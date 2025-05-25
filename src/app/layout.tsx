@@ -31,10 +31,10 @@ export default function RootLayout({
         <GoogleTagManager />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased w-full overflow-x-hidden`}
       >
         <Header />
-        <main>{children}</main>
+        <main className="w-full max-w-full">{children}</main>
         <Footer />
       </body>
     </html>

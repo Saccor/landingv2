@@ -28,16 +28,16 @@ export default function HeroSection() {
 
   return (
     <section
-      className="w-full flex justify-center items-center bg-[#020202]"
+      className="w-full flex justify-center items-center bg-[#020202] px-4 sm:px-8 md:px-16 lg:px-32 py-8 md:py-0"
       style={{ minHeight: '400px' }}
     >
       <div
-        className="w-full max-w-[1440px] h-auto md:h-[675px] flex flex-col md:flex-row justify-center items-center"
+        className="w-full max-w-[1440px] flex flex-col md:flex-row justify-center items-center gap-8"
         style={{ minHeight: '400px' }}
       >
         {/* Left: Image Container */}
         <div
-          className="w-full md:w-[720px] h-[300px] md:h-[539.81px] flex-none order-0 flex-grow"
+          className="w-full md:w-1/2 h-[200px] xs:h-[250px] sm:h-[300px] md:h-[539.81px] flex-none order-0 flex-grow rounded-2xl"
           style={{
             backgroundImage: "url('/heroimg.png')",
             backgroundSize: 'cover',
@@ -46,18 +46,17 @@ export default function HeroSection() {
         />
         {/* Right: Content Container */}
         <div
-          className="w-full md:w-[720px] h-auto md:h-[416.13px] flex flex-col items-center justify-center gap-[32px] flex-none order-1 flex-grow px-4"
-          style={{ padding: 0 }}
+          className="w-full md:w-1/2 h-auto flex flex-col items-center justify-center gap-6 md:gap-8 order-1 flex-grow px-0 sm:px-4"
         >
-          <h1 className="text-white text-3xl md:text-4xl font-bold text-center leading-tight font-montserrat">
+          <h1 className="text-white text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold text-center leading-tight font-montserrat">
             Shape the future of<br />sustainable sound
           </h1>
           <CountdownTimer {...countdown} />
-          <p className="text-white text-base md:text-lg text-center font-poppins max-w-[420px]">
+          <p className="text-white text-sm xs:text-base md:text-lg text-center font-poppins max-w-[420px]">
             Subscribe now — don't miss a thing. The countdown to launch has begun!
           </p>
-          <div className="flex flex-row items-center gap-3 w-[421.79px] h-[44px]">
-            <SignupForm className="w-full h-full flex-row gap-3 [&>form]:flex-row [&>form]:gap-3 [&>form]:w-full" buttonText="Sign-up" />
+          <div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-[420px]">
+            <SignupForm className="w-full h-full flex-col sm:flex-row gap-3 [&>form]:flex-col sm:[&>form]:flex-row [&>form]:gap-3 [&>form]:w-full" buttonText="Sign-up" />
           </div>
         </div>
       </div>

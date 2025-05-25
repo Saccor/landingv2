@@ -174,41 +174,54 @@ export default function CountdownTimer({ days, hours, minutes, seconds }: Countd
   const paddedRows = paddedGrid.length;
   const paddedCols = paddedGrid[0].length;
 
-  // Calculate exact grid size
-  const SQUARE_SIZE = 7.78; // px
-  const GAP = 2; // px
+  // Responsive square size and gap
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 480;
+  const SQUARE_SIZE = isMobile ? 4.5 : 7.78; // px
+  const GAP = isMobile ? 1 : 2; // px
   const containerWidth = paddedCols * SQUARE_SIZE + (paddedCols - 1) * GAP;
   const containerHeight = paddedRows * SQUARE_SIZE + (paddedRows - 1) * GAP;
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-full">
       <div
-        className="relative mx-auto overflow-hidden"
-        style={{ width: `${containerWidth}px`, height: `${containerHeight}px` }}
+        className="relative mx-auto overflow-x-auto w-full"
+        style={{
+          maxWidth: '100vw',
+          minWidth: '180px',
+          width: '100%',
+          height: `${containerHeight}px`,
+          display: 'flex',
+          justifyContent: 'center',
+        }}
       >
         <div
-          className="absolute inset-0 grid"
+          className="grid"
           style={{
             gridTemplateColumns: `repeat(${paddedCols}, 1fr)`,
             gridTemplateRows: `repeat(${paddedRows}, 1fr)`,
             gap: `${GAP}px`,
-            width: '100%',
+            width: `${containerWidth}px`,
             height: '100%',
+            margin: '0 auto',
           }}
         >
           {paddedGrid.flat().map((cell, i) => (
             <div
               key={i}
-              className={`w-[7.78px] h-[7.78px] border-[0.7px] border-[rgba(208,208,208,0.33)] ${cell ? 'bg-white' : 'bg-transparent'}`}
+              className={`w-[${SQUARE_SIZE}px] h-[${SQUARE_SIZE}px] border-[0.7px] border-[rgba(208,208,208,0.33)] ${cell ? 'bg-white' : 'bg-transparent'}`}
             />
           ))}
         </div>
       </div>
-      <div className="flex flex-row justify-center w-full mt-2 gap-[60px]">
+      {/* Responsive label row */}
+      <div
+        className="flex flex-row justify-between items-center w-full max-w-full overflow-x-auto mt-2 gap-2 px-1"
+        style={{ maxWidth: `${containerWidth}px`, minWidth: '180px' }}
+      >
         {['Days', 'Hours', 'Minutes', 'Seconds'].map((label) => (
           <span
             key={label}
-            className="text-white text-lg font-montserrat text-center min-w-[90px]"
+            className="text-white text-xs sm:text-sm md:text-lg font-montserrat text-center min-w-[60px] flex-1"
           >
             {label}
           </span>
