@@ -62,8 +62,8 @@ const DIGIT_PATTERNS: Record<string, number[][]> = {
   '5': [
     [1,1,1,1,1],
     [1,0,0,0,0],
+    [1,0,0,0,0],
     [1,1,1,1,0],
-    [0,0,0,0,1],
     [0,0,0,0,1],
     [0,0,0,0,1],
     [1,0,0,0,1],
@@ -103,10 +103,10 @@ const DIGIT_PATTERNS: Record<string, number[][]> = {
     [0,1,1,1,0],
     [1,0,0,0,1],
     [1,0,0,0,1],
-    [0,1,1,1,1],
+    [1,1,1,1,1],
     [0,0,0,0,1],
     [0,0,0,0,1],
-    [1,0,0,0,1],
+    [0,0,0,0,1],
     [0,1,1,1,0],
   ],
 };
@@ -208,7 +208,7 @@ export default function CountdownTimer({ days, hours, minutes, seconds }: Countd
           {paddedGrid.flat().map((cell, i) => (
             <div
               key={i}
-              className={`w-[${SQUARE_SIZE}px] h-[${SQUARE_SIZE}px] border-[0.7px] border-[rgba(208,208,208,0.33)] ${cell ? 'bg-white' : 'bg-transparent'}`}
+              className={`w-[${SQUARE_SIZE}px] h-[${SQUARE_SIZE}px] border-[0.7px] border-stone-300/30 ${cell ? 'bg-white' : 'bg-transparent'}`}
             />
           ))}
         </div>
