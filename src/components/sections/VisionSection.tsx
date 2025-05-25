@@ -9,14 +9,14 @@ export default function VisionSection() {
     <section className="w-full bg-black flex justify-center items-center py-12 px-4 sm:px-8 md:px-16 lg:px-32">
       <div className="flex flex-col md:flex-row w-full gap-8 items-stretch">
         {/* Left: Text */}
-        <div className="bg-[var(--Gray-800,#363637)] rounded-[23px] p-5 flex flex-col justify-center items-center gap-3 w-full md:w-[420px] h-[220px] md:h-[460px] z-[1] flex-none md:ml-32">
+        <div className="bg-[var(--Gray-800,#363637)] rounded-[23px] p-5 flex flex-col justify-center items-center gap-3 flex-1 max-w-[420px] h-[220px] md:h-[460px] z-[1]">
           <h2 className="text-white text-3xl font-bold mb-2 font-montserrat text-center">Our vision</h2>
           <p className="text-gray-200 text-lg font-poppins text-center">
             Arfive isn't just another pair of earbuds — it's a modular audio system engineered for life on your terms.
           </p>
         </div>
         {/* Right: Video */}
-        <div className="relative flex items-center justify-center w-full h-[220px] md:h-[460px] rounded-[27px] overflow-hidden flex-grow z-0 md:mr-32">
+        <div className="relative flex items-center justify-center flex-1 h-[220px] md:h-[460px] rounded-[27px] overflow-hidden z-0">
           <video
             className="w-full h-full object-cover rounded-[27px]"
             src="/video/hero-optimized.mp4"
