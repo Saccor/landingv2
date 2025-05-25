@@ -26,17 +26,17 @@ const Footer = () => {
           <div className="flex items-center gap-3">
             <Link 
               href="/privacy-policy" 
-              className="text-brand-mist text-base font-normal font-['Poppins'] leading-normal hover:opacity-80 transition-opacity"
+              className="text-white text-base font-normal font-['Poppins'] leading-normal hover:opacity-80 transition-opacity"
             >
               Privacy policy
             </Link>
             <Link 
               href="/cookie-settings" 
-              className="text-brand-mist text-base font-normal font-['Poppins'] leading-normal hover:opacity-80 transition-opacity"
+              className="text-white text-base font-normal font-['Poppins'] leading-normal hover:opacity-80 transition-opacity"
             >
               Cookie settings
             </Link>
-            <span className="text-brand-mist text-base font-normal font-['Poppins'] leading-normal">
+            <span className="text-white text-base font-normal font-['Poppins'] leading-normal">
               © 2025 Arfve
             </span>
           </div>
@@ -47,7 +47,7 @@ const Footer = () => {
               href="https://linkedin.com" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="text-brand-mist hover:opacity-80 transition-opacity"
+              className="text-white hover:opacity-80 transition-opacity"
               aria-label="LinkedIn"
             >
               <LinkedInIcon />
@@ -56,7 +56,7 @@ const Footer = () => {
               href="https://instagram.com" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="text-brand-mist hover:opacity-80 transition-opacity"
+              className="text-white hover:opacity-80 transition-opacity"
               aria-label="Instagram"
             >
               <InstagramIcon />
@@ -65,7 +65,7 @@ const Footer = () => {
               href="https://tiktok.com" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="text-brand-mist hover:opacity-80 transition-opacity"
+              className="text-white hover:opacity-80 transition-opacity"
               aria-label="TikTok"
             >
               <TikTokIcon />
@@ -74,7 +74,7 @@ const Footer = () => {
               href="https://facebook.com" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="text-brand-mist hover:opacity-80 transition-opacity"
+              className="text-white hover:opacity-80 transition-opacity"
               aria-label="Facebook"
             >
               <FacebookIcon />
@@ -83,12 +83,11 @@ const Footer = () => {
               href="https://youtube.com" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="text-brand-mist hover:opacity-80 transition-opacity"
+              className="text-white hover:opacity-80 transition-opacity"
               aria-label="YouTube"
             >
               <YouTubeIcon />
             </Link>
-            <Link href="#" className="w-7 h-5 bg-brand-mist hover:opacity-80 transition-opacity" aria-label="Social Media 5" />
           </div>
         </div>
       </div>

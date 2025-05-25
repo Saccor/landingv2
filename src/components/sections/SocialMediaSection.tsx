@@ -30,7 +30,7 @@ export default function SocialMediaSection({ className = '' }: SocialMediaSectio
         {socialPlatforms.map((platform) => (
           <div
             key={platform.name}
-            className="flex flex-col justify-center items-center p-5 gap-5 w-[180px] h-[150px] bg-[var(--Gray-900,#1b1b1b)] rounded-[23px] flex-none order-0 flex-grow-0"
+            className="flex flex-col justify-center items-center p-5 gap-5 w-[180px] h-[150px] bg-[var(--Gray-900,#1b1b1b)] rounded-[23px] flex-none order-0 flex-grow-0 text-white"
           >
             {platform.icon}
             <div className="w-36 h-9 text-center justify-start text-white text-lg font-normal font-['Poppins'] leading-7">

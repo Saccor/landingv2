@@ -4,7 +4,7 @@ A modern, scalable Next.js landing page project with TypeScript, featuring Googl
 
 ## Tech Stack
 
-- Next.js 13+ (App Router)
+- Next.js 15+ (App Router)
 - TypeScript
 - Tailwind CSS
 - Google Tag Manager
@@ -70,6 +70,34 @@ MAILERLITE_GROUP_ID=your_group_id_here
 - TypeScript for type safety
 - Tailwind CSS for styling
 - Modern Next.js 13+ features with App Router
+- **Pixel-perfect, responsive countdown timer using CSS Grid**
+
+## Countdown Timer Implementation
+
+### Approach
+
+- The countdown timer is rendered as a single CSS Grid for the entire timer row, ensuring perfect alignment and pixel-perfect design.
+- Each digit is defined by a 5x8 pattern (array of 1s and 0s), and the colon is a 1x8 pattern with centered dots.
+- There is a 1-row and 1-column border of empty squares around the timer for a digital display effect.
+- An empty column of squares is added between every digit and colon for clear visual separation.
+- The timer is fully responsive and scales to fit its container.
+
+### Customization
+
+- **Digit Patterns:** You can adjust the digit patterns in `src/components/ui/countdown-timer.tsx` by editing the `DIGIT_PATTERNS` object.
+- **Colon Pattern:** The colon is vertically centered by default; you can change its pattern in the `COLON_PATTERN` array.
+- **Grid Styling:** The border, gap, and background color of each square can be customized via Tailwind classes in the timer component.
+- **Responsiveness:** The timer container uses Tailwind's responsive classes for width and height. Adjust these as needed for your design.
+
+### Example Usage
+
+```
+<CountdownTimer days="12" hours="23" minutes="45" seconds="56" />
+```
+
+### No SVGs Required
+
+- The timer no longer uses SVG digit components. All rendering is handled by CSS Grid and JavaScript arrays for maximum maintainability and scalability.
 
 ## Development Guidelines
 
