@@ -27,20 +27,21 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="w-full bg-[#020202] flex justify-center items-stretch min-h-[675px]">
-      <div className="w-full max-w-[1440px] flex flex-col md:flex-row justify-center items-center gap-8 min-h-[675px]">
+    <section className="w-full bg-[#020202] flex justify-center items-stretch min-h-[600px] py-6 sm:py-8 md:py-0">
+      <div className="w-full max-w-[1440px] flex flex-col md:flex-row justify-center items-center gap-3 md:gap-6 min-h-[600px]">
         {/* Left: Image Container */}
         <div
-          className="w-full md:w-1/2 h-[300px] md:h-[539.81px] rounded-2xl min-w-0"
+          className="w-full md:w-1/2 h-[400px] sm:h-[450px] md:h-[539.81px] rounded-2xl min-w-0"
           style={{
             backgroundImage: "url('/heroimg.png')",
-            backgroundSize: 'cover',
+            backgroundSize: 'contain',
             backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
           }}
         />
         {/* Right: Content Container */}
-        <div className="w-full md:w-1/2 h-full flex flex-col items-center justify-center px-4 sm:px-8 md:px-0 py-8 mx-auto">
-          <div className="flex flex-col items-center gap-[43px] w-full max-w-[720px]">
+        <div className="w-full md:w-1/2 h-full flex flex-col items-center justify-start px-4 sm:px-8 md:px-0 py-10 md:py-4 mx-auto">
+          <div className="flex flex-col items-center gap-6 sm:gap-8 md:gap-[43px] w-full max-w-[720px]">
             <h1 className="text-center text-white text-4xl md:text-5xl font-bold font-montserrat leading-tight">
               Shape the future of <br />sustainable sound
             </h1>

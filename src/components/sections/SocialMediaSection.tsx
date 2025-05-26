@@ -21,7 +21,7 @@ const socialPlatforms = [
 
 export default function SocialMediaSection({ className = '' }: SocialMediaSectionProps) {
   return (
-    <section className={`w-full px-4 sm:px-8 md:px-16 lg:px-32 py-12 sm:py-20 bg-black flex flex-col justify-center items-center gap-9 overflow-hidden ${className}`}>
+    <section className={`w-full px-4 sm:px-8 md:px-16 lg:px-32 pt-8 sm:pt-12 md:pt-24 pb-12 sm:pb-20 bg-black flex flex-col justify-center items-center gap-9 overflow-hidden ${className}`}>
       <div className="flex flex-col justify-start items-start gap-3 w-full">
         <div className="self-stretch text-center justify-start text-white text-2xl font-bold font-['Montserrat'] leading-loose">
           Follow us on social media
