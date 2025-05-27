@@ -14,46 +14,82 @@ interface SocialMediaSectionProps {
 const socialPlatforms = [
   { name: 'LinkedIn', icon: <LinkedInIcon />, url: '#' },
   { name: 'Instagram', icon: <InstagramIcon />, url: '#' },
-  { name: 'Tiktok', icon: <TikTokIcon />, url: '#' },
+  { name: 'TikTok', icon: <TikTokIcon />, url: '#' },
   { name: 'Facebook', icon: <FacebookIcon />, url: '#' },
-  { name: 'Youtube', icon: <YouTubeIcon />, url: '#' },
+  { name: 'YouTube', icon: <YouTubeIcon />, url: '#' },
 ];
 
 export default function SocialMediaSection({ className = '' }: SocialMediaSectionProps) {
   return (
-    <section className={`w-full px-4 sm:px-8 md:px-16 lg:px-32 pt-8 sm:pt-12 md:pt-24 pb-12 sm:pb-20 bg-black flex flex-col justify-center items-center gap-9 overflow-hidden ${className}`}>
-      <div className="flex flex-col justify-start items-start gap-3 w-full">
-        <div className="self-stretch text-center justify-start text-white text-2xl font-bold font-['Montserrat'] leading-loose">
-          Follow us on social media
+    <section className={`bg-black overflow-hidden ${className}`}>
+      {/* Container: Clean, simple approach with proper spacing */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+        
+        {/* Content: Center aligned with clean spacing */}
+        <div className="
+          flex flex-col items-center text-center
+          space-y-8 lg:space-y-12
+          max-w-4xl mx-auto
+        ">
+          
+          {/* Heading: Simple responsive typography */}
+          <h2 className="
+            text-white font-bold font-montserrat
+            text-xl sm:text-2xl lg:text-3xl
+            leading-tight
+          ">
+            Follow us on social media
+          </h2>
+
+          {/* Social Grid: Mobile-first responsive grid */}
+          <div className="
+            grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5
+            gap-4 sm:gap-6 lg:gap-8
+            w-full
+          ">
+            {socialPlatforms.map((platform) => (
+              <motion.a
+                key={platform.name}
+                href={platform.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{
+                  scale: 1.05,
+                  rotateX: 4,
+                  rotateY: -4,
+                  boxShadow: '0 8px 24px 0 rgba(0,0,0,0.3)'
+                }}
+                whileTap={{
+                  scale: 0.98,
+                  rotateX: 0,
+                  rotateY: 0
+                }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                className="
+                  flex flex-col items-center justify-center
+                  p-4 sm:p-5 lg:p-6
+                  space-y-2 sm:space-y-3 lg:space-y-4
+                  bg-[#1b1b1b] rounded-2xl lg:rounded-3xl
+                  text-white cursor-pointer
+                  h-24 sm:h-32 lg:h-36
+                  hover:bg-[#252525] transition-colors
+                "
+                aria-label={`Follow us on ${platform.name}`}
+              >
+                <div className="flex-shrink-0">
+                  {platform.icon}
+                </div>
+                <span className="
+                  text-xs sm:text-sm lg:text-base
+                  font-poppins text-center
+                  leading-tight
+                ">
+                  {platform.name}
+                </span>
+              </motion.a>
+            ))}
+          </div>
         </div>
-      </div>
-      <div className="flex flex-wrap justify-center items-start gap-4 sm:gap-[35px] w-full max-w-[1040px] p-0">
-        {socialPlatforms.map((platform) => (
-          <motion.a
-            key={platform.name}
-            href={platform.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{
-              scale: 1.08,
-              rotateX: 8,
-              rotateY: -8,
-              boxShadow: '0 12px 32px 0 rgba(0,0,0,0.22)'
-            }}
-            whileTap={{
-              scale: 0.96,
-              rotateX: 0,
-              rotateY: 0
-            }}
-            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            className="flex flex-col justify-center items-center p-4 sm:p-5 gap-3 sm:gap-5 w-[120px] sm:w-[180px] h-[100px] sm:h-[150px] bg-[var(--Gray-900,#1b1b1b)] rounded-[23px] flex-none text-white cursor-pointer"
-          >
-            {platform.icon}
-            <div className="w-24 sm:w-36 h-7 sm:h-9 text-center justify-start text-white text-base sm:text-lg font-normal font-['Poppins'] leading-7">
-              {platform.name}
-            </div>
-          </motion.a>
-        ))}
       </div>
     </section>
   );

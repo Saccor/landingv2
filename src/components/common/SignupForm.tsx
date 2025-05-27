@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { MailerLiteService } from '@/services/mailerlite';
+import Button from './Button';
 
 interface SignupFormProps {
   className?: string;
@@ -37,23 +38,32 @@ export default function SignupForm({
   };
 
   return (
-    <div className={`w-[408px] flex flex-col items-center gap-3 ${className}`}>
-      <form onSubmit={handleSubmit} className="flex flex-row items-center gap-6 w-full">
+    <div className={`w-full max-w-sm lg:max-w-md flex flex-col items-center gap-3 ${className}`}>
+      <form onSubmit={handleSubmit} className="flex flex-row items-center gap-3 sm:gap-4 w-full">
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
           placeholder="email"
-          className="flex-1 h-11 px-5 py-2.5 rounded-3xl border border-white bg-transparent text-white text-sm font-normal font-['Poppins'] leading-tight placeholder:text-white focus:outline-none"
+          className="
+            flex-1 h-12
+            px-4 rounded-full
+            border border-white/20 bg-transparent
+            text-white placeholder:text-gray-400
+            text-sm font-normal font-poppins leading-tight
+            focus:outline-none focus:border-white/40 focus:ring-1 focus:ring-white/20
+            transition-all duration-200
+          "
         />
-        <button
+        <Button
           type="submit"
-          disabled={status === 'loading'}
-          className="h-11 px-8 py-2.5 bg-white rounded-[55px] flex justify-center items-center text-black text-base font-medium font-['Poppins'] leading-tight disabled:opacity-50 border-none shadow-none"
+          variant="primary"
+          size="md"
+          isLoading={status === 'loading'}
         >
-          {status === 'loading' ? 'Signing up...' : buttonText}
-        </button>
+          {buttonText}
+        </Button>
       </form>
       {message && (
         <p

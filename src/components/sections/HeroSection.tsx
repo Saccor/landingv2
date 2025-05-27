@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import CountdownTimer from '@/components/ui/countdown-timer';
+import Button from '@/components/common/Button';
 
 const LAUNCH_DATE = new Date(new Date().getFullYear(), 6, 22, 0, 0, 0); // July is month 6 (0-indexed)
 
@@ -92,7 +93,7 @@ export default function HeroSection() {
             {/* Form: Simple responsive layout */}
             <form className="
               w-full max-w-sm lg:max-w-md
-              flex flex-col sm:flex-row
+              flex flex-row
               gap-3 sm:gap-4
             ">
               <input
@@ -107,19 +108,9 @@ export default function HeroSection() {
                   transition-all duration-200
                 "
               />
-              <button
-                type="submit"
-                className="
-                  px-8 h-12 
-                  bg-white text-black font-medium font-poppins
-                  rounded-full
-                  hover:bg-gray-100 active:bg-gray-200
-                  transition-all duration-200
-                  whitespace-nowrap
-                "
-              >
+              <Button type="submit" variant="primary" size="md">
                 Sign-up
-              </button>
+              </Button>
             </form>
           </div>
         </div>

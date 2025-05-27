@@ -8,41 +8,75 @@ import YouTubeIcon from './icons/YouTubeIcon';
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-black border-t border-gray-500">
-      <div className="w-full px-4 sm:px-8 md:px-16 lg:px-32 pt-8 pb-6">
-        <div className="w-full max-w-[1192px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0">
-          {/* Logo */}
-          <Link href="/" className="relative w-28 h-10 mb-4 md:mb-0">
+    <footer className="bg-black border-t border-gray-500 overflow-hidden">
+      {/* Container: Clean, simple approach with proper spacing */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        
+        {/* Layout: Mobile stack, desktop row */}
+        <div className="
+          flex flex-col lg:flex-row 
+          items-center lg:justify-between
+          space-y-6 lg:space-y-0
+          text-center lg:text-left
+        ">
+          
+          {/* Logo: Simple responsive sizing */}
+          <Link href="/" className="
+            flex-shrink-0
+            order-1 lg:order-1
+          ">
             <Image
               src="/logo.svg"
               alt="Logo"
               width={120}
               height={42}
-              className="object-contain"
+              className="object-contain w-24 h-8 sm:w-28 sm:h-10 lg:w-32 lg:h-11"
             />
           </Link>
 
-          {/* Navigation Links */}
-          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-3 mb-4 md:mb-0">
+          {/* Navigation Links: Clean responsive layout */}
+          <div className="
+            flex flex-col sm:flex-row items-center
+            space-y-2 sm:space-y-0 sm:space-x-4 lg:space-x-6
+            order-3 lg:order-2
+          ">
             <Link 
               href="/privacy-policy" 
-              className="text-white text-base font-normal font-['Poppins'] leading-normal hover:opacity-80 transition-opacity"
+              className="
+                text-white font-poppins
+                text-sm sm:text-base
+                hover:opacity-80 transition-opacity
+                leading-normal
+              "
             >
               Privacy policy
             </Link>
             <Link 
               href="/cookie-settings" 
-              className="text-white text-base font-normal font-['Poppins'] leading-normal hover:opacity-80 transition-opacity"
+              className="
+                text-white font-poppins
+                text-sm sm:text-base
+                hover:opacity-80 transition-opacity
+                leading-normal
+              "
             >
               Cookie settings
             </Link>
-            <span className="text-white text-base font-normal font-['Poppins'] leading-normal">
+            <span className="
+              text-white font-poppins
+              text-sm sm:text-base
+              leading-normal
+            ">
               © 2025 Arfve
             </span>
           </div>
 
-          {/* Social Links */}
-          <div className="flex flex-row flex-wrap justify-center items-center gap-4 md:gap-5">
+          {/* Social Links: Clean responsive grid */}
+          <div className="
+            flex flex-row items-center justify-center
+            space-x-4 sm:space-x-5 lg:space-x-6
+            order-2 lg:order-3
+          ">
             <Link 
               href="https://linkedin.com" 
               target="_blank" 

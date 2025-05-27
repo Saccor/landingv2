@@ -125,126 +125,64 @@ const COLON_PATTERN = [
 
 const ROWS = 8;
 
-export default function CountdownTimer({ days, hours, minutes, seconds }: CountdownTimerProps) {
+// Create individual digit grid for each time unit
+function DigitGroup({ value, label }: { value: string; label: string }) {
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => { 
+  useEffect(() => {
     setMounted(true);
   }, []);
-  
+
   if (!mounted) return null;
 
-  // Build the full grid pattern for the timer row
-  const groups = [days, hours, minutes, seconds];
+  // Build grid for this 2-digit group
+  const digits = value.split('');
   const grid: number[][] = Array.from({ length: ROWS }, () => []);
-  groups.forEach((group, groupIdx) => {
-    group.split('').forEach((digit, digitIdx) => {
-      const pattern = DIGIT_PATTERNS[digit] || DIGIT_PATTERNS['0'];
-      for (let row = 0; row < ROWS; row++) {
-        grid[row].push(...pattern[row]);
-      }
-      // Add gap after each digit except the last in the group
-      if (digitIdx < group.length - 1) {
-        for (let row = 0; row < ROWS; row++) {
-          grid[row].push(0);
-        }
-      }
-    });
-    // Add colon after each group except the last
-    if (groupIdx < groups.length - 1) {
-      // Add gap before colon
-      for (let row = 0; row < ROWS; row++) {
-        grid[row].push(0);
-      }
-      // Add colon
-      for (let row = 0; row < ROWS; row++) {
-        grid[row].push(...COLON_PATTERN[row]);
-      }
-      // Add gap after colon
+  
+  digits.forEach((digit, digitIdx) => {
+    const pattern = DIGIT_PATTERNS[digit] || DIGIT_PATTERNS['0'];
+    for (let row = 0; row < ROWS; row++) {
+      grid[row].push(...pattern[row]);
+    }
+    // Add gap between digits
+    if (digitIdx < digits.length - 1) {
       for (let row = 0; row < ROWS; row++) {
         grid[row].push(0);
       }
     }
   });
 
-  // Add 1 row/col of empty squares around the grid
+  // Add padding around the group
   const paddedGrid: number[][] = [
-    Array(grid[0].length + 2).fill(0), // Top border
-    ...grid.map(row => [0, ...row, 0]), // Left/right borders
-    Array(grid[0].length + 2).fill(0), // Bottom border
+    Array(grid[0].length + 2).fill(0),
+    ...grid.map(row => [0, ...row, 0]),
+    Array(grid[0].length + 2).fill(0),
   ];
+
   const paddedRows = paddedGrid.length;
   const paddedCols = paddedGrid[0].length;
 
-  // Simple Mobile-First Responsive System (aligned with hero section)
-  const getResponsiveSize = () => {
-    return { gap: 0.2 };
-  };
-
-  const { gap } = getResponsiveSize();
-
-  // Calculate label positions to align with digit groups
-  const calculateLabelPositions = () => {
-    // Each digit group structure: 2 digits (5 cols each) + 1 gap = 11 cols per group
-    // Colon structure: 1 gap + 1 colon + 1 gap = 3 cols
-    // Total structure: 11 + 3 + 11 + 3 + 11 + 3 + 11 = 53 cols + 2 padding = 55 cols
-    
-    const digitWidth = 5; // Each digit is 5 columns wide
-    const gapWidth = 1;   // Gap between digits in same group
-    const colonWidth = 3; // Gap + colon + gap
-    const paddingWidth = 1; // Border padding
-    
-    // Calculate center positions for each group
-    const positions = [];
-    let currentPos = paddingWidth; // Start after left padding
-    
-    // Days group: 2 digits + gap = 11 columns
-    const daysCenter = currentPos + (digitWidth * 2 + gapWidth) / 2;
-    positions.push(daysCenter);
-    currentPos += digitWidth * 2 + gapWidth + colonWidth;
-    
-    // Hours group
-    const hoursCenter = currentPos + (digitWidth * 2 + gapWidth) / 2;
-    positions.push(hoursCenter);
-    currentPos += digitWidth * 2 + gapWidth + colonWidth;
-    
-    // Minutes group  
-    const minutesCenter = currentPos + (digitWidth * 2 + gapWidth) / 2;
-    positions.push(minutesCenter);
-    currentPos += digitWidth * 2 + gapWidth + colonWidth;
-    
-    // Seconds group
-    const secondsCenter = currentPos + (digitWidth * 2 + gapWidth) / 2;
-    positions.push(secondsCenter);
-    
-    // Convert to percentages of total width
-    const totalWidth = paddedCols;
-    return positions.map(pos => (pos / totalWidth) * 100);
-  };
-
-  const labelPositions = calculateLabelPositions();
-
   return (
-    <div className="flex flex-col items-center w-full countdown-timer-container">
-      {/* Responsive Container - inherits parent sizing */}
-      <div className="w-full flex justify-center">
+    <div className="flex flex-col items-center space-y-3 sm:space-y-4">
+      {/* Individual timer grid */}
+      <div className="flex justify-center">
         <div
-          className="grid transition-all duration-300 ease-out"
+          className="grid gap-[1px] sm:gap-[1.5px] lg:gap-[2px]"
           style={{
             gridTemplateColumns: `repeat(${paddedCols}, 1fr)`,
             gridTemplateRows: `repeat(${paddedRows}, 1fr)`,
-            gap: `${gap}px`,
           }}
         >
           {paddedGrid.flat().map((cell, i) => (
             <div
               key={i}
               className={`
-                border border-stone-300/20 transition-all duration-300
+                border border-stone-300/20
                 ${cell ? 'bg-white shadow-sm' : 'bg-transparent'}
-                w-1 h-1
-                sm:w-1.5 sm:h-1.5
-                lg:w-1.5 lg:h-1.5
+                w-[2px] h-[2px]
+                sm:w-[3px] sm:h-[3px]
+                lg:w-[4px] lg:h-[4px]
+                transition-all duration-300
               `}
               style={{
                 borderWidth: '0.5px',
@@ -254,24 +192,26 @@ export default function CountdownTimer({ days, hours, minutes, seconds }: Countd
         </div>
       </div>
       
-      {/* Aligned Label Row - positioned to match digit groups */}
-      <div className="relative w-full mt-4">
-        {['Days', 'Hours', 'Minutes', 'Seconds'].map((label, index) => (
-          <span
-            key={label}
-            className="
-              absolute text-white font-montserrat text-center
-              text-xs sm:text-sm lg:text-base
-              transform -translate-x-1/2
-            "
-            style={{
-              left: `${labelPositions[index]}%`,
-            }}
-          >
-            {label}
-          </span>
-        ))}
-      </div>
+      {/* Label */}
+      <span className="text-white font-montserrat text-xs sm:text-sm lg:text-base text-center">
+        {label}
+      </span>
+    </div>
+  );
+}
+
+export default function CountdownTimer({ days, hours, minutes, seconds }: CountdownTimerProps) {
+  return (
+    <div className="
+      grid grid-cols-4 
+      w-full max-w-sm lg:max-w-md
+      gap-4 sm:gap-6 lg:gap-8
+      items-center justify-items-center
+    ">
+      <DigitGroup value={days} label="Days" />
+      <DigitGroup value={hours} label="Hours" />
+      <DigitGroup value={minutes} label="Minutes" />
+      <DigitGroup value={seconds} label="Seconds" />
     </div>
   );
 }

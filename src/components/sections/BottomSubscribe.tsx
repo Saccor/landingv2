@@ -8,17 +8,40 @@ interface BottomSubscribeProps {
 
 export default function BottomSubscribe({ className = '' }: BottomSubscribeProps) {
   return (
-    <section className={`w-full px-4 sm:px-8 md:px-16 lg:px-32 py-12 sm:py-20 bg-black flex flex-col justify-center items-center gap-9 overflow-hidden ${className}`}>
-      <div className="w-full max-w-[408px] flex flex-col items-center justify-center">
-        <div className="text-center w-full">
-          <div className="text-white text-2xl font-bold font-['Montserrat'] leading-8">Subscribe now</div>
-          <div className="text-white text-2xl font-normal font-['Montserrat'] leading-8">Time is ticking, and secrets await.</div>
+    <section className={`bg-black overflow-hidden ${className}`}>
+      {/* Container: Clean, simple approach with proper spacing */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+        
+        {/* Content: Center aligned with clean spacing */}
+        <div className="
+          flex flex-col items-center text-center
+          space-y-8 lg:space-y-10
+          max-w-lg mx-auto
+        ">
+          
+          {/* Heading: Simple responsive typography */}
+          <div className="space-y-2">
+            <h2 className="
+              text-white font-bold font-montserrat
+              text-xl sm:text-2xl lg:text-3xl
+              leading-tight
+            ">
+              Subscribe now
+            </h2>
+            <p className="
+              text-white font-montserrat
+              text-xl sm:text-2xl lg:text-3xl
+              leading-tight
+            ">
+              Time is ticking, and secrets await.
+            </p>
+          </div>
+
+          {/* Form: Inherits proper responsive behavior */}
+          <SignupForm buttonText="Sign-up" />
+          
         </div>
       </div>
-      <SignupForm
-        className="w-full max-w-[408px] flex-col sm:flex-row gap-4 sm:gap-6 [&>form]:flex-col sm:[&>form]:flex-row [&>form]:gap-4 sm:[&>form]:gap-6 [&>form]:w-full"
-        buttonText="Sign-up"
-      />
     </section>
   );
 } 
