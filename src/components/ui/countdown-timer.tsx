@@ -111,18 +111,6 @@ const DIGIT_PATTERNS: Record<string, number[][]> = {
   ],
 };
 
-// Centered colon pattern (dots in rows 2 and 5)
-const COLON_PATTERN = [
-  [0],
-  [0],
-  [1],
-  [0],
-  [0],
-  [1],
-  [0],
-  [0],
-];
-
 const ROWS = 8;
 
 // Create individual digit grid for each time unit
