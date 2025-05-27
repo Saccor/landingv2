@@ -1,4 +1,3 @@
-import Image from "next/image";
 import BottomSubscribe from '@/components/sections/BottomSubscribe';
 import SocialMediaSection from '@/components/sections/SocialMediaSection';
 import VisionSection from '@/components/sections/VisionSection';

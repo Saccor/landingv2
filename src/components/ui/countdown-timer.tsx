@@ -123,8 +123,6 @@ const COLON_PATTERN = [
   [0],
 ];
 
-const DIGIT_WIDTH = 5;
-const COLON_WIDTH = 1;
 const ROWS = 8;
 
 export default function CountdownTimer({ days, hours, minutes, seconds }: CountdownTimerProps) {

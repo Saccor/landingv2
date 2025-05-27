@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 import GoogleTagManager from "@/components/common/GoogleTagManager";
 import Header from "@/components/Header";
@@ -28,7 +29,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <GoogleTagManager />
+        <Suspense fallback={null}>
+          <GoogleTagManager />
+        </Suspense>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased w-full overflow-x-hidden`}

@@ -30,7 +30,7 @@ export default function SignupForm({
       setMessage('Thank you for subscribing!');
       setEmail('');
       onSuccess?.();
-    } catch (error) {
+    } catch {
       setStatus('error');
       setMessage('Something went wrong. Please try again.');
     }

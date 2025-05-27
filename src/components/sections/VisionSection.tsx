@@ -6,7 +6,7 @@ export default function VisionSection() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [isVideoReady, setIsVideoReady] = useState(true);
+
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleVideoClick = useCallback(async () => {
@@ -56,20 +56,18 @@ export default function VisionSection() {
     setIsPlaying(false);
   }, []);
 
-  const handleVideoError = useCallback((e: any) => {
-    console.error('Video error:', e.target.error);
+  const handleVideoError = useCallback(() => {
+    console.error('Video error occurred');
     setHasError(true);
     setIsLoading(false);
   }, []);
 
   const handleVideoLoadedData = useCallback(() => {
     console.log('Video loaded successfully');
-    setIsVideoReady(true);
   }, []);
 
   const handleVideoCanPlay = useCallback(() => {
     console.log('Video can play');
-    setIsVideoReady(true);
   }, []);
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
@@ -80,13 +78,13 @@ export default function VisionSection() {
   }, [handleVideoClick]);
 
   return (
-    <section className="w-full bg-black flex justify-center items-center py-8 sm:py-12 md:py-16 px-4 sm:px-8 md:px-16 lg:px-32 pb-4 sm:pb-8 md:pb-16">
-      <div className="flex flex-col md:flex-row w-full gap-4 md:gap-8 items-stretch max-w-7xl mx-auto">
+    <section className="w-full bg-black flex justify-center items-center pt-1 sm:pt-2 md:pt-16 pb-3 sm:pb-6 md:pb-16 px-4 sm:px-8 md:px-16 lg:px-32">
+      <div className="flex flex-col md:flex-row w-full gap-4 md:gap-8 items-start md:items-stretch max-w-7xl mx-auto">
         {/* Left: Text */}
-        <div className="bg-[var(--Gray-800,#363637)] rounded-[23px] p-5 md:p-6 flex flex-col justify-center items-center gap-3 flex-1 max-w-full md:max-w-[420px] h-[200px] sm:h-[240px] md:h-[460px] z-[1] mx-auto md:mx-0">
+        <div className="bg-[var(--Gray-800,#363637)] rounded-[23px] p-8 md:p-6 flex flex-col justify-center items-center gap-6 flex-1 max-w-full md:max-w-[420px] h-[380px] sm:h-[420px] md:h-[460px] z-[1] mx-auto md:mx-0">
           <h2 className="text-white text-2xl sm:text-3xl font-bold mb-2 font-montserrat text-center">Our vision</h2>
           <p className="text-gray-200 text-base sm:text-lg font-poppins text-center leading-relaxed">
-            Arfive isn't just another pair of earbuds — it's a modular audio system engineered for life on your terms.
+            Arfive isn&apos;t just another pair of earbuds — it&apos;s a modular audio system engineered for life on your terms.
           </p>
         </div>
 
@@ -95,7 +93,7 @@ export default function VisionSection() {
           <video
             ref={videoRef}
             className="w-full h-full object-cover rounded-[27px] cursor-pointer"
-            src="/video/hero-v2-optimized.mp4"
+            src="/video/hero-optimized.mp4"
             preload="metadata"
             playsInline
             onClick={handleVideoClick}
@@ -105,7 +103,7 @@ export default function VisionSection() {
             onCanPlay={handleVideoCanPlay}
             aria-label="Arfive product vision video"
           >
-            <source src="/video/hero-v2-optimized.mp4" type="video/mp4" />
+            <source src="/video/hero-optimized.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
 
