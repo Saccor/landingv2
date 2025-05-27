@@ -78,18 +78,18 @@ export default function VisionSection() {
   }, [handleVideoClick]);
 
   return (
-    <section className="w-full bg-black flex justify-center items-center pt-1 sm:pt-2 md:pt-16 pb-3 sm:pb-6 md:pb-16 px-4 sm:px-8 md:px-16 lg:px-32">
+    <section className="w-full bg-black flex justify-center items-center pt-0 sm:pt-2 md:pt-8 lg:pt-16 pb-3 sm:pb-6 md:pb-16 px-4 sm:px-8 md:px-16 lg:px-32">
       <div className="flex flex-col md:flex-row w-full gap-4 md:gap-8 items-start md:items-stretch max-w-7xl mx-auto">
         {/* Left: Text */}
-        <div className="bg-[var(--Gray-800,#363637)] rounded-[23px] p-8 md:p-6 flex flex-col justify-center items-center gap-6 flex-1 max-w-full md:max-w-[420px] h-[380px] sm:h-[420px] md:h-[460px] z-[1] mx-auto md:mx-0">
-          <h2 className="text-white text-2xl sm:text-3xl font-bold mb-2 font-montserrat text-center">Our vision</h2>
-          <p className="text-gray-200 text-base sm:text-lg font-poppins text-center leading-relaxed">
+        <div className="bg-[#363637] rounded-[23px] p-6 sm:p-8 md:p-6 flex flex-col justify-center items-center gap-6 flex-1 max-w-full md:max-w-[420px] h-[350px] sm:h-[380px] md:h-[420px] lg:h-[460px] z-[1] mx-auto md:mx-0">
+          <h2 className="text-white text-xl sm:text-2xl md:text-3xl font-bold mb-2 font-montserrat text-center">Our vision</h2>
+          <p className="text-gray-200 text-sm sm:text-base md:text-lg font-poppins text-center leading-relaxed">
             Arfive isn&apos;t just another pair of earbuds — it&apos;s a modular audio system engineered for life on your terms.
           </p>
         </div>
 
         {/* Right: Video */}
-        <div className="relative flex items-center justify-center flex-1 w-full aspect-video min-h-[280px] sm:min-h-[320px] md:min-h-[300px] rounded-[27px] overflow-hidden z-0 bg-gray-900">
+        <div className="relative flex items-center justify-center flex-1 w-full aspect-video min-h-[280px] sm:min-h-[320px] md:min-h-[350px] lg:min-h-[400px] rounded-[27px] overflow-hidden z-0 bg-gray-900">
           <video
             ref={videoRef}
             className="w-full h-full object-cover rounded-[27px] cursor-pointer"

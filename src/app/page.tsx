@@ -5,11 +5,8 @@ import HeroSection from '@/components/sections/HeroSection';
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-black">
       <HeroSection />
-      <main className="flex-1">
-        {/* Your other sections will go here */}
-      </main>
       <VisionSection />
       <SocialMediaSection />
       <BottomSubscribe />

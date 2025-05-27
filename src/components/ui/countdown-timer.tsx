@@ -127,7 +127,27 @@ const ROWS = 8;
 
 export default function CountdownTimer({ days, hours, minutes, seconds }: CountdownTimerProps) {
   const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
+  const [containerWidth, setContainerWidth] = useState(0);
+
+  useEffect(() => { 
+    setMounted(true);
+    
+    // Set initial container width
+    const updateContainerWidth = () => {
+      const width = window.innerWidth;
+      setContainerWidth(width);
+    };
+    
+    updateContainerWidth();
+    
+    const handleResize = () => {
+      updateContainerWidth();
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
   if (!mounted) return null;
 
   // Build the full grid pattern for the timer row
@@ -172,54 +192,143 @@ export default function CountdownTimer({ days, hours, minutes, seconds }: Countd
   const paddedRows = paddedGrid.length;
   const paddedCols = paddedGrid[0].length;
 
-  // Responsive square size and gap
-  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 480;
-  const SQUARE_SIZE = isMobile ? 4.5 : 7.78; // px
-  const GAP = isMobile ? 1 : 2; // px
-  const containerWidth = paddedCols * SQUARE_SIZE + (paddedCols - 1) * GAP;
-  const containerHeight = paddedRows * SQUARE_SIZE + (paddedRows - 1) * GAP;
+  // Enhanced Responsive System with Proper iPad Pro Detection
+  const getResponsiveSize = () => {
+    if (!mounted || containerWidth === 0) return { squareSize: 6, gap: 1.5, maxWidth: 400 };
+    
+    // Detect iPad Pro specifically using user agent and dimensions
+    const isIPadPro = /iPad/.test(navigator.userAgent) || 
+                      (containerWidth === 1024 && window.innerHeight === 1366) ||
+                      (containerWidth === 1366 && window.innerHeight === 1024);
+    
+    // Debug logging for iPad Pro detection
+    if (containerWidth > 1000) {
+      console.log('CountdownTimer Debug:', {
+        containerWidth,
+        windowHeight: window.innerHeight,
+        isIPadPro,
+        userAgent: navigator.userAgent,
+      });
+    }
+    
+    // Calculate available space (with padding)
+    const availableWidth = Math.min(containerWidth * 0.95, 700);
+    
+    // Calculate optimal square size based on available space
+    const totalGaps = (paddedCols - 1);
+    const gapRatio = 0.2; // Gap should be 20% of square size
+    
+    // Solve: availableWidth = (squareSize * paddedCols) + (gap * totalGaps)
+    // Where gap = squareSize * gapRatio
+    const optimalSquareSize = availableWidth / (paddedCols + (totalGaps * gapRatio));
+    const optimalGap = optimalSquareSize * gapRatio;
+    
+    // Define breakpoint-based constraints with proper iPad Pro detection
+    let squareSize, gap, maxWidth;
+    
+    // iPad Pro gets special treatment regardless of window width
+    if (isIPadPro) {
+      squareSize = Math.min(optimalSquareSize, 4.8); // Smaller squares for iPad Pro
+      gap = Math.max(squareSize * 0.16, 1.0);
+      maxWidth = Math.min(containerWidth * 0.90, 480); // Tighter container
+    } else if (containerWidth < 480) {
+      // Extra Small Mobile
+      squareSize = Math.min(optimalSquareSize, 3.5);
+      gap = Math.max(squareSize * 0.15, 0.8);
+      maxWidth = containerWidth * 0.95;
+    } else if (containerWidth < 640) {
+      // Small Mobile
+      squareSize = Math.min(optimalSquareSize, 4.5);
+      gap = Math.max(squareSize * 0.2, 1);
+      maxWidth = containerWidth * 0.9;
+    } else if (containerWidth < 768) {
+      // Large Mobile / Small Tablet
+      squareSize = Math.min(optimalSquareSize, 5.5);
+      gap = Math.max(squareSize * 0.2, 1.2);
+      maxWidth = Math.min(containerWidth * 0.85, 500);
+    } else if (containerWidth < 1024) {
+      // Standard Tablet
+      squareSize = Math.min(optimalSquareSize, 6.5);
+      gap = Math.max(squareSize * 0.2, 1.4);
+      maxWidth = Math.min(containerWidth * 0.8, 550);
+    } else if (containerWidth < 1280) {
+      // Small Desktop
+      squareSize = Math.min(optimalSquareSize, 7.8);
+      gap = Math.max(squareSize * 0.24, 1.8);
+      maxWidth = Math.min(containerWidth * 0.7, 650);
+    } else {
+      // Large Desktop
+      squareSize = Math.min(optimalSquareSize, 8.5);
+      gap = Math.max(squareSize * 0.26, 2);
+      maxWidth = Math.min(containerWidth * 0.65, 700);
+    }
+    
+    // Ensure minimum readable size
+    squareSize = Math.max(squareSize, 2.5);
+    gap = Math.max(gap, 0.5);
+    
+    return { squareSize, gap, maxWidth };
+  };
+
+  const { squareSize: SQUARE_SIZE, gap: GAP, maxWidth: MAX_WIDTH } = getResponsiveSize();
+  const calculatedWidth = paddedCols * SQUARE_SIZE + (paddedCols - 1) * GAP;
+  const calculatedHeight = paddedRows * SQUARE_SIZE + (paddedRows - 1) * GAP;
 
   return (
-    <div className="flex flex-col items-center w-full">
+    <div className="flex flex-col items-center w-full countdown-timer-container">
+      {/* Responsive Timer Container */}
       <div
-        className="relative mx-auto overflow-x-auto w-full"
+        className="relative flex justify-center items-center w-full overflow-hidden"
         style={{
-          maxWidth: '100vw',
-          minWidth: '180px',
-          width: '100%',
-          height: `${containerHeight}px`,
-          display: 'flex',
-          justifyContent: 'center',
+          maxWidth: `${MAX_WIDTH}px`,
+          minHeight: `${calculatedHeight + 20}px`, // Add buffer
         }}
       >
         <div
-          className="grid"
+          className="grid transition-all duration-300 ease-out countdown-grid"
           style={{
             gridTemplateColumns: `repeat(${paddedCols}, 1fr)`,
             gridTemplateRows: `repeat(${paddedRows}, 1fr)`,
             gap: `${GAP}px`,
-            width: `${containerWidth}px`,
-            height: '100%',
-            margin: '0 auto',
+            width: `${Math.min(calculatedWidth, MAX_WIDTH)}px`,
+            height: `${calculatedHeight}px`,
           }}
         >
           {paddedGrid.flat().map((cell, i) => (
             <div
               key={i}
-              className={`w-[${SQUARE_SIZE}px] h-[${SQUARE_SIZE}px] border-[0.7px] border-stone-300/30 ${cell ? 'bg-white' : 'bg-transparent'}`}
+              className={`
+                border border-stone-300/20 transition-all duration-300
+                ${cell ? 'bg-white shadow-sm' : 'bg-transparent'}
+              `}
+              style={{
+                width: `${SQUARE_SIZE}px`,
+                height: `${SQUARE_SIZE}px`,
+                borderWidth: Math.max(0.5, SQUARE_SIZE * 0.08),
+              }}
             />
           ))}
         </div>
       </div>
-      {/* Responsive label row */}
+      
+      {/* Responsive Label Row */}
       <div
-        className="flex flex-row justify-between items-center w-full max-w-full overflow-x-auto mt-2 gap-2 px-1"
-        style={{ maxWidth: `${containerWidth}px`, minWidth: '180px' }}
+        className="flex flex-row justify-between items-center w-full mt-3 gap-2 px-2"
+        style={{ 
+          maxWidth: `${MAX_WIDTH}px`,
+        }}
       >
         {['Days', 'Hours', 'Minutes', 'Seconds'].map((label) => (
           <span
             key={label}
-            className="text-white text-xs sm:text-sm md:text-lg font-montserrat text-center min-w-[60px] flex-1"
+            className="
+              text-white font-montserrat text-center flex-1
+              text-xs sm:text-sm md:text-base lg:text-lg
+              transition-all duration-300
+            "
+            style={{
+              fontSize: `${Math.max(0.75, SQUARE_SIZE * 0.18)}rem`,
+            }}
           >
             {label}
           </span>
