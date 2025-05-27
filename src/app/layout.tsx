@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
 import GoogleTagManager from "@/components/common/GoogleTagManager";
+import GoogleAnalytics from "@/components/common/GoogleAnalytics";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -31,6 +32,7 @@ export default function RootLayout({
       <head>
         <Suspense fallback={null}>
           <GoogleTagManager />
+          <GoogleAnalytics />
         </Suspense>
       </head>
       <body

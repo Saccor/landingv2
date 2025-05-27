@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { MailerLiteService } from '@/services/mailerlite';
+import { trackEvent } from '@/lib/analytics';
 import Button from './Button';
 
 interface SignupFormProps {
@@ -24,16 +24,51 @@ export default function SignupForm({
     setStatus('loading');
     setMessage('');
 
+    // Track form submission attempt
+    trackEvent({
+      action: 'newsletter_signup_attempt',
+      category: 'engagement',
+      label: 'signup_form'
+    });
+
     try {
-      const mailerLite = new MailerLiteService();
-      await mailerLite.subscribe({ email });
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to subscribe');
+      }
+
       setStatus('success');
       setMessage('Thank you for subscribing!');
       setEmail('');
+      
+      // Track successful signup
+      trackEvent({
+        action: 'newsletter_signup_success',
+        category: 'conversion',
+        label: 'signup_form',
+        value: 1
+      });
+      
       onSuccess?.();
-    } catch {
+    } catch (error) {
       setStatus('error');
-      setMessage('Something went wrong. Please try again.');
+      setMessage(error instanceof Error ? error.message : 'Something went wrong. Please try again.');
+      
+      // Track signup error
+      trackEvent({
+        action: 'newsletter_signup_error',
+        category: 'engagement',
+        label: 'signup_form'
+      });
     }
   };
 

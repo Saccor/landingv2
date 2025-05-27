@@ -7,7 +7,7 @@ interface SubscribeParams {
 export class MailerLiteService {
   private readonly apiKey: string;
   private readonly groupId: string;
-  private readonly baseUrl = 'https://api.mailerlite.com/api/v2';
+  private readonly baseUrl = 'https://connect.mailerlite.com/api';
 
   constructor() {
     this.apiKey = process.env.MAILERLITE_API_KEY || '';
@@ -15,65 +15,48 @@ export class MailerLiteService {
   }
 
   async subscribe({ email, name, fields = {} }: SubscribeParams) {
+    if (!this.apiKey) {
+      throw new Error('MailerLite API key not configured');
+    }
+
     try {
+      const subscriberData: any = {
+        email,
+        status: 'active',
+      };
+
+      // Add name and fields if provided
+      if (name || Object.keys(fields).length > 0) {
+        subscriberData.fields = { name, ...fields };
+      }
+
+      // Add to group if groupId is provided
+      if (this.groupId) {
+        subscriberData.groups = [this.groupId];
+      }
+
       const response = await fetch(`${this.baseUrl}/subscribers`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-MailerLite-ApiKey': this.apiKey,
+          'Authorization': `Bearer ${this.apiKey}`,
+          'Accept': 'application/json',
         },
-        body: JSON.stringify({
-          email,
-          name,
-          fields,
-          resubscribe: true,
-          autoresponders: true,
-          type: 'active',
-        }),
+        body: JSON.stringify(subscriberData),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to subscribe');
-      }
-
-      const data = await response.json();
-      
-      // Add to group if groupId is provided
-      if (this.groupId) {
-        await this.addToGroup(data.id);
-      }
-
-      return data;
-    } catch (error) {
-      console.error('MailerLite subscription error:', error);
-      throw error;
-    }
-  }
-
-  private async addToGroup(subscriberId: string) {
-    try {
-      const response = await fetch(
-        `${this.baseUrl}/groups/${this.groupId}/subscribers`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-MailerLite-ApiKey': this.apiKey,
-          },
-          body: JSON.stringify({
-            subscribers: [{ id: subscriberId }],
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error('Failed to add subscriber to group');
+        const errorData = await response.json().catch(() => null);
+        const errorMessage = errorData?.message || `HTTP ${response.status}`;
+        throw new Error(`Failed to subscribe: ${errorMessage}`);
       }
 
       return await response.json();
     } catch (error) {
-      console.error('MailerLite add to group error:', error);
-      throw error;
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error('Failed to subscribe to newsletter');
     }
   }
 } 

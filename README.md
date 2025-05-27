@@ -8,7 +8,7 @@ A modern, scalable Next.js landing page project with TypeScript, featuring Googl
 - TypeScript
 - Tailwind CSS
 - Google Tag Manager
-- MailerLite API
+- MailerLite API v3
 
 ## Project Structure
 
@@ -55,22 +55,36 @@ Create a `.env.local` file with the following variables:
 
 ```env
 # Google Analytics
-NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 
-# MailerLite
+# MailerLite (API v3)
 MAILERLITE_API_KEY=your_api_key_here
-MAILERLITE_GROUP_ID=your_group_id_here
+MAILERLITE_GROUP_ID=153205008280585364
 ```
 
 ## Features
 
-- Google Tag Manager integration for analytics
-- MailerLite newsletter subscription service
-- TypeScript for type safety
-- Tailwind CSS for styling
-- Modern Next.js 13+ features with App Router
-- **Pixel-perfect, responsive countdown timer using CSS Grid**
+- **MailerLite Integration**: Clean API v3 implementation with automatic group assignment
+- **Google Analytics**: Complete tracking setup with pageview and event tracking
+- **Google Tag Manager**: Advanced analytics and conversion tracking
+- **TypeScript**: Full type safety throughout the application
+- **Responsive Design**: Mobile-first approach with Tailwind CSS
+- **Form Validation**: Client and server-side email validation
+- **Error Handling**: Graceful error handling with user-friendly messages
+
+## Testing
+
+Test the subscription functionality:
+```bash
+npm run test:subscription
+```
+
+## Deployment
+
+The application is ready for deployment on Vercel, Netlify, or any other Next.js-compatible platform.
+
+Make sure to set your environment variables in your deployment platform.
 
 ## Countdown Timer Implementation
 
