@@ -16,7 +16,7 @@ export default function GoogleTagManager() {
     }
   }, [pathname, searchParams]);
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (!GTM_ID) {
     return null;
   }
 

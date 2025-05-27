@@ -4,6 +4,13 @@ interface SubscribeParams {
   fields?: Record<string, string>;
 }
 
+interface SubscriberData {
+  email: string;
+  status: 'active' | 'unsubscribed' | 'unconfirmed' | 'bounced' | 'junk';
+  fields?: Record<string, string>;
+  groups?: string[];
+}
+
 export class MailerLiteService {
   private readonly apiKey: string;
   private readonly groupId: string;
@@ -20,14 +27,17 @@ export class MailerLiteService {
     }
 
     try {
-      const subscriberData: any = {
+      const subscriberData: SubscriberData = {
         email,
         status: 'active',
       };
 
       // Add name and fields if provided
       if (name || Object.keys(fields).length > 0) {
-        subscriberData.fields = { name, ...fields };
+        subscriberData.fields = { 
+          ...(name && { name }), 
+          ...fields 
+        };
       }
 
       // Add to group if groupId is provided

@@ -111,10 +111,21 @@ const DIGIT_PATTERNS: Record<string, number[][]> = {
   ],
 };
 
+// Colon pattern (1x8, centered vertically)
+const COLON_PATTERN = [
+  [0],
+  [0],
+  [1],
+  [0],
+  [0],
+  [1],
+  [0],
+  [0],
+];
+
 const ROWS = 8;
 
-// Create individual digit grid for each time unit
-function DigitGroup({ value, label }: { value: string; label: string }) {
+export default function CountdownTimer({ days, hours, minutes, seconds }: CountdownTimerProps) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -123,24 +134,35 @@ function DigitGroup({ value, label }: { value: string; label: string }) {
 
   if (!mounted) return null;
 
-  // Build grid for this 2-digit group
-  const digits = value.split('');
+  // Build the complete timer grid: DD:HH:MM:SS
+  const timeString = `${days}:${hours}:${minutes}:${seconds}`;
   const grid: number[][] = Array.from({ length: ROWS }, () => []);
-  
-  digits.forEach((digit, digitIdx) => {
-    const pattern = DIGIT_PATTERNS[digit] || DIGIT_PATTERNS['0'];
-    for (let row = 0; row < ROWS; row++) {
-      grid[row].push(...pattern[row]);
+
+  for (let i = 0; i < timeString.length; i++) {
+    const char = timeString[i];
+    
+    if (char === ':') {
+      // Add colon pattern
+      for (let row = 0; row < ROWS; row++) {
+        grid[row].push(...COLON_PATTERN[row]);
+      }
+    } else {
+      // Add digit pattern
+      const pattern = DIGIT_PATTERNS[char] || DIGIT_PATTERNS['0'];
+      for (let row = 0; row < ROWS; row++) {
+        grid[row].push(...pattern[row]);
+      }
     }
-    // Add gap between digits
-    if (digitIdx < digits.length - 1) {
+    
+    // Add spacing between characters (except after last character)
+    if (i < timeString.length - 1) {
       for (let row = 0; row < ROWS; row++) {
         grid[row].push(0);
       }
     }
-  });
+  }
 
-  // Add padding around the group
+  // Add padding around the entire timer
   const paddedGrid: number[][] = [
     Array(grid[0].length + 2).fill(0),
     ...grid.map(row => [0, ...row, 0]),
@@ -151,8 +173,8 @@ function DigitGroup({ value, label }: { value: string; label: string }) {
   const paddedCols = paddedGrid[0].length;
 
   return (
-    <div className="flex flex-col items-center space-y-3 sm:space-y-4">
-      {/* Individual timer grid */}
+    <div className="flex flex-col items-center space-y-4 sm:space-y-6">
+      {/* Main timer display */}
       <div className="flex justify-center">
         <div
           className="grid gap-[1px] sm:gap-[1.5px] lg:gap-[2px]"
@@ -180,26 +202,21 @@ function DigitGroup({ value, label }: { value: string; label: string }) {
         </div>
       </div>
       
-      {/* Label */}
-      <span className="text-white font-montserrat text-xs sm:text-sm lg:text-base text-center">
-        {label}
-      </span>
-    </div>
-  );
-}
-
-export default function CountdownTimer({ days, hours, minutes, seconds }: CountdownTimerProps) {
-  return (
-    <div className="
-      grid grid-cols-4 
-      w-full max-w-sm lg:max-w-md
-      gap-4 sm:gap-6 lg:gap-8
-      items-center justify-items-center
-    ">
-      <DigitGroup value={days} label="Days" />
-      <DigitGroup value={hours} label="Hours" />
-      <DigitGroup value={minutes} label="Minutes" />
-      <DigitGroup value={seconds} label="Seconds" />
+      {/* Labels row */}
+      <div className="grid grid-cols-4 w-full max-w-sm lg:max-w-md gap-4 sm:gap-6 lg:gap-8">
+        <span className="text-white font-montserrat text-xs sm:text-sm lg:text-base text-center">
+          Days
+        </span>
+        <span className="text-white font-montserrat text-xs sm:text-sm lg:text-base text-center">
+          Hours
+        </span>
+        <span className="text-white font-montserrat text-xs sm:text-sm lg:text-base text-center">
+          Minutes
+        </span>
+        <span className="text-white font-montserrat text-xs sm:text-sm lg:text-base text-center">
+          Seconds
+        </span>
+      </div>
     </div>
   );
 }
