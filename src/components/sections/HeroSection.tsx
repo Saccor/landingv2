@@ -26,35 +26,28 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="w-full bg-[#020202] overflow-hidden">
-      {/* Responsive Container with Progressive Breakpoints + iPad Pro Support */}
-      <div className="
-        min-h-screen sm:min-h-[600px] md:min-h-[700px] lg:min-h-[750px] xl:min-h-[800px]
-        w-full max-w-[2000px] mx-auto
-        px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20
-        py-6 sm:py-8 md:py-12 lg:py-16 xl:py-20
-      ">
-        {/* Mobile-First Layout: Stack by default, side-by-side on larger screens */}
+    <section className="bg-[#020202] overflow-hidden">
+      {/* Container: Clean, simple approach with proper spacing */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
+        
+        {/* Layout Grid: Mobile stack, desktop row */}
         <div className="
-          flex flex-col lg:flex-row 
-          items-center lg:items-stretch
-          gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-16
-          h-full min-h-[calc(100vh-8rem)] sm:min-h-[500px] md:min-h-[600px] lg:min-h-[650px]
+          w-full 
+          grid grid-cols-1 lg:grid-cols-2 
+          gap-8 lg:gap-12 xl:gap-16
+          items-center
         ">
           
-          {/* Image Container - Enhanced for iPad Pro */}
+          {/* Image: Aspect-ratio based, simple sizing */}
           <div className="
-            w-full lg:flex-1
-            h-[40vh] sm:h-[45vh] md:h-[55vh] lg:h-auto 
-            lg:min-h-[500px] xl:min-h-[600px]
-            max-h-[400px] sm:max-h-[500px] md:max-h-[600px] lg:max-h-none
+            w-full max-w-sm mx-auto lg:max-w-none
+            aspect-[4/5] lg:aspect-square
             rounded-2xl lg:rounded-3xl
-            relative overflow-hidden
+            overflow-hidden bg-gray-900
             order-1 lg:order-1
-            bg-gray-900
           ">
             <div
-              className="w-full h-full"
+              className="w-full h-full transition-transform duration-500 hover:scale-105"
               style={{
                 backgroundImage: "url('/heroimg.png')",
                 backgroundSize: 'cover',
@@ -64,91 +57,70 @@ export default function HeroSection() {
             />
           </div>
 
-          {/* Content Container - Enhanced for iPad Pro */}
+          {/* Content: Clean spacing and typography */}
           <div className="
-            w-full lg:w-1/2 lg:max-w-[600px] xl:max-w-[700px]
-            flex flex-col items-center justify-center
-            px-2 sm:px-4 md:px-6 lg:px-8
-            py-4 sm:py-6 md:py-8 lg:py-12
+            flex flex-col items-center text-center
+            space-y-6 lg:space-y-8
             order-2 lg:order-2
+            max-w-lg mx-auto lg:max-w-none
           ">
-            <div className="
-              flex flex-col items-center 
-              gap-4 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-12
-              w-full max-w-[500px] lg:max-w-[600px]
+            
+            {/* Heading: Simple responsive typography */}
+            <h1 className="
+              text-white font-bold font-montserrat 
+              text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-4xl
+              leading-tight
             ">
-              
-              {/* Responsive Heading - Enhanced for iPad Pro */}
-              <h1 className="
-                text-center text-white font-bold font-montserrat leading-tight
-                text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl
-                px-2 sm:px-4
-                [@media(min-width:820px)_and_(max-width:1024px)]:text-5xl
-              ">
-                Shape the future of <br className="hidden sm:block" />
-                <span className="sm:hidden"> </span>sustainable sound
-              </h1>
+              Shape the future of{' '}
+              <br className="hidden sm:block lg:hidden xl:block" />
+              <span className="sm:hidden lg:inline xl:hidden"> </span>
+              sustainable sound
+            </h1>
 
-              {/* Countdown Timer - Now with iPad Pro Optimization */}
-              <div className="w-full flex justify-center">
-                <CountdownTimer {...countdown} />
-              </div>
+            {/* Timer: Inherits parent container sizing */}
+            <CountdownTimer {...countdown} />
 
-              {/* Responsive Subtitle - Enhanced for iPad Pro */}
-              <p className="
-                text-center text-white font-normal font-poppins leading-relaxed
-                text-sm sm:text-base md:text-lg lg:text-xl
-                px-2 sm:px-4 md:px-6
-                max-w-[400px] sm:max-w-[500px] md:max-w-full
-                [@media(min-width:820px)_and_(max-width:1024px)]:text-lg
-              ">
-                Subscribe now — don&apos;t miss a thing. The countdown to launch has begun!
-              </p>
+            {/* Subtitle: Clean typography scale */}
+            <p className="
+              text-white font-poppins leading-relaxed
+              text-sm sm:text-base lg:text-lg
+              max-w-sm lg:max-w-md
+            ">
+              Subscribe now — don&apos;t miss a thing. The countdown to launch has begun!
+            </p>
 
-              {/* Responsive Form - Enhanced for iPad Pro */}
-              <form className="
-                w-full max-w-[300px] sm:max-w-[400px] md:max-w-[450px] lg:max-w-[500px]
-                flex flex-col sm:flex-row items-center 
-                gap-3 sm:gap-4
-                [@media(min-width:820px)_and_(max-width:1024px)]:max-w-[480px]
-              ">
-                <input
-                  type="email"
-                  placeholder="email"
-                  className="
-                    w-full sm:flex-1 
-                    h-10 sm:h-11 md:h-12
-                    px-4 sm:px-5 
-                    py-2 sm:py-2.5
-                    rounded-3xl 
-                    outline outline-1 outline-offset-[-1px] outline-white 
-                    bg-transparent text-white font-poppins
-                    text-sm sm:text-base
-                    placeholder:text-gray-400
-                    [@media(min-width:820px)_and_(max-width:1024px)]:h-12
-                    [@media(min-width:820px)_and_(max-width:1024px)]:text-base
-                  "
-                />
-                <button
-                  type="submit"
-                  className="
-                    w-full sm:w-auto
-                    h-10 sm:h-11 md:h-12
-                    px-6 sm:px-5 md:px-8
-                    py-2 sm:py-2.5
-                    bg-white rounded-[55px] 
-                    text-black font-medium font-poppins
-                    text-sm sm:text-base
-                    hover:bg-gray-100 transition-colors
-                    min-w-[100px] sm:min-w-[120px]
-                    [@media(min-width:820px)_and_(max-width:1024px)]:h-12
-                    [@media(min-width:820px)_and_(max-width:1024px)]:text-base
-                  "
-                >
-                  Sign-up
-                </button>
-              </form>
-            </div>
+            {/* Form: Simple responsive layout */}
+            <form className="
+              w-full max-w-sm lg:max-w-md
+              flex flex-col sm:flex-row
+              gap-3 sm:gap-4
+            ">
+              <input
+                type="email"
+                placeholder="email"
+                className="
+                  flex-1 h-12
+                  px-4 rounded-full
+                  border border-white/20 bg-transparent
+                  text-white placeholder:text-gray-400
+                  focus:outline-none focus:border-white/40 focus:ring-1 focus:ring-white/20
+                  transition-all duration-200
+                "
+              />
+              <button
+                type="submit"
+                className="
+                  px-8 h-12 
+                  bg-white text-black font-medium font-poppins
+                  rounded-full
+                  hover:bg-gray-100 active:bg-gray-200
+                  transition-all duration-200
+                  whitespace-nowrap
+                "
+              >
+                Sign-up
+              </button>
+            </form>
           </div>
         </div>
       </div>

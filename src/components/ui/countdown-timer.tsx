@@ -127,25 +127,9 @@ const ROWS = 8;
 
 export default function CountdownTimer({ days, hours, minutes, seconds }: CountdownTimerProps) {
   const [mounted, setMounted] = useState(false);
-  const [containerWidth, setContainerWidth] = useState(0);
 
   useEffect(() => { 
     setMounted(true);
-    
-    // Set initial container width
-    const updateContainerWidth = () => {
-      const width = window.innerWidth;
-      setContainerWidth(width);
-    };
-    
-    updateContainerWidth();
-    
-    const handleResize = () => {
-      updateContainerWidth();
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
   }, []);
   
   if (!mounted) return null;
@@ -192,106 +176,64 @@ export default function CountdownTimer({ days, hours, minutes, seconds }: Countd
   const paddedRows = paddedGrid.length;
   const paddedCols = paddedGrid[0].length;
 
-  // Enhanced Responsive System with Proper iPad Pro Detection
+  // Simple Mobile-First Responsive System (aligned with hero section)
   const getResponsiveSize = () => {
-    if (!mounted || containerWidth === 0) return { squareSize: 6, gap: 1.5, maxWidth: 400 };
-    
-    // Detect iPad Pro specifically using user agent and dimensions
-    const isIPadPro = /iPad/.test(navigator.userAgent) || 
-                      (containerWidth === 1024 && window.innerHeight === 1366) ||
-                      (containerWidth === 1366 && window.innerHeight === 1024);
-    
-    // Debug logging for iPad Pro detection
-    if (containerWidth > 1000) {
-      console.log('CountdownTimer Debug:', {
-        containerWidth,
-        windowHeight: window.innerHeight,
-        isIPadPro,
-        userAgent: navigator.userAgent,
-      });
-    }
-    
-    // Calculate available space (with padding)
-    const availableWidth = Math.min(containerWidth * 0.95, 700);
-    
-    // Calculate optimal square size based on available space
-    const totalGaps = (paddedCols - 1);
-    const gapRatio = 0.2; // Gap should be 20% of square size
-    
-    // Solve: availableWidth = (squareSize * paddedCols) + (gap * totalGaps)
-    // Where gap = squareSize * gapRatio
-    const optimalSquareSize = availableWidth / (paddedCols + (totalGaps * gapRatio));
-    const optimalGap = optimalSquareSize * gapRatio;
-    
-    // Define breakpoint-based constraints with proper iPad Pro detection
-    let squareSize, gap, maxWidth;
-    
-    // iPad Pro gets special treatment regardless of window width
-    if (isIPadPro) {
-      squareSize = Math.min(optimalSquareSize, 4.8); // Smaller squares for iPad Pro
-      gap = Math.max(squareSize * 0.16, 1.0);
-      maxWidth = Math.min(containerWidth * 0.90, 480); // Tighter container
-    } else if (containerWidth < 480) {
-      // Extra Small Mobile
-      squareSize = Math.min(optimalSquareSize, 3.5);
-      gap = Math.max(squareSize * 0.15, 0.8);
-      maxWidth = containerWidth * 0.95;
-    } else if (containerWidth < 640) {
-      // Small Mobile
-      squareSize = Math.min(optimalSquareSize, 4.5);
-      gap = Math.max(squareSize * 0.2, 1);
-      maxWidth = containerWidth * 0.9;
-    } else if (containerWidth < 768) {
-      // Large Mobile / Small Tablet
-      squareSize = Math.min(optimalSquareSize, 5.5);
-      gap = Math.max(squareSize * 0.2, 1.2);
-      maxWidth = Math.min(containerWidth * 0.85, 500);
-    } else if (containerWidth < 1024) {
-      // Standard Tablet
-      squareSize = Math.min(optimalSquareSize, 6.5);
-      gap = Math.max(squareSize * 0.2, 1.4);
-      maxWidth = Math.min(containerWidth * 0.8, 550);
-    } else if (containerWidth < 1280) {
-      // Small Desktop
-      squareSize = Math.min(optimalSquareSize, 7.8);
-      gap = Math.max(squareSize * 0.24, 1.8);
-      maxWidth = Math.min(containerWidth * 0.7, 650);
-    } else {
-      // Large Desktop
-      squareSize = Math.min(optimalSquareSize, 8.5);
-      gap = Math.max(squareSize * 0.26, 2);
-      maxWidth = Math.min(containerWidth * 0.65, 700);
-    }
-    
-    // Ensure minimum readable size
-    squareSize = Math.max(squareSize, 2.5);
-    gap = Math.max(gap, 0.5);
-    
-    return { squareSize, gap, maxWidth };
+    return { gap: 0.2 };
   };
 
-  const { squareSize: SQUARE_SIZE, gap: GAP, maxWidth: MAX_WIDTH } = getResponsiveSize();
-  const calculatedWidth = paddedCols * SQUARE_SIZE + (paddedCols - 1) * GAP;
-  const calculatedHeight = paddedRows * SQUARE_SIZE + (paddedRows - 1) * GAP;
+  const { gap } = getResponsiveSize();
+
+  // Calculate label positions to align with digit groups
+  const calculateLabelPositions = () => {
+    // Each digit group structure: 2 digits (5 cols each) + 1 gap = 11 cols per group
+    // Colon structure: 1 gap + 1 colon + 1 gap = 3 cols
+    // Total structure: 11 + 3 + 11 + 3 + 11 + 3 + 11 = 53 cols + 2 padding = 55 cols
+    
+    const digitWidth = 5; // Each digit is 5 columns wide
+    const gapWidth = 1;   // Gap between digits in same group
+    const colonWidth = 3; // Gap + colon + gap
+    const paddingWidth = 1; // Border padding
+    
+    // Calculate center positions for each group
+    const positions = [];
+    let currentPos = paddingWidth; // Start after left padding
+    
+    // Days group: 2 digits + gap = 11 columns
+    const daysCenter = currentPos + (digitWidth * 2 + gapWidth) / 2;
+    positions.push(daysCenter);
+    currentPos += digitWidth * 2 + gapWidth + colonWidth;
+    
+    // Hours group
+    const hoursCenter = currentPos + (digitWidth * 2 + gapWidth) / 2;
+    positions.push(hoursCenter);
+    currentPos += digitWidth * 2 + gapWidth + colonWidth;
+    
+    // Minutes group  
+    const minutesCenter = currentPos + (digitWidth * 2 + gapWidth) / 2;
+    positions.push(minutesCenter);
+    currentPos += digitWidth * 2 + gapWidth + colonWidth;
+    
+    // Seconds group
+    const secondsCenter = currentPos + (digitWidth * 2 + gapWidth) / 2;
+    positions.push(secondsCenter);
+    
+    // Convert to percentages of total width
+    const totalWidth = paddedCols;
+    return positions.map(pos => (pos / totalWidth) * 100);
+  };
+
+  const labelPositions = calculateLabelPositions();
 
   return (
     <div className="flex flex-col items-center w-full countdown-timer-container">
-      {/* Responsive Timer Container */}
-      <div
-        className="relative flex justify-center items-center w-full overflow-hidden"
-        style={{
-          maxWidth: `${MAX_WIDTH}px`,
-          minHeight: `${calculatedHeight + 20}px`, // Add buffer
-        }}
-      >
+      {/* Responsive Container - inherits parent sizing */}
+      <div className="w-full flex justify-center">
         <div
-          className="grid transition-all duration-300 ease-out countdown-grid"
+          className="grid transition-all duration-300 ease-out"
           style={{
             gridTemplateColumns: `repeat(${paddedCols}, 1fr)`,
             gridTemplateRows: `repeat(${paddedRows}, 1fr)`,
-            gap: `${GAP}px`,
-            width: `${Math.min(calculatedWidth, MAX_WIDTH)}px`,
-            height: `${calculatedHeight}px`,
+            gap: `${gap}px`,
           }}
         >
           {paddedGrid.flat().map((cell, i) => (
@@ -300,34 +242,30 @@ export default function CountdownTimer({ days, hours, minutes, seconds }: Countd
               className={`
                 border border-stone-300/20 transition-all duration-300
                 ${cell ? 'bg-white shadow-sm' : 'bg-transparent'}
+                w-1 h-1
+                sm:w-1.5 sm:h-1.5
+                lg:w-1.5 lg:h-1.5
               `}
               style={{
-                width: `${SQUARE_SIZE}px`,
-                height: `${SQUARE_SIZE}px`,
-                borderWidth: Math.max(0.5, SQUARE_SIZE * 0.08),
+                borderWidth: '0.5px',
               }}
             />
           ))}
         </div>
       </div>
       
-      {/* Responsive Label Row */}
-      <div
-        className="flex flex-row justify-between items-center w-full mt-3 gap-2 px-2"
-        style={{ 
-          maxWidth: `${MAX_WIDTH}px`,
-        }}
-      >
-        {['Days', 'Hours', 'Minutes', 'Seconds'].map((label) => (
+      {/* Aligned Label Row - positioned to match digit groups */}
+      <div className="relative w-full mt-4">
+        {['Days', 'Hours', 'Minutes', 'Seconds'].map((label, index) => (
           <span
             key={label}
             className="
-              text-white font-montserrat text-center flex-1
-              text-xs sm:text-sm md:text-base lg:text-lg
-              transition-all duration-300
+              absolute text-white font-montserrat text-center
+              text-xs sm:text-sm lg:text-base
+              transform -translate-x-1/2
             "
             style={{
-              fontSize: `${Math.max(0.75, SQUARE_SIZE * 0.18)}rem`,
+              left: `${labelPositions[index]}%`,
             }}
           >
             {label}

@@ -301,13 +301,13 @@
     and (orientation: landscape) {
     
     .countdown-timer-container {
-      max-width: 480px !important;
+      max-width: 600px !important;
       margin: 0 auto;
     }
     
     .countdown-grid {
       max-width: 100%;
-      transform: scale(0.8);
+      transform: scale(0.9);
       transform-origin: center;
     }
   }
@@ -320,14 +320,24 @@
     and (orientation: portrait) {
     
     .countdown-timer-container {
-      max-width: 420px !important;
+      max-width: 500px !important;
       margin: 0 auto;
     }
     
     .countdown-grid {
-      transform: scale(0.85);
+      transform: scale(0.9);
       transform-origin: center;
     }
+  }
+
+  /* Countdown Timer - Let JavaScript handle sizing for full visibility */
+  .countdown-timer-container {
+    margin: 0 auto;
+  }
+  
+  .countdown-grid {
+    transform: scale(1);
+    transform-origin: center;
   }
 }
 

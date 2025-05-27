@@ -78,95 +78,129 @@ export default function VisionSection() {
   }, [handleVideoClick]);
 
   return (
-    <section className="w-full bg-black flex justify-center items-center pt-0 sm:pt-2 md:pt-8 lg:pt-16 pb-3 sm:pb-6 md:pb-16 px-4 sm:px-8 md:px-16 lg:px-32">
-      <div className="flex flex-col md:flex-row w-full gap-4 md:gap-8 items-start md:items-stretch max-w-7xl mx-auto">
-        {/* Left: Text */}
-        <div className="bg-[#363637] rounded-[23px] p-6 sm:p-8 md:p-6 flex flex-col justify-center items-center gap-6 flex-1 max-w-full md:max-w-[420px] h-[350px] sm:h-[380px] md:h-[420px] lg:h-[460px] z-[1] mx-auto md:mx-0">
-          <h2 className="text-white text-xl sm:text-2xl md:text-3xl font-bold mb-2 font-montserrat text-center">Our vision</h2>
-          <p className="text-gray-200 text-sm sm:text-base md:text-lg font-poppins text-center leading-relaxed">
-            Arfive isn&apos;t just another pair of earbuds — it&apos;s a modular audio system engineered for life on your terms.
-          </p>
-        </div>
+    <section className="bg-black overflow-hidden">
+      {/* Container: Clean, simple approach with proper spacing */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
+        
+        {/* Layout: Mobile stack, desktop row */}
+        <div className="
+          flex flex-col lg:flex-row 
+          items-center lg:items-stretch
+          gap-8 lg:gap-12 xl:gap-16
+          w-full
+        ">
+          
+          {/* Text Container: Clean sizing and typography */}
+          <div className="
+            w-full max-w-sm mx-auto lg:max-w-none lg:flex-none lg:w-96
+            bg-[#363637] rounded-2xl lg:rounded-3xl
+            p-6 lg:p-8
+            flex flex-col justify-center items-center gap-4 lg:gap-6
+            aspect-[4/3] lg:aspect-auto lg:min-h-[400px]
+            order-1 lg:order-1
+          ">
+            <h2 className="
+              text-white font-bold font-montserrat text-center
+              text-xl sm:text-2xl lg:text-3xl xl:text-4xl
+              leading-tight
+            ">
+              Our vision
+            </h2>
+            <p className="
+              text-gray-200 font-poppins text-center leading-relaxed
+              text-sm sm:text-base lg:text-lg
+              max-w-xs lg:max-w-sm
+            ">
+              Arfive isn&apos;t just another pair of earbuds — it&apos;s a modular audio system engineered for life on your terms.
+            </p>
+          </div>
 
-        {/* Right: Video */}
-        <div className="relative flex items-center justify-center flex-1 w-full aspect-video min-h-[280px] sm:min-h-[320px] md:min-h-[350px] lg:min-h-[400px] rounded-[27px] overflow-hidden z-0 bg-gray-900">
-          <video
-            ref={videoRef}
-            className="w-full h-full object-cover rounded-[27px] cursor-pointer"
-            src="/video/hero-optimized.mp4"
-            preload="metadata"
-            playsInline
-            onClick={handleVideoClick}
-            onEnded={handleVideoEnd}
-            onError={handleVideoError}
-            onLoadedData={handleVideoLoadedData}
-            onCanPlay={handleVideoCanPlay}
-            aria-label="Arfive product vision video"
-          >
-            <source src="/video/hero-optimized.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-
-          {/* Play button overlay when not playing */}
-          {(!isPlaying || isLoading || hasError) && (
-            <div 
-              className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-[1px] cursor-pointer rounded-[27px] transition-all duration-300 hover:bg-black/50"
+          {/* Video Container: Fluid responsive video */}
+          <div className="
+            w-full lg:flex-1
+            relative rounded-2xl lg:rounded-3xl overflow-hidden
+            aspect-video lg:aspect-auto lg:min-h-[400px]
+            order-2 lg:order-2
+            bg-gray-900
+          ">
+            <video
+              ref={videoRef}
+              className="w-full h-full object-cover cursor-pointer"
+              src="/video/hero-optimized.mp4"
+              preload="metadata"
+              playsInline
               onClick={handleVideoClick}
-              onKeyDown={handleKeyDown}
-              tabIndex={0}
-              role="button"
-              aria-label={hasError ? "Video failed to load. Click to retry." : isLoading ? "Loading video..." : "Play video"}
+              onEnded={handleVideoEnd}
+              onError={handleVideoError}
+              onLoadedData={handleVideoLoadedData}
+              onCanPlay={handleVideoCanPlay}
+              aria-label="Arfive product vision video"
             >
-              {hasError ? (
-                <div className="flex flex-col items-center gap-3 text-white">
-                  <svg className="w-12 h-12 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                  </svg>
-                  <span className="text-sm font-medium">Failed to load video</span>
-                  <span className="text-xs opacity-75">Click to retry</span>
-                </div>
-              ) : isLoading ? (
-                <div className="flex flex-col items-center gap-3 text-white">
-                  <div className="w-12 h-12 border-3 border-white/30 border-t-white rounded-full animate-spin"></div>
-                  <span className="text-sm font-medium">Loading...</span>
-                </div>
-              ) : (
-                <div className="group flex flex-col items-center gap-2">
-                  {/* Modern play button */}
-                  <div className="relative">
-                    <div className="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 group-hover:bg-white/20 group-hover:scale-110 transition-all duration-300 ease-out">
-                      <svg 
-                        className="w-8 h-8 text-white ml-1" 
-                        fill="currentColor" 
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                      >
-                        <path d="M8 5v14l11-7z"/>
-                      </svg>
-                    </div>
-                    {/* Pulse animation ring */}
-                    <div className="absolute inset-0 w-20 h-20 bg-white/5 rounded-full animate-ping group-hover:animate-none"></div>
+              <source src="/video/hero-optimized.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+
+            {/* Play button overlay when not playing */}
+            {(!isPlaying || isLoading || hasError) && (
+              <div 
+                className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-[1px] cursor-pointer transition-all duration-300 hover:bg-black/50"
+                onClick={handleVideoClick}
+                onKeyDown={handleKeyDown}
+                tabIndex={0}
+                role="button"
+                aria-label={hasError ? "Video failed to load. Click to retry." : isLoading ? "Loading video..." : "Play video"}
+              >
+                {hasError ? (
+                  <div className="flex flex-col items-center gap-3 text-white">
+                    <svg className="w-12 h-12 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                    </svg>
+                    <span className="text-sm font-medium">Failed to load video</span>
+                    <span className="text-xs opacity-75">Click to retry</span>
                   </div>
-                  <span className="text-white text-sm font-medium opacity-90 group-hover:opacity-100 transition-opacity">
-                    Watch our vision
-                  </span>
-                </div>
-              )}
-            </div>
-          )}
+                ) : isLoading ? (
+                  <div className="flex flex-col items-center gap-3 text-white">
+                    <div className="w-12 h-12 border-3 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    <span className="text-sm font-medium">Loading...</span>
+                  </div>
+                ) : (
+                  <div className="group flex flex-col items-center gap-2">
+                    {/* Modern play button */}
+                    <div className="relative">
+                      <div className="w-16 sm:w-20 h-16 sm:h-20 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 group-hover:bg-white/20 group-hover:scale-110 transition-all duration-300 ease-out">
+                        <svg 
+                          className="w-6 sm:w-8 h-6 sm:h-8 text-white ml-1" 
+                          fill="currentColor" 
+                          viewBox="0 0 24 24"
+                          aria-hidden="true"
+                        >
+                          <path d="M8 5v14l11-7z"/>
+                        </svg>
+                      </div>
+                      {/* Pulse animation ring */}
+                      <div className="absolute inset-0 w-16 sm:w-20 h-16 sm:h-20 bg-white/5 rounded-full animate-ping group-hover:animate-none"></div>
+                    </div>
+                    <span className="text-white text-xs sm:text-sm font-medium opacity-90 group-hover:opacity-100 transition-opacity">
+                      Watch our vision
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
 
-          {/* Invisible clickable overlay when playing - no visible pause button */}
-          {isPlaying && !isLoading && !hasError && (
-            <div 
-              className="absolute inset-0 cursor-pointer"
-              onClick={handleVideoClick}
-              onKeyDown={handleKeyDown}
-              tabIndex={0}
-              role="button"
-              aria-label="Pause video"
-            />
-          )}
+            {/* Invisible clickable overlay when playing - no visible pause button */}
+            {isPlaying && !isLoading && !hasError && (
+              <div 
+                className="absolute inset-0 cursor-pointer"
+                onClick={handleVideoClick}
+                onKeyDown={handleKeyDown}
+                tabIndex={0}
+                role="button"
+                aria-label="Pause video"
+              />
+            )}
 
+          </div>
         </div>
       </div>
     </section>
