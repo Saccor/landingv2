@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LandingV2",
-  description: "A modern landing page built with Next.js",
+  title: "Arfve - Shape the future of sustainable sound",
+  description: "Join Arfve in revolutionizing audio technology with our modular earbud system. Subscribe now to be part of the future of sustainable sound.",
 };
 
 export default function RootLayout({
