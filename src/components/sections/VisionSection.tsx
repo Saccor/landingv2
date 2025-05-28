@@ -81,14 +81,16 @@ export default function VisionSection() {
     if (videoRef.current) {
       setDuration(videoRef.current.duration);
       console.log('Video duration:', videoRef.current.duration);
-      // Set video to start at 5 seconds to show background
-      setTimeout(() => {
-        if (videoRef.current && videoRef.current.duration > 5) {
-          console.log('Setting video to 5 seconds');
-          videoRef.current.currentTime = 5;
-          setCurrentTime(5);
-        }
-      }, 100);
+      // Set video to start at 5 seconds to show background (only on initial load)
+      if (videoRef.current.currentTime === 0) {
+        setTimeout(() => {
+          if (videoRef.current && videoRef.current.duration > 5 && videoRef.current.currentTime === 0) {
+            console.log('Setting video to 5 seconds on initial load');
+            videoRef.current.currentTime = 5;
+            setCurrentTime(5);
+          }
+        }, 100);
+      }
     }
   }, []);
 
@@ -200,27 +202,31 @@ export default function VisionSection() {
   // Progress bar handlers
   const handleProgressInteraction = useCallback((e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
-    if (!videoRef.current || !progressRef.current) return;
+    if (!videoRef.current || !progressRef.current || duration === 0) return;
     
     const progress = getProgressFromEvent(e, progressRef.current);
     const newTime = progress * duration;
     
+    console.log('Seeking to:', newTime);
     videoRef.current.currentTime = newTime;
     setCurrentTime(newTime);
   }, [duration, getProgressFromEvent]);
 
   const handleProgressMouseDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
     setIsDragging(true);
     handleProgressInteraction(e);
   }, [handleProgressInteraction]);
 
   const handleProgressTouchStart = useCallback((e: React.TouchEvent) => {
+    e.preventDefault();
     setIsDragging(true);
     handleProgressInteraction(e);
   }, [handleProgressInteraction]);
 
   const handleProgressMove = useCallback((e: React.MouseEvent | React.TouchEvent) => {
     if (!isDragging) return;
+    e.preventDefault();
     handleProgressInteraction(e);
   }, [isDragging, handleProgressInteraction]);
 
@@ -231,7 +237,7 @@ export default function VisionSection() {
   // Global mouse/touch move and end handlers
   useEffect(() => {
     const handleGlobalMouseMove = (e: MouseEvent) => {
-      if (isDragging && progressRef.current) {
+      if (isDragging && progressRef.current && duration > 0) {
         const rect = progressRef.current.getBoundingClientRect();
         const clickX = e.clientX - rect.left;
         const progress = Math.max(0, Math.min(1, clickX / rect.width));
@@ -245,7 +251,7 @@ export default function VisionSection() {
     };
 
     const handleGlobalTouchMove = (e: TouchEvent) => {
-      if (isDragging && progressRef.current) {
+      if (isDragging && progressRef.current && duration > 0) {
         e.preventDefault();
         const rect = progressRef.current.getBoundingClientRect();
         const touch = e.touches[0] || e.changedTouches[0];
@@ -323,7 +329,7 @@ export default function VisionSection() {
 
   const handleVideoLoadedData = useCallback(() => {
     console.log('Video data loaded');
-    // Ensure we're at 5 seconds when data is loaded
+    // Only set to 5 seconds if this is the initial load (currentTime is 0)
     if (videoRef.current && videoRef.current.currentTime === 0) {
       videoRef.current.currentTime = 5;
       setCurrentTime(5);
@@ -332,8 +338,8 @@ export default function VisionSection() {
 
   const handleVideoCanPlay = useCallback(() => {
     console.log('Video can play');
-    // Final check to ensure we're at 5 seconds
-    if (videoRef.current && videoRef.current.currentTime < 5) {
+    // Only set to 5 seconds if this is the initial load (currentTime is still 0)
+    if (videoRef.current && videoRef.current.currentTime === 0) {
       videoRef.current.currentTime = 5;
       setCurrentTime(5);
     }
@@ -341,6 +347,7 @@ export default function VisionSection() {
 
   const handleVideoSeeked = useCallback(() => {
     console.log('Video seeked to:', videoRef.current?.currentTime);
+    // Simply update the current time display - don't force it back to 5 seconds
     if (videoRef.current) {
       setCurrentTime(videoRef.current.currentTime);
     }
@@ -481,13 +488,14 @@ export default function VisionSection() {
               {/* Progress Bar */}
               <div 
                 ref={progressRef}
-                className="w-full h-3 sm:h-4 bg-white/30 rounded-full cursor-pointer mb-3 relative touch-manipulation"
+                className="w-full h-3 sm:h-4 bg-white/30 rounded-full cursor-pointer mb-3 relative touch-manipulation group"
                 onMouseDown={handleProgressMouseDown}
                 onTouchStart={handleProgressTouchStart}
                 onMouseMove={handleProgressMove}
                 onTouchMove={handleProgressMove}
                 onMouseUp={handleProgressEnd}
                 onTouchEnd={handleProgressEnd}
+                onClick={handleProgressInteraction}
               >
                 <div 
                   className="h-full bg-white rounded-full transition-all duration-150 relative"
@@ -496,6 +504,8 @@ export default function VisionSection() {
                   {/* Progress handle */}
                   <div className="absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
+                {/* Hover preview */}
+                <div className="absolute top-0 left-0 w-full h-full opacity-0 group-hover:opacity-20 bg-white rounded-full transition-opacity pointer-events-none"></div>
               </div>
 
               {/* Controls Row */}
@@ -593,9 +603,9 @@ export default function VisionSection() {
             </div>
           </div>
         )}
+        </div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
-);
+    </section>
+  );
 } 
