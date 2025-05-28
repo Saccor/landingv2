@@ -6,6 +6,7 @@ import GoogleTagManager from "@/components/common/GoogleTagManager";
 import GoogleAnalytics from "@/components/common/GoogleAnalytics";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CookieConsent from "@/components/CookieConsent";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,6 +42,7 @@ export default function RootLayout({
         <Header />
         <main className="w-full max-w-full">{children}</main>
         <Footer />
+        <CookieConsent />
       </body>
     </html>
   );
