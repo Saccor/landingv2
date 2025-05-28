@@ -32,7 +32,7 @@ export default function HeroSection() {
       <div className="container mx-auto px-4 py-8 pb-16">
         
         {/* Layout: Mobile stack, desktop row with max-width constraint */}
-        <div className="flex flex-col md:flex-row items-center gap-8 w-full max-w-6xl mx-auto">
+        <div className="flex flex-col lg:flex-row items-center gap-8 w-full max-w-6xl mx-auto">
           
           {/* Image: Larger, more prominent sizing */}
           <div className="flex-1 flex items-center justify-center">

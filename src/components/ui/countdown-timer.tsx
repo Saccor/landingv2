@@ -135,61 +135,61 @@ export default function CountdownTimer({ days, hours, minutes, seconds }: Countd
   if (!mounted) return null;
 
   return (
-    <div className="w-full flex flex-col items-center space-y-4">
-      {/* Clean timer display with colons */}
-      <div className="w-full max-w-[clamp(320px,95%,600px)]">
-        <div className="flex items-center justify-center gap-2 sm:gap-3">
+    <div className="w-full flex flex-col items-center">
+      {/* Mobile-first fluid timer display */}
+      <div className="w-full max-w-[clamp(280px,90%,500px)]">
+        <div className="flex items-center justify-center gap-2 sm:gap-3 md:gap-4">
           {/* Days */}
           <div className="flex flex-col items-center">
-            <span className="text-white font-bold font-montserrat text-[clamp(2rem,6vw,4rem)] leading-none">
+            <span className="text-white font-bold font-montserrat text-[clamp(2rem,6vw,3.5rem)] leading-none">
               {days}
             </span>
-            <span className="text-white/70 font-montserrat text-[clamp(0.7rem,2vw,0.9rem)] uppercase tracking-wider">
+            <span className="text-white/70 font-montserrat text-[clamp(0.7rem,2vw,0.9rem)] uppercase tracking-wider mt-1">
               Days
             </span>
           </div>
 
           {/* Colon */}
-          <span className="text-white font-bold font-montserrat text-[clamp(1.5rem,5vw,3rem)] leading-none mb-6">
+          <span className="text-white font-bold font-montserrat text-[clamp(1.5rem,5vw,2.5rem)] leading-none mb-4 sm:mb-5">
             :
           </span>
 
           {/* Hours */}
           <div className="flex flex-col items-center">
-            <span className="text-white font-bold font-montserrat text-[clamp(2rem,6vw,4rem)] leading-none">
+            <span className="text-white font-bold font-montserrat text-[clamp(2rem,6vw,3.5rem)] leading-none">
               {hours}
             </span>
-            <span className="text-white/70 font-montserrat text-[clamp(0.7rem,2vw,0.9rem)] uppercase tracking-wider">
+            <span className="text-white/70 font-montserrat text-[clamp(0.7rem,2vw,0.9rem)] uppercase tracking-wider mt-1">
               Hours
             </span>
           </div>
 
           {/* Colon */}
-          <span className="text-white font-bold font-montserrat text-[clamp(1.5rem,5vw,3rem)] leading-none mb-6">
+          <span className="text-white font-bold font-montserrat text-[clamp(1.5rem,5vw,2.5rem)] leading-none mb-4 sm:mb-5">
             :
           </span>
 
           {/* Minutes */}
           <div className="flex flex-col items-center">
-            <span className="text-white font-bold font-montserrat text-[clamp(2rem,6vw,4rem)] leading-none">
+            <span className="text-white font-bold font-montserrat text-[clamp(2rem,6vw,3.5rem)] leading-none">
               {minutes}
             </span>
-            <span className="text-white/70 font-montserrat text-[clamp(0.7rem,2vw,0.9rem)] uppercase tracking-wider">
+            <span className="text-white/70 font-montserrat text-[clamp(0.7rem,2vw,0.9rem)] uppercase tracking-wider mt-1">
               Minutes
             </span>
           </div>
 
           {/* Colon */}
-          <span className="text-white font-bold font-montserrat text-[clamp(1.5rem,5vw,3rem)] leading-none mb-6">
+          <span className="text-white font-bold font-montserrat text-[clamp(1.5rem,5vw,2.5rem)] leading-none mb-4 sm:mb-5">
             :
           </span>
 
           {/* Seconds */}
           <div className="flex flex-col items-center">
-            <span className="text-white font-bold font-montserrat text-[clamp(2rem,6vw,4rem)] leading-none">
+            <span className="text-white font-bold font-montserrat text-[clamp(2rem,6vw,3.5rem)] leading-none">
               {seconds}
             </span>
-            <span className="text-white/70 font-montserrat text-[clamp(0.7rem,2vw,0.9rem)] uppercase tracking-wider">
+            <span className="text-white/70 font-montserrat text-[clamp(0.7rem,2vw,0.9rem)] uppercase tracking-wider mt-1">
               Seconds
             </span>
           </div>
