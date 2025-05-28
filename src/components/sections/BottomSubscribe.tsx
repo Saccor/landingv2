@@ -17,10 +17,11 @@ export default function BottomSubscribe({ className = '' }: BottomSubscribeProps
           flex flex-col items-center text-center
           space-y-8 lg:space-y-10
           max-w-lg mx-auto
+          w-full
         ">
           
           {/* Heading: Simple responsive typography */}
-          <div className="space-y-2">
+          <div className="space-y-2 px-4 sm:px-0">
             <h2 className="
               text-white font-bold font-montserrat
               text-xl sm:text-2xl lg:text-3xl
@@ -38,7 +39,9 @@ export default function BottomSubscribe({ className = '' }: BottomSubscribeProps
           </div>
 
           {/* Form: Inherits proper responsive behavior */}
-          <SignupForm buttonText="Sign-up" />
+          <div className="w-full max-w-md">
+            <SignupForm buttonText="Sign-up" />
+          </div>
           
         </div>
       </div>
