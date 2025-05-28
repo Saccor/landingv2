@@ -254,91 +254,7 @@
     padding-right: env(safe-area-inset-right);
   }
 
-  /* Responsive Visibility */
-  .show-mobile-only {
-    display: block;
-  }
-  
-  .hide-mobile {
-    display: none;
-  }
-  
-  @media (min-width: 640px) {
-    .show-mobile-only {
-      display: none;
-    }
-    
-    .hide-mobile {
-      display: block;
-    }
-  }
 
-  /* iPad Pro Specific Optimizations */
-  @media (min-width: 820px) and (max-width: 1024px) {
-    .ipad-pro-optimize {
-      min-height: calc(100vh - 6rem);
-    }
-    
-    .ipad-pro-countdown {
-      max-width: 85%;
-      margin: 0 auto;
-    }
-    
-    .ipad-pro-text {
-      font-size: clamp(1rem, 2.5vw, 1.25rem);
-    }
-    
-    .ipad-pro-heading {
-      font-size: clamp(2.5rem, 5vw, 3.5rem);
-    }
-  }
-
-  /* iPad Pro 12.9" Landscape Specific - EXACT DIMENSIONS */
-  @media only screen 
-    and (min-device-width: 1024px) 
-    and (max-device-width: 1366px)
-    and (-webkit-min-device-pixel-ratio: 2) 
-    and (orientation: landscape) {
-    
-    .countdown-timer-container {
-      max-width: 600px !important;
-      margin: 0 auto;
-    }
-    
-    .countdown-grid {
-      max-width: 100%;
-      transform: scale(0.9);
-      transform-origin: center;
-    }
-  }
-
-  /* iPad Pro 12.9" Portrait Specific - EXACT DIMENSIONS */
-  @media only screen 
-    and (min-device-width: 1024px) 
-    and (max-device-width: 1024px)
-    and (-webkit-min-device-pixel-ratio: 2) 
-    and (orientation: portrait) {
-    
-    .countdown-timer-container {
-      max-width: 500px !important;
-      margin: 0 auto;
-    }
-    
-    .countdown-grid {
-      transform: scale(0.9);
-      transform-origin: center;
-    }
-  }
-
-  /* Countdown Timer - Let JavaScript handle sizing for full visibility */
-  .countdown-timer-container {
-    margin: 0 auto;
-  }
-  
-  .countdown-grid {
-    transform: scale(1);
-    transform-origin: center;
-  }
 }
 
 @theme inline {
@@ -390,10 +306,3 @@
   100% { transform: rotateY(180deg); }
 }
 
-/* Optimized for mobile performance */
-@media (max-width: 768px) {
-  * {
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-  }
-}

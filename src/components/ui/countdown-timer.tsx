@@ -134,88 +134,66 @@ export default function CountdownTimer({ days, hours, minutes, seconds }: Countd
 
   if (!mounted) return null;
 
-  // Build the complete timer grid: DD:HH:MM:SS
-  const timeString = `${days}:${hours}:${minutes}:${seconds}`;
-  const grid: number[][] = Array.from({ length: ROWS }, () => []);
-
-  for (let i = 0; i < timeString.length; i++) {
-    const char = timeString[i];
-    
-    if (char === ':') {
-      // Add colon pattern
-      for (let row = 0; row < ROWS; row++) {
-        grid[row].push(...COLON_PATTERN[row]);
-      }
-    } else {
-      // Add digit pattern
-      const pattern = DIGIT_PATTERNS[char] || DIGIT_PATTERNS['0'];
-      for (let row = 0; row < ROWS; row++) {
-        grid[row].push(...pattern[row]);
-      }
-    }
-    
-    // Add spacing between characters (except after last character)
-    if (i < timeString.length - 1) {
-      for (let row = 0; row < ROWS; row++) {
-        grid[row].push(0);
-      }
-    }
-  }
-
-  // Add padding around the entire timer
-  const paddedGrid: number[][] = [
-    Array(grid[0].length + 2).fill(0),
-    ...grid.map(row => [0, ...row, 0]),
-    Array(grid[0].length + 2).fill(0),
-  ];
-
-  const paddedRows = paddedGrid.length;
-  const paddedCols = paddedGrid[0].length;
-
   return (
-    <div className="flex flex-col items-center space-y-4 sm:space-y-6">
-      {/* Main timer display */}
-      <div className="flex justify-center">
-        <div
-          className="grid gap-[1px] sm:gap-[1.5px] lg:gap-[2px]"
-          style={{
-            gridTemplateColumns: `repeat(${paddedCols}, 1fr)`,
-            gridTemplateRows: `repeat(${paddedRows}, 1fr)`,
-          }}
-        >
-          {paddedGrid.flat().map((cell, i) => (
-            <div
-              key={i}
-              className={`
-                border border-stone-300/20
-                ${cell ? 'bg-white shadow-sm' : 'bg-transparent'}
-                w-[2px] h-[2px]
-                sm:w-[3px] sm:h-[3px]
-                lg:w-[4px] lg:h-[4px]
-                transition-all duration-300
-              `}
-              style={{
-                borderWidth: '0.5px',
-              }}
-            />
-          ))}
+    <div className="w-full flex flex-col items-center space-y-4">
+      {/* Clean timer display with colons */}
+      <div className="w-full max-w-[clamp(320px,95%,600px)]">
+        <div className="flex items-center justify-center gap-2 sm:gap-3">
+          {/* Days */}
+          <div className="flex flex-col items-center">
+            <span className="text-white font-bold font-montserrat text-[clamp(2rem,6vw,4rem)] leading-none">
+              {days}
+            </span>
+            <span className="text-white/70 font-montserrat text-[clamp(0.7rem,2vw,0.9rem)] uppercase tracking-wider">
+              Days
+            </span>
+          </div>
+
+          {/* Colon */}
+          <span className="text-white font-bold font-montserrat text-[clamp(1.5rem,5vw,3rem)] leading-none mb-6">
+            :
+          </span>
+
+          {/* Hours */}
+          <div className="flex flex-col items-center">
+            <span className="text-white font-bold font-montserrat text-[clamp(2rem,6vw,4rem)] leading-none">
+              {hours}
+            </span>
+            <span className="text-white/70 font-montserrat text-[clamp(0.7rem,2vw,0.9rem)] uppercase tracking-wider">
+              Hours
+            </span>
+          </div>
+
+          {/* Colon */}
+          <span className="text-white font-bold font-montserrat text-[clamp(1.5rem,5vw,3rem)] leading-none mb-6">
+            :
+          </span>
+
+          {/* Minutes */}
+          <div className="flex flex-col items-center">
+            <span className="text-white font-bold font-montserrat text-[clamp(2rem,6vw,4rem)] leading-none">
+              {minutes}
+            </span>
+            <span className="text-white/70 font-montserrat text-[clamp(0.7rem,2vw,0.9rem)] uppercase tracking-wider">
+              Minutes
+            </span>
+          </div>
+
+          {/* Colon */}
+          <span className="text-white font-bold font-montserrat text-[clamp(1.5rem,5vw,3rem)] leading-none mb-6">
+            :
+          </span>
+
+          {/* Seconds */}
+          <div className="flex flex-col items-center">
+            <span className="text-white font-bold font-montserrat text-[clamp(2rem,6vw,4rem)] leading-none">
+              {seconds}
+            </span>
+            <span className="text-white/70 font-montserrat text-[clamp(0.7rem,2vw,0.9rem)] uppercase tracking-wider">
+              Seconds
+            </span>
+          </div>
         </div>
-      </div>
-      
-      {/* Labels row */}
-      <div className="grid grid-cols-4 w-full max-w-sm lg:max-w-md gap-4 sm:gap-6 lg:gap-8">
-        <span className="text-white font-montserrat text-xs sm:text-sm lg:text-base text-center">
-          Days
-        </span>
-        <span className="text-white font-montserrat text-xs sm:text-sm lg:text-base text-center">
-          Hours
-        </span>
-        <span className="text-white font-montserrat text-xs sm:text-sm lg:text-base text-center">
-          Minutes
-        </span>
-        <span className="text-white font-montserrat text-xs sm:text-sm lg:text-base text-center">
-          Seconds
-        </span>
       </div>
     </div>
   );

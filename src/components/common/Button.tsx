@@ -16,9 +16,9 @@ const buttonVariants = {
 };
 
 const buttonSizes = {
-  sm: 'h-10 px-3 sm:px-4 lg:px-5 text-sm',
-  md: 'h-12 px-4 sm:px-6 lg:px-8 text-base',
-  lg: 'h-14 px-6 sm:px-8 lg:px-10 text-lg',
+  sm: 'h-10 px-4 text-sm',
+  md: 'h-12 px-6 text-base',
+  lg: 'h-14 px-8 text-lg',
 };
 
 export default function Button({
@@ -35,7 +35,7 @@ export default function Button({
       className={cn(
         // Base styles
         'font-medium font-poppins rounded-full transition-all duration-200 whitespace-nowrap',
-        'focus:outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-transparent',
+        'focus:outline-none focus:ring-2 focus:ring-white/20',
         'disabled:opacity-50 disabled:cursor-not-allowed',
         
         // Variant styles

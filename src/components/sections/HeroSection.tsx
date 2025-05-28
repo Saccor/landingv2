@@ -27,71 +27,46 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="bg-[#020202] overflow-hidden">
-      {/* Container: Clean, simple approach with proper spacing */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
+    <section className="bg-[#020202]">
+      {/* Container: Clean layout without forced height constraints */}
+      <div className="container mx-auto px-4 py-8 pb-16">
         
-        {/* Layout Grid: Mobile stack, desktop row */}
-        <div className="
-          w-full 
-          grid grid-cols-1 lg:grid-cols-2 
-          gap-8 lg:gap-12 xl:gap-16
-          items-center
-        ">
+        {/* Layout: Mobile stack, desktop row with max-width constraint */}
+        <div className="flex flex-col md:flex-row items-center gap-8 w-full max-w-6xl mx-auto">
           
-          {/* Image: Aspect-ratio based, simple sizing */}
-          <div className="
-            w-full max-w-sm mx-auto lg:max-w-none
-            aspect-[4/5] lg:aspect-square
-            rounded-2xl lg:rounded-3xl
-            overflow-hidden bg-gray-900
-            order-1 lg:order-1
-          ">
+          {/* Image: Larger, more prominent sizing */}
+          <div className="flex-1 flex items-center justify-center">
             <div
-              className="w-full h-full transition-transform duration-500 hover:scale-105"
+              className="w-full max-w-lg aspect-[4/5] rounded-2xl overflow-hidden"
               style={{
                 backgroundImage: "url('/heroimg.png')",
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
+                backgroundColor: '#1f2937', // fallback color
+                minHeight: '500px' // larger minimum height
               }}
             />
           </div>
 
-          {/* Content: Clean spacing and typography */}
-          <div className="
-            flex flex-col items-center text-center
-            space-y-6 lg:space-y-8
-            order-2 lg:order-2
-            max-w-lg mx-auto lg:max-w-none
-          ">
+          {/* Content: Perfectly centered spacing and typography */}
+          <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6 px-4">
             
-            {/* Heading: Simple responsive typography */}
-            <h1 className="
-              text-white font-bold font-montserrat 
-              text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-4xl
-              leading-tight
-            ">
-              Shape the future of{' '}
-              <br className="hidden sm:block lg:hidden xl:block" />
-              <span className="sm:hidden lg:inline xl:hidden"> </span>
-              sustainable sound
+            {/* Heading: Fluid responsive typography */}
+            <h1 className="text-white font-bold font-montserrat text-[clamp(1.5rem,5vw,2.5rem)] leading-tight max-w-md">
+              Shape the future of sustainable sound
             </h1>
 
-            {/* Timer: Inherits parent container sizing */}
+            {/* Timer: Clean container */}
             <CountdownTimer {...countdown} />
 
-            {/* Subtitle: Clean typography scale */}
-            <p className="
-              text-white font-poppins leading-relaxed
-              text-sm sm:text-base lg:text-lg
-              max-w-sm lg:max-w-md
-            ">
+            {/* Subtitle: Fluid typography */}
+            <p className="text-white font-poppins text-base leading-relaxed max-w-md">
               Subscribe now — don&apos;t miss a thing. The countdown to launch has begun!
             </p>
 
             {/* Form: Simple responsive layout */}
-            <SignupForm className="w-full max-w-sm lg:max-w-md" buttonText="Sign-up" />
+            <SignupForm buttonText="Sign-up" />
           </div>
         </div>
       </div>

@@ -79,15 +79,15 @@ export default function VisionSection() {
 
   return (
     <section className="bg-black overflow-hidden">
-      {/* Container: Clean, simple approach with proper spacing */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
+      {/* Container: Moved closer to previous section */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-8 sm:pb-12 lg:pb-16">
         
-        {/* Layout: Mobile stack, desktop row */}
+        {/* Layout: Mobile stack, desktop row with max-width constraint */}
         <div className="
           flex flex-col lg:flex-row 
           items-center lg:items-stretch
-          gap-8 lg:gap-12 xl:gap-16
-          w-full
+          gap-8 lg:gap-12
+          w-full max-w-6xl mx-auto
         ">
           
           {/* Text Container: Clean sizing and typography */}
@@ -115,9 +115,9 @@ export default function VisionSection() {
             </p>
           </div>
 
-          {/* Video Container: Fluid responsive video */}
+          {/* Video Container: Fixed proportions to prevent expansion */}
           <div className="
-            w-full lg:flex-1
+            w-full max-w-sm mx-auto lg:max-w-none lg:flex-none lg:w-[calc(100%-24rem)]
             relative rounded-2xl lg:rounded-3xl overflow-hidden
             aspect-video lg:aspect-auto lg:min-h-[400px]
             order-2 lg:order-2

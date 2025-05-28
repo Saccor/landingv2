@@ -73,8 +73,8 @@ export default function SignupForm({
   };
 
   return (
-    <div className={`w-full max-w-sm lg:max-w-md flex flex-col items-center gap-3 ${className}`}>
-      <form onSubmit={handleSubmit} className="flex flex-row items-center gap-3 sm:gap-4 w-full">
+    <div className={`w-full max-w-md flex flex-col items-center gap-3 ${className}`}>
+      <form onSubmit={handleSubmit} className="flex flex-row items-center gap-3 w-full">
         <input
           type="email"
           value={email}
@@ -82,13 +82,11 @@ export default function SignupForm({
           required
           placeholder="email"
           className="
-            flex-1 h-12
-            px-4 rounded-full
+            flex-1 h-12 px-4 rounded-full
             border border-white/20 bg-transparent
             text-white placeholder:text-gray-400
-            text-sm font-normal font-poppins leading-tight
-            focus:outline-none focus:border-white/40 focus:ring-1 focus:ring-white/20
-            transition-all duration-200
+            text-sm font-poppins
+            focus:outline-none focus:border-white/40
           "
         />
         <Button
@@ -101,11 +99,9 @@ export default function SignupForm({
         </Button>
       </form>
       {message && (
-        <p
-          className={`text-sm text-center w-full ${
-            status === 'success' ? 'text-green-600' : 'text-red-600'
-          }`}
-        >
+        <p className={`text-sm text-center w-full ${
+          status === 'success' ? 'text-green-600' : 'text-red-600'
+        }`}>
           {message}
         </p>
       )}
