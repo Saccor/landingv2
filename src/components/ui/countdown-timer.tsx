@@ -112,7 +112,7 @@ const DIGIT_PATTERNS = {
 };
 
 // Helper to pad a pattern with minimal padding for clean layout
-function padPattern(pattern: number[][], rows = 10, cols = 6) {
+function padPattern(pattern: number[][], cols = 6) {
   // Add 1 empty row on top AND 1 empty row on bottom
   // Add 1 empty column on left only (no right padding)
   // This gives us: 1 (left) + 5 (pattern width) = 6 cols total
@@ -139,7 +139,7 @@ function padPattern(pattern: number[][], rows = 10, cols = 6) {
 
 // Pad all digit patterns to 10x6 (1 empty border on top, bottom, and left only)
 const PADDED_DIGIT_PATTERNS = Object.fromEntries(
-  Object.entries(DIGIT_PATTERNS).map(([digit, pattern]) => [digit, padPattern(pattern, 10, 6)])
+  Object.entries(DIGIT_PATTERNS).map(([digit, pattern]) => [digit, padPattern(pattern, 6)])
 );
 
 // Simplified colon pattern for 2-column grid (remove empty right columns)
@@ -157,7 +157,7 @@ const COLON_PATTERN_SIMPLE = [
 ];
 
 // Helper function to render a digit using SVG with grid always visible and border
-const renderDigit = (digit: string, size: number) => {
+const renderDigit = (digit: string, size: number | string) => {
   const pattern = PADDED_DIGIT_PATTERNS[digit as keyof typeof PADDED_DIGIT_PATTERNS];
   if (!pattern) return null;
   const rows = pattern.length; // This is now 10
@@ -195,13 +195,19 @@ const renderDigit = (digit: string, size: number) => {
     }
   }
 
+  const svgStyle = typeof size === 'string' ? {
+    width: size,
+    height: `calc(${size} * ${totalHeight / totalWidth})`,
+  } : {
+    width: size,
+    height: size * (totalHeight / totalWidth),
+  };
+
   return (
     <svg
-      width={size}
-      height={size * (totalHeight / totalWidth)}
+      style={svgStyle}
       viewBox={`0 0 ${totalWidth} ${totalHeight}`}
-      className="text-white"
-      style={{ display: 'block' }}
+      className="text-white block"
     >
       {cells}
     </svg>
@@ -209,7 +215,7 @@ const renderDigit = (digit: string, size: number) => {
 };
 
 // Helper function to render a colon - using same base grid for perfect alignment
-const renderColon = (size: number) => {
+const renderColon = (size: number | string) => {
   const pattern = COLON_PATTERN_SIMPLE;
   const rows = pattern.length; // 10
   const cols = pattern[0].length; // 2
@@ -248,15 +254,20 @@ const renderColon = (size: number) => {
 
   // Use exact proportional width for perfect fit
   const actualWidth = cols * cellUnit;
-  const scaledWidth = size * (actualWidth / totalWidth);
+  
+  const svgStyle = typeof size === 'string' ? {
+    width: `calc(${size} * ${actualWidth / totalWidth})`,
+    height: `calc(${size} * ${totalHeight / totalWidth})`,
+  } : {
+    width: size * (actualWidth / totalWidth),
+    height: size * (totalHeight / totalWidth),
+  };
 
   return (
     <svg
-      width={scaledWidth}
-      height={size * (totalHeight / totalWidth)}
+      style={svgStyle}
       viewBox={`0 0 ${actualWidth} ${totalHeight}`}
-      className="text-white"
-      style={{ display: 'block' }}
+      className="text-white block"
     >
       {cells}
     </svg>
@@ -264,7 +275,7 @@ const renderColon = (size: number) => {
 };
 
 // Helper function to render an empty column spacer
-const renderEmptyColumn = (size: number) => {
+const renderEmptyColumn = (size: number | string) => {
   const rows = 10;
   const cols = 1; // Just 1 empty column
   
@@ -301,15 +312,20 @@ const renderEmptyColumn = (size: number) => {
 
   // Use exact proportional width for perfect fit
   const actualWidth = cols * cellUnit;
-  const scaledWidth = size * (actualWidth / totalWidth);
+  
+  const svgStyle = typeof size === 'string' ? {
+    width: `calc(${size} * ${actualWidth / totalWidth})`,
+    height: `calc(${size} * ${totalHeight / totalWidth})`,
+  } : {
+    width: size * (actualWidth / totalWidth),
+    height: size * (totalHeight / totalWidth),
+  };
 
   return (
     <svg
-      width={scaledWidth}
-      height={size * (totalHeight / totalWidth)}
+      style={svgStyle}
       viewBox={`0 0 ${actualWidth} ${totalHeight}`}
-      className="text-white"
-      style={{ display: 'block' }}
+      className="text-white block"
     >
       {cells}
     </svg>
@@ -326,20 +342,14 @@ export default function CountdownTimer({ days, hours, minutes, seconds }: Countd
   // Don't render until mounted to avoid hydration mismatches
   if (!mounted) return null;
 
-  // Simple responsive digit size - no complex calculations
-  const digitSize = 50; // Base size, CSS will handle responsiveness
+  // Dynamic sizing based on viewport width
+  const digitSize = "clamp(25px, 8vw, 50px)";
 
   return (
     <div className="w-full flex flex-col items-center">
-      <div className="w-full max-w-[clamp(220px,90vw,600px)]">
-        {/* Use flexbox with no gaps for seamless grid */}
-        <div 
-          className="flex justify-center items-center gap-0"
-          style={{
-            transform: 'scale(clamp(0.4, 2vw, 1))',
-            transformOrigin: 'center'
-          }}
-        >
+      <div className="w-full">
+        {/* Use flexbox with no gaps for seamless layout */}
+        <div className="flex justify-center items-center gap-0">
           {/* Days */}
           <div className="flex gap-0">
             {days.split('').map((digit, i) => (
@@ -397,38 +407,87 @@ export default function CountdownTimer({ days, hours, minutes, seconds }: Countd
           </div>
         </div>
 
-        {/* Labels */}
-        <div 
-          className="flex justify-center items-center gap-0 mt-2"
-          style={{
-            transform: 'scale(clamp(0.4, 2vw, 1))',
-            transformOrigin: 'center'
-          }}
-        >
-          <div className="flex-1 text-center">
-            <span className="text-white/70 font-montserrat text-sm uppercase tracking-wider">
+        {/* Labels - use flexbox to match the timer layout exactly */}
+        <div className="flex justify-center items-center gap-0 mt-2">
+          {/* Days label - matches width of 2 digits */}
+          <div 
+            className="text-center"
+            style={{
+              width: `calc(${digitSize} * 2 * 6 / 6)`, // 2 digits worth of space
+              fontSize: 'clamp(0.5rem, 2.5vw, 0.875rem)',
+            }}
+          >
+            <span className="text-white/70 font-montserrat uppercase tracking-wider">
               Days
             </span>
           </div>
-          <div className="w-6"></div> {/* Space for colon */}
-          <div className="flex-1 text-center">
-            <span className="text-white/70 font-montserrat text-sm uppercase tracking-wider">
+
+          {/* Colon space */}
+          <div 
+            style={{
+              width: `calc(${digitSize} * 2 / 6)`, // Colon width
+            }}
+          ></div>
+
+          {/* Hours label - matches width of 2 digits */}
+          <div 
+            className="text-center"
+            style={{
+              width: `calc(${digitSize} * 2 * 6 / 6)`, // 2 digits worth of space
+              fontSize: 'clamp(0.5rem, 2.5vw, 0.875rem)',
+            }}
+          >
+            <span className="text-white/70 font-montserrat uppercase tracking-wider">
               Hours
             </span>
           </div>
-          <div className="w-6"></div> {/* Space for colon */}
-          <div className="flex-1 text-center">
-            <span className="text-white/70 font-montserrat text-sm uppercase tracking-wider">
+
+          {/* Colon space */}
+          <div 
+            style={{
+              width: `calc(${digitSize} * 2 / 6)`, // Colon width
+            }}
+          ></div>
+
+          {/* Minutes label - matches width of 2 digits */}
+          <div 
+            className="text-center"
+            style={{
+              width: `calc(${digitSize} * 2 * 6 / 6)`, // 2 digits worth of space
+              fontSize: 'clamp(0.5rem, 2.5vw, 0.875rem)',
+            }}
+          >
+            <span className="text-white/70 font-montserrat uppercase tracking-wider">
               Minutes
             </span>
           </div>
-          <div className="w-6"></div> {/* Space for colon */}
-          <div className="flex-1 text-center">
-            <span className="text-white/70 font-montserrat text-sm uppercase tracking-wider">
+
+          {/* Colon space */}
+          <div 
+            style={{
+              width: `calc(${digitSize} * 2 / 6)`, // Colon width
+            }}
+          ></div>
+
+          {/* Seconds label - matches width of 2 digits */}
+          <div 
+            className="text-center"
+            style={{
+              width: `calc(${digitSize} * 2 * 6 / 6)`, // 2 digits worth of space
+              fontSize: 'clamp(0.5rem, 2.5vw, 0.875rem)',
+            }}
+          >
+            <span className="text-white/70 font-montserrat uppercase tracking-wider">
               Seconds
             </span>
           </div>
-          <div className="w-1"></div> {/* Space for empty column */}
+
+          {/* Empty column space */}
+          <div 
+            style={{
+              width: `calc(${digitSize} * 1 / 6)`, // Empty column width
+            }}
+          ></div>
         </div>
       </div>
     </div>
