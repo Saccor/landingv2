@@ -358,7 +358,7 @@ export default function VisionSection() {
             bg-[#363637] rounded-2xl lg:rounded-3xl
             p-6 lg:p-8
             flex flex-col justify-center items-center gap-4 lg:gap-6
-            aspect-[4/3] lg:aspect-auto lg:min-h-[400px]
+            aspect-video lg:aspect-auto lg:min-h-[500px]
           ">
           <h2 className="
             text-white font-bold font-montserrat text-center

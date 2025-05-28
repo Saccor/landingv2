@@ -23,12 +23,12 @@ export default function SocialMediaSection({ className = '' }: SocialMediaSectio
   return (
     <section className={`bg-black overflow-hidden ${className}`}>
       {/* Container: Clean, simple approach with proper spacing */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
         
         {/* Content: Center aligned with clean spacing */}
         <div className="
           flex flex-col items-center text-center
-          space-y-8 lg:space-y-12
+          space-y-8 lg:space-y-10
           max-w-4xl mx-auto
         ">
           
