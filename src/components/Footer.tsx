@@ -21,7 +21,7 @@ const Footer = () => {
         ">
           
           {/* Logo: Simple responsive sizing */}
-          <Link href="https://www.linkedin.com/company/arfve" target="_blank" rel="noopener noreferrer" className="
+          <Link href="https://www.youtube.com/@arfve" target="_blank" rel="noopener noreferrer" className="
             flex-shrink-0
             order-1 lg:order-1
           ">
