@@ -21,7 +21,7 @@ const Footer = () => {
         ">
           
           {/* Logo: Simple responsive sizing */}
-          <Link href="/" className="
+          <Link href="https://www.linkedin.com/company/arfve" target="_blank" rel="noopener noreferrer" className="
             flex-shrink-0
             order-1 lg:order-1
           ">
@@ -78,7 +78,7 @@ const Footer = () => {
             order-2 lg:order-3
           ">
             <Link 
-              href="https://linkedin.com" 
+              href="https://www.linkedin.com/company/arfve" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="text-white hover:opacity-80 transition-opacity"
@@ -87,7 +87,7 @@ const Footer = () => {
               <LinkedInIcon />
             </Link>
             <Link 
-              href="https://instagram.com" 
+              href="https://www.instagram.com/arfve_legacy/" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="text-white hover:opacity-80 transition-opacity"
@@ -96,7 +96,7 @@ const Footer = () => {
               <InstagramIcon />
             </Link>
             <Link 
-              href="https://tiktok.com" 
+              href="https://www.tiktok.com/@arfve_legacy" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="text-white hover:opacity-80 transition-opacity"
@@ -105,7 +105,7 @@ const Footer = () => {
               <TikTokIcon />
             </Link>
             <Link 
-              href="https://facebook.com" 
+              href="https://www.facebook.com/profile.php?id=61554925177330" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="text-white hover:opacity-80 transition-opacity"
@@ -114,7 +114,7 @@ const Footer = () => {
               <FacebookIcon />
             </Link>
             <Link 
-              href="https://youtube.com" 
+              href="https://www.youtube.com/@Arfve-ll7vt" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="text-white hover:opacity-80 transition-opacity"
