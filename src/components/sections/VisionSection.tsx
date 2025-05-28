@@ -171,6 +171,11 @@ export default function VisionSection() {
           });
         }
 
+        // Ensure video is unmuted when starting playback
+        videoRef.current.muted = false;
+        setIsMuted(false);
+        videoRef.current.volume = volume;
+        
         console.log('Playing video');
         await videoRef.current.play();
         setIsPlaying(true);
@@ -182,7 +187,7 @@ export default function VisionSection() {
     } finally {
       setIsLoading(false);
     }
-  }, [isLoading, isPlaying]);
+  }, [isLoading, isPlaying, volume]);
 
   // Unified progress handler for both mouse and touch
   const getProgressFromEvent = useCallback((e: React.MouseEvent | React.TouchEvent, element: HTMLElement) => {
@@ -279,13 +284,16 @@ export default function VisionSection() {
     e.preventDefault();
     if (!videoRef.current || !volumeRef.current) return;
     
-    const progress = getProgressFromEvent(e, volumeRef.current);
-    const newVolume = Math.max(0, Math.min(1, progress));
+    const rect = volumeRef.current.getBoundingClientRect();
+    const clientX = 'touches' in e ? e.touches[0]?.clientX || e.changedTouches[0]?.clientX : e.clientX;
+    const clickX = clientX - rect.left;
+    const newVolume = Math.max(0, Math.min(1, clickX / rect.width));
     
+    videoRef.current.muted = false;
     videoRef.current.volume = newVolume;
     setVolume(newVolume);
-    setIsMuted(newVolume === 0);
-  }, [getProgressFromEvent]);
+    setIsMuted(false);
+  }, []);
 
   // Mute toggle
   const toggleMute = useCallback(() => {
@@ -388,7 +396,6 @@ export default function VisionSection() {
           src="/video/hero-optimized.mp4"
           preload="auto"
           playsInline
-          muted
           onTimeUpdate={handleTimeUpdate}
           onLoadedMetadata={handleLoadedMetadata}
           onVolumeChange={handleVolumeChange}
