@@ -14,6 +14,18 @@ interface WebkitDocument extends Document {
   webkitFullscreenElement?: Element;
 }
 
+// Extend HTMLElement interface for vendor-specific fullscreen methods
+interface VendorHTMLElement extends HTMLElement {
+  webkitRequestFullscreen?: () => Promise<void>;
+  mozRequestFullScreen?: () => Promise<void>;
+}
+
+// Extend Document interface for vendor-specific fullscreen methods
+interface VendorDocument extends Document {
+  webkitExitFullscreen?: () => void;
+  mozCancelFullScreen?: () => void;
+}
+
 export default function VisionSection() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -165,21 +177,23 @@ export default function VisionSection() {
 
       // Standard fullscreen API
       if (!document.fullscreenElement) {
+        const vendorElement = containerRef.current as VendorHTMLElement;
         if (containerRef.current.requestFullscreen) {
           await containerRef.current.requestFullscreen();
-        } else if ((containerRef.current as any).webkitRequestFullscreen) {
-          await (containerRef.current as any).webkitRequestFullscreen();
-        } else if ((containerRef.current as any).mozRequestFullScreen) {
-          await (containerRef.current as any).mozRequestFullScreen();
+        } else if (vendorElement.webkitRequestFullscreen) {
+          await vendorElement.webkitRequestFullscreen();
+        } else if (vendorElement.mozRequestFullScreen) {
+          await vendorElement.mozRequestFullScreen();
         }
         setIsFullscreen(true);
       } else {
+        const vendorDoc = document as VendorDocument;
         if (document.exitFullscreen) {
           await document.exitFullscreen();
-        } else if ((document as any).webkitExitFullscreen) {
-          (document as any).webkitExitFullscreen();
-        } else if ((document as any).mozCancelFullScreen) {
-          (document as any).mozCancelFullScreen();
+        } else if (vendorDoc.webkitExitFullscreen) {
+          vendorDoc.webkitExitFullscreen();
+        } else if (vendorDoc.mozCancelFullScreen) {
+          vendorDoc.mozCancelFullScreen();
         }
         setIsFullscreen(false);
       }
