@@ -41,13 +41,14 @@ export default function SocialMediaSection({ className = '' }: SocialMediaSectio
             Follow us on social media
           </h2>
 
-          {/* Social Grid: Mobile-first responsive grid */}
+          {/* Social Grid: Mobile-first responsive grid with geometric pattern */}
           <div className="
             grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5
-            gap-4 sm:gap-6 lg:gap-8
+            gap-3 sm:gap-4 lg:gap-6
             w-full
+            max-w-5xl
           ">
-            {socialPlatforms.map((platform) => (
+            {socialPlatforms.map((platform, index) => (
               <motion.a
                 key={platform.name}
                 href={platform.url}
@@ -69,11 +70,15 @@ export default function SocialMediaSection({ className = '' }: SocialMediaSectio
                   flex flex-col items-center justify-center
                   p-4 sm:p-5 lg:p-6
                   space-y-2 sm:space-y-3 lg:space-y-4
-                  bg-[#1b1b1b] rounded-2xl lg:rounded-3xl
+                  bg-[#1b1b1b] rounded-sm
                   text-white cursor-pointer
                   h-24 sm:h-32 lg:h-36
                   hover:bg-[#252525] transition-colors
+                  border border-[#2a2a2a]/50
                 "
+                style={{
+                  aspectRatio: '1.2/1', // Slightly rectangular like a charging case
+                }}
                 aria-label={`Follow us on ${platform.name}`}
               >
                 <div className="flex-shrink-0">

@@ -498,14 +498,20 @@ export default function VisionSection() {
         <div className="flex flex-col lg:flex-row items-center lg:items-stretch gap-8 lg:gap-12 max-w-6xl mx-auto">
           
           {/* Text Container */}
-          <div className="
-            w-full max-w-sm mx-auto
-            lg:flex-none lg:w-96 lg:max-w-none
-            bg-[#363637]
-            p-6 lg:p-8
-            flex flex-col justify-center items-center gap-4 lg:gap-6
-            aspect-video lg:aspect-auto lg:min-h-[500px]
-          ">
+          <div 
+            className="
+              w-full max-w-sm mx-auto
+              lg:flex-none lg:w-96 lg:max-w-none
+              bg-[#363637] rounded-sm
+              p-6 lg:p-8
+              flex flex-col justify-center items-center gap-4 lg:gap-6
+              aspect-video lg:aspect-auto lg:min-h-[500px]
+              border border-[#4a4a4a]/50
+            "
+            style={{
+              aspectRatio: '1.2/1', // Slightly rectangular like a charging case
+            }}
+          >
           <h2 className="
             text-white font-bold font-montserrat text-center
             text-xl sm:text-2xl lg:text-3xl xl:text-4xl
