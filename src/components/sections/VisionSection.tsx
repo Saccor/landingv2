@@ -501,7 +501,7 @@ export default function VisionSection() {
           <div className="
             w-full max-w-sm mx-auto
             lg:flex-none lg:w-96 lg:max-w-none
-            bg-[#363637] rounded-2xl lg:rounded-3xl
+            bg-[#363637]
             p-6 lg:p-8
             flex flex-col justify-center items-center gap-4 lg:gap-6
             aspect-video lg:aspect-auto lg:min-h-[500px]
