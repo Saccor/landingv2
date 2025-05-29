@@ -2,6 +2,18 @@
 
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 
+// Extend HTMLVideoElement interface for webkit properties
+interface WebkitHTMLVideoElement extends HTMLVideoElement {
+  webkitEnterFullscreen?: () => void;
+  webkitExitFullscreen?: () => void;
+}
+
+// Extend Document interface for webkit properties
+interface WebkitDocument extends Document {
+  webkitExitFullscreen?: () => void;
+  webkitFullscreenElement?: Element;
+}
+
 export default function VisionSection() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -14,16 +26,47 @@ export default function VisionSection() {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [isIOS, setIsIOS] = useState(false);
+  const [canAutoplay, setCanAutoplay] = useState(false);
+  const [hasUserInteracted, setHasUserInteracted] = useState(false);
 
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<WebkitHTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const volumeRef = useRef<HTMLDivElement>(null);
 
-  // Detect touch device
+  // Detect device capabilities
   useEffect(() => {
-    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    const touchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const iosDevice = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    
+    setIsTouchDevice(touchDevice);
+    setIsIOS(iosDevice);
+    
+    // Test autoplay capability
+    const testAutoplay = async () => {
+      if (videoRef.current) {
+        try {
+          // Create a test video element to check autoplay support
+          const testVideo = document.createElement('video');
+          testVideo.muted = true;
+          testVideo.playsInline = true;
+          testVideo.style.position = 'absolute';
+          testVideo.style.left = '-9999px';
+          document.body.appendChild(testVideo);
+          
+          await testVideo.play();
+          setCanAutoplay(true);
+          testVideo.remove();
+        } catch (error) {
+          console.log('Autoplay not supported:', error);
+          setCanAutoplay(false);
+        }
+      }
+    };
+    
+    testAutoplay();
   }, []);
 
   // Auto-hide controls after 3 seconds of inactivity (but not on touch devices when paused)
@@ -57,6 +100,7 @@ export default function VisionSection() {
 
   // Handle touch to show controls
   const handleTouch = useCallback(() => {
+    setHasUserInteracted(true);
     if (isTouchDevice) {
       setShowControls(true);
       if (isPlaying) {
@@ -101,22 +145,48 @@ export default function VisionSection() {
     }
   }, []);
 
-  // Fullscreen handlers
+  // Fullscreen handlers with mobile-specific fallbacks
   const toggleFullscreen = useCallback(async () => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || !videoRef.current) return;
 
     try {
+      // On iOS, use native video fullscreen if available
+      if (isIOS && videoRef.current.webkitEnterFullscreen) {
+        if (isFullscreen) {
+          const webkitDoc = document as WebkitDocument;
+          if (webkitDoc.webkitExitFullscreen) {
+            webkitDoc.webkitExitFullscreen();
+          }
+        } else {
+          videoRef.current.webkitEnterFullscreen();
+        }
+        return;
+      }
+
+      // Standard fullscreen API
       if (!document.fullscreenElement) {
-        await containerRef.current.requestFullscreen();
+        if (containerRef.current.requestFullscreen) {
+          await containerRef.current.requestFullscreen();
+        } else if ((containerRef.current as any).webkitRequestFullscreen) {
+          await (containerRef.current as any).webkitRequestFullscreen();
+        } else if ((containerRef.current as any).mozRequestFullScreen) {
+          await (containerRef.current as any).mozRequestFullScreen();
+        }
         setIsFullscreen(true);
       } else {
-        await document.exitFullscreen();
+        if (document.exitFullscreen) {
+          await document.exitFullscreen();
+        } else if ((document as any).webkitExitFullscreen) {
+          (document as any).webkitExitFullscreen();
+        } else if ((document as any).mozCancelFullScreen) {
+          (document as any).mozCancelFullScreen();
+        }
         setIsFullscreen(false);
       }
     } catch (error) {
       console.error('Fullscreen error:', error);
     }
-  }, []);
+  }, [isFullscreen, isIOS]);
 
   // Listen for fullscreen changes
   useEffect(() => {
@@ -124,13 +194,23 @@ export default function VisionSection() {
       setIsFullscreen(!!document.fullscreenElement);
     };
 
+    const handleWebkitFullscreenChange = () => {
+      const webkitDoc = document as WebkitDocument;
+      setIsFullscreen(!!webkitDoc.webkitFullscreenElement);
+    };
+
     document.addEventListener('fullscreenchange', handleFullscreenChange);
-    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleWebkitFullscreenChange);
+    
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleWebkitFullscreenChange);
+    };
   }, []);
 
-  // Play/pause handler (only for control buttons)
+  // Play/pause handler with mobile-specific improvements
   const handlePlayPause = useCallback(async () => {
-    console.log('handlePlayPause called', { isLoading, isPlaying, videoRef: !!videoRef.current });
+    console.log('handlePlayPause called', { isLoading, isPlaying, videoRef: !!videoRef.current, isIOS, hasUserInteracted });
     
     if (!videoRef.current) {
       console.log('No video ref');
@@ -142,6 +222,9 @@ export default function VisionSection() {
       return;
     }
 
+    // Mark user interaction for autoplay policies
+    setHasUserInteracted(true);
+
     try {
       if (isPlaying) {
         console.log('Pausing video');
@@ -152,18 +235,27 @@ export default function VisionSection() {
         setIsLoading(true);
         setHasError(false);
         
+        // Wait for video to be ready
         if (videoRef.current.readyState < 3) {
           console.log('Video not ready, waiting...');
           await new Promise((resolve, reject) => {
             const video = videoRef.current!;
+            const timeout = setTimeout(() => {
+              video.removeEventListener('canplay', onCanPlay);
+              video.removeEventListener('error', onError);
+              reject(new Error('Video load timeout'));
+            }, 10000); // 10 second timeout
+
             const onCanPlay = () => {
               console.log('Video can play');
+              clearTimeout(timeout);
               video.removeEventListener('canplay', onCanPlay);
               video.removeEventListener('error', onError);
               resolve(void 0);
             };
             const onError = () => {
               console.log('Video error during load');
+              clearTimeout(timeout);
               video.removeEventListener('canplay', onCanPlay);
               video.removeEventListener('error', onError);
               reject(new Error('Video failed to load'));
@@ -173,10 +265,17 @@ export default function VisionSection() {
           });
         }
 
-        // Ensure video is unmuted when starting playback
-        videoRef.current.muted = false;
-        setIsMuted(false);
-        videoRef.current.volume = volume;
+        // Handle audio based on platform and user interaction
+        if (hasUserInteracted && !isIOS) {
+          // Only unmute if user has interacted and not on iOS
+          videoRef.current.muted = false;
+          setIsMuted(false);
+          videoRef.current.volume = volume;
+        } else {
+          // Keep muted for autoplay compliance
+          videoRef.current.muted = true;
+          setIsMuted(true);
+        }
         
         console.log('Playing video');
         await videoRef.current.play();
@@ -186,10 +285,15 @@ export default function VisionSection() {
     } catch (error) {
       console.error('Error with video playback:', error);
       setHasError(true);
+      
+      // If play failed due to autoplay policy, show a helpful message
+      if (error instanceof DOMException && error.name === 'NotAllowedError') {
+        console.log('Autoplay prevented by browser policy');
+      }
     } finally {
       setIsLoading(false);
     }
-  }, [isLoading, isPlaying, volume]);
+  }, [isLoading, isPlaying, volume, isIOS, hasUserInteracted]);
 
   // Unified progress handler for both mouse and touch
   const getProgressFromEvent = useCallback((e: React.MouseEvent | React.TouchEvent, element: HTMLElement) => {
@@ -301,13 +405,25 @@ export default function VisionSection() {
     setIsMuted(false);
   }, []);
 
-  // Mute toggle
+  // Mute toggle with improved iOS handling
   const toggleMute = useCallback(() => {
     if (!videoRef.current) return;
     
-    videoRef.current.muted = !isMuted;
-    setIsMuted(!isMuted);
-  }, [isMuted]);
+    // On iOS, we need to ensure user has interacted before unmuting
+    if (isIOS && !hasUserInteracted) {
+      setHasUserInteracted(true);
+    }
+    
+    const newMutedState = !isMuted;
+    videoRef.current.muted = newMutedState;
+    setIsMuted(newMutedState);
+    
+    // If unmuting, ensure volume is audible
+    if (!newMutedState && videoRef.current.volume === 0) {
+      videoRef.current.volume = 0.5;
+      setVolume(0.5);
+    }
+  }, [isMuted, isIOS, hasUserInteracted]);
 
   // Format time display
   const formatTime = useCallback((time: number) => {
@@ -323,9 +439,18 @@ export default function VisionSection() {
 
   const handleVideoError = useCallback(() => {
     console.error('Video error occurred');
+    console.log('Video error details:', {
+      isIOS,
+      isTouchDevice,
+      hasUserInteracted,
+      canAutoplay,
+      videoReadyState: videoRef.current?.readyState,
+      videoNetworkState: videoRef.current?.networkState,
+      videoError: videoRef.current?.error
+    });
     setHasError(true);
     setIsLoading(false);
-  }, []);
+  }, [isIOS, isTouchDevice, hasUserInteracted, canAutoplay]);
 
   const handleVideoLoadedData = useCallback(() => {
     console.log('Video data loaded');
@@ -392,17 +517,30 @@ export default function VisionSection() {
             relative rounded-2xl lg:rounded-3xl overflow-hidden
             aspect-video lg:aspect-auto lg:min-h-[500px] xl:min-h-[550px]
             bg-gray-900
+            touch-manipulation
           "
           onMouseMove={handleMouseMove}
           onMouseLeave={() => !isTouchDevice && isPlaying && setShowControls(false)}
           onTouchStart={handleTouch}
+          style={{
+            // Improve touch responsiveness on mobile
+            WebkitTouchCallout: 'none',
+            WebkitUserSelect: 'none',
+            userSelect: 'none',
+            // Prevent double-tap zoom on mobile
+            touchAction: 'manipulation',
+          }}
         >
         <video
           ref={videoRef}
           className="w-full h-full object-cover"
           src="/video/hero-optimized.mp4"
-          preload="auto"
+          preload={isTouchDevice ? "metadata" : "auto"}
           playsInline
+          muted={!hasUserInteracted || isIOS}
+          data-webkit-playsinline="true"
+          data-x5-video-player-type="h5"
+          data-x5-video-player-fullscreen="true"
           onTimeUpdate={handleTimeUpdate}
           onLoadedMetadata={handleLoadedMetadata}
           onVolumeChange={handleVolumeChange}
@@ -412,6 +550,14 @@ export default function VisionSection() {
           onCanPlay={handleVideoCanPlay}
           onSeeked={handleVideoSeeked}
           aria-label="Arfive product vision video"
+          style={{
+            // Prevent iOS video controls overlay
+            WebkitAppearance: 'none',
+            // Ensure video fills container properly on mobile
+            objectFit: 'cover',
+            width: '100%',
+            height: '100%'
+          }}
         >
           <source src="/video/hero-optimized.mp4" type="video/mp4" />
           Your browser does not support the video tag.
@@ -423,16 +569,28 @@ export default function VisionSection() {
             className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-[1px] transition-all duration-300"
           >
             {hasError ? (
-              <div className="flex flex-col items-center gap-3 text-white">
+              <div className="flex flex-col items-center gap-3 text-white max-w-xs text-center">
                 <svg className="w-12 h-12 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
                 </svg>
-                <span className="text-sm font-medium">Failed to load video</span>
+                <span className="text-sm font-medium">
+                  {isTouchDevice ? 'Video failed to load' : 'Failed to load video'}
+                </span>
+                {isTouchDevice && (
+                  <div className="text-xs opacity-75 space-y-1">
+                    <p>Try:</p>
+                    <ul className="text-left space-y-1">
+                      <li>• Checking your connection</li>
+                      <li>• Refreshing the page</li>
+                      {isIOS && <li>• Allowing video autoplay in Safari settings</li>}
+                    </ul>
+                  </div>
+                )}
                 <button 
                   onClick={handlePlayPause}
-                  className="text-xs opacity-75 hover:opacity-100 underline"
+                  className="text-xs opacity-75 hover:opacity-100 underline touch-manipulation px-3 py-2"
                 >
-                  Click to retry
+                  Tap to retry
                 </button>
               </div>
             ) : isLoading ? (
@@ -471,8 +629,17 @@ export default function VisionSection() {
                   <div className="absolute inset-0 w-16 sm:w-20 h-16 sm:h-20 bg-white/5 rounded-full animate-ping group-hover:animate-none pointer-events-none"></div>
                 </div>
                 <span className="text-white text-xs sm:text-sm font-medium opacity-90 group-hover:opacity-100 transition-opacity">
-                  Watch our vision
+                  {isIOS && !hasUserInteracted ? 'Tap to play (muted)' : 'Watch our vision'}
                 </span>
+                {/* Unmute hint for iOS after user has started playing */}
+                {isIOS && hasUserInteracted && isMuted && (
+                  <div className="flex items-center gap-2 mt-2 px-3 py-2 bg-black/50 rounded-lg">
+                    <svg className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+                    </svg>
+                    <span className="text-white text-xs">Video is muted - use controls to unmute</span>
+                  </div>
+                )}
               </div>
             )}
           </div>
