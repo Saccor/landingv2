@@ -44,9 +44,10 @@ export default function SocialMediaSection({ className = '' }: SocialMediaSectio
           {/* Social Grid: Mobile-first responsive grid with geometric pattern */}
           <div className="
             grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5
-            gap-3 sm:gap-4 lg:gap-6
+            gap-2 sm:gap-3 lg:gap-4
             w-full
-            max-w-5xl
+            max-w-4xl
+            justify-items-center
           ">
             {socialPlatforms.map((platform, index) => (
               <motion.a
