@@ -49,7 +49,7 @@ export default function SocialMediaSection({ className = '' }: SocialMediaSectio
             max-w-4xl
             justify-items-center
           ">
-            {socialPlatforms.map((platform, index) => (
+            {socialPlatforms.map((platform) => (
               <motion.a
                 key={platform.name}
                 href={platform.url}
