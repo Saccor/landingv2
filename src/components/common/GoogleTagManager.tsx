@@ -8,7 +8,7 @@ export default function GoogleTagManager() {
       {/* Initialize consent mode with defaults */}
       <Script
         id="gtm-consent-init"
-        strategy="beforeInteractive"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];
@@ -31,7 +31,7 @@ export default function GoogleTagManager() {
       {/* Load GTM */}
       <Script
         id="gtm-script"
-        strategy="beforeInteractive"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { getConsentSettings, saveConsentSettings, getConsentSummary } from '@/lib/consent';
+import { getConsentSettings, saveConsentSettings } from '@/lib/consent';
 
 export default function CookieSettings() {
   const [settings, setSettings] = useState({

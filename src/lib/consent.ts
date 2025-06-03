@@ -175,8 +175,9 @@ export const updateGTMConsent = (settings: { preferences: boolean; analytics: bo
     };
     
     // Also update consent via gtag for immediate effect
-    if (typeof (window as any).gtag === 'function') {
-      (window as any).gtag('consent', 'update', {
+    const windowWithGtag = window as typeof window & { gtag?: (...args: unknown[]) => void };
+    if (typeof windowWithGtag.gtag === 'function') {
+      windowWithGtag.gtag('consent', 'update', {
         'ad_storage': settings.marketing ? 'granted' : 'denied',
         'ad_user_data': settings.marketing ? 'granted' : 'denied',
         'ad_personalization': settings.marketing ? 'granted' : 'denied',

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { saveConsentSettings, initializeConsent, hasAnyConsent } from '@/lib/consent';
+import { saveConsentSettings, initializeConsent } from '@/lib/consent';
 
 export default function CookieConsent() {
   const [showBanner, setShowBanner] = useState(false);
