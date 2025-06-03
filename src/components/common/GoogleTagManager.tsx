@@ -5,6 +5,30 @@ import Script from 'next/script';
 export default function GoogleTagManager() {
   return (
     <>
+      {/* Initialize consent mode with defaults */}
+      <Script
+        id="gtm-consent-init"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            
+            // Set default consent state (all denied except essential)
+            gtag('consent', 'default', {
+              'ad_storage': 'denied',
+              'ad_user_data': 'denied',
+              'ad_personalization': 'denied',
+              'analytics_storage': 'denied',
+              'functionality_storage': 'granted',
+              'personalization_storage': 'granted',
+              'security_storage': 'granted'
+            });
+          `,
+        }}
+      />
+      
+      {/* Load GTM */}
       <Script
         id="gtm-script"
         strategy="beforeInteractive"

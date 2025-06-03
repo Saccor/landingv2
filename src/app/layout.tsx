@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
 import GoogleTagManager, { GoogleTagManagerNoScript } from "@/components/common/GoogleTagManager";
-import GoogleAnalytics from "@/components/common/GoogleAnalytics";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CookieConsent from "@/components/CookieConsent";
@@ -32,9 +31,6 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <GoogleTagManager />
-        <Suspense fallback={null}>
-          <GoogleAnalytics />
-        </Suspense>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased w-full overflow-x-hidden`}

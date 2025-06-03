@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { saveConsentSettings, initializeConsent, hasAnyConsent } from '@/lib/consent';
 
 export default function CookieConsent() {
   const [showBanner, setShowBanner] = useState(false);
@@ -10,8 +11,9 @@ export default function CookieConsent() {
   useEffect(() => {
     // Small delay to ensure page is loaded, then check if user has already made a choice
     const timer = setTimeout(() => {
-      const consent = localStorage.getItem('cookie-consent');
-      if (!consent) {
+      const existingConsent = initializeConsent();
+      
+      if (!existingConsent) {
         setShowBanner(true);
       }
     }, 500); // 500ms delay to ensure smooth page load
@@ -20,30 +22,27 @@ export default function CookieConsent() {
   }, []);
 
   const acceptAll = () => {
-    localStorage.setItem('cookie-consent', JSON.stringify({
+    saveConsentSettings({
       necessary: true,
+      preferences: true,
       analytics: true,
-      marketing: true,
-      timestamp: new Date().toISOString()
-    }));
+      marketing: true
+    });
     setShowBanner(false);
   };
 
   const acceptNecessary = () => {
-    localStorage.setItem('cookie-consent', JSON.stringify({
+    saveConsentSettings({
       necessary: true,
+      preferences: false,
       analytics: false,
-      marketing: false,
-      timestamp: new Date().toISOString()
-    }));
+      marketing: false
+    });
     setShowBanner(false);
   };
 
-  const saveSettings = (settings: { necessary: boolean; analytics: boolean; marketing: boolean }) => {
-    localStorage.setItem('cookie-consent', JSON.stringify({
-      ...settings,
-      timestamp: new Date().toISOString()
-    }));
+  const saveSettings = (settings: { necessary: boolean; preferences: boolean; analytics: boolean; marketing: boolean }) => {
+    saveConsentSettings(settings);
     setShowBanner(false);
     setShowSettings(false);
   };
@@ -83,20 +82,20 @@ export default function CookieConsent() {
               {/* Actions */}
               <div className="flex items-center gap-2 flex-shrink-0">
                 <button
+                  onClick={acceptNecessary}
+                  className="px-3 py-1.5 text-xs text-white border border-gray-600/50 rounded-lg hover:border-gray-500 hover:bg-gray-800 transition-all duration-200 font-poppins"
+                >
+                  Reject All
+                </button>
+                <button
                   onClick={() => setShowSettings(true)}
                   className="px-3 py-1.5 text-xs text-gray-300 hover:text-white border border-gray-600/50 rounded-lg hover:border-gray-500 transition-all duration-200 font-poppins"
                 >
                   Settings
                 </button>
                 <button
-                  onClick={acceptNecessary}
-                  className="px-3 py-1.5 text-xs text-gray-300 hover:text-white border border-gray-600/50 rounded-lg hover:border-gray-500 transition-all duration-200 font-poppins"
-                >
-                  Essential
-                </button>
-                <button
                   onClick={acceptAll}
-                  className="px-4 py-1.5 text-xs bg-white text-black rounded-lg hover:bg-gray-200 transition-all duration-200 font-medium font-poppins"
+                  className="px-3 py-1.5 text-xs bg-white text-black rounded-lg hover:bg-gray-200 transition-all duration-200 font-medium font-poppins"
                 >
                   Accept All
                 </button>
@@ -121,11 +120,12 @@ function CookieSettingsModal({
   onSave, 
   onClose 
 }: { 
-  onSave: (settings: { necessary: boolean; analytics: boolean; marketing: boolean }) => void;
+  onSave: (settings: { necessary: boolean; preferences: boolean; analytics: boolean; marketing: boolean }) => void;
   onClose: () => void;
 }) {
   const [settings, setSettings] = useState({
     necessary: true,
+    preferences: false,
     analytics: false,
     marketing: false
   });
@@ -133,6 +133,7 @@ function CookieSettingsModal({
   const acceptAllInModal = () => {
     const allAcceptedSettings = {
       necessary: true,
+      preferences: true,
       analytics: true,
       marketing: true
     };
@@ -170,6 +171,28 @@ function CookieSettingsModal({
                   <div className="w-10 h-5 bg-green-600 rounded-full flex items-center justify-end px-0.5">
                     <div className="w-3.5 h-3.5 bg-white rounded-full"></div>
                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Preferences Cookies */}
+            <div className="bg-[#252525] rounded-xl p-4 border border-gray-700/30">
+              <div className="flex items-start justify-between">
+                <div className="flex-1 mr-4">
+                  <h3 className="text-white font-semibold mb-2 font-poppins">Preferences Cookies</h3>
+                  <p className="text-gray-400 text-sm font-poppins leading-relaxed">
+                    Remember your settings and preferences to enhance your experience.
+                  </p>
+                </div>
+                <div className="flex-shrink-0">
+                  <button
+                    onClick={() => setSettings(prev => ({ ...prev, preferences: !prev.preferences }))}
+                    className={`w-10 h-5 rounded-full flex items-center transition-all duration-200 ${
+                      settings.preferences ? 'bg-green-600 justify-end' : 'bg-gray-600 justify-start'
+                    } px-0.5`}
+                  >
+                    <div className="w-3.5 h-3.5 bg-white rounded-full shadow-sm"></div>
+                  </button>
                 </div>
               </div>
             </div>
@@ -221,16 +244,16 @@ function CookieSettingsModal({
 
           <div className="flex flex-col sm:flex-row gap-3 mt-6 pt-6 border-t border-gray-700/30">
             <button
-              onClick={onClose}
-              className="px-4 py-2.5 text-gray-300 hover:text-white border border-gray-600/50 rounded-lg hover:border-gray-500 transition-all duration-200 font-poppins text-sm"
+              onClick={() => onSave({ necessary: true, preferences: false, analytics: false, marketing: false })}
+              className="px-4 py-2.5 text-white border border-gray-600/50 rounded-lg hover:border-gray-500 hover:bg-gray-800 transition-all duration-200 font-poppins text-sm"
             >
-              Cancel
+              Reject All
             </button>
             <button
               onClick={() => onSave(settings)}
               className="px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-200 font-medium font-poppins text-sm"
             >
-              Save Preferences
+              Save Settings
             </button>
             <button
               onClick={acceptAllInModal}

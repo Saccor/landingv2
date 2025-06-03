@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import CountdownTimer from '@/components/ui/countdown-timer';
 import SignupForm from '@/components/common/SignupForm';
 
-const LAUNCH_DATE = new Date(new Date().getFullYear(), 7, 11, 0, 0, 0); // August is month 7 (0-indexed)
+const LAUNCH_DATE = new Date(new Date().getFullYear(), 7, 1, 0, 0, 0); // August is month 7 (0-indexed)
 
 function getTimeLeft() {
   const now = new Date();

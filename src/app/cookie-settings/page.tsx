@@ -2,70 +2,77 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { getConsentSettings, saveConsentSettings, getConsentSummary } from '@/lib/consent';
 
 export default function CookieSettings() {
   const [settings, setSettings] = useState({
     necessary: true,
+    preferences: false,
     analytics: false,
     marketing: false
   });
   const [saved, setSaved] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Load current settings from localStorage
-    const consent = localStorage.getItem('cookie-consent');
-    if (consent) {
-      try {
-        const parsed = JSON.parse(consent);
-        setSettings({
-          necessary: parsed.necessary || true,
-          analytics: parsed.analytics || false,
-          marketing: parsed.marketing || false
-        });
-      } catch (error) {
-        console.error('Error parsing cookie consent:', error);
-      }
+    // Load current settings using centralized function
+    const existingConsent = getConsentSettings();
+    if (existingConsent) {
+      setSettings({
+        necessary: existingConsent.necessary,
+        preferences: existingConsent.preferences,
+        analytics: existingConsent.analytics,
+        marketing: existingConsent.marketing
+      });
     }
+    setLoading(false);
   }, []);
 
   const saveSettings = () => {
-    localStorage.setItem('cookie-consent', JSON.stringify({
-      ...settings,
-      timestamp: new Date().toISOString()
-    }));
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+    const result = saveConsentSettings(settings);
+    if (result) {
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3000);
+    }
   };
 
   const acceptAll = () => {
     const newSettings = {
       necessary: true,
+      preferences: true,
       analytics: true,
       marketing: true
     };
     setSettings(newSettings);
-    localStorage.setItem('cookie-consent', JSON.stringify({
-      ...newSettings,
-      timestamp: new Date().toISOString()
-    }));
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+    const result = saveConsentSettings(newSettings);
+    if (result) {
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3000);
+    }
   };
 
   const rejectAll = () => {
     const newSettings = {
       necessary: true,
+      preferences: false,
       analytics: false,
       marketing: false
     };
     setSettings(newSettings);
-    localStorage.setItem('cookie-consent', JSON.stringify({
-      ...newSettings,
-      timestamp: new Date().toISOString()
-    }));
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+    const result = saveConsentSettings(newSettings);
+    if (result) {
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3000);
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="bg-black min-h-screen flex items-center justify-center">
+        <div className="text-white">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-black min-h-screen">
@@ -81,6 +88,29 @@ export default function CookieSettings() {
               types of cookies you want to allow. Note that disabling some types of cookies 
               may impact your experience on our website.
             </p>
+
+            {/* Current Status */}
+            <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-4">
+              <h3 className="text-white font-semibold mb-3 text-sm">Current Status</h3>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div className="text-center">
+                  <div className={`w-3 h-3 rounded-full mx-auto mb-1 ${settings.necessary ? 'bg-green-500' : 'bg-gray-500'}`}></div>
+                  <div className="text-xs text-gray-400">Essential</div>
+                </div>
+                <div className="text-center">
+                  <div className={`w-3 h-3 rounded-full mx-auto mb-1 ${settings.preferences ? 'bg-green-500' : 'bg-gray-500'}`}></div>
+                  <div className="text-xs text-gray-400">Preferences</div>
+                </div>
+                <div className="text-center">
+                  <div className={`w-3 h-3 rounded-full mx-auto mb-1 ${settings.analytics ? 'bg-green-500' : 'bg-gray-500'}`}></div>
+                  <div className="text-xs text-gray-400">Analytics</div>
+                </div>
+                <div className="text-center">
+                  <div className={`w-3 h-3 rounded-full mx-auto mb-1 ${settings.marketing ? 'bg-green-500' : 'bg-gray-500'}`}></div>
+                  <div className="text-xs text-gray-400">Marketing</div>
+                </div>
+              </div>
+            </div>
 
             {saved && (
               <div className="bg-green-600/20 border border-green-600/50 rounded-lg p-4">
@@ -110,6 +140,33 @@ export default function CookieSettings() {
                 </div>
                 <div className="text-xs text-gray-500">
                   Always Active
+                </div>
+              </div>
+
+              {/* Preferences Cookies */}
+              <div className="bg-gray-800 rounded-xl p-6">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex-1 mr-4">
+                    <h3 className="text-white text-lg font-semibold mb-2">Preferences Cookies</h3>
+                    <p className="text-gray-400 text-sm leading-relaxed">
+                      These cookies enable the website to remember information that changes the way the website 
+                      behaves or looks, like your preferred language or the region that you are in. They help 
+                      provide a more personalized experience.
+                    </p>
+                  </div>
+                  <div className="flex-shrink-0">
+                    <button
+                      onClick={() => setSettings(prev => ({ ...prev, preferences: !prev.preferences }))}
+                      className={`w-12 h-6 rounded-full flex items-center transition-colors ${
+                        settings.preferences ? 'bg-green-600 justify-end' : 'bg-gray-600 justify-start'
+                      } px-1`}
+                    >
+                      <div className="w-4 h-4 bg-white rounded-full"></div>
+                    </button>
+                  </div>
+                </div>
+                <div className="text-xs text-gray-500">
+                  Used for: Language preferences, theme settings, user interface customization
                 </div>
               </div>
 

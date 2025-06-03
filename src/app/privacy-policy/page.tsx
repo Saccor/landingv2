@@ -50,11 +50,56 @@ export default function PrivacyPolicy() {
               <div className="mt-4">
                 <h3 className="text-white font-medium mb-2">Types of cookies we use:</h3>
                 <ul className="list-disc list-inside space-y-1">
-                  <li><strong>Necessary cookies:</strong> Essential for website functionality</li>
-                  <li><strong>Analytics cookies:</strong> Help us understand how you use our site</li>
-                  <li><strong>Marketing cookies:</strong> Used to show you relevant advertisements</li>
+                  <li><strong>Necessary cookies:</strong> Essential for website functionality (Legal basis: Legitimate interest)</li>
+                  <li><strong>Analytics cookies:</strong> Help us understand how you use our site (Legal basis: Consent)</li>
+                  <li><strong>Marketing cookies:</strong> Used to show you relevant advertisements (Legal basis: Consent)</li>
                 </ul>
               </div>
+              <div className="mt-4">
+                <h3 className="text-white font-medium mb-2">Cookie retention periods:</h3>
+                <ul className="list-disc list-inside space-y-1">
+                  <li><strong>Necessary cookies:</strong> Session-based, deleted when browser closes</li>
+                  <li><strong>Analytics cookies (Google Analytics):</strong> 26 months</li>
+                  <li><strong>Marketing cookies:</strong> Up to 24 months</li>
+                  <li><strong>Consent preferences:</strong> Stored locally until manually cleared</li>
+                </ul>
+              </div>
+            </section>
+
+            <section>
+              <h2 className="text-white text-xl font-semibold mb-4">3a. Legal Basis for Processing</h2>
+              <p>Under GDPR Article 6, we process your personal data based on the following legal grounds:</p>
+              <ul className="list-disc list-inside mt-2 space-y-1">
+                <li><strong>Consent (Art. 6(1)(a)):</strong> Newsletter subscriptions, analytics cookies, marketing cookies</li>
+                <li><strong>Legitimate Interest (Art. 6(1)(f)):</strong> Website functionality, necessary cookies, fraud prevention</li>
+                <li><strong>Legal Obligation (Art. 6(1)(c)):</strong> Tax records, compliance with applicable laws</li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="text-white text-xl font-semibold mb-4">3b. Third-Party Data Processors</h2>
+              <p>We share data with the following third-party processors:</p>
+              <ul className="list-disc list-inside mt-2 space-y-2">
+                <li><strong>Google Analytics (Google LLC):</strong> Website analytics - Data processed in US with adequate safeguards</li>
+                <li><strong>Google Tag Manager (Google LLC):</strong> Tag management - Data processed in US with adequate safeguards</li>
+                <li><strong>MailerLite (UAB MailerLite):</strong> Email marketing - Data processed in EU (Lithuania)</li>
+                <li><strong>Vercel Inc.:</strong> Website hosting - Data processed globally with adequate safeguards</li>
+              </ul>
+              <p className="mt-2">
+                All processors are bound by Data Processing Agreements ensuring GDPR compliance.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-white text-xl font-semibold mb-4">3c. Data Retention</h2>
+              <p>We retain your personal data for the following periods:</p>
+              <ul className="list-disc list-inside mt-2 space-y-1">
+                <li><strong>Email addresses (newsletter):</strong> Until you unsubscribe or 3 years of inactivity</li>
+                <li><strong>Website analytics data:</strong> 26 months (Google Analytics default)</li>
+                <li><strong>Cookie consent records:</strong> 12 months or until consent is withdrawn</li>
+                <li><strong>Contact form submissions:</strong> 2 years for customer service purposes</li>
+                <li><strong>Legal compliance data:</strong> As required by applicable law (typically 7 years)</li>
+              </ul>
             </section>
 
             <section>
