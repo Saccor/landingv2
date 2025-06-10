@@ -5,13 +5,13 @@ import Link from 'next/link';
 
 const Header = () => {
   return (
-    <header className="w-full h-20 bg-black">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 md:px-16 lg:px-32 h-full flex items-center justify-between relative">
+    <header className="w-full h-20 bg-black relative z-10">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 md:px-16 lg:px-32 h-full flex items-center justify-between">
         {/* Left: Empty for symmetry or future nav */}
         <div className="w-1/3" />
         {/* Center: Logo */}
-        <div className="flex justify-center items-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-1/3 pointer-events-none">
-          <Link href="/" className="relative w-28 h-10 flex-shrink-0 pointer-events-auto">
+        <div className="flex justify-center items-center w-1/3">
+          <Link href="/" className="relative w-28 h-10 flex-shrink-0">
             <Image
               src="/logo.svg"
               alt="Logo"

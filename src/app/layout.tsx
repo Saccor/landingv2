@@ -32,12 +32,14 @@ export default function RootLayout({
         <GoogleTagManager />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased w-full overflow-x-hidden`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased w-full overflow-x-hidden min-h-screen flex flex-col bg-black`}
       >
         <GoogleTagManagerNoScript />
-        <Header />
-        <main className="w-full max-w-full">{children}</main>
-        <Footer />
+        <div className="flex flex-col min-h-screen">
+          <Header />
+          <main className="flex-grow">{children}</main>
+          <Footer />
+        </div>
         <CookieConsent />
       </body>
     </html>
