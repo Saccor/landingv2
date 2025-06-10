@@ -27,35 +27,38 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="container mx-auto px-4 py-8">
-      <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-10">
-        {/* Image: Improved sizing and positioning to match reference */}
-        <div className="flex-1 flex items-center justify-center w-full">
-          <div
-            className="w-full aspect-[3/4] max-w-[clamp(280px,70vw,500px)] lg:max-w-[clamp(350px,45vw,600px)] rounded-2xl overflow-hidden shadow-2xl"
-            style={{
-              backgroundImage: "url('/heroimg.png')",
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              backgroundColor: '#1f2937',
-              minHeight: '300px',
-            }}
-          />
-        </div>
-        {/* Content: Fluid, mobile-first */}
-        <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6 md:space-y-8 px-0">
-          <h1 className="text-white font-bold font-montserrat text-[clamp(1.5rem,5vw,2.5rem)] leading-tight max-w-md">
+    <section className="w-full max-w-[1440px] mx-auto relative">
+      <div className="flex flex-col lg:flex-row items-center p-0 w-full max-w-[1440px] h-auto lg:h-[539.81px] mt-[97px] mx-auto">
+        {/* Hero Image */}
+        <div
+          className="w-full h-[294.65px] lg:w-[720px] lg:h-[539.81px] lg:flex-none lg:order-0 lg:flex-grow"
+          style={{
+            backgroundImage: "url('/heroimg.png')",
+            backgroundColor: '#1f2937',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          }}
+        />
+        {/* Content (mobile: below image, desktop: right side) */}
+        <div className="flex flex-col items-center w-full max-w-[393px] mx-auto lg:w-[720px] lg:h-[462.13px] lg:gap-[40px] gap-6 p-3 lg:p-0 lg:order-1 lg:flex-grow lg:max-w-none lg:mx-0 text-center">
+          <h1 className="font-montserrat font-bold text-[30px] leading-[38px] text-[#FCFCFD] text-center max-w-[369px] w-full">
             Shape the future of sustainable sound
           </h1>
-          {/* Timer: Improved responsive scaling for iPhone SE and all devices */}
-          <div className="w-full max-w-[min(100%,600px)] mx-auto px-2">
+          <div className="w-full h-[75.12px] flex items-center justify-center lg:w-[506.98px] lg:h-[112.13px] lg:flex-row lg:items-start lg:gap-[1.39px] lg:order-1 lg:flex-grow-0 lg:max-w-none lg:mx-0">
             <CountdownTimer {...countdown} />
           </div>
-          <p className="text-white font-poppins text-base md:text-lg leading-relaxed max-w-md">
-            Subscribe now — don&apos;t miss a thing. The countdown to launch has begun!
-          </p>
-          <SignupForm buttonText="Sign-up" />
+          <div className="w-full flex flex-col gap-2">
+            <p className="font-montserrat font-semibold text-base lg:text-lg text-white text-center">
+              <span className="font-bold">Sign up now</span> — countdown's ticking and secrets awaits.
+            </p>
+            <p className="font-montserrat text-base text-[#F5F5F5] text-center">
+              485 of 1000 spots already gone.
+            </p>
+          </div>
+          <div className="w-full flex items-center justify-center">
+            <SignupForm buttonText="Sign-up" />
+          </div>
         </div>
       </div>
     </section>
