@@ -339,156 +339,69 @@ export default function CountdownTimer({ days, hours, minutes, seconds }: Countd
     setMounted(true);
   }, []);
 
-  // Don't render until mounted to avoid hydration mismatches
   if (!mounted) return null;
 
-  // Dynamic sizing based on viewport width
-  const digitSize = "clamp(25px, 8vw, 50px)";
+  // Responsive digit size: min 32px, scales up to 48px
+  const digitSize = "clamp(32px, 4vw, 48px)";
 
   return (
-    <div className="w-full flex flex-col items-center">
-      <div className="w-full">
-        {/* Use flexbox with no gaps for seamless layout */}
-        <div className="flex justify-center items-center gap-0">
-          {/* Days */}
-          <div className="flex gap-0">
-            {days.split('').map((digit, i) => (
-              <div key={`days-${i}`} className="flex-shrink-0">
-                {renderDigit(digit, digitSize)}
-              </div>
-            ))}
-          </div>
-
-          {/* Colon */}
-          <div className="flex-shrink-0">
-            {renderColon(digitSize)}
-          </div>
-
-          {/* Hours */}
-          <div className="flex gap-0">
-            {hours.split('').map((digit, i) => (
-              <div key={`hours-${i}`} className="flex-shrink-0">
-                {renderDigit(digit, digitSize)}
-              </div>
-            ))}
-          </div>
-
-          {/* Colon */}
-          <div className="flex-shrink-0">
-            {renderColon(digitSize)}
-          </div>
-
-          {/* Minutes */}
-          <div className="flex gap-0">
-            {minutes.split('').map((digit, i) => (
-              <div key={`minutes-${i}`} className="flex-shrink-0">
-                {renderDigit(digit, digitSize)}
-              </div>
-            ))}
-          </div>
-
-          {/* Colon */}
-          <div className="flex-shrink-0">
-            {renderColon(digitSize)}
-          </div>
-
-          {/* Seconds */}
-          <div className="flex gap-0">
-            {seconds.split('').map((digit, i) => (
-              <div key={`seconds-${i}`} className="flex-shrink-0">
-                {renderDigit(digit, digitSize)}
-              </div>
-            ))}
-          </div>
-
-          {/* Empty column spacer after seconds */}
-          <div className="flex-shrink-0">
-            {renderEmptyColumn(digitSize)}
-          </div>
+    <div className="w-full max-w-[421px] mx-auto flex flex-col items-center">
+      {/* Timer digits */}
+      <div className="flex items-center justify-center gap-2 w-full">
+        {/* Days */}
+        <div className="flex">
+          {days.split('').map((digit, i) => (
+            <div key={`days-${i}`} className="flex-shrink-0">
+              {renderDigit(digit, digitSize)}
+            </div>
+          ))}
         </div>
-
-        {/* Labels - use flexbox to match the timer layout exactly */}
-        <div className="flex justify-center items-center gap-0 mt-2">
-          {/* Days label - matches width of 2 digits */}
-          <div 
-            className="text-center"
-            style={{
-              width: `calc(${digitSize} * 2 * 6 / 6)`, // 2 digits worth of space
-              fontSize: 'clamp(0.5rem, 2.5vw, 0.875rem)',
-            }}
-          >
-            <span className="text-white/70 font-montserrat uppercase tracking-wider">
-              Days
-            </span>
-          </div>
-
-          {/* Colon space */}
-          <div 
-            style={{
-              width: `calc(${digitSize} * 2 / 6)`, // Colon width
-            }}
-          ></div>
-
-          {/* Hours label - matches width of 2 digits */}
-          <div 
-            className="text-center"
-            style={{
-              width: `calc(${digitSize} * 2 * 6 / 6)`, // 2 digits worth of space
-              fontSize: 'clamp(0.5rem, 2.5vw, 0.875rem)',
-            }}
-          >
-            <span className="text-white/70 font-montserrat uppercase tracking-wider">
-              Hours
-            </span>
-          </div>
-
-          {/* Colon space */}
-          <div 
-            style={{
-              width: `calc(${digitSize} * 2 / 6)`, // Colon width
-            }}
-          ></div>
-
-          {/* Minutes label - matches width of 2 digits */}
-          <div 
-            className="text-center"
-            style={{
-              width: `calc(${digitSize} * 2 * 6 / 6)`, // 2 digits worth of space
-              fontSize: 'clamp(0.5rem, 2.5vw, 0.875rem)',
-            }}
-          >
-            <span className="text-white/70 font-montserrat uppercase tracking-wider">
-              Minutes
-            </span>
-          </div>
-
-          {/* Colon space */}
-          <div 
-            style={{
-              width: `calc(${digitSize} * 2 / 6)`, // Colon width
-            }}
-          ></div>
-
-          {/* Seconds label - matches width of 2 digits */}
-          <div 
-            className="text-center"
-            style={{
-              width: `calc(${digitSize} * 2 * 6 / 6)`, // 2 digits worth of space
-              fontSize: 'clamp(0.5rem, 2.5vw, 0.875rem)',
-            }}
-          >
-            <span className="text-white/70 font-montserrat uppercase tracking-wider">
-              Seconds
-            </span>
-          </div>
-
-          {/* Empty column space */}
-          <div 
-            style={{
-              width: `calc(${digitSize} * 1 / 6)`, // Empty column width
-            }}
-          ></div>
+        {/* Colon */}
+        <div className="flex-shrink-0">
+          {renderColon(digitSize)}
         </div>
+        {/* Hours */}
+        <div className="flex">
+          {hours.split('').map((digit, i) => (
+            <div key={`hours-${i}`} className="flex-shrink-0">
+              {renderDigit(digit, digitSize)}
+            </div>
+          ))}
+        </div>
+        {/* Colon */}
+        <div className="flex-shrink-0">
+          {renderColon(digitSize)}
+        </div>
+        {/* Minutes */}
+        <div className="flex">
+          {minutes.split('').map((digit, i) => (
+            <div key={`minutes-${i}`} className="flex-shrink-0">
+              {renderDigit(digit, digitSize)}
+            </div>
+          ))}
+        </div>
+        {/* Colon */}
+        <div className="flex-shrink-0">
+          {renderColon(digitSize)}
+        </div>
+        {/* Seconds */}
+        <div className="flex">
+          {seconds.split('').map((digit, i) => (
+            <div key={`seconds-${i}`} className="flex-shrink-0">
+              {renderDigit(digit, digitSize)}
+            </div>
+          ))}
+        </div>
+      </div>
+      {/* Labels */}
+      <div className="flex justify-center w-full mt-2 text-xs font-mono text-white/80 gap-2">
+        <div className="flex-1 text-center">Days</div>
+        <div className="w-[24px]" />
+        <div className="flex-1 text-center">Hours</div>
+        <div className="w-[24px]" />
+        <div className="flex-1 text-center">Minutes</div>
+        <div className="w-[24px]" />
+        <div className="flex-1 text-center">Seconds</div>
       </div>
     </div>
   );
