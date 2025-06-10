@@ -50,7 +50,7 @@ export default function HeroSection() {
           </div>
           <div className="w-full flex flex-col gap-2">
             <p className="font-montserrat font-semibold text-base lg:text-lg text-white text-center">
-              <span className="font-bold">Sign up now</span> — countdown's ticking and secrets awaits.
+              <span className="font-bold">Sign up now</span> — countdown&apos;s ticking and secrets awaits.
             </p>
             <p className="font-montserrat text-base text-[#F5F5F5] text-center">
               485 of 1000 spots already gone.
