@@ -6,7 +6,7 @@ import CountdownTimer from '@/components/ui/CountdownTimer';
 export default function HeroSection() {
   return (
     <section className="w-full max-w-[1440px] mx-auto relative">
-      <div className="flex flex-col lg:flex-row items-center w-full max-w-[1440px] h-auto lg:h-[539.81px] mx-auto p-0">
+      <div className="flex flex-col lg:flex-row items-center w-full max-w-[1440px] h-auto lg:h-[539.81px] lg:mt-[97px] mx-auto p-0">
         {/* Hero Image */}
         <div
           className="
