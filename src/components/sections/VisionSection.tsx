@@ -253,13 +253,26 @@ export default function VisionSection() {
 
   return (
     <section className="bg-black overflow-hidden">
-      <div className="w-full max-w-[353px] mx-auto py-8 sm:py-12 lg:py-16">
-        <div className="flex flex-col items-center gap-5">
+      <div className="w-full max-w-[353px] lg:max-w-[1440px] mx-auto py-8 sm:py-12 lg:py-16">
+        <div className="flex flex-col lg:flex-row items-center gap-5 lg:gap-8">
           
-          {/* Video Container */}
+          {/* Vision Text Box - Left on desktop, bottom on mobile */}
+          <div className="order-2 w-[353px] h-[460px] bg-[var(--Gray-900,#1b1b1b)] rounded-sm flex justify-center items-center">
+            <div className="w-[305px] h-[360px] mx-auto bg-gradient-to-b from-white to-[#C8A596] bg-clip-text text-transparent text-center text-[20px] leading-[30px] font-semibold font-['Montserrat'] flex flex-col h-full gap-y-4">
+              <p className="m-0 p-0">Arfve isn't just earbuds.</p>
+              <p className="m-0 p-0">
+                It's a modular system of personalized sound, intelligent design, and circular thinking —<br className="hidden lg:block" />
+                built to last, adapt, and be yours.
+              </p>
+              <p className="m-0 p-0">Rooted in Scandinavian minimalism.</p>
+              <p className="m-0 p-0">Made by Arfve. Defined by you.</p>
+            </div>
+          </div>
+
+          {/* Video Container - Right on desktop, top on mobile */}
           <div 
             ref={containerRef}
-            className={`flex flex-col justify-center items-center ${isFullscreen ? 'p-0 w-screen h-screen fixed inset-0 z-50' : 'p-5 gap-3 w-full h-[210px] rounded-sm'} bg-gray-900 relative overflow-hidden cursor-pointer transition-all duration-300`}
+            className={`order-1 lg:order-2 flex flex-col justify-center items-center ${isFullscreen ? 'p-0 w-screen h-screen fixed inset-0 z-50' : 'p-5 gap-3 w-full h-[210px] lg:w-[875px] lg:h-[505px] rounded-sm'} bg-gray-900 relative overflow-hidden cursor-pointer transition-all duration-300`}
             onMouseMove={() => setShowControls(true)}
             onMouseLeave={() => isPlaying && !isMobile && setShowControls(false)}
             onClick={handlePlayPause}
@@ -296,7 +309,7 @@ export default function VisionSection() {
                          {/* Video Controls */}
              {isPlaying && (
                <div 
-                 className={`absolute inset-0 transition-opacity duration-300 ${showControls ? 'opacity-100' : 'opacity-0'} pointer-events-none z-20`}
+                 className={`absolute inset-0 transition-opacity duration-300 ${showControls ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'} z-20`}
                  onMouseMove={() => setShowControls(true)}
                  onClick={(e) => e.stopPropagation()}
                >
@@ -395,16 +408,6 @@ export default function VisionSection() {
                  </div>
                </div>
              )}
-          </div>
-
-          {/* Vision Text Box */}
-          <div className="w-full h-[460px] bg-[var(--Gray-900,#1b1b1b)] rounded-sm flex flex-col justify-center items-center">
-            <div className="w-[305px] h-[360px] flex flex-col justify-center items-center text-center text-xl font-semibold font-['Montserrat'] leading-relaxed space-y-6">
-              <p className="text-white">Arfve isn't just earbuds.</p>
-              <p className="bg-gradient-to-b from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">It's a modular system of personalized sound, intelligent design, and circular thinking — built to last, adapt, and be yours.</p>
-              <p className="bg-gradient-to-b from-gray-400 to-[#C8A596] bg-clip-text text-transparent">Rooted in Scandinavian minimalism.</p>
-              <p className="text-[#C8A596]">Made by Arfve. Defined by you.</p>
-            </div>
           </div>
         </div>
       </div>
