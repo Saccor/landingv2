@@ -171,18 +171,18 @@ export default function VisionSection() {
       if (isFullscreen) {
         if (document.exitFullscreen) {
           await document.exitFullscreen();
-        } else if ((document as any).webkitExitFullscreen) {
-          (document as any).webkitExitFullscreen();
-        } else if ((document as any).mozCancelFullScreen) {
-          (document as any).mozCancelFullScreen();
+        } else if ('webkitExitFullscreen' in document) {
+          await (document as Document & { webkitExitFullscreen: () => Promise<void> }).webkitExitFullscreen();
+        } else if ('mozCancelFullScreen' in document) {
+          await (document as Document & { mozCancelFullScreen: () => Promise<void> }).mozCancelFullScreen();
         }
       } else {
-        if (containerRef.current.requestFullscreen) {
+        if (containerRef.current && 'requestFullscreen' in containerRef.current) {
           await containerRef.current.requestFullscreen();
-        } else if ((containerRef.current as any).webkitRequestFullscreen) {
-          await (containerRef.current as any).webkitRequestFullscreen();
-        } else if ((containerRef.current as any).mozRequestFullScreen) {
-          await (containerRef.current as any).mozRequestFullScreen();
+        } else if (containerRef.current && 'webkitRequestFullscreen' in containerRef.current) {
+          await (containerRef.current as Element & { webkitRequestFullscreen: () => Promise<void> }).webkitRequestFullscreen();
+        } else if (containerRef.current && 'mozRequestFullScreen' in containerRef.current) {
+          await (containerRef.current as Element & { mozRequestFullScreen: () => Promise<void> }).mozRequestFullScreen();
         }
       }
     } catch (error) {
@@ -285,9 +285,9 @@ export default function VisionSection() {
           {/* Vision Text Box - Left on desktop, bottom on mobile */}
           <div className="order-2 w-[353px] h-[460px] lg:w-[505px] lg:h-[505px] bg-[var(--Gray-900,#1b1b1b)] rounded-sm flex justify-center items-center">
             <div className="w-[305px] h-[360px] mx-auto bg-gradient-to-b from-white to-[#C8A596] bg-clip-text text-transparent text-center text-[20px] leading-[30px] font-semibold font-['Montserrat'] flex flex-col justify-between">
-              <p className="m-0 p-0">Arfve isn't just earbuds.</p>
+              <p className="m-0 p-0">Arfve isn&apos;t just earbuds.</p>
               <p className="m-0 p-0">
-                It's a modular system of personalized sound, intelligent design, and circular thinking —<br className="hidden lg:block" />
+                It&apos;s a modular system of personalized sound, intelligent design, and circular thinking —<br className="hidden lg:block" />
                 built to last, adapt, and be yours.
               </p>
               <p className="m-0 p-0">Rooted in Scandinavian minimalism.</p>

@@ -80,7 +80,7 @@ export default function GrayBoxSection() {
                   <span className="font-montserrat font-semibold text-white text-lg lg:text-xl">Recycled materials</span>
                 </div>
                 <p className="font-montserrat text-sm lg:text-base text-[#F5F5F5] ml-7">
-                  Crafted from recycled materials and designed to be 100% serviceable. Replace only what's needed, and extend lifespan with every update.
+                  Crafted from recycled materials and designed to be 100% serviceable. Replace only what&apos;s needed, and extend lifespan with every update.
                 </p>
               </div>
             </div>
