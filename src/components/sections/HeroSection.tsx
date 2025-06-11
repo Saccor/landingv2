@@ -17,7 +17,6 @@ export default function HeroSection() {
           "
           style={{
             backgroundImage: "url('/heroimg.png')",
-            backgroundColor: '#1f2937',
             backgroundSize: 'contain',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
