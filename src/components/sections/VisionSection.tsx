@@ -258,7 +258,7 @@ export default function VisionSection() {
           
           {/* Vision Text Box - Left on desktop, bottom on mobile */}
           <div className="order-2 w-[353px] h-[460px] bg-[var(--Gray-900,#1b1b1b)] rounded-sm flex justify-center items-center">
-            <div className="w-[305px] h-[360px] mx-auto bg-gradient-to-b from-white to-[#C8A596] bg-clip-text text-transparent text-center text-[20px] leading-[30px] font-semibold font-['Montserrat'] flex flex-col h-full gap-y-4">
+            <div className="w-[305px] h-[360px] mx-auto bg-gradient-to-b from-white to-[#C8A596] bg-clip-text text-transparent text-center text-[20px] leading-[30px] font-semibold font-['Montserrat'] flex flex-col justify-between">
               <p className="m-0 p-0">Arfve isn't just earbuds.</p>
               <p className="m-0 p-0">
                 It's a modular system of personalized sound, intelligent design, and circular thinking —<br className="hidden lg:block" />
@@ -272,7 +272,7 @@ export default function VisionSection() {
           {/* Video Container - Right on desktop, top on mobile */}
           <div 
             ref={containerRef}
-            className={`order-1 lg:order-2 flex flex-col justify-center items-center ${isFullscreen ? 'p-0 w-screen h-screen fixed inset-0 z-50' : 'p-5 gap-3 w-full h-[210px] lg:w-[875px] lg:h-[505px] rounded-sm'} bg-gray-900 relative overflow-hidden cursor-pointer transition-all duration-300`}
+            className={`order-1 lg:order-2 relative w-full h-[210px] lg:w-[875px] lg:h-[505px] bg-gray-900 rounded-sm overflow-hidden cursor-pointer transition-all duration-300`}
             onMouseMove={() => setShowControls(true)}
             onMouseLeave={() => isPlaying && !isMobile && setShowControls(false)}
             onClick={handlePlayPause}
@@ -280,7 +280,7 @@ export default function VisionSection() {
           >
             <video
               ref={videoRef}
-              className="absolute inset-0 w-full h-full object-cover"
+              className="w-full h-full object-cover"
               src="/video/hero-optimized.mp4"
               muted={isMuted}
               playsInline
