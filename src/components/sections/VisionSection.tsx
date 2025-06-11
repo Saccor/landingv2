@@ -71,35 +71,61 @@ export default function VisionSection() {
   };
 
   const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-    const newTime = getProgressFromEvent(e);
-    if (videoRef.current && newTime > 0) {
-      videoRef.current.currentTime = newTime;
-      setCurrentTime(newTime);
-    }
+    if (!videoRef.current) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const pos = (e.clientX - rect.left) / rect.width;
+    videoRef.current.currentTime = pos * (videoRef.current.duration || 0);
     setShowControls(true);
   };
 
   const handleProgressMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
+    e.preventDefault();
     setIsDragging(true);
-    const newTime = getProgressFromEvent(e);
-    if (videoRef.current && newTime > 0) {
-      videoRef.current.currentTime = newTime;
-      setCurrentTime(newTime);
-    }
-    setShowControls(true);
+    handleProgressClick(e);
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!videoRef.current || !isDragging) return;
+      const rect = (e.target as HTMLDivElement).getBoundingClientRect();
+      const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      videoRef.current.currentTime = pos * (videoRef.current.duration || 0);
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
   };
 
   const handleProgressTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    e.stopPropagation();
+    e.preventDefault();
     setIsDragging(true);
-    const newTime = getProgressFromEvent(e);
-    if (videoRef.current && newTime > 0) {
-      videoRef.current.currentTime = newTime;
-      setCurrentTime(newTime);
+    const touch = e.touches[0];
+    const rect = e.currentTarget.getBoundingClientRect();
+    const pos = Math.max(0, Math.min(1, (touch.clientX - rect.left) / rect.width));
+    if (videoRef.current) {
+      videoRef.current.currentTime = pos * (videoRef.current.duration || 0);
     }
-    setShowControls(true);
+    
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!videoRef.current || !isDragging) return;
+      const touch = e.touches[0];
+      const rect = (e.target as HTMLDivElement).getBoundingClientRect();
+      const pos = Math.max(0, Math.min(1, (touch.clientX - rect.left) / rect.width));
+      videoRef.current.currentTime = pos * (videoRef.current.duration || 0);
+    };
+
+    const handleTouchEnd = () => {
+      setIsDragging(false);
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
+    };
+
+    document.addEventListener('touchmove', handleTouchMove);
+    document.addEventListener('touchend', handleTouchEnd);
   };
 
   const handleVolumeChange = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -257,7 +283,7 @@ export default function VisionSection() {
         <div className="flex flex-col lg:flex-row items-center gap-5 lg:gap-8">
           
           {/* Vision Text Box - Left on desktop, bottom on mobile */}
-          <div className="order-2 w-[353px] h-[460px] bg-[var(--Gray-900,#1b1b1b)] rounded-sm flex justify-center items-center">
+          <div className="order-2 w-[353px] h-[460px] lg:w-[505px] lg:h-[505px] bg-[var(--Gray-900,#1b1b1b)] rounded-sm flex justify-center items-center">
             <div className="w-[305px] h-[360px] mx-auto bg-gradient-to-b from-white to-[#C8A596] bg-clip-text text-transparent text-center text-[20px] leading-[30px] font-semibold font-['Montserrat'] flex flex-col justify-between">
               <p className="m-0 p-0">Arfve isn't just earbuds.</p>
               <p className="m-0 p-0">
@@ -309,7 +335,7 @@ export default function VisionSection() {
                          {/* Video Controls */}
              {isPlaying && (
                <div 
-                 className={`absolute inset-0 transition-opacity duration-300 ${showControls ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'} z-20`}
+                 className={`absolute inset-0 transition-opacity duration-300 ${(showControls || isDragging) ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'} z-30`}
                  onMouseMove={() => setShowControls(true)}
                  onClick={(e) => e.stopPropagation()}
                >
@@ -345,6 +371,8 @@ export default function VisionSection() {
                          onClick={handleControlPlayPause} 
                          className={`hover:scale-110 transition-transform ${isFullscreen ? 'p-2' : 'p-1'}`}
                          onMouseEnter={() => setShowControls(true)}
+                         aria-label={isPlaying ? 'Pause video' : 'Play video'}
+                         tabIndex={0}
                        >
                          <svg className={`${isFullscreen ? 'w-6 h-6' : 'w-4 h-4'}`} fill="currentColor" viewBox="0 0 24 24">
                            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
@@ -355,6 +383,8 @@ export default function VisionSection() {
                          onClick={toggleMute} 
                          className={`hover:scale-110 transition-transform ${isFullscreen ? 'p-2' : 'p-1'}`}
                          onMouseEnter={() => setShowControls(true)}
+                         aria-label={isMuted ? 'Unmute video' : 'Mute video'}
+                         tabIndex={0}
                        >
                          <svg className={`${isFullscreen ? 'w-6 h-6' : 'w-4 h-4'}`} fill="currentColor" viewBox="0 0 24 24">
                            {isMuted ? (
@@ -370,6 +400,8 @@ export default function VisionSection() {
                          onClick={handleVolumeChange}
                          onMouseMove={() => setShowControls(true)}
                          onMouseEnter={() => setShowControls(true)}
+                         aria-label="Change volume"
+                         tabIndex={0}
                        >
                          <div 
                            className="h-full bg-white rounded-full"
@@ -394,6 +426,8 @@ export default function VisionSection() {
                           }}
                           className={`hover:scale-110 transition-transform touch-manipulation ${isFullscreen ? 'p-2' : 'p-1'}`}
                           onMouseEnter={() => setShowControls(true)}
+                          aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+                          tabIndex={0}
                         >
                           <svg className={`${isFullscreen ? 'w-6 h-6' : 'w-4 h-4'}`} fill="currentColor" viewBox="0 0 24 24">
                            {isFullscreen ? (
