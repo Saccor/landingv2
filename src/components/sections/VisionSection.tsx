@@ -279,8 +279,8 @@ export default function VisionSection() {
 
   return (
     <section className="bg-black overflow-hidden">
-      <div className="w-full max-w-[353px] lg:max-w-[1440px] mx-auto py-8 sm:py-12 lg:py-16">
-        <div className="flex flex-col lg:flex-row items-center gap-5 lg:gap-8">
+      <div className="w-full flex flex-col items-center pt-8 sm:pt-12 lg:pt-16">
+        <div className="flex flex-col lg:flex-row items-center gap-5 lg:gap-5">
           
           {/* Vision Text Box - Left on desktop, bottom on mobile */}
           <div className="order-2 w-[353px] h-[460px] lg:w-[505px] lg:h-[505px] bg-[var(--Gray-900,#1b1b1b)] rounded-sm flex justify-center items-center">
