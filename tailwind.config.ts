@@ -72,6 +72,11 @@ export default {
         'fluid-5xl': ['clamp(3rem, 2.4rem + 2.5vw, 4rem)', { lineHeight: '1.1' }],
         'fluid-6xl': ['clamp(3.75rem, 3rem + 3vw, 5rem)', { lineHeight: '1.1' }],
       },
+
+      fontFamily: {
+        'montserrat': ['Montserrat', 'sans-serif'],
+        'poppins': ['Poppins', 'sans-serif'],
+      },
       
 
       
