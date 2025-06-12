@@ -13,9 +13,9 @@ export default function FeatureSection() {
     <section className="bg-black overflow-hidden">
       <div className="w-full flex flex-col items-center">
         {/* Gray box: heading at the top, features grid below */}
-        <div className="bg-[var(--Gray-900,#1b1b1b)] rounded-xl shadow-lg w-[353px] lg:w-[1400px] flex flex-col items-start px-6 py-7 mt-[20px] lg:px-16 lg:py-0">
+        <div className="bg-[var(--Gray-900,#1b1b1b)] rounded-xl shadow-lg w-[353px] lg:w-[1400px] lg:h-[587px] flex flex-col items-start px-6 py-7 mt-[20px] lg:px-16 lg:py-0 lg:justify-center">
           {/* Heading inside the gray box, left-aligned, width matches features */}
-          <h2 className="font-montserrat font-bold text-[24px] leading-[32px] bg-gradient-to-r from-white to-[#C8A596] bg-clip-text text-transparent text-left mb-[50px] lg:mb-8 lg:text-[28px] lg:leading-[36px] w-full max-w-[305px] lg:max-w-none">
+          <h2 className="font-montserrat font-bold text-[24px] leading-[32px] bg-gradient-to-r from-white to-[#C8A596] bg-clip-text text-transparent text-left mb-[50px] lg:mb-[50px] lg:text-[28px] lg:leading-[36px] w-full max-w-[305px] lg:max-w-none">
             <span className="block lg:hidden">
               Earbuds Engineered<br />
               Without Compromise —<br />
