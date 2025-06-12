@@ -298,7 +298,7 @@ export default function VisionSection() {
           {/* Video Container - Right on desktop, top on mobile */}
           <div 
             ref={containerRef}
-            className={`order-1 lg:order-2 relative w-full h-[210px] lg:w-[875px] lg:h-[505px] bg-gray-900 rounded-sm overflow-hidden cursor-pointer transition-all duration-300`}
+            className="order-1 lg:order-2 relative w-full h-[210px] lg:w-[875px] lg:h-[505px] bg-gray-900 rounded-sm overflow-hidden cursor-pointer transition-all duration-300 p-0 m-0"
             onMouseMove={() => setShowControls(true)}
             onMouseLeave={() => isPlaying && !isMobile && setShowControls(false)}
             onClick={handlePlayPause}
@@ -306,7 +306,7 @@ export default function VisionSection() {
           >
             <video
               ref={videoRef}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover p-0 m-0"
               src="/video/hero-optimized.mp4"
               muted={isMuted}
               playsInline
@@ -319,7 +319,7 @@ export default function VisionSection() {
 
             {/* Play Button Overlay */}
             {!isPlaying && (
-              <div className="absolute inset-0 flex items-center justify-center bg-black/30 z-10">
+              <div className="absolute inset-0 flex items-center justify-center z-10">
                 {isLoading ? (
                   <div className="w-12 h-12 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                 ) : (
