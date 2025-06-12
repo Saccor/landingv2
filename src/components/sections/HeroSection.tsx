@@ -25,7 +25,7 @@ export default function HeroSection() {
           }}
         />
         {/* Content (mobile: below image, desktop: right side) */}
-        <div className="flex flex-col items-center w-full max-w-[393px] mx-auto lg:w-[720px] lg:h-[462.13px] lg:gap-[40px] gap-6 p-3 lg:p-0 text-center lg:justify-center">
+        <div className="flex flex-col items-center w-full max-w-[393px] mx-auto lg:w-[720px] lg:h-[462.13px] lg:gap-[40px] gap-6 text-center lg:justify-center">
           <h1 className="font-montserrat font-bold text-[30px] leading-[38px] text-[#FCFCFD] max-w-[369px] w-full">
             Shape the future of sustainable sound
           </h1>

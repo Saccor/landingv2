@@ -73,8 +73,8 @@ export default function SignupForm({
   };
 
   return (
-    <div className={`w-full max-w-md flex flex-col items-center gap-3 ${className}`}>
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row items-center gap-3 w-full px-4 sm:px-0">
+    <div className={`w-full flex flex-col items-center gap-3 ${className}`}>
+      <form onSubmit={handleSubmit} className="flex flex-row items-center justify-center gap-3 w-[369px] h-[44px] p-0 bg-transparent">
         <input
           type="email"
           value={email}
@@ -82,11 +82,13 @@ export default function SignupForm({
           required
           placeholder="email"
           className="
-            w-full h-12 px-4 rounded-full
-            border border-white/20 bg-transparent
+            w-[227px] h-[44px] px-5 py-2.5 rounded-full
+            border border-white bg-transparent
             text-white placeholder:text-gray-400
             text-sm font-poppins
             focus:outline-none focus:border-white/40
+            transition-all duration-200
+            box-border
           "
         />
         <Button
@@ -94,7 +96,7 @@ export default function SignupForm({
           variant="primary"
           size="md"
           isLoading={status === 'loading'}
-          className="w-full sm:w-auto"
+          className="h-full px-6 rounded-full whitespace-nowrap"
         >
           {buttonText}
         </Button>
