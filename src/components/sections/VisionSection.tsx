@@ -279,8 +279,8 @@ export default function VisionSection() {
 
   return (
     <section className="bg-black overflow-hidden">
-      <div className="w-full max-w-[353px] lg:max-w-[1440px] mx-auto py-8 sm:py-12 lg:py-16">
-        <div className="flex flex-col lg:flex-row items-center gap-5 lg:gap-8">
+      <div className="w-full flex flex-col items-center pt-8 sm:pt-12 lg:pt-16">
+        <div className="flex flex-col lg:flex-row items-center gap-5 lg:gap-5">
           
           {/* Vision Text Box - Left on desktop, bottom on mobile */}
           <div className="order-2 w-[353px] h-[460px] lg:w-[505px] lg:h-[505px] bg-[var(--Gray-900,#1b1b1b)] rounded-sm flex justify-center items-center">
@@ -298,7 +298,7 @@ export default function VisionSection() {
           {/* Video Container - Right on desktop, top on mobile */}
           <div 
             ref={containerRef}
-            className={`order-1 lg:order-2 relative w-full h-[210px] lg:w-[875px] lg:h-[505px] bg-gray-900 rounded-sm overflow-hidden cursor-pointer transition-all duration-300`}
+            className="order-1 lg:order-2 relative w-full h-[210px] lg:w-[875px] lg:h-[505px] bg-gray-900 rounded-sm overflow-hidden cursor-pointer transition-all duration-300 p-0 m-0"
             onMouseMove={() => setShowControls(true)}
             onMouseLeave={() => isPlaying && !isMobile && setShowControls(false)}
             onClick={handlePlayPause}
@@ -306,7 +306,7 @@ export default function VisionSection() {
           >
             <video
               ref={videoRef}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover p-0 m-0"
               src="/video/hero-optimized.mp4"
               muted={isMuted}
               playsInline
@@ -319,7 +319,7 @@ export default function VisionSection() {
 
             {/* Play Button Overlay */}
             {!isPlaying && (
-              <div className="absolute inset-0 flex items-center justify-center bg-black/30 z-10">
+              <div className="absolute inset-0 flex items-center justify-center z-10">
                 {isLoading ? (
                   <div className="w-12 h-12 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                 ) : (
