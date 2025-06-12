@@ -278,8 +278,8 @@ export default function VisionSection() {
   }, [isPlaying, showControls, isDragging]);
 
   return (
-    <section className="bg-black overflow-hidden">
-      <div className="w-full flex flex-col items-center pt-8 sm:pt-12 lg:pt-16">
+    <section className="bg-black overflow-hidden mt-5">
+      <div className="w-full flex flex-col items-center">
         <div className="flex flex-col lg:flex-row items-center gap-5 lg:gap-5">
           
           {/* Vision Text Box - Left on desktop, bottom on mobile */}
