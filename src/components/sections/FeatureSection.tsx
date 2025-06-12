@@ -1,12 +1,12 @@
 'use client';
 
 import React from 'react';
-import WavesIcon from '@/components/icons/featuresIcons/waves.svg';
-import BatteryIcon from '@/components/icons/featuresIcons/Battery.svg';
-import CircleIcon from '@/components/icons/featuresIcons/Circle.svg';
-import GamepadIcon from '@/components/icons/featuresIcons/gamepad.svg';
-import SoundwaveIcon from '@/components/icons/featuresIcons/soundwave.svg';
-import LeafIcon from '@/components/icons/featuresIcons/Leaf.svg';
+import WavesIcon from '@/components/icons/featuresIcons/waves';
+import BatteryIcon from '@/components/icons/featuresIcons/Battery';
+import CircleIcon from '@/components/icons/featuresIcons/Circle';
+import GamepadIcon from '@/components/icons/featuresIcons/gamepad';
+import SoundwaveIcon from '@/components/icons/featuresIcons/soundwave';
+import LeafIcon from '@/components/icons/featuresIcons/Leaf';
 
 export default function FeatureSection() {
   return (
