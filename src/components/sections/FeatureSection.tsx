@@ -8,7 +8,7 @@ import GamepadIcon from '@/components/icons/featuresIcons/gamepad.svg';
 import SoundwaveIcon from '@/components/icons/featuresIcons/soundwave.svg';
 import LeafIcon from '@/components/icons/featuresIcons/Leaf.svg';
 
-export default function GrayBoxSection() {
+export default function FeatureSection() {
   return (
     <section className="bg-black overflow-hidden">
       <div className="w-full flex flex-col items-center">
