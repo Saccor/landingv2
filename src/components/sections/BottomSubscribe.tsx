@@ -35,7 +35,7 @@ export default function BottomSubscribe({ className = '' }: BottomSubscribeProps
               text-left
               mb-4
             ">
-              <span className="font-bold">Sign up now</span> — countdown's ticking<br/>
+              <span className="font-bold">Sign up now</span> — countdown&apos;s ticking<br/>
               and secrets awaits.
             </p>
             <p className="
