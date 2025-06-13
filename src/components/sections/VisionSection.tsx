@@ -278,8 +278,8 @@ export default function VisionSection() {
   }, [isPlaying, showControls, isDragging]);
 
   return (
-    <section className="bg-black overflow-hidden">
-      <div className="w-full flex flex-col items-center pt-8 sm:pt-12 lg:pt-16">
+    <section className="bg-black overflow-hidden mt-5">
+      <div className="w-full flex flex-col items-center">
         <div className="flex flex-col lg:flex-row items-center gap-5 lg:gap-5">
           
           {/* Vision Text Box - Left on desktop, bottom on mobile */}
@@ -298,7 +298,7 @@ export default function VisionSection() {
           {/* Video Container - Right on desktop, top on mobile */}
           <div 
             ref={containerRef}
-            className="order-1 lg:order-2 relative w-full h-[210px] lg:w-[875px] lg:h-[505px] bg-gray-900 rounded-sm overflow-hidden cursor-pointer transition-all duration-300 p-0 m-0"
+            className="order-1 lg:order-2 relative w-[353px] h-[210px] lg:w-[875px] lg:h-[505px] bg-gray-900 rounded-sm overflow-hidden cursor-pointer transition-all duration-300 p-0 m-0"
             onMouseMove={() => setShowControls(true)}
             onMouseLeave={() => isPlaying && !isMobile && setShowControls(false)}
             onClick={handlePlayPause}
