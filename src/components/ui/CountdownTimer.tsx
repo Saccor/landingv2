@@ -103,7 +103,7 @@ const CountdownTimer: React.FC = () => {
   );
 
   return (
-    <div className="flex items-start justify-center">
+    <div className="w-full h-full flex items-start justify-between lg:justify-center gap-0 lg:gap-[1.39px]">
       {/* Days */}
       <DigitGroup 
         digits={renderDoubleDigit(timeRemaining.days)} 

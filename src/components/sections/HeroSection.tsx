@@ -30,7 +30,7 @@ export default function HeroSection() {
             Shape the future of sustainable sound
           </h1>
           {/* Countdown Timer */}
-          <div className="w-full flex items-center justify-center lg:w-[506.98px] lg:max-w-none">
+          <div className="w-[353px] h-[73px] flex items-center justify-center lg:w-[506.98px] lg:h-[112.13px] lg:max-w-none">
             <CountdownTimer />
           </div>
           <div className="w-full flex flex-col gap-2 items-center justify-center text-center lg:w-[421.79px] lg:h-[102px]">
