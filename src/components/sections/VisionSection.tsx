@@ -524,7 +524,7 @@ export default function VisionSection() {
             text-sm sm:text-base lg:text-lg
             max-w-xs lg:max-w-sm
           ">
-            Arfive isn&apos;t just another pair of earbuds — it&apos;s a modular audio system engineered for life on your terms.
+            Arfve isn&apos;t just another pair of earbuds — it&apos;s a modular audio system engineered for life on your terms.
           </p>
         </div>
 
