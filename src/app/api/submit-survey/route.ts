@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabaseClient';
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseAdmin = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE!   // ← your secret service_role key
+);
 
 export async function POST(request: NextRequest) {
   try {
@@ -19,16 +24,15 @@ export async function POST(request: NextRequest) {
     }
 
     console.log('Answers to submit:', answers);
-    console.log('Supabase client initialized:', !!supabase);
 
-    // Get the survey ID dynamically from the surveys table
-    const { data: surveyData, error: surveyError } = await supabase
+    // 1) lookup survey
+    const { data: survey, error: surveyError } = await supabaseAdmin
       .from('surveys')
       .select('id')
       .eq('title', 'Arfve Launch Survey')
       .single();
 
-    if (surveyError || !surveyData) {
+    if (surveyError || !survey) {
       console.error('Failed to get survey ID:', surveyError);
       return NextResponse.json(
         { error: 'Survey not found', details: surveyError?.message },
@@ -36,40 +40,33 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log('Found survey ID:', surveyData.id);
+    console.log('Found survey ID:', survey.id);
 
-    // Insert the survey response
-    const insertData = {
-      survey_id: surveyData.id,
-      answers: answers,
-      submitted_at: new Date().toISOString()
-    };
-
-    console.log('Data to insert:', insertData);
-
-    const { data, error } = await supabase
+    // 2) insert response & select id in one go
+    const { data: resp, error: respErr } = await supabaseAdmin
       .from('responses')
-      .insert([insertData])
-      .select();
+      .insert({
+        survey_id: survey.id,
+        submitted_at: new Date().toISOString()
+      })
+      .select('id')
+      .single();
+    if (respErr) throw respErr;
 
-    if (error) {
-      console.error('Supabase insert error:', error);
-      console.error('Error details:', JSON.stringify(error, null, 2));
-      return NextResponse.json(
-        { error: 'Failed to submit survey', details: error.message, code: error.code },
-        { status: 500 }
+    // 3) insert answers
+    await supabaseAdmin
+      .from('answers')
+      .insert(
+        Object.entries(answers).map(([qid, val]) => ({
+          response_id: resp.id,
+          question_id: qid,
+          value: Array.isArray(val) ? JSON.stringify(val) : val
+        }))
       );
-    }
 
-    console.log('Insert successful:', data);
+    console.log('Insert successful:', resp);
 
-    return NextResponse.json(
-      { 
-        message: 'Survey submitted successfully',
-        response_id: data[0]?.id 
-      },
-      { status: 200 }
-    );
+    return NextResponse.json({ response_id: resp.id });
 
   } catch (error) {
     console.error('Survey submission error:', error);
