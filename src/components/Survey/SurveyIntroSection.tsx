@@ -149,6 +149,13 @@ export default function SurveyIntroSection() {
               onNext={handleNext}
               onPrevious={handlePrevious}
               showPrevious={true}
+              otherValue={answers[`${currentQuestion.id}_other`] as string || ''}
+              onOtherChange={(value: string) =>
+                setAnswers(a => ({
+                  ...a,
+                  [`${currentQuestion.id}_other`]: value
+                }))
+              }
             />
           )}
         </div>

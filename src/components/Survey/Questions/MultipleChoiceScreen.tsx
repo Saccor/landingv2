@@ -11,6 +11,8 @@ interface MultipleChoiceScreenProps {
   onNext: () => void;
   onPrevious: () => void;
   showPrevious?: boolean;
+  otherValue?: string;
+  onOtherChange?: (value: string) => void;
 }
 
 export default function MultipleChoiceScreen({
@@ -21,7 +23,9 @@ export default function MultipleChoiceScreen({
   onSelect,
   onNext,
   onPrevious,
-  showPrevious = true
+  showPrevious = true,
+  otherValue = '',
+  onOtherChange
 }: MultipleChoiceScreenProps) {
   const [selectedOptions, setSelectedOptions] = useState<string[]>(selected || []);
 
@@ -41,6 +45,8 @@ export default function MultipleChoiceScreen({
   const handleContinue = () => {
     onNext();
   };
+
+  const showOtherInput = selectedOptions.includes('Other (please specify)');
 
   return (
     <div className="flex flex-col items-center justify-center px-4 lg:px-6">
@@ -72,6 +78,22 @@ export default function MultipleChoiceScreen({
               </button>
             ))}
           </div>
+
+          {/* Other Input Field - appears between options and buttons */}
+          {showOtherInput && onOtherChange && (
+            <div className="w-[329px] mb-4">
+              <label className="block font-montserrat font-medium text-white mb-2">
+                Please specify:
+              </label>
+              <input
+                type="text"
+                value={otherValue}
+                onChange={e => onOtherChange(e.target.value)}
+                className="w-full p-2 bg-[rgba(31,36,41,0.05)] border border-[#6C6C6E] rounded text-white placeholder-gray-400"
+                placeholder="Enter your answer..."
+              />
+            </div>
+          )}
         </div>
 
         {/* Buttons Container - 300x44 - Always at bottom */}
