@@ -55,37 +55,74 @@ export async function POST(request: NextRequest) {
 
     console.log('Response created with ID:', resp.id);
 
-    // 3) bulk-insert individual answers into relational table
-    const answerRows = Object.entries(answers)
-      // only process real question IDs (skip the "…_other" entries)
+    // 3) First, build options lookup table
+    const { data: optionsData, error: optionsError } = await supabaseAdmin
+      .from('options')
+      .select('id, question_id, value');
+
+    if (optionsError) {
+      console.error('Failed to fetch options:', optionsError);
+      throw new Error(`Options fetch failed: ${optionsError.message}`);
+    }
+
+    // Group options by question_id for easy lookup
+    const optionsLookup: Record<string, Array<{id: string, value: string}>> = {};
+    optionsData?.forEach(option => {
+      if (!optionsLookup[option.question_id]) {
+        optionsLookup[option.question_id] = [];
+      }
+      optionsLookup[option.question_id].push({
+        id: option.id,
+        value: option.value
+      });
+    });
+
+    console.log('Options lookup built:', optionsLookup);
+
+    // 4) Build answer rows with option_id and answer_text
+    const rows = Object.entries(answers)
       .filter(([qid]) => !qid.endsWith('_other'))
-      .map(([qid, val]) => {
+      .flatMap(([qid, val]) => {
         const otherKey = `${qid}_other`;
-        // if there's a custom-text entry, use that instead of the placeholder
-        const hasCustom = answers.hasOwnProperty(otherKey);
-        let answerValue: string;
+        const hasCustom = !!answers[otherKey];
 
-        if (hasCustom) {
-          answerValue = String(answers[otherKey]);
-        } else if (Array.isArray(val)) {
-          answerValue = val.join('; ');
+        // single‐choice or multi‐choice
+        if (Array.isArray(val)) {
+          return val.map(optValue => {
+            // find the matching option_id from your options table
+            const option = optionsLookup[qid]?.find(o => o.value === optValue);
+            if (!option) {
+              console.warn(`Option not found for question ${qid}, value: ${optValue}`);
+              return null;
+            }
+            return {
+              response_id: resp.id,
+              question_id: qid,
+              option_id: option.id,
+              answer_text: hasCustom ? answers[otherKey] : null
+            };
+          }).filter(Boolean); // Remove null entries
         } else {
-          answerValue = String(val);
+          // single‐choice
+          const option = optionsLookup[qid]?.find(o => o.value === val);
+          if (!option) {
+            console.warn(`Option not found for question ${qid}, value: ${val}`);
+            return [];
+          }
+          return {
+            response_id: resp.id,
+            question_id: qid,
+            option_id: option.id,
+            answer_text: hasCustom ? answers[otherKey] : null
+          };
         }
-
-        return {
-          response_id: resp.id,
-          question_id: qid,
-          answer: answerValue,
-        };
       });
 
-    console.log('Inserting answer rows:', answerRows);
+    console.log('Inserting answer rows:', rows);
 
-    // then insert:
     const { error: answersErr } = await supabaseAdmin
       .from('answers')
-      .insert(answerRows);
+      .insert(rows);
     if (answersErr) throw answersErr;
 
     console.log('All answers inserted successfully');
