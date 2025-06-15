@@ -13,6 +13,7 @@ interface MultipleChoiceScreenProps {
   showPrevious?: boolean;
   otherValue?: string;
   onOtherChange?: (value: string) => void;
+  questionType: 'multiple' | 'likert';
 }
 
 export default function MultipleChoiceScreen({
@@ -25,7 +26,8 @@ export default function MultipleChoiceScreen({
   onPrevious,
   showPrevious = true,
   otherValue = '',
-  onOtherChange
+  onOtherChange,
+  questionType
 }: MultipleChoiceScreenProps) {
   const [selectedOptions, setSelectedOptions] = useState<string[]>(selected || []);
 
@@ -33,13 +35,23 @@ export default function MultipleChoiceScreen({
     setSelectedOptions(selected || []);
   }, [selected]);
 
+  // Generate default likert scale options if none provided
+  const displayOptions = questionType === 'likert' && options.length === 0 
+    ? ['1', '2', '3', '4', '5']
+    : options;
+
   const handleOptionToggle = (option: string) => {
-    const newSelected = selectedOptions.includes(option)
-      ? selectedOptions.filter(item => item !== option)
-      : [...selectedOptions, option];
-    
-    setSelectedOptions(newSelected);
-    onSelect(newSelected);
+    if (questionType === 'likert') {
+      // Likert scale: single selection only
+      onSelect([option]);
+    } else {
+      // Multiple choice: allow multiple selections
+      if (selectedOptions.includes(option)) {
+        onSelect(selectedOptions.filter(opt => opt !== option));
+      } else {
+        onSelect([...selectedOptions, option]);
+      }
+    }
   };
 
   const handleContinue = () => {
@@ -62,18 +74,22 @@ export default function MultipleChoiceScreen({
 
           {/* Options Container - flexible height */}
           <div className="w-[329px] flex flex-col justify-center items-start gap-3 mb-8">
-            {options.map((option, index) => (
+            {displayOptions.map((opt, i) => (
               <button
-                key={index}
-                onClick={() => handleOptionToggle(option)}
-                className={`w-[329px] min-h-[36px] flex flex-row items-center px-2 py-[6px] gap-[10px] border rounded-lg transition-all duration-200 ${
-                  selectedOptions.includes(option)
-                    ? "bg-[rgba(255,255,255,0.2)] border-white"
-                    : "bg-[rgba(31,36,41,0.05)] border-[#6C6C6E] hover:bg-[rgba(255,255,255,0.1)] hover:border-[#8C8C8E]"
-                }`}
+                key={i}
+                onClick={() => handleOptionToggle(opt)}
+                className={`
+                  w-[329px] min-h-[36px] rounded-lg
+                  flex items-center justify-center border transition-all duration-200
+                  ${
+                    selectedOptions.includes(opt)
+                      ? 'bg-[rgba(255,255,255,0.2)] border-white'
+                      : 'bg-[rgba(31,36,41,0.05)] border-[#6C6C6E] hover:bg-[rgba(255,255,255,0.1)] hover:border-[#8C8C8E]'
+                  }
+                `}
               >
                 <span className="w-full font-montserrat font-normal text-[16px] leading-[24px] text-center text-[#F2F4F7] py-1">
-                  {option}
+                  {opt}
                 </span>
               </button>
             ))}

@@ -4,6 +4,7 @@ import { Home } from 'lucide-react';
 import { useState } from 'react';
 import SingleChoiceScreen from './Questions/SingleChoiceScreen';
 import MultipleChoiceScreen from './Questions/MultipleChoiceScreen';
+import OpenEndedScreen from './Questions/OpenEndedScreen';
 
 type Question = {
   id: string;
@@ -20,6 +21,8 @@ export default function SurveyIntroSection() {
   const [answers, setAnswers] = useState<Record<string, string | string[]>>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>('');
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const fetchQuestions = async () => {
     setLoading(true);
@@ -72,12 +75,55 @@ export default function SurveyIntroSection() {
     }));
   };
 
+  const handleOpenEndedChange = (value: string) => {
+    const currentQuestion = questions[currentQuestionIndex];
+    setAnswers(prev => ({
+      ...prev,
+      [currentQuestion.id]: value
+    }));
+  };
+
+  const submitSurvey = async () => {
+    setSubmitting(true);
+    setError('');
+    
+    try {
+      console.log('Submitting survey with answers:', answers);
+      const response = await fetch('/api/submit-survey', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ answers }),
+      });
+
+      console.log('Response status:', response.status);
+      console.log('Response ok:', response.ok);
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Survey submitted successfully:', data);
+        setSubmitted(true);
+      } else {
+        const errorData = await response.json();
+        console.error('Submission error response:', errorData);
+        console.error('Full error object:', JSON.stringify(errorData, null, 2));
+        setError(`Failed to submit survey: ${errorData.details || errorData.error || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Network error during submission:', error);
+      setError(`Network error: ${error instanceof Error ? error.message : 'Unable to submit survey'}`);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1);
     } else {
-      // Survey completed - handle submission here
-      console.log('Survey completed:', answers);
+      // Survey completed - submit to Supabase
+      submitSurvey();
     }
   };
 
@@ -89,6 +135,44 @@ export default function SurveyIntroSection() {
       setCurrentView('intro');
     }
   };
+
+  // Show success screen after submission
+  if (submitted) {
+    return (
+      <div className="flex flex-col bg-black text-white pb-8">
+        {/* Breadcrumb */}
+        <div className="w-full px-4 mb-6 lg:px-6 lg:pt-10 lg:mb-6">
+          <div className="lg:max-w-[1270px] lg:mx-auto flex items-center gap-2 text-sm text-white">
+            <Home size={18} className="lg:w-4 lg:h-4" />
+            <span className="font-semibold underline cursor-pointer">Homepage</span>
+            <span className="text-lg">›</span>
+            <span className="text-white/80 lg:text-white">Survey</span>
+          </div>
+        </div>
+        
+        {/* Success Content */}
+        <div className="px-4 lg:px-6">
+          <div className="w-full max-w-[321px] mx-auto lg:max-w-[960px] lg:mt-12 lg:pb-16">
+            <div className="font-montserrat lg:space-y-6 text-center">
+              <h1 className="font-bold text-xl mb-4 lg:mb-0 lg:text-xl lg:font-semibold">Thank You!</h1>
+              <p className="font-bold mb-2 lg:mb-0 lg:font-semibold">Your survey has been submitted successfully.</p>
+              <p className="mb-4 lg:mb-0 lg:text-[#CCCCCC]">We appreciate you taking the time to help us shape the future of Arfve.</p>
+              <p className="mb-4 lg:mb-0 lg:text-[#CCCCCC]">Keep an eye on your email for exclusive updates and your chance to win Legacy 1 Earbuds!</p>
+              
+              <div className="flex justify-center lg:mt-8">
+                <button 
+                  onClick={() => window.location.href = '/'}
+                  className="bg-white text-black rounded-full px-8 py-2 font-semibold text-base shadow-sm hover:bg-gray-100 transition lg:px-6 lg:py-2 lg:hover:opacity-90 lg:shadow-none"
+                >
+                  Back to Homepage
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (currentView === 'questions' && questions.length > 0) {
     const currentQuestion = questions[currentQuestionIndex];
@@ -127,6 +211,15 @@ export default function SurveyIntroSection() {
           </div>
         </div>
 
+        {/* Error Display */}
+        {error && (
+          <div className="w-full px-4 lg:px-6 mb-4">
+            <div className="max-w-[329px] mx-auto p-4 bg-red-900/20 border border-red-500 rounded text-red-300 text-sm">
+              {error}
+            </div>
+          </div>
+        )}
+
         {/* Question Content */}
         <div className="w-full px-4 lg:px-6">
           {currentQuestion.type === 'single' ? (
@@ -138,6 +231,17 @@ export default function SurveyIntroSection() {
               onSelect={handleSelect}
               onPrev={handlePrevious}
               onNext={handleNext}
+            />
+          ) : currentQuestion.type === 'open' ? (
+            <OpenEndedScreen
+              questionNumber={currentQuestionIndex + 1}
+              questionText={currentQuestion.text}
+              value={currentAnswer as string || ''}
+              onChange={handleOpenEndedChange}
+              onPrev={handlePrevious}
+              onNext={submitting ? () => {} : handleNext}
+              isRequired={currentQuestion.text.includes('Required') || currentQuestion.text.includes('email')}
+              isLastQuestion={currentQuestionIndex === questions.length - 1}
             />
           ) : (
             <MultipleChoiceScreen
@@ -156,9 +260,20 @@ export default function SurveyIntroSection() {
                   [`${currentQuestion.id}_other`]: value
                 }))
               }
+              questionType={currentQuestion.type as 'multiple' | 'likert'}
             />
           )}
         </div>
+
+        {/* Submitting Overlay */}
+        {submitting && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-[#1F2429] p-6 rounded-lg text-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-4"></div>
+              <p className="text-white font-montserrat">Submitting your survey...</p>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
