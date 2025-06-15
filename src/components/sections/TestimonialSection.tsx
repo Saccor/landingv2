@@ -49,8 +49,8 @@ export default function TestimonialSection() {
           </h2>
 
           <blockquote className="text-center italic font-semibold text-lg lg:text-xl max-w-2xl mx-auto text-[#DDDDDD] mb-4 leading-snug">
-            "Arfve's earbuds is a dream come to life,<br />
-            leading the way in audio innovation."
+            &ldquo;Arfve&rsquo;s earbuds is a dream come to life,<br />
+            leading the way in audio innovation.&rdquo;
           </blockquote>
 
           <div className="text-center text-[#BBBBBB] text-sm lg:text-base mb-12 leading-snug">
@@ -75,7 +75,7 @@ export default function TestimonialSection() {
                     />
                     <div className="px-4 lg:px-0">
                       <p className="text-sm text-[#CCCCCC] mb-2 font-semibold leading-relaxed">
-                        "{t.quote}"
+                        &ldquo;{t.quote}&rdquo;
                       </p>
                       <p className="text-xs text-[#AAAAAA]">{t.name}</p>
                       <p className="text-xs text-[#AAAAAA]">{t.title}</p>
