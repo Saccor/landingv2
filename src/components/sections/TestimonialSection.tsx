@@ -24,9 +24,7 @@ const testimonials = [
 export default function TestimonialSection() {
   // For seamless infinite scroll, we need to duplicate the content
   // Each item is 200px wide + 20px gap = 220px total
-  // We'll create enough duplicates so the animation moves exactly the width of the original set
-  const itemWidth = 220; // 200px + 20px gap
-  const originalSetWidth = testimonials.length * itemWidth; // 2 * 220 = 440px
+  // The animation moves exactly 440px (width of 2 original items) for seamless loop
   
   // Duplicate enough times to create a long strip
   // The animation will move exactly the width of one complete set (440px)

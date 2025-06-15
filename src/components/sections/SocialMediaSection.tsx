@@ -23,7 +23,7 @@ const socialPlatforms = [
 export default function SocialMediaSection({ className = '' }: SocialMediaSectionProps) {
   return (
     <RevealSection className={`bg-black overflow-hidden ${className}`}>
-      <div className="w-full px-4 py-12 flex flex-col items-center">
+      <div className="w-full px-4 pb-12 flex flex-col items-center">
         {/* Heading */}
         <h2 className="text-white font-bold font-montserrat text-xl sm:text-2xl lg:text-3xl mb-8 text-center">
           Follow us on social media

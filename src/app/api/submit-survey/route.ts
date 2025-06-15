@@ -21,25 +21,26 @@ export async function POST(request: NextRequest) {
     console.log('Answers to submit:', answers);
     console.log('Supabase client initialized:', !!supabase);
 
-    // Test Supabase connection first
-    const { data: testData, error: testError } = await supabase
-      .from('responses')
-      .select('count')
-      .limit(1);
-    
-    if (testError) {
-      console.error('Supabase connection test failed:', testError);
+    // Get the survey ID dynamically from the surveys table
+    const { data: surveyData, error: surveyError } = await supabase
+      .from('surveys')
+      .select('id')
+      .eq('title', 'Arfve Launch Survey')
+      .single();
+
+    if (surveyError || !surveyData) {
+      console.error('Failed to get survey ID:', surveyError);
       return NextResponse.json(
-        { error: 'Database connection failed', details: testError.message },
-        { status: 500 }
+        { error: 'Survey not found', details: surveyError?.message },
+        { status: 404 }
       );
     }
 
-    console.log('Supabase connection test passed');
+    console.log('Found survey ID:', surveyData.id);
 
     // Insert the survey response
     const insertData = {
-      survey_id: '550e8400-e29b-41d4-a716-446655440000', // Fixed UUID for Arfve survey
+      survey_id: surveyData.id,
       answers: answers,
       submitted_at: new Date().toISOString()
     };

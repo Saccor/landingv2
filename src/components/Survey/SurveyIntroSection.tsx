@@ -4,6 +4,7 @@ import { Home } from 'lucide-react';
 import { useState } from 'react';
 import SingleChoiceScreen from './Questions/SingleChoiceScreen';
 import MultipleChoiceScreen from './Questions/MultipleChoiceScreen';
+import LikertScaleScreen from './Questions/LikertScaleScreen';
 import OpenEndedScreen from './Questions/OpenEndedScreen';
 
 type Question = {
@@ -243,6 +244,17 @@ export default function SurveyIntroSection() {
               isRequired={currentQuestion.text.includes('Required') || currentQuestion.text.includes('email')}
               isLastQuestion={currentQuestionIndex === questions.length - 1}
             />
+          ) : currentQuestion.type === 'likert' ? (
+            <LikertScaleScreen
+              questionNumber={currentQuestionIndex + 1}
+              question={currentQuestion.text}
+              options={currentQuestion.options.map(opt => opt.value)}
+              selected={currentAnswer as string}
+              onSelect={handleSelect}
+              onNext={handleNext}
+              onPrevious={handlePrevious}
+              showPrevious={true}
+            />
           ) : (
             <MultipleChoiceScreen
               questionNumber={currentQuestionIndex + 1}
@@ -260,7 +272,6 @@ export default function SurveyIntroSection() {
                   [`${currentQuestion.id}_other`]: value
                 }))
               }
-              questionType={currentQuestion.type as 'multiple' | 'likert'}
             />
           )}
         </div>
@@ -296,10 +307,10 @@ export default function SurveyIntroSection() {
             <h1 className="font-bold text-xl mb-4 lg:mb-0 lg:text-xl lg:font-semibold">Welcome to the Arfve Survey</h1>
             <p className="font-bold mb-2 lg:mb-0 lg:font-semibold">Help us shape the future of audio – your voice matters.</p>
             <p className="mb-4 lg:mb-0 lg:text-[#CCCCCC]">This quick 4-minute survey will directly influence our final design and features.</p>
-            <p className="mb-4 lg:mb-0 lg:text-[#CCCCCC]">At Arfve, we believe the world doesn't need more disposable earbuds. It needs sound that lasts, design that adapts, and tech that doesn't expire. Your insights will help us build something different.</p>
-            <p className="mb-4 lg:mb-0 lg:text-[#CCCCCC]">As a thank you, you'll get early access to exclusive discounts, product updates and a chance to win a pair of Legacy 1 Earbuds.</p>
+            <p className="mb-4 lg:mb-0 lg:text-[#CCCCCC]">At Arfve, we believe the world doesn&apos;t need more disposable earbuds. It needs sound that lasts, design that adapts, and tech that doesn&apos;t expire. Your insights will help us build something different.</p>
+            <p className="mb-4 lg:mb-0 lg:text-[#CCCCCC]">As a thank you, you&apos;ll get early access to exclusive discounts, product updates and a chance to win a pair of Legacy 1 Earbuds.</p>
             <p className="font-bold mb-4 lg:mb-0 lg:font-semibold">The winner will be announced right before launch day.</p>
-            <p className="mb-4 lg:mb-0 lg:text-[#CCCCCC]">This survey is anonymous. If you'd like to receive your reward, please leave your email at the end.</p>
+            <p className="mb-4 lg:mb-0 lg:text-[#CCCCCC]">This survey is anonymous. If you&apos;d like to receive your reward, please leave your email at the end.</p>
             <div className="mb-6 lg:mb-0 lg:leading-snug">
               <p className="font-bold mb-6 lg:mb-0 lg:font-semibold lg:text-white">Thank you for being part of this movement.</p>
               <p className="italic mb-8 lg:mb-0 lg:not-italic lg:text-[#CCCCCC]">– The Arfve Team</p>

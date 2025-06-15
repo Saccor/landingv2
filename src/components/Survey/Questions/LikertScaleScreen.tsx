@@ -1,21 +1,17 @@
-'use client';
-
 import React, { useState, useEffect } from 'react';
 
-interface MultipleChoiceScreenProps {
+interface LikertScaleScreenProps {
   questionNumber: number;
   question: string;
-  options: string[];
-  selected: string[];
-  onSelect: (selected: string[]) => void;
+  options?: string[];
+  selected: string;
+  onSelect: (selected: string) => void;
   onNext: () => void;
   onPrevious: () => void;
   showPrevious?: boolean;
-  otherValue?: string;
-  onOtherChange?: (value: string) => void;
 }
 
-const MultipleChoiceScreen: React.FC<MultipleChoiceScreenProps> = ({
+const LikertScaleScreen: React.FC<LikertScaleScreenProps> = ({
   questionNumber,
   question,
   options,
@@ -23,40 +19,23 @@ const MultipleChoiceScreen: React.FC<MultipleChoiceScreenProps> = ({
   onSelect,
   onNext,
   onPrevious,
-  showPrevious = true,
-  otherValue = '',
-  onOtherChange
+  showPrevious = true
 }) => {
-  const [selectedOptions, setSelectedOptions] = useState<string[]>(selected || []);
-  const [otherText, setOtherText] = useState(otherValue);
+  const [selectedOption, setSelectedOption] = useState<string>(selected || '');
 
   useEffect(() => {
-    setSelectedOptions(selected || []);
+    setSelectedOption(selected || '');
   }, [selected]);
 
-  useEffect(() => {
-    setOtherText(otherValue);
-  }, [otherValue]);
+  // Use provided options or default 1-5 scale
+  const displayOptions = options && options.length > 0 
+    ? options 
+    : ['1', '2', '3', '4', '5'];
 
-  const handleOptionToggle = (option: string) => {
-    // Multiple choice: allow multiple selections
-    if (selectedOptions.includes(option)) {
-      onSelect(selectedOptions.filter(opt => opt !== option));
-    } else {
-      onSelect([...selectedOptions, option]);
-    }
+  const handleOptionSelect = (option: string) => {
+    setSelectedOption(option);
+    onSelect(option);
   };
-
-  const handleOtherChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setOtherText(value);
-    if (onOtherChange) {
-      onOtherChange(value);
-    }
-  };
-
-  const hasOtherOption = options.some(opt => opt.toLowerCase().includes('other'));
-  const showOtherInput = hasOtherOption && selectedOptions.some(opt => opt.toLowerCase().includes('other'));
 
   return (
     <div className="w-full max-w-[329px] mx-auto flex flex-col items-center justify-center">
@@ -67,17 +46,17 @@ const MultipleChoiceScreen: React.FC<MultipleChoiceScreenProps> = ({
           {questionNumber}. {question}
         </h2>
 
-        {/* Options Container - vertical layout */}
+        {/* Options Container - vertical layout like other question types */}
         <div className="w-[329px] flex flex-col justify-center items-start gap-3 mb-8">
-          {options.map((opt, i) => (
+          {displayOptions.map((opt, i) => (
             <button
               key={i}
-              onClick={() => handleOptionToggle(opt)}
+              onClick={() => handleOptionSelect(opt)}
               className={`
                 w-[329px] min-h-[36px] rounded-lg
                 flex items-center justify-center border transition-all duration-200
                 ${
-                  selectedOptions.includes(opt)
+                  selectedOption === opt
                     ? 'bg-[rgba(255,255,255,0.2)] border-white'
                     : 'bg-[rgba(31,36,41,0.05)] border-[#6C6C6E] hover:bg-[rgba(255,255,255,0.1)] hover:border-[#8C8C8E]'
                 }
@@ -89,22 +68,6 @@ const MultipleChoiceScreen: React.FC<MultipleChoiceScreenProps> = ({
             </button>
           ))}
         </div>
-
-        {/* Other Input Field */}
-        {showOtherInput && (
-          <div className="w-[329px] mb-8">
-            <input
-              type="text"
-              value={otherText}
-              onChange={handleOtherChange}
-              placeholder="Please specify..."
-              className="w-full h-[36px] px-3 rounded-lg bg-[rgba(31,36,41,0.05)] border border-[#6C6C6E] 
-                       text-[#F2F4F7] font-montserrat font-normal text-[16px] leading-[24px]
-                       placeholder-[#98A2B3] focus:outline-none focus:border-white focus:bg-[rgba(255,255,255,0.1)]
-                       transition-all duration-200"
-            />
-          </div>
-        )}
       </div>
 
       {/* Navigation Buttons */}
@@ -124,9 +87,9 @@ const MultipleChoiceScreen: React.FC<MultipleChoiceScreenProps> = ({
         
         <button
           onClick={onNext}
-          disabled={selectedOptions.length === 0}
+          disabled={!selectedOption}
           className={`w-[141px] h-[44px] rounded-lg transition-all duration-200 flex items-center justify-center
-            ${selectedOptions.length > 0 
+            ${selectedOption 
               ? 'bg-white hover:bg-[#E5E7EB] text-[#1F2429]' 
               : 'bg-[rgba(255,255,255,0.3)] text-[#98A2B3] cursor-not-allowed'
             }`}
@@ -140,4 +103,4 @@ const MultipleChoiceScreen: React.FC<MultipleChoiceScreenProps> = ({
   );
 };
 
-export default MultipleChoiceScreen; 
+export default LikertScaleScreen; 
