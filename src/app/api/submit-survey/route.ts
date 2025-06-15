@@ -56,10 +56,38 @@ export async function POST(request: NextRequest) {
     console.log('Response created with ID:', resp.id);
 
     // 3) bulk-insert individual answers into relational table
-    const answerRows = Object.entries(answers).map(([qid, val]) => ({
+    // Filter out "_other" entries and process them separately
+    const processedAnswers: Record<string, string> = {};
+    
+    Object.entries(answers).forEach(([key, val]) => {
+      if (key.endsWith('_other')) {
+        // This is an "other" text input, combine it with the main answer
+        const baseQuestionId = key.replace('_other', '');
+        const mainAnswer = answers[baseQuestionId];
+        
+        if (mainAnswer && Array.isArray(mainAnswer) && mainAnswer.includes('Other')) {
+          // Replace 'Other' with 'Other: [custom text]'
+          const updatedAnswer = mainAnswer.map(option => 
+            option === 'Other' ? `Other: ${val}` : option
+          );
+          processedAnswers[baseQuestionId] = updatedAnswer.join('; ');
+        } else if (mainAnswer === 'Other') {
+          // Single choice "Other" option
+          processedAnswers[baseQuestionId] = `Other: ${val}`;
+        }
+        // If there's other text but no "Other" selected, ignore the other text
+      } else {
+        // Regular answer - only add if not already processed above
+        if (!processedAnswers[key]) {
+          processedAnswers[key] = Array.isArray(val) ? val.join('; ') : val as string;
+        }
+      }
+    });
+
+    const answerRows = Object.entries(processedAnswers).map(([qid, answer]) => ({
       response_id: resp.id,
       question_id: qid,
-      answer: Array.isArray(val) ? val.join('; ') : val
+      answer: answer
     }));
 
     console.log('Inserting answer rows:', answerRows);
