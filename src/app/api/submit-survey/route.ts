@@ -56,50 +56,37 @@ export async function POST(request: NextRequest) {
     console.log('Response created with ID:', resp.id);
 
     // 3) bulk-insert individual answers into relational table
-    // Filter out "_other" entries and process them separately
-    const processedAnswers: Record<string, string> = {};
-    
-    Object.entries(answers).forEach(([key, val]) => {
-      if (key.endsWith('_other')) {
-        // This is an "other" text input, combine it with the main answer
-        const baseQuestionId = key.replace('_other', '');
-        const mainAnswer = answers[baseQuestionId];
-        
-        if (mainAnswer && Array.isArray(mainAnswer) && mainAnswer.includes('Other')) {
-          // Replace 'Other' with 'Other: [custom text]'
-          const updatedAnswer = mainAnswer.map(option => 
-            option === 'Other' ? `Other: ${val}` : option
-          );
-          processedAnswers[baseQuestionId] = updatedAnswer.join('; ');
-        } else if (mainAnswer === 'Other') {
-          // Single choice "Other" option
-          processedAnswers[baseQuestionId] = `Other: ${val}`;
-        }
-        // If there's other text but no "Other" selected, ignore the other text
-      } else {
-        // Regular answer - only add if not already processed above
-        if (!processedAnswers[key]) {
-          processedAnswers[key] = Array.isArray(val) ? val.join('; ') : val as string;
-        }
-      }
-    });
+    const answerRows = Object.entries(answers)
+      // only process real question IDs (skip the "…_other" entries)
+      .filter(([qid]) => !qid.endsWith('_other'))
+      .map(([qid, val]) => {
+        const otherKey = `${qid}_other`;
+        // if there's a custom-text entry, use that instead of the placeholder
+        const hasCustom = answers.hasOwnProperty(otherKey);
+        let answerValue: string;
 
-    const answerRows = Object.entries(processedAnswers).map(([qid, answer]) => ({
-      response_id: resp.id,
-      question_id: qid,
-      answer: answer
-    }));
+        if (hasCustom) {
+          answerValue = String(answers[otherKey]);
+        } else if (Array.isArray(val)) {
+          answerValue = val.join('; ');
+        } else {
+          answerValue = String(val);
+        }
+
+        return {
+          response_id: resp.id,
+          question_id: qid,
+          answer: answerValue,
+        };
+      });
 
     console.log('Inserting answer rows:', answerRows);
 
-    const { error: answersError } = await supabaseAdmin
+    // then insert:
+    const { error: answersErr } = await supabaseAdmin
       .from('answers')
       .insert(answerRows);
-
-    if (answersError) {
-      console.error('Failed to insert answers:', answersError);
-      throw new Error(`Answers insertion failed: ${answersError.message}`);
-    }
+    if (answersErr) throw answersErr;
 
     console.log('All answers inserted successfully');
 
