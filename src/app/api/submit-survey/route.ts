@@ -42,29 +42,22 @@ export async function POST(request: NextRequest) {
 
     console.log('Found survey ID:', survey.id);
 
-    // 2) insert response & select id in one go
+    // build your insert payload:
+    const insertData = {
+      survey_id: survey.id,
+      submitted_at: new Date().toISOString(),
+      answers,        // ← answers is a plain JS object; Supabase will cast it to JSONB
+    };
+
+    // server‐side with service_role client:
     const { data: resp, error: respErr } = await supabaseAdmin
       .from('responses')
-      .insert({
-        survey_id: survey.id,
-        submitted_at: new Date().toISOString()
-      })
+      .insert(insertData)
       .select('id')
       .single();
     if (respErr) throw respErr;
 
-    // 3) insert answers
-    await supabaseAdmin
-      .from('answers')
-      .insert(
-        Object.entries(answers).map(([qid, val]) => ({
-          response_id: resp.id,
-          question_id: qid,
-          value: Array.isArray(val) ? JSON.stringify(val) : val
-        }))
-      );
-
-    console.log('Insert successful:', resp);
+    console.log('Response and answers inserted successfully:', resp);
 
     return NextResponse.json({ response_id: resp.id });
 
