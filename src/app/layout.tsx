@@ -43,14 +43,20 @@ export default function RootLayout({
         <GoogleTagManager />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${poppins.variable} antialiased w-full overflow-x-hidden min-h-screen flex flex-col bg-black`}
+        className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${poppins.variable} antialiased bg-black text-white`}
       >
         <GoogleTagManagerNoScript />
+
+        {/* Page wrapper */}
         <div className="flex flex-col min-h-screen">
           <Header />
+          
+          {/* Main content grows to fill space */}
           <main className="flex-grow">{children}</main>
+
           <Footer />
         </div>
+
         <CookieConsent />
       </body>
     </html>
