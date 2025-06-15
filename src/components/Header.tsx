@@ -49,9 +49,6 @@ const Header = () => {
           <Link href="/survey" className="text-white text-sm font-medium hover:underline transition">
             Survey
           </Link>
-          <Link href="/specs" className="text-white text-sm font-medium hover:underline transition">
-            Specs
-          </Link>
         </div>
       </div>
     </header>
