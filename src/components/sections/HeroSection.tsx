@@ -1,7 +1,6 @@
 "use client";
 import React from 'react';
 import SignupForm from '@/components/common/SignupForm';
-import CountdownTimer from '@/components/ui/CountdownTimer';
 
 export default function HeroSection() {
   return (
@@ -29,10 +28,7 @@ export default function HeroSection() {
           <h1 className="font-montserrat font-bold text-[30px] leading-[38px] text-[#FCFCFD] max-w-[369px] w-full">
             Shape the future of sustainable sound
           </h1>
-          {/* Countdown Timer */}
-          <div className="w-[353px] h-[73px] flex items-center justify-center lg:w-[506.98px] lg:h-[112.13px] lg:max-w-none">
-            <CountdownTimer />
-          </div>
+       
           <div className="w-full flex flex-col gap-2 items-center justify-center text-center lg:w-[421.79px] lg:h-[102px]">
             <p className="font-montserrat font-normal text-[18px] leading-[28px] text-[#F5F5F5]">
               <span className="font-bold">Sign up now</span> — countdown&apos;s ticking and secrets awaits.

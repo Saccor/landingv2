@@ -35,8 +35,7 @@ export default function BottomSubscribe({ className = '' }: BottomSubscribeProps
               text-left
               mb-4
             ">
-              <span className="font-bold">Sign up now</span> — countdown&apos;s ticking<br/>
-              and secrets awaits.
+              <span className="font-bold">Sign up now</span> to be part of the future of sustainable sound.
             </p>
             <p className="
               text-[#F5F5F5] font-montserrat font-normal
