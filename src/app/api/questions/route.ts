@@ -10,15 +10,22 @@ type Question = {
 };
 
 export async function GET() {
-  const { data, error } = await supabase
-    .from('questions')
-    .select('id, text, type, order_no, options(value)')
-    .eq('survey_id', 'YOUR_SURVEY_ID')
-    .order('order_no', { ascending: true });
+  try {
+    const { data, error } = await supabase
+      .from('questions')
+      .select('id, text, type, order_no, options(value)')
+      // .eq('survey_id', 'YOUR_SURVEY_ID') // Commented out for now
+      .order('order_no', { ascending: true });
 
-  if (error) {
-    return NextResponse.json({ error }, { status: 500 });
+    if (error) {
+      console.error('Supabase error:', error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    console.log('Fetched questions:', data);
+    return NextResponse.json(data as Question[]);
+  } catch (err) {
+    console.error('API error:', err);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
-
-  return NextResponse.json(data as Question[]);
 } 
