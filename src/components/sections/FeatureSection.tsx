@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import RevealSection from '@/components/common/RevealSection';
 import WavesIcon from '@/components/icons/featuresIcons/waves';
 import BatteryIcon from '@/components/icons/featuresIcons/Battery';
 import CircleIcon from '@/components/icons/featuresIcons/Circle';
@@ -10,7 +11,7 @@ import LeafIcon from '@/components/icons/featuresIcons/Leaf';
 
 export default function FeatureSection() {
   return (
-    <section className="bg-black overflow-hidden">
+    <RevealSection className="bg-black overflow-hidden">
       <div className="w-full flex flex-col items-center">
         {/* Gray box: heading at the top, features grid below */}
         <div className="bg-[var(--Gray-900,#1b1b1b)] shadow-lg w-[353px] lg:w-[1400px] lg:h-[587px] flex flex-col items-start px-6 py-7 mt-[20px] lg:px-16 lg:py-0 lg:justify-center">
@@ -94,6 +95,6 @@ export default function FeatureSection() {
           </div>
         </div>
       </div>
-    </section>
+    </RevealSection>
   );
 } 

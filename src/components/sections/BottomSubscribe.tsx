@@ -1,6 +1,8 @@
 'use client';
 
+import React from 'react';
 import SignupForm from '@/components/common/SignupForm';
+import RevealSection from '@/components/common/RevealSection';
 
 interface BottomSubscribeProps {
   className?: string;
@@ -8,7 +10,7 @@ interface BottomSubscribeProps {
 
 export default function BottomSubscribe({ className = '' }: BottomSubscribeProps) {
   return (
-    <section className={`bg-black overflow-hidden ${className}`}>
+    <RevealSection className={`bg-black overflow-hidden ${className}`}>
       {/* Container: Clean, simple approach with proper spacing */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
         
@@ -53,6 +55,6 @@ export default function BottomSubscribe({ className = '' }: BottomSubscribeProps
           
         </div>
       </div>
-    </section>
+    </RevealSection>
   );
 } 

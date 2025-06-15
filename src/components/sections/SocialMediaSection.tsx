@@ -6,6 +6,7 @@ import TikTokIcon from '@/components/icons/TikTokIcon';
 import FacebookIcon from '@/components/icons/FacebookIcon';
 import YouTubeIcon from '@/components/icons/YouTubeIcon';
 import { motion } from 'framer-motion';
+import RevealSection from '@/components/common/RevealSection';
 
 interface SocialMediaSectionProps {
   className?: string;
@@ -21,7 +22,7 @@ const socialPlatforms = [
 
 export default function SocialMediaSection({ className = '' }: SocialMediaSectionProps) {
   return (
-    <section className={`bg-black overflow-hidden ${className}`}>
+    <RevealSection className={`bg-black overflow-hidden ${className}`}>
       {/* Container: Clean, simple approach with proper spacing */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
         
@@ -141,6 +142,6 @@ export default function SocialMediaSection({ className = '' }: SocialMediaSectio
           </div>
         </div>
       </div>
-    </section>
+    </RevealSection>
   );
 } 

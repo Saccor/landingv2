@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import RevealSection from '@/components/common/RevealSection';
 
 export default function VisionSection() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -278,7 +279,7 @@ export default function VisionSection() {
   }, [isPlaying, showControls, isDragging]);
 
   return (
-    <section className="bg-black overflow-hidden mt-5">
+    <RevealSection className="bg-black overflow-hidden mt-5">
       <div className="w-full flex flex-col items-center">
         <div className="flex flex-col lg:flex-row items-center gap-5 lg:gap-5">
           
@@ -445,6 +446,6 @@ export default function VisionSection() {
           </div>
         </div>
       </div>
-    </section>
+    </RevealSection>
   );
 } 

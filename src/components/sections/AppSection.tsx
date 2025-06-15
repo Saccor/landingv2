@@ -2,10 +2,11 @@
 
 import React from 'react';
 import Image from 'next/image';
+import RevealSection from '@/components/common/RevealSection';
 
 const AppSection: React.FC = () => {
   return (
-    <section className="bg-black overflow-hidden flex justify-center">
+    <RevealSection className="bg-black overflow-hidden flex justify-center">
       <div className="w-full flex justify-center">
         <div className="w-[380px] lg:w-[1400px] flex flex-col lg:flex-row gap-x-0 px-6 py-8 lg:px-16 lg:py-16">
 
@@ -62,7 +63,7 @@ const AppSection: React.FC = () => {
           </div>
         </div>
       </div>
-    </section>
+    </RevealSection>
   );
 };
 
