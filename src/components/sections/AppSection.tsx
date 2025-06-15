@@ -10,6 +10,8 @@ const AppSection: React.FC = () => {
       <div className="w-full flex justify-center">
         <div className="w-[380px] lg:w-[1400px] flex flex-col lg:flex-row gap-x-0 px-6 py-8 lg:px-16 lg:py-16">
 
+
+
           {/* Image container */}
           <div className="flex-shrink-0 lg:flex-[0.9] text-center lg:text-left mb-8 lg:mb-0 lg:-mr-4">
 
@@ -18,7 +20,7 @@ const AppSection: React.FC = () => {
               alt="App preview"
               width={236}
               height={400}
-              className="mx-auto lg:mx-0 w-full max-w-[150px] lg:max-w-[220] object-contain"
+              className="mx-auto lg:mx-0 w-full max-w-[150px] lg:max-w-[220] lg:ml-11 object-contain"
               priority
             />
           </div>
