@@ -38,7 +38,7 @@ const Footer = () => {
           <div className="
             flex flex-col sm:flex-row items-center
             space-y-2 sm:space-y-0 sm:space-x-4 lg:space-x-6
-            order-3 lg:order-2
+            order-2 lg:order-2
           ">
             <Link 
               href="/privacy-policy" 
@@ -75,7 +75,7 @@ const Footer = () => {
           <div className="
             flex flex-row items-center justify-center
             space-x-4 sm:space-x-5 lg:space-x-6
-            order-2 lg:order-3
+            order-3 lg:order-3
           ">
             <Link 
               href="https://www.linkedin.com/company/arfve" 

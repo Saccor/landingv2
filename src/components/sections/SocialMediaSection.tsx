@@ -23,77 +23,77 @@ const socialPlatforms = [
 export default function SocialMediaSection({ className = '' }: SocialMediaSectionProps) {
   return (
     <RevealSection className={`bg-black overflow-hidden ${className}`}>
-      {/* Container: Clean, simple approach with proper spacing */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
-        
-        {/* Content: Center aligned with clean spacing */}
-        <div className="
-          flex flex-col items-center text-center
-          space-y-8 lg:space-y-10
-          max-w-4xl mx-auto
-        ">
+        {/* Container: Clean, simple approach with proper spacing */}
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
           
-          {/* Heading: Simple responsive typography */}
-          <h2 className="
-            text-white font-bold font-montserrat
-            text-xl sm:text-2xl lg:text-3xl
-            leading-tight
-          ">
-            Follow us on social media
-          </h2>
-
-          {/* Social Grid: Mobile-first responsive grid with geometric pattern */}
-          {/* Mobile Container: Horizontal scroll layout */}
+          {/* Content: Center aligned with clean spacing */}
           <div className="
-            sm:hidden
-            flex flex-row items-start
-            p-0 gap-3
-            w-[348px] h-[60px]
-            flex-none order-1 flex-grow-0
-            overflow-x-auto
-            scrollbar-hide
+            flex flex-col items-center text-center
+            space-y-8 lg:space-y-10
+            max-w-4xl mx-auto
           ">
-            {socialPlatforms.map((platform) => (
-              <motion.a
-                key={platform.name}
-                href={platform.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{
-                  scale: 1.05,
-                }}
-                whileTap={{
-                  scale: 0.98,
-                }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                className="
-                  flex flex-col items-center justify-center
-                  p-2
-                  space-y-1
-                  bg-[#1b1b1b] rounded-sm
-                  text-white cursor-pointer
-                  h-[60px] w-[60px]
-                  hover:bg-[#252525] transition-colors
-                  border border-[#2a2a2a]/50
-                  flex-shrink-0
-                "
-                aria-label={`Follow us on ${platform.name}`}
-              >
-                <div className="flex-shrink-0 text-xs">
-                  {platform.icon}
-                </div>
-              </motion.a>
-            ))}
-          </div>
+            
+            {/* Heading: Simple responsive typography */}
+            <h2 className="
+              text-white font-bold font-montserrat
+              text-xl sm:text-2xl lg:text-3xl
+              leading-tight
+            ">
+              Follow us on social media
+            </h2>
 
-          {/* Desktop Grid: Hidden on mobile */}
-          <div className="
-            hidden sm:grid grid-cols-5
-            gap-[35px]
-            w-full
-            max-w-4xl
-            justify-items-center
-          ">
+            {/* Social Grid: Mobile-first responsive grid with geometric pattern */}
+            {/* Mobile Container: Horizontal scroll layout */}
+            <div className="
+              sm:hidden
+              flex flex-row items-start
+              p-0 gap-3
+              w-[348px] h-[60px]
+              flex-none order-1 flex-grow-0
+              overflow-x-auto
+              scrollbar-hide
+            ">
+              {socialPlatforms.map((platform) => (
+                <motion.a
+                  key={platform.name}
+                  href={platform.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{
+                    scale: 1.05,
+                  }}
+                  whileTap={{
+                    scale: 0.98,
+                  }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                  className="
+                    flex flex-col items-center justify-center
+                    p-2
+                    space-y-1
+                    bg-[#1b1b1b] rounded-sm
+                    text-white cursor-pointer
+                    h-[60px] w-[60px]
+                    hover:bg-[#252525] transition-colors
+                    border border-[#2a2a2a]/50
+                    flex-shrink-0
+                  "
+                  aria-label={`Follow us on ${platform.name}`}
+                >
+                  <div className="flex-shrink-0 text-xs">
+                    {platform.icon}
+                  </div>
+                </motion.a>
+              ))}
+            </div>
+
+            {/* Desktop Grid: Hidden on mobile */}
+            <div className="
+              hidden sm:grid grid-cols-5
+              gap-[35px]
+              w-full
+              max-w-4xl
+              justify-items-center
+            ">
             {socialPlatforms.map((platform) => (
               <motion.a
                 key={platform.name}
@@ -139,9 +139,9 @@ export default function SocialMediaSection({ className = '' }: SocialMediaSectio
                 </span>
               </motion.a>
             ))}
+            </div>
           </div>
         </div>
-      </div>
-    </RevealSection>
+      </RevealSection>
   );
 } 
