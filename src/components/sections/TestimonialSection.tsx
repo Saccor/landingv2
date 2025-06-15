@@ -19,13 +19,6 @@ const testimonials = [
       '“It’s the rite of a modern brand meeting human needs, maintaining quality with minimal impact on nature.”',
     image: '/person2carousel.png',
   },
-  {
-    name: 'John Doe',
-    title: 'Design Strategist @ FutureLab',
-    quote:
-      '“Arfve is transforming audio with real empathy for users. It’s exciting to watch.”',
-    image: '/person1carousel.png',
-  },
 ];
 
 export default function EndorsementSection() {
