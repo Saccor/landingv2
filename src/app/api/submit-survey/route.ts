@@ -42,22 +42,38 @@ export async function POST(request: NextRequest) {
 
     console.log('Found survey ID:', survey.id);
 
-    // build your insert payload:
-    const insertData = {
-      survey_id: survey.id,
-      submitted_at: new Date().toISOString(),
-      answers,        // ← answers is a plain JS object; Supabase will cast it to JSONB
-    };
-
-    // server‐side with service_role client:
+    // 2) insert response (without answers in the response table)
     const { data: resp, error: respErr } = await supabaseAdmin
       .from('responses')
-      .insert(insertData)
+      .insert({
+        survey_id: survey.id,
+        submitted_at: new Date().toISOString()
+      })
       .select('id')
       .single();
     if (respErr) throw respErr;
 
-    console.log('Response and answers inserted successfully:', resp);
+    console.log('Response created with ID:', resp.id);
+
+    // 3) bulk-insert individual answers into relational table
+    const answerRows = Object.entries(answers).map(([qid, val]) => ({
+      response_id: resp.id,
+      question_id: qid,
+      answer: Array.isArray(val) ? val.join('; ') : val
+    }));
+
+    console.log('Inserting answer rows:', answerRows);
+
+    const { error: answersError } = await supabaseAdmin
+      .from('answers')
+      .insert(answerRows);
+
+    if (answersError) {
+      console.error('Failed to insert answers:', answersError);
+      throw new Error(`Answers insertion failed: ${answersError.message}`);
+    }
+
+    console.log('All answers inserted successfully');
 
     return NextResponse.json({ response_id: resp.id });
 
