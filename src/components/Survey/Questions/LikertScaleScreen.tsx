@@ -38,7 +38,7 @@ const LikertScaleScreen: React.FC<LikertScaleScreenProps> = ({
   };
 
   return (
-    <div className="w-full max-w-[329px] mx-auto flex flex-col items-center justify-center">
+    <div className="w-full max-w-[329px] lg:max-w-none mx-auto flex flex-col items-center justify-center">
       
       {/* Question */}
       <div className="w-full mb-8">
@@ -46,23 +46,25 @@ const LikertScaleScreen: React.FC<LikertScaleScreenProps> = ({
           {questionNumber}. {question}
         </h2>
 
-        {/* Options Grid - 2-column on mobile, horizontal line on desktop */}
-        <div className="w-[329px] min-h-[329px] grid grid-cols-2 gap-3 mb-8 lg:w-full lg:max-w-4xl lg:flex lg:justify-center lg:items-center lg:min-h-auto lg:mx-auto">
-          {displayOptions.map((opt, i) => (
-            <button
-              key={i}
-              onClick={() => handleOptionSelect(opt)}
-              className={`flex justify-center items-center w-full min-h-[158px] border rounded-lg font-montserrat font-normal text-[16px] leading-[24px] text-center transition-all duration-200 text-white hover:bg-[rgba(255,255,255,0.1)] p-4 lg:w-[163px] lg:h-[158px] lg:min-h-0 lg:flex-shrink-0 ${
-                selectedOption === opt
-                  ? "bg-[rgba(255,255,255,0.2)] border-white"
-                  : "bg-[rgba(31,36,41,0.05)] border-[#6C6C6E] hover:border-[#8C8C8E]"
-              }`}
-            >
-              <span className="break-words text-center">
-                {opt}
-              </span>
-            </button>
-          ))}
+        {/* Options Grid - Responsive wrapping layout */}
+        <div className="w-full max-w-[329px] lg:max-w-none mx-auto mb-8">
+          <div className="grid grid-cols-2 gap-3 lg:flex lg:flex-wrap lg:justify-center lg:gap-3">
+            {displayOptions.map((opt, i) => (
+              <button
+                key={i}
+                onClick={() => handleOptionSelect(opt)}
+                className={`flex justify-center items-center min-h-[158px] border rounded-lg font-montserrat font-normal text-[16px] leading-[24px] text-center transition-all duration-200 text-white hover:bg-[rgba(255,255,255,0.1)] p-4 lg:w-[163px] lg:h-[158px] lg:flex-shrink-0 ${
+                  selectedOption === opt
+                    ? "bg-[rgba(255,255,255,0.2)] border-white"
+                    : "bg-[rgba(31,36,41,0.05)] border-[#6C6C6E] hover:border-[#8C8C8E]"
+                }`}
+              >
+                <span className="break-words text-center">
+                  {opt}
+                </span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
