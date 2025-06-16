@@ -2,7 +2,65 @@
 
 import { useState } from 'react';
 import { trackEvent } from '@/lib/analytics';
-import Button from '@/components/ui/Button';
+
+// Simple Button component without external dependencies
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'primary' | 'secondary' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  children: React.ReactNode;
+  className?: string;
+  isLoading?: boolean;
+}
+
+function Button({
+  variant = 'primary',
+  size = 'md',
+  children,
+  className = '',
+  isLoading = false,
+  disabled,
+  ...props
+}: ButtonProps) {
+  const isDisabled = disabled || isLoading;
+  
+  const variantStyles = {
+    primary: 'bg-white text-black hover:bg-gray-100 hover:scale-105 hover:shadow-lg hover:shadow-white/20 active:bg-gray-200 active:scale-100 active:shadow-md transform transition-all duration-200 ease-out',
+    secondary: 'bg-transparent text-white border border-white/20 hover:border-white/40 hover:bg-white/5 hover:scale-105 hover:shadow-md hover:shadow-white/10 active:scale-100 transform transition-all duration-200 ease-out',
+    outline: 'bg-transparent text-white border border-white hover:bg-white hover:text-black hover:scale-105 hover:shadow-lg hover:shadow-white/20 active:scale-100 transform transition-all duration-200 ease-out'
+  };
+  
+  const sizeStyles = {
+    sm: 'h-10 px-4 text-sm',
+    md: 'h-12 px-6 text-base',
+    lg: 'h-14 px-8 text-lg'
+  };
+  
+  const classNames = [
+    'font-medium font-poppins rounded-full whitespace-nowrap',
+    'focus:outline-none focus:ring-2 focus:ring-white/20 focus:scale-105',
+    'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none',
+    variantStyles[variant],
+    sizeStyles[size],
+    className
+  ].filter(Boolean).join(' ');
+
+  return (
+    <button
+      className={classNames}
+      disabled={isDisabled}
+      {...props}
+    >
+      {isLoading ? (
+        <div className="flex items-center gap-2">
+          <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+          <span>Loading...</span>
+        </div>
+      ) : (
+        children
+      )}
+    </button>
+  );
+}
 
 interface SignupFormProps {
   className?: string;

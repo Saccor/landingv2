@@ -1,5 +1,4 @@
 import React from 'react';
-import { cn } from '@/lib/utils';
 
 // Types
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -53,22 +52,23 @@ export default function Button({
 }: ButtonProps) {
   const isDisabled = disabled || isLoading;
 
+  // Simple class name merging without external dependencies
+  const classNames = [
+    // Base styles
+    'font-medium font-poppins rounded-full whitespace-nowrap',
+    'focus:outline-none focus:ring-2 focus:ring-white/20 focus:scale-105',
+    'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none',
+    // Variant styles
+    buttonVariants[variant],
+    // Size styles
+    buttonSizes[size],
+    // Custom className
+    className
+  ].filter(Boolean).join(' ');
+
   return (
     <button
-      className={cn(
-        // Base styles
-        'font-medium font-poppins rounded-full whitespace-nowrap',
-        'focus:outline-none focus:ring-2 focus:ring-white/20 focus:scale-105',
-        'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none',
-        
-        // Variant styles
-        buttonVariants[variant],
-        
-        // Size styles
-        buttonSizes[size],
-        
-        className
-      )}
+      className={classNames}
       disabled={isDisabled}
       {...props}
     >
