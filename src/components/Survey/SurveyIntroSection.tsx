@@ -531,7 +531,7 @@ function IntroScreen({
   </div>
 
   {/* Centered main content */}
-  <div className="flex-1 flex items-center justify-center">
+  <div className="flex-1 flex justify-center mt-12">
     <div className="w-full max-w-[788px] text-left font-montserrat">
 
       <h1 className="text-xl font-bold mb-4">Welcome to the Arfve Survey</h1>
