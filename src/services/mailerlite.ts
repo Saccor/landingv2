@@ -52,21 +52,22 @@ export class MailerLiteService {
             const data = await response.json();
             console.log('- Group response data:', JSON.stringify(data, null, 2));
             
-            // Try different possible locations for the count
-            const possibleCounts = [
-              data.data?.total,
-              data.data?.subscriber_count,
-              data.data?.subscribers_count,
-              data.data?.count,
-              data.total,
-              data.subscriber_count,
-              data.subscribers_count,
-              data.count
-            ];
-            
-            console.log('- Possible count values:', possibleCounts);
-            
-            const count = possibleCounts.find(val => typeof val === 'number' && val > 0) || 0;
+                         // Try different possible locations for the count
+             const possibleCounts = [
+               data.data?.active_count,  // This is the correct field!
+               data.data?.total,
+               data.data?.subscriber_count,
+               data.data?.subscribers_count,
+               data.data?.count,
+               data.total,
+               data.subscriber_count,
+               data.subscribers_count,
+               data.count
+             ];
+             
+             console.log('- Possible count values:', possibleCounts);
+             
+             const count = possibleCounts.find(val => typeof val === 'number' && val >= 0) || 0;
             if (count > 0) {
               console.log('- Found count from group stats:', count);
               return count;
@@ -83,23 +84,23 @@ export class MailerLiteService {
           let cursor = null;
           let hasMore = true;
           
-          while (hasMore && totalCount < 2000) { // Safety limit
-            const url = `${this.baseUrl}/groups/${this.groupId}/subscribers?limit=100${cursor ? `&cursor=${cursor}` : ''}`;
-            console.log(`- Fetching batch with cursor: ${cursor || 'none'}`);
-            
-            const response = await fetch(url, {
-              method: 'GET',
-              headers: {
-                'Authorization': `Bearer ${this.apiKey}`,
-                'Accept': 'application/json',
-              },
-            });
+                     while (hasMore && totalCount < 2000) { // Safety limit
+             const url: string = `${this.baseUrl}/groups/${this.groupId}/subscribers?limit=100${cursor ? `&cursor=${cursor}` : ''}`;
+             console.log(`- Fetching batch with cursor: ${cursor || 'none'}`);
+             
+             const response: Response = await fetch(url, {
+               method: 'GET',
+               headers: {
+                 'Authorization': `Bearer ${this.apiKey}`,
+                 'Accept': 'application/json',
+               },
+             });
 
-            if (!response.ok) {
-              throw new Error(`HTTP ${response.status}`);
-            }
+             if (!response.ok) {
+               throw new Error(`HTTP ${response.status}`);
+             }
 
-            const data = await response.json();
+             const data: any = await response.json();
             const batchCount = data.data?.length || 0;
             totalCount += batchCount;
             
