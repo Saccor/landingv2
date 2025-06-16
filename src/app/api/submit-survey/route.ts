@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
+// Define types for the request body
+interface SurveyAnswers {
+  [key: string]: string | string[] | unknown;
+}
+
+interface SurveySubmissionBody {
+  answers: SurveyAnswers;
+}
+
 // Create admin client with proper error handling
 function createSupabaseAdmin() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -22,7 +31,7 @@ function createSupabaseAdmin() {
 }
 
 export async function POST(request: NextRequest) {
-  let body: any = null;
+  let body: SurveySubmissionBody | null = null;
   try {
     console.log('=== Survey Submission Started ===');
     
@@ -33,7 +42,16 @@ export async function POST(request: NextRequest) {
     body = await request.json();
     console.log('✅ Request body parsed successfully:', body);
     
-    const { answers } = body;
+    // Type guard to ensure body has the correct structure
+    if (!body || typeof body !== 'object' || !('answers' in body)) {
+      console.log('❌ Invalid request body structure:', body);
+      return NextResponse.json(
+        { error: 'Invalid request body' },
+        { status: 400 }
+      );
+    }
+    
+    const { answers } = body as SurveySubmissionBody;
     console.log('✅ Answers extracted:', answers);
 
     if (!answers || typeof answers !== 'object') {
