@@ -275,7 +275,7 @@ export default function SurveyIntroSection() {
       // Survey completed - submit to API
       submitSurvey();
     }
-  }, [state.currentQuestionIndex, state.questions.length, submitSurvey]);
+  }, [state.currentQuestionIndex, state.questions, submitSurvey]);
 
   /**
    * Navigate to previous question or intro

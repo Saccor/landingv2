@@ -16,9 +16,16 @@ function createSupabaseAdmin() {
 }
 
 /**
+ * Type for survey result row from the database view
+ */
+interface SurveyResultRow {
+  [key: string]: string | number | null;
+}
+
+/**
  * Converts survey data to CSV format
  */
-function convertToCSV(data: any[]): string {
+function convertToCSV(data: SurveyResultRow[]): string {
   if (data.length === 0) return '';
   
   // Get headers from first row
@@ -31,8 +38,9 @@ function convertToCSV(data: any[]): string {
       headers.map(header => {
         const value = row[header] || '';
         // Escape commas and quotes in values
-        const escapedValue = String(value).replace(/"/g, '""');
-        return value.includes(',') || value.includes('"') || value.includes('\n') 
+        const stringValue = String(value);
+        const escapedValue = stringValue.replace(/"/g, '""');
+        return stringValue.includes(',') || stringValue.includes('"') || stringValue.includes('\n') 
           ? `"${escapedValue}"` 
           : escapedValue;
       }).join(',')

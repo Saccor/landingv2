@@ -65,7 +65,7 @@ const OpenEndedScreen: React.FC<OpenEndedScreenProps> = ({
   })();
 
   return (
-    <div className="w-full max-w-[329px] mx-auto flex flex-col items-center justify-center">
+    <div className="w-full max-w-[329px] lg:max-w-none mx-auto flex flex-col items-center justify-center">
       
       {/* Question */}
       <div className="w-full mb-8">
@@ -73,15 +73,15 @@ const OpenEndedScreen: React.FC<OpenEndedScreenProps> = ({
           {questionNumber}. {questionText}
         </h2>
 
-        {/* Input Container - same width as other options */}
-        <div className="w-[329px] flex flex-col justify-center items-start gap-3 mb-8">
+        {/* Input Container - responsive width */}
+        <div className="w-full max-w-[329px] lg:max-w-md mx-auto flex flex-col justify-center items-start gap-3 mb-8">
           {isEmailField ? (
             <input
   type="email"
   value={inputValue}
   onChange={handleInputChange}
   placeholder="your.email@gmail.com"
-  className="w-[329px] h-[48px] px-4 rounded-lg 
+  className="w-full h-[48px] px-4 rounded-lg 
              bg-[rgba(31,36,41,0.05)] 
              border border-[#6C6C6E] 
              text-[#F2F4F7] font-montserrat font-normal text-[16px] leading-[24px]
@@ -97,7 +97,7 @@ const OpenEndedScreen: React.FC<OpenEndedScreenProps> = ({
               value={inputValue}
               onChange={handleInputChange}
               placeholder="Type your answer here..."
-              className="w-[329px] min-h-[120px] p-4 rounded-lg bg-[rgba(31,36,41,0.05)] border border-[#6C6C6E] 
+              className="w-full min-h-[120px] p-4 rounded-lg bg-[rgba(31,36,41,0.05)] border border-[#6C6C6E] 
                        text-[#F2F4F7] font-montserrat font-normal text-[16px] leading-[24px]
                        placeholder-[#98A2B3] resize-vertical
                        focus:outline-none focus:border-white focus:bg-[rgba(255,255,255,0.1)]
@@ -130,7 +130,7 @@ const OpenEndedScreen: React.FC<OpenEndedScreenProps> = ({
       </div>
 
       {/* Navigation Buttons */}
-      <div className="flex w-[300px] h-[44px] items-center gap-[18px] mt-auto">
+      <div className="flex w-full max-w-[300px] h-[44px] items-center gap-[18px] mt-auto">
   <button
     onClick={onPrev}
     className="flex-1 flex justify-center items-center py-[10px] px-[20px] 
@@ -154,7 +154,7 @@ const OpenEndedScreen: React.FC<OpenEndedScreenProps> = ({
       }`}
   >
     <span className="font-montserrat font-medium text-[14px] leading-[20px]">
-      {isLastQuestion ? 'Finish' : 'Next'}
+                  {isLastQuestion ? 'Finish' : 'Continue'}
     </span>
   </button>
 </div>

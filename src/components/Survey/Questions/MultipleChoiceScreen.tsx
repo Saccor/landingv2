@@ -66,7 +66,7 @@ const MultipleChoiceScreen: React.FC<MultipleChoiceScreenProps> = ({
   const showOtherInput = hasOtherOption && selectedOptions.some(opt => opt.toLowerCase().includes('other'));
 
   return (
-    <div className="w-full max-w-[329px] mx-auto flex flex-col items-center justify-center">
+    <div className="w-full max-w-[329px] lg:max-w-none mx-auto flex flex-col items-center justify-center">
       
       {/* Question */}
       <div className="w-full mb-8">
@@ -74,14 +74,14 @@ const MultipleChoiceScreen: React.FC<MultipleChoiceScreenProps> = ({
           {questionNumber}. {question}
         </h2>
 
-        {/* Options Container - vertical layout */}
-        <div className="w-[329px] flex flex-col justify-center items-start gap-3 mb-8">
+        {/* Options Container - responsive layout */}
+        <div className="w-full max-w-[329px] lg:max-w-none mx-auto flex flex-col justify-center items-center gap-3 mb-8">
           {options.map((opt, i) => (
             <button
               key={i}
               onClick={() => handleOptionToggle(opt)}
               className={`
-                w-[329px] min-h-[36px] rounded-lg
+                w-full max-w-[329px] lg:max-w-md min-h-[36px] rounded-lg
                 flex items-center justify-center border transition-all duration-200
                 ${
                   selectedOptions.includes(opt)
@@ -99,7 +99,7 @@ const MultipleChoiceScreen: React.FC<MultipleChoiceScreenProps> = ({
 
         {/* Other Input Field */}
         {showOtherInput && (
-          <div className="w-[329px] mb-8">
+          <div className="w-full max-w-[329px] lg:max-w-md mx-auto mb-8">
             <input
               type="text"
               value={otherText}
@@ -115,7 +115,7 @@ const MultipleChoiceScreen: React.FC<MultipleChoiceScreenProps> = ({
       </div>
 
       {/* Navigation Buttons */}
-      <div className="flex w-[300px] h-[44px] items-center gap-[18px] mb-8">
+      <div className="flex w-full max-w-[300px] h-[44px] items-center gap-[18px] mb-8">
         {showPrevious && (
           <button
             onClick={onPrevious}
@@ -141,7 +141,7 @@ const MultipleChoiceScreen: React.FC<MultipleChoiceScreenProps> = ({
             }`}
         >
           <span className="font-montserrat font-medium text-[14px] leading-[20px]">
-            Next
+                          Continue
           </span>
         </button>
       </div>

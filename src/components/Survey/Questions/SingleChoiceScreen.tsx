@@ -44,7 +44,7 @@ export default function SingleChoiceScreen({
 
   return (
     <div className="flex flex-col items-center justify-center px-4 lg:px-6">
-      <div className="w-[329px] min-h-[328px] mx-auto flex flex-col items-center py-8 gap-6">
+      <div className="w-full max-w-[329px] lg:max-w-none min-h-[328px] mx-auto flex flex-col items-center py-8 gap-6">
         {/* Question Title - flexible height */}
         <div className="w-full min-h-[28px]">
           <p className="font-montserrat font-semibold text-[18px] leading-[28px] text-white text-center">
@@ -52,28 +52,30 @@ export default function SingleChoiceScreen({
           </p>
         </div>
         
-        {/* Options Grid - flexible height */}
-        <div className="w-[329px] min-h-[329px] grid grid-cols-2 gap-3">
-          {options.map((opt, i) => (
-            <button
-              key={i}
-              onClick={() => onSelect(opt)}
-              className={`flex justify-center items-center w-full min-h-[158px] border rounded-lg font-montserrat font-normal text-[16px] leading-[24px] text-center transition-all duration-200 text-white hover:bg-[rgba(255,255,255,0.1)] p-4 ${
-                selected === opt
-                  ? "bg-[rgba(255,255,255,0.2)] border-white"
-                  : "bg-[rgba(31,36,41,0.05)] border-[#6C6C6E] hover:border-[#8C8C8E]"
-              }`}
-            >
-              <span className="break-words text-center">
-                {opt}
-              </span>
-            </button>
-          ))}
+        {/* Options Grid - Responsive wrapping layout */}
+        <div className="w-full max-w-[329px] lg:max-w-none mx-auto">
+          <div className="grid grid-cols-2 gap-3 lg:flex lg:flex-wrap lg:justify-center lg:gap-3">
+            {options.map((opt, i) => (
+              <button
+                key={i}
+                onClick={() => onSelect(opt)}
+                className={`flex justify-center items-center min-h-[158px] border rounded-lg font-montserrat font-normal text-[16px] leading-[24px] text-center transition-all duration-200 text-white hover:bg-[rgba(255,255,255,0.1)] p-4 lg:w-[163px] lg:h-[158px] lg:flex-shrink-0 ${
+                  selected === opt
+                    ? "bg-[rgba(255,255,255,0.2)] border-white"
+                    : "bg-[rgba(31,36,41,0.05)] border-[#6C6C6E] hover:border-[#8C8C8E]"
+                }`}
+              >
+                <span className="break-words text-center">
+                  {opt}
+                </span>
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Other Input Field - Between options and buttons */}
         {showOtherInput && (
-          <div className="w-[329px]">
+          <div className="w-full max-w-[329px] lg:max-w-md mx-auto">
             <input
               type="text"
               value={otherText}
@@ -88,7 +90,7 @@ export default function SingleChoiceScreen({
         )}
         
         {/* Previous/Next Buttons - Always at bottom */}
-        <div className="flex w-[300px] h-[44px] items-center gap-[18px] mt-auto">
+        <div className="flex w-full max-w-[300px] h-[44px] items-center gap-[18px] mt-auto">
           <button
   onClick={onPrev}
   className="flex-1 flex justify-center items-center py-[10px] px-[20px] 
