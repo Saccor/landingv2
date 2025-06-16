@@ -4,8 +4,11 @@ import React from 'react';
 import SignupForm from '@/components/common/SignupForm';
 import RevealSection from '@/components/common/RevealSection';
 import CountdownTimerPixel from '@/components/common/CountdownTimerPixel';
+import { useSubscriberCount } from '@/hooks/useSubscriberCount';
 
 export default function HeroSection() {
+  const { count, total } = useSubscriberCount();
+  
   return (
     <RevealSection className="w-full max-w-[1440px] lg:h-[675px] mx-auto relative">
       <div className="flex flex-col lg:flex-row items-center lg:items-stretch w-full max-w-[1440px] h-auto lg:h-[539.81px] lg:mt-[97px] mx-auto p-0">
@@ -47,7 +50,7 @@ export default function HeroSection() {
               <span className="font-bold">Sign up now</span> — countdown&apos;s ticking and secrets awaits.
             </p>
             <p className="font-montserrat font-normal text-[18px] leading-[28px] text-[#F5F5F5]">
-              485 of 1000 spots already gone.
+              {count} of {total} spots already gone.
             </p>
           </div>
 

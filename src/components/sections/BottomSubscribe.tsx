@@ -3,12 +3,15 @@
 import React from 'react';
 import SignupForm from '@/components/common/SignupForm';
 import RevealSection from '@/components/common/RevealSection';
+import { useSubscriberCount } from '@/hooks/useSubscriberCount';
 
 interface BottomSubscribeProps {
   className?: string;
 }
 
 export default function BottomSubscribe({ className = '' }: BottomSubscribeProps) {
+  const { count, total } = useSubscriberCount();
+  
   return (
     <RevealSection className={`bg-black overflow-hidden ${className}`}>
       {/* Container: Clean, simple approach with proper spacing */}
@@ -44,7 +47,7 @@ export default function BottomSubscribe({ className = '' }: BottomSubscribeProps
               text-[18px] leading-[28px]
               text-left
             ">
-              485 of 1000 spots already gone.
+              {count} of {total} spots already gone.
             </p>
           </div>
 
