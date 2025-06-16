@@ -125,33 +125,35 @@ const OpenEndedScreen: React.FC<OpenEndedScreenProps> = ({
       </div>
 
       {/* Navigation Buttons */}
-      <div className="flex gap-4">
-        <button
-  onClick={onPrev}
-  className="w-[141px] h-[44px] rounded-lg bg-[rgba(31,36,41,0.05)] border border-[#6C6C6E] 
-             hover:bg-[rgba(255,255,255,0.08)] hover:border-[#8C8C8E] transition-all duration-200
-             flex items-center justify-center"
->
-  <span className="font-montserrat font-medium text-[16px] leading-[24px] text-[#F2F4F7] !hover:text-[#F2F4F7]">
-    Previous
-  </span>
-</button>
+      <div className="flex w-[300px] h-[44px] items-center gap-[18px] mt-auto">
+  <button
+    onClick={onPrev}
+    className="flex-1 flex justify-center items-center py-[10px] px-[20px] 
+               border border-white rounded-full 
+               bg-[rgba(31,36,41,0.05)] 
+               hover:bg-[rgba(255,255,255,0.08)] hover:border-[#8C8C8E] 
+               transition-all duration-200"
+  >
+    <span className="font-montserrat font-normal text-[14px] leading-[20px] text-white !hover:text-white">
+      Previous
+    </span>
+  </button>
 
-        
-        <button
-          onClick={handleNext}
-          disabled={!canProceed}
-          className={`w-[141px] h-[44px] rounded-lg transition-all duration-200 flex items-center justify-center
-            ${canProceed 
-              ? 'bg-white hover:bg-[#E5E7EB] text-[#1F2429]' 
-              : 'bg-[rgba(255,255,255,0.3)] text-[#98A2B3] cursor-not-allowed'
-            }`}
-        >
-          <span className="font-montserrat font-medium text-[16px] leading-[24px]">
-            {isLastQuestion ? 'Finish' : 'Next'}
-          </span>
-        </button>
-      </div>
+  <button
+    onClick={handleNext}
+    disabled={!canProceed}
+    className={`flex-1 flex justify-center items-center py-[10px] px-[20px] rounded-full transition-all duration-200 
+      ${canProceed 
+        ? "bg-[#F5F5F5] text-black hover:bg-white" 
+        : "bg-gray-400 text-gray-600 cursor-not-allowed"
+      }`}
+  >
+    <span className="font-montserrat font-medium text-[14px] leading-[20px]">
+      {isLastQuestion ? 'Finish' : 'Next'}
+    </span>
+  </button>
+</div>
+
     </div>
   );
 };

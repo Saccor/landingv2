@@ -74,16 +74,14 @@ const LikertScaleScreen: React.FC<LikertScaleScreenProps> = ({
       <div className="flex gap-4 mb-6">
         {showPrevious && (
           <button
-  onClick={onPrevious}
-  className="w-[141px] h-[44px] rounded-lg bg-[rgba(31,36,41,0.05)] border border-[#6C6C6E] 
+            onClick={onPrevious}
+            className="w-[141px] h-[44px] rounded-lg bg-[rgba(31,36,41,0.05)] border border-[#6C6C6E] 
              hover:bg-[rgba(255,255,255,0.08)] hover:border-[#8C8C8E] transition-all duration-200
-             flex items-center justify-center"
->
-  <span className="font-montserrat font-medium text-[16px] leading-[24px] text-[#F2F4F7] !hover:text-[#F2F4F7]">
-    Previous
-  </span>
-</button>
-
+             flex items-center justify-center">
+              <span className="font-montserrat font-medium text-[16px] leading-[24px] text-[#F2F4F7] !hover:text-[#F2F4F7]">
+                Previous
+              </span>
+          </button>
         )}
         
         <button
