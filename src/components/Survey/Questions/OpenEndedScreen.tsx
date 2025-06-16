@@ -77,16 +77,21 @@ const OpenEndedScreen: React.FC<OpenEndedScreenProps> = ({
         <div className="w-[329px] flex flex-col justify-center items-start gap-3 mb-8">
           {isEmailField ? (
             <input
-              type="email"
-              value={inputValue}
-              onChange={handleInputChange}
-              placeholder="your.email@gmail.com"
-              className="w-[329px] h-[48px] px-4 rounded-lg bg-[rgba(31,36,41,0.05)] border border-[#6C6C6E] 
-                       text-[#F2F4F7] font-montserrat font-normal text-[16px] leading-[24px]
-                       placeholder-[#98A2B3] 
-                       focus:outline-none focus:border-white focus:bg-[rgba(255,255,255,0.1)]
-                       transition-all duration-200"
-            />
+  type="email"
+  value={inputValue}
+  onChange={handleInputChange}
+  placeholder="your.email@gmail.com"
+  className="w-[329px] h-[48px] px-4 rounded-lg 
+             bg-[rgba(31,36,41,0.05)] 
+             border border-[#6C6C6E] 
+             text-[#F2F4F7] font-montserrat font-normal text-[16px] leading-[24px]
+             placeholder-[#98A2B3] 
+             focus:outline-none 
+             focus:border-white 
+             focus:bg-[rgba(255,255,255,0.08)] 
+             transition-all duration-200"
+/>
+
           ) : (
             <textarea
               value={inputValue}
