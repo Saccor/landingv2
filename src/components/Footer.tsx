@@ -21,16 +21,16 @@ const Footer = () => {
         ">
           
           {/* Logo: Simple responsive sizing */}
-          <Link href="https://www.youtube.com/@arfve" target="_blank" rel="noopener noreferrer" className="
+          <Link href="/" className="
             flex-shrink-0
             order-1 lg:order-1
           ">
             <Image
               src="/logo.svg"
               alt="Logo"
-              width={120}
-              height={42}
-              className="object-contain w-24 h-8 sm:w-28 sm:h-10 lg:w-32 lg:h-11"
+              width={118.15}
+              height={41}
+              className="object-contain w-[86px] h-[30px] lg:w-[118.15px] lg:h-[41px]"
             />
           </Link>
 

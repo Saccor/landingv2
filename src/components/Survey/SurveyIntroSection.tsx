@@ -341,7 +341,7 @@ function Breadcrumb({
 function ProgressBar({ progressPercentage }: { progressPercentage: number }) {
   return (
     <div className="w-full px-4 lg:px-6 mb-6 mt-6">
-      <div className={`w-full max-w-[${LAYOUT_CONSTANTS.PROGRESS_BAR_MAX_WIDTH}] mx-auto flex items-center gap-4`}>
+      <div className="w-[305px] lg:max-w-[768px] lg:w-full mx-auto flex items-center gap-4">
         {/* Percentage Text */}
         <div className="w-[40px] h-[20px] flex items-center justify-start">
           <span className="font-montserrat font-medium text-sm text-white">
