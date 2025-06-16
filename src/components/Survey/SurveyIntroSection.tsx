@@ -263,6 +263,7 @@ export default function SurveyIntroSection() {
               onNext={submitting ? () => {} : handleNext}
               isRequired={currentQuestion.text.includes('Required') || currentQuestion.text.includes('email')}
               isLastQuestion={currentQuestionIndex === questions.length - 1}
+              isEmailField={currentQuestionIndex === questions.length - 1}
             />
           ) : currentQuestion.type === 'likert' ? (
             <LikertScaleScreen

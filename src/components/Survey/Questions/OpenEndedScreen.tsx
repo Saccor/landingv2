@@ -9,6 +9,7 @@ interface OpenEndedScreenProps {
   onNext: () => void;
   isRequired?: boolean;
   isLastQuestion?: boolean;
+  isEmailField?: boolean;
 }
 
 const OpenEndedScreen: React.FC<OpenEndedScreenProps> = ({
@@ -19,21 +20,49 @@ const OpenEndedScreen: React.FC<OpenEndedScreenProps> = ({
   onPrev,
   onNext,
   isRequired = false,
-  isLastQuestion = false
+  isLastQuestion = false,
+  isEmailField = false
 }) => {
   const [inputValue, setInputValue] = useState(value || '');
+  const [emailError, setEmailError] = useState('');
 
   useEffect(() => {
     setInputValue(value || '');
   }, [value]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  // Email validation function
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const newValue = e.target.value;
     setInputValue(newValue);
     onChange(newValue);
+
+    // Clear email error when user starts typing
+    if (isEmailField && emailError) {
+      setEmailError('');
+    }
   };
 
-  const canProceed = !isRequired || inputValue.trim().length > 0;
+  const handleNext = () => {
+    if (isEmailField && inputValue.trim()) {
+      if (!validateEmail(inputValue.trim())) {
+        setEmailError('Please enter a valid email address (e.g., user@gmail.com)');
+        return;
+      }
+    }
+    onNext();
+  };
+
+  const canProceed = (() => {
+    if (!isRequired && !inputValue.trim()) return true;
+    if (isRequired && !inputValue.trim()) return false;
+    if (isEmailField && inputValue.trim() && !validateEmail(inputValue.trim())) return false;
+    return true;
+  })();
 
   return (
     <div className="w-full max-w-[329px] mx-auto flex flex-col items-center justify-center">
@@ -44,23 +73,52 @@ const OpenEndedScreen: React.FC<OpenEndedScreenProps> = ({
           {questionNumber}. {questionText}
         </h2>
 
-        {/* Text Area Container - same width as other options */}
+        {/* Input Container - same width as other options */}
         <div className="w-[329px] flex flex-col justify-center items-start gap-3 mb-8">
-          <textarea
-            value={inputValue}
-            onChange={handleInputChange}
-            placeholder="Type your answer here..."
-            className="w-[329px] min-h-[120px] p-4 rounded-lg bg-[rgba(31,36,41,0.05)] border border-[#6C6C6E] 
-                     text-[#F2F4F7] font-montserrat font-normal text-[16px] leading-[24px]
-                     placeholder-[#98A2B3] resize-vertical
-                     focus:outline-none focus:border-white focus:bg-[rgba(255,255,255,0.1)]
-                     transition-all duration-200"
-            rows={5}
-          />
+          {isEmailField ? (
+            <input
+              type="email"
+              value={inputValue}
+              onChange={handleInputChange}
+              placeholder="your.email@gmail.com"
+              className="w-[329px] h-[48px] px-4 rounded-lg bg-[rgba(31,36,41,0.05)] border border-[#6C6C6E] 
+                       text-[#F2F4F7] font-montserrat font-normal text-[16px] leading-[24px]
+                       placeholder-[#98A2B3] 
+                       focus:outline-none focus:border-white focus:bg-[rgba(255,255,255,0.1)]
+                       transition-all duration-200"
+            />
+          ) : (
+            <textarea
+              value={inputValue}
+              onChange={handleInputChange}
+              placeholder="Type your answer here..."
+              className="w-[329px] min-h-[120px] p-4 rounded-lg bg-[rgba(31,36,41,0.05)] border border-[#6C6C6E] 
+                       text-[#F2F4F7] font-montserrat font-normal text-[16px] leading-[24px]
+                       placeholder-[#98A2B3] resize-vertical
+                       focus:outline-none focus:border-white focus:bg-[rgba(255,255,255,0.1)]
+                       transition-all duration-200"
+              rows={5}
+            />
+          )}
           
+          {/* Email Error Message */}
+          {isEmailField && emailError && (
+            <p className="mt-2 text-red-400 font-montserrat font-normal text-[12px] leading-[16px]">
+              {emailError}
+            </p>
+          )}
+          
+          {/* Required Field Message */}
           {isRequired && (
             <p className="mt-2 text-[#98A2B3] font-montserrat font-normal text-[12px] leading-[16px]">
               * This field is required
+            </p>
+          )}
+          
+          {/* Email Help Text */}
+          {isEmailField && (
+            <p className="mt-2 text-[#98A2B3] font-montserrat font-normal text-[12px] leading-[16px]">
+              Enter your email to receive exclusive updates and participate in the Legacy 1 Earbuds giveaway
             </p>
           )}
         </div>
@@ -80,7 +138,7 @@ const OpenEndedScreen: React.FC<OpenEndedScreenProps> = ({
         </button>
         
         <button
-          onClick={onNext}
+          onClick={handleNext}
           disabled={!canProceed}
           className={`w-[141px] h-[44px] rounded-lg transition-all duration-200 flex items-center justify-center
             ${canProceed 
