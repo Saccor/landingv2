@@ -108,7 +108,7 @@ const MultipleChoiceScreen: React.FC<MultipleChoiceScreenProps> = ({
       </div>
 
       {/* Navigation Buttons */}
-      <div className="flex gap-4">
+      <div className="flex gap-4 mb-8">
         {showPrevious && (
           <button
   onClick={onPrevious}
