@@ -53,26 +53,23 @@ export default function SingleChoiceScreen({
         </div>
         
         {/* Options Grid - flexible height */}
-        <div className="w-[329px] flex flex-col justify-center items-start gap-3 mb-8">
-  {options.map((opt, i) => (
-    <button
-      key={i}
-      onClick={() => onSelect(opt)}
-      className={`w-[329px] min-h-[36px] rounded-lg
-                  flex items-center justify-center border transition-all duration-200
-                  ${
-                    selected === opt
-                      ? 'bg-[rgba(255,255,255,0.2)] border-white'
-                      : 'bg-[rgba(31,36,41,0.05)] border-[#6C6C6E] hover:bg-[rgba(255,255,255,0.1)] hover:border-[#8C8C8E]'
-                  }`}
-    >
-      <span className="w-full font-montserrat font-normal text-[16px] leading-[24px] text-center text-[#F2F4F7] py-1">
-        {opt}
-      </span>
-    </button>
-  ))}
-</div>
-
+        <div className="w-[329px] min-h-[329px] grid grid-cols-2 gap-3">
+          {options.map((opt, i) => (
+            <button
+              key={i}
+              onClick={() => onSelect(opt)}
+              className={`flex justify-center items-center w-full min-h-[158px] border rounded-lg font-montserrat font-normal text-[16px] leading-[24px] text-center transition-all duration-200 text-white hover:bg-[rgba(255,255,255,0.1)] p-4 ${
+                selected === opt
+                  ? "bg-[rgba(255,255,255,0.2)] border-white"
+                  : "bg-[rgba(31,36,41,0.05)] border-[#6C6C6E] hover:border-[#8C8C8E]"
+              }`}
+            >
+              <span className="break-words text-center">
+                {opt}
+              </span>
+            </button>
+          ))}
+        </div>
 
         {/* Other Input Field - Between options and buttons */}
         {showOtherInput && (
@@ -93,18 +90,13 @@ export default function SingleChoiceScreen({
         {/* Previous/Next Buttons - Always at bottom */}
         <div className="flex w-[300px] h-[44px] items-center gap-[18px] mt-auto">
           <button
-  onClick={onPrev}
-  className="flex-1 flex justify-center items-center py-[10px] px-[20px] 
-             border border-white rounded-full 
-             bg-[rgba(31,36,41,0.05)] 
-             hover:bg-[rgba(255,255,255,0.08)] hover:border-[#8C8C8E] 
-             transition-all duration-200"
->
-  <span className="font-montserrat font-normal text-[14px] leading-[20px] text-white !hover:text-white">
-    Previous
-  </span>
-</button>
-
+            onClick={onPrev}
+            className="flex-1 flex justify-center items-center py-[10px] px-[20px] border border-white rounded-full hover:bg-white hover:text-black transition-all duration-200"
+          >
+            <span className="font-montserrat font-normal text-[14px] leading-[20px] text-white">
+              Previous
+            </span>
+          </button>
           <button
             onClick={onNext}
             disabled={!selected}
