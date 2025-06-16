@@ -524,7 +524,8 @@ function IntroScreen({
   onStartSurvey: () => void;
 }) {
   return (
-<div className="min-h-screen flex flex-col bg-black text-white px-4">
+<div className="min-h-0 flex flex-col bg-black text-white px-4">
+
   {/* Top breadcrumb */}
   <div className="pt-4">
     <Breadcrumb onGoToHomepage={onGoToHomepage} onGoToSurvey={onGoToSurvey} />
