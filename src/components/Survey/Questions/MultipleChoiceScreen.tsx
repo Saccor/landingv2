@@ -141,7 +141,7 @@ const MultipleChoiceScreen: React.FC<MultipleChoiceScreenProps> = ({
             }`}
         >
           <span className="font-montserrat font-medium text-[14px] leading-[20px]">
-            Next
+                          Continue
           </span>
         </button>
       </div>

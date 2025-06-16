@@ -52,13 +52,13 @@ export default function SingleChoiceScreen({
           </p>
         </div>
         
-        {/* Options Grid - flexible height */}
-        <div className="w-[329px] min-h-[329px] grid grid-cols-2 gap-3">
+        {/* Options Grid - 2-column on mobile, horizontal line on desktop */}
+        <div className="w-[329px] min-h-[329px] grid grid-cols-2 gap-3 lg:w-full lg:max-w-4xl lg:flex lg:justify-center lg:items-center lg:min-h-auto lg:mx-auto">
           {options.map((opt, i) => (
             <button
               key={i}
               onClick={() => onSelect(opt)}
-              className={`flex justify-center items-center w-full min-h-[158px] border rounded-lg font-montserrat font-normal text-[16px] leading-[24px] text-center transition-all duration-200 text-white hover:bg-[rgba(255,255,255,0.1)] p-4 ${
+              className={`flex justify-center items-center w-full min-h-[158px] border rounded-lg font-montserrat font-normal text-[16px] leading-[24px] text-center transition-all duration-200 text-white hover:bg-[rgba(255,255,255,0.1)] p-4 lg:w-[163px] lg:h-[158px] lg:min-h-0 lg:flex-shrink-0 ${
                 selected === opt
                   ? "bg-[rgba(255,255,255,0.2)] border-white"
                   : "bg-[rgba(31,36,41,0.05)] border-[#6C6C6E] hover:border-[#8C8C8E]"

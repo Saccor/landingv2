@@ -154,7 +154,7 @@ const OpenEndedScreen: React.FC<OpenEndedScreenProps> = ({
       }`}
   >
     <span className="font-montserrat font-medium text-[14px] leading-[20px]">
-      {isLastQuestion ? 'Finish' : 'Next'}
+                  {isLastQuestion ? 'Finish' : 'Continue'}
     </span>
   </button>
 </div>

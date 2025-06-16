@@ -46,23 +46,19 @@ const LikertScaleScreen: React.FC<LikertScaleScreenProps> = ({
           {questionNumber}. {question}
         </h2>
 
-        {/* Options Container - vertical layout like other question types */}
-        <div className="w-[329px] flex flex-col justify-center items-start gap-3 mb-8">
+        {/* Options Grid - 2-column on mobile, horizontal line on desktop */}
+        <div className="w-[329px] min-h-[329px] grid grid-cols-2 gap-3 mb-8 lg:w-full lg:max-w-4xl lg:flex lg:justify-center lg:items-center lg:min-h-auto lg:mx-auto">
           {displayOptions.map((opt, i) => (
             <button
               key={i}
               onClick={() => handleOptionSelect(opt)}
-              className={`
-                w-[329px] min-h-[36px] rounded-lg
-                flex items-center justify-center border transition-all duration-200
-                ${
-                  selectedOption === opt
-                    ? 'bg-[rgba(255,255,255,0.2)] border-white'
-                    : 'bg-[rgba(31,36,41,0.05)] border-[#6C6C6E] hover:bg-[rgba(255,255,255,0.1)] hover:border-[#8C8C8E]'
-                }
-              `}
+              className={`flex justify-center items-center w-full min-h-[158px] border rounded-lg font-montserrat font-normal text-[16px] leading-[24px] text-center transition-all duration-200 text-white hover:bg-[rgba(255,255,255,0.1)] p-4 lg:w-[163px] lg:h-[158px] lg:min-h-0 lg:flex-shrink-0 ${
+                selectedOption === opt
+                  ? "bg-[rgba(255,255,255,0.2)] border-white"
+                  : "bg-[rgba(31,36,41,0.05)] border-[#6C6C6E] hover:border-[#8C8C8E]"
+              }`}
             >
-              <span className="w-full font-montserrat font-normal text-[16px] leading-[24px] text-center text-[#F2F4F7] py-1">
+              <span className="break-words text-center">
                 {opt}
               </span>
             </button>
@@ -75,7 +71,7 @@ const LikertScaleScreen: React.FC<LikertScaleScreenProps> = ({
         {showPrevious && (
           <button
             onClick={onPrevious}
-            className="w-[141px] h-[44px] rounded-lg bg-[rgba(31,36,41,0.05)] border border-[#6C6C6E] 
+            className="w-[141px] h-[44px] rounded-full bg-[rgba(31,36,41,0.05)] border border-[#6C6C6E] 
              hover:bg-[rgba(255,255,255,0.08)] hover:border-[#8C8C8E] transition-all duration-200
              flex items-center justify-center">
               <span className="font-montserrat font-medium text-[16px] leading-[24px] text-[#F2F4F7] !hover:text-[#F2F4F7]">
@@ -87,14 +83,14 @@ const LikertScaleScreen: React.FC<LikertScaleScreenProps> = ({
         <button
           onClick={onNext}
           disabled={!selectedOption}
-          className={`w-[141px] h-[44px] rounded-lg transition-all duration-200 flex items-center justify-center
+          className={`w-[141px] h-[44px] rounded-full transition-all duration-200 flex items-center justify-center
             ${selectedOption 
               ? 'bg-white hover:bg-[#E5E7EB] text-[#1F2429]' 
               : 'bg-[rgba(255,255,255,0.3)] text-[#98A2B3] cursor-not-allowed'
             }`}
         >
           <span className="font-montserrat font-medium text-[16px] leading-[24px]">
-            Next
+                          Continue
           </span>
         </button>
       </div>
