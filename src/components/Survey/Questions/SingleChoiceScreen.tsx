@@ -90,13 +90,18 @@ export default function SingleChoiceScreen({
         {/* Previous/Next Buttons - Always at bottom */}
         <div className="flex w-[300px] h-[44px] items-center gap-[18px] mt-auto">
           <button
-            onClick={onPrev}
-            className="flex-1 flex justify-center items-center py-[10px] px-[20px] border border-white rounded-full hover:bg-white hover:text-black transition-all duration-200"
-          >
-            <span className="font-montserrat font-normal text-[14px] leading-[20px] text-white">
-              Previous
-            </span>
-          </button>
+  onClick={onPrev}
+  className="flex-1 flex justify-center items-center py-[10px] px-[20px] 
+             border border-white rounded-full 
+             bg-[rgba(31,36,41,0.05)] 
+             hover:bg-[rgba(255,255,255,0.08)] hover:border-[#8C8C8E] 
+             transition-all duration-200"
+>
+  <span className="font-montserrat font-normal text-[14px] leading-[20px] text-white">
+    Previous
+  </span>
+</button>
+
           <button
             onClick={onNext}
             disabled={!selected}
