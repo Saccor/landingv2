@@ -1,5 +1,7 @@
 "use client";
 
+import React, { useState, useEffect } from 'react';
+
 type Props = {
   questionNumber: number;
   question: string;
@@ -8,6 +10,8 @@ type Props = {
   onSelect: (opt: string) => void;
   onPrev: () => void;
   onNext: () => void;
+  otherValue?: string;
+  onOtherChange?: (value: string) => void;
 };
 
 export default function SingleChoiceScreen({
@@ -18,10 +22,29 @@ export default function SingleChoiceScreen({
   onSelect,
   onPrev,
   onNext,
+  otherValue = '',
+  onOtherChange
 }: Props) {
+  const [otherText, setOtherText] = useState(otherValue);
+
+  useEffect(() => {
+    setOtherText(otherValue);
+  }, [otherValue]);
+
+  const handleOtherChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setOtherText(value);
+    if (onOtherChange) {
+      onOtherChange(value);
+    }
+  };
+
+  const hasOtherOption = options.some(opt => opt.toLowerCase().includes('other'));
+  const showOtherInput = hasOtherOption && selected && selected.toLowerCase().includes('other');
+
   return (
     <div className="flex flex-col items-center justify-center px-4 lg:px-6">
-      <div className="w-[329px] min-h-[328px] mx-auto flex flex-col items-center py-8 gap-10">
+      <div className="w-[329px] min-h-[328px] mx-auto flex flex-col items-center py-8 gap-6">
         {/* Question Title - flexible height */}
         <div className="w-full min-h-[28px]">
           <p className="font-montserrat font-semibold text-[18px] leading-[28px] text-white text-center">
@@ -30,7 +53,7 @@ export default function SingleChoiceScreen({
         </div>
         
         {/* Options Grid - flexible height */}
-        <div className="w-[329px] min-h-[329px] grid grid-cols-2 gap-3 mb-8">
+        <div className="w-[329px] min-h-[329px] grid grid-cols-2 gap-3">
           {options.map((opt, i) => (
             <button
               key={i}
@@ -47,6 +70,22 @@ export default function SingleChoiceScreen({
             </button>
           ))}
         </div>
+
+        {/* Other Input Field - Between options and buttons */}
+        {showOtherInput && (
+          <div className="w-[329px]">
+            <input
+              type="text"
+              value={otherText}
+              onChange={handleOtherChange}
+              placeholder="Please specify..."
+              className="w-full h-[36px] px-3 rounded-lg bg-[rgba(31,36,41,0.05)] border border-[#6C6C6E] 
+                       text-[#F2F4F7] font-montserrat font-normal text-[16px] leading-[24px]
+                       placeholder-[#98A2B3] focus:outline-none focus:border-white focus:bg-[rgba(255,255,255,0.1)]
+                       transition-all duration-200"
+            />
+          </div>
+        )}
         
         {/* Previous/Next Buttons - Always at bottom */}
         <div className="flex w-[300px] h-[44px] items-center gap-[18px] mt-auto">

@@ -232,6 +232,13 @@ export default function SurveyIntroSection() {
               onSelect={handleSelect}
               onPrev={handlePrevious}
               onNext={handleNext}
+              otherValue={answers[`${currentQuestion.id}_other`] as string || ''}
+              onOtherChange={(value: string) =>
+                setAnswers(a => ({
+                  ...a,
+                  [`${currentQuestion.id}_other`]: value
+                }))
+              }
             />
           ) : currentQuestion.type === 'open' ? (
             <OpenEndedScreen
