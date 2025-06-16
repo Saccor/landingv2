@@ -205,25 +205,27 @@ export default function SurveyIntroSection() {
           </div>
         </div>
 
-        {/* Progress Bar */}
-        <div className="w-full px-4 lg:px-6 mb-6">
-          <div className="max-w-[329px] mx-auto flex items-center gap-4">
-            {/* Percentage Text */}
-            <div className="w-[27px] h-[20px] flex items-center justify-start">
-              <span className="font-montserrat font-medium text-sm text-white">
-                {progressPercentage}%
-              </span>
-            </div>
-            
-            {/* Progress Bar */}
-            <div className="w-[305px] h-[2px] bg-gray-700 rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-white transition-all duration-300 ease-out"
-                style={{ width: `${progressPercentage}%` }}
-              />
-            </div>
-          </div>
-        </div>
+    {/* Progress Bar */}
+<div className="w-full px-4 lg:px-6 mb-6 mt-6">
+  <div className="w-full max-w-[768px] mx-auto flex items-center gap-4">
+    {/* Percentage Text */}
+    <div className="w-[40px] h-[20px] flex items-center justify-start">
+      <span className="font-montserrat font-medium text-sm text-white">
+        {progressPercentage}%
+      </span>
+    </div>
+
+    {/* Progress Line */}
+    <div className="flex-1 h-[2px] bg-gray-700 rounded-full overflow-hidden">
+      <div 
+        className="h-full bg-white transition-all duration-300 ease-out"
+        style={{ width: `${progressPercentage}%` }}
+      />
+    </div>
+  </div>
+</div>
+
+
 
         {/* Error Display */}
         {error && (
