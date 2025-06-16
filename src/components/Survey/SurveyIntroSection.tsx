@@ -15,7 +15,8 @@ interface Question {
   text: string;
   type: string;
   order_no: number;
-  options: { value: string }[];
+  question_code: string;
+  options: { id: string; value: string; order_no: number }[];
 }
 
 /**
@@ -220,7 +221,19 @@ export default function SurveyIntroSection() {
     setState(prev => ({ ...prev, submitting: true, error: '' }));
     
     try {
-      console.log('SurveyIntroSection: 🔄 Submitting survey', { answerCount: Object.keys(state.answers).length });
+      console.log('SurveyIntroSection: 🔄 Submitting survey', { 
+        answerCount: Object.keys(state.answers).length,
+        answers: state.answers 
+      });
+      
+      // Log specific question answers for debugging
+      Object.entries(state.answers).forEach(([questionId, answer]) => {
+        const question = state.questions.find(q => q.id === questionId);
+        if (question) {
+          console.log(`Q${question.order_no} (${question.question_code}):`, answer);
+        }
+      });
+      
       const response = await fetch(API_ENDPOINTS.SUBMIT_SURVEY, {
         method: 'POST',
         headers: {
@@ -586,7 +599,7 @@ function QuestionRenderer({
         />
       );
 
-    case 'open':
+    case 'open-ended':
       return (
         <OpenEndedScreen
           questionNumber={questionNumber}
@@ -615,6 +628,7 @@ function QuestionRenderer({
         />
       );
 
+    case 'multiple':
     default: // multiple choice
       return (
         <MultipleChoiceScreen

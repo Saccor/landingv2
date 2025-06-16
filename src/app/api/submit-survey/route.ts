@@ -5,6 +5,13 @@ import { createClient } from '@supabase/supabase-js';
 interface Question {
   id: string;
   text: string;
+  question_code: string;
+  type: string;
+}
+
+interface Option {
+  id: string;
+  value: string;
 }
 
 interface SurveyAnswers {
@@ -15,31 +22,11 @@ interface SurveySubmissionBody {
   answers: SurveyAnswers;
 }
 
-interface ProcessedAnswers {
-  [questionText: string]: string;
-}
-
-/**
- * Maps raw answer UUIDs to human-readable question text
- */
-function mapAnswersToQuestions(
-  rawAnswers: Record<string, string>,
-  questions: Question[]
-): ProcessedAnswers {
-  const questionLookup = Object.fromEntries(
-    questions.map((q) => [q.id, q.text])
-  );
-
-  const humanReadableAnswers: ProcessedAnswers = {};
-  
-  for (const [questionId, answer] of Object.entries(rawAnswers)) {
-    if (questionId.endsWith('_other')) continue;
-    
-    const questionText = questionLookup[questionId] ?? questionId;
-    humanReadableAnswers[questionText] = answer;
-  }
-
-  return humanReadableAnswers;
+interface AnswerInsert {
+  response_id: string;
+  question_id: string;
+  option_id?: string;
+  answer_text?: string;
 }
 
 /**
@@ -58,53 +45,82 @@ function createSupabaseAdmin() {
 }
 
 /**
- * Processes raw survey answers, handling "Other" options and multiple selections
+ * Processes raw survey answers into individual answer records
  */
-function processAnswers(answers: SurveyAnswers): Record<string, string> {
-  const processed: Record<string, string> = {};
+function processAnswersForInsert(
+  answers: SurveyAnswers, 
+  questions: Question[], 
+  questionOptions: Record<string, Option[]>
+): AnswerInsert[] {
+  const answerInserts: AnswerInsert[] = [];
   
-  Object.entries(answers).forEach(([key, value]) => {
+  // Create lookup maps
+  const questionLookup = Object.fromEntries(
+    questions.map(q => [q.id, q])
+  );
+  
+  Object.entries(answers).forEach(([questionId, value]) => {
     // Skip _other suffix keys (processed separately)
-    if (key.endsWith('_other')) return;
+    if (questionId.endsWith('_other')) return;
     
-    const valueString = Array.isArray(value) ? value.join(' | ') : String(value);
+    const question = questionLookup[questionId];
+    if (!question) return;
     
-    // Skip standalone "Others:" entries that are duplicates
-    const isStandaloneOther = valueString.match(/^Others?:\s*.+$/i) && !valueString.includes('|');
-    if (isStandaloneOther) return;
-    
-    // Handle custom "Other" text
-    const otherKey = `${key}_other`;
+    const otherKey = `${questionId}_other`;
     const customText = answers[otherKey] ? String(answers[otherKey]).trim() : '';
-    const hasCustomText = customText.length > 0;
+    const options = questionOptions[questionId] || [];
     
-    if (hasCustomText) {
-      processed[key] = processAnswerWithCustomText(value, customText);
+    console.log(`Processing question ${question.question_code}:`, {
+      questionId,
+      value,
+      customText,
+      optionsCount: options.length
+    });
+    
+    if (question.type === 'open-ended') {
+      // Open-ended questions: store as answer_text
+      answerInserts.push({
+        response_id: '', // Will be filled later
+        question_id: questionId,
+        answer_text: String(value)
+      });
     } else if (Array.isArray(value)) {
-      processed[key] = value.join(' | ');
+      // Multiple choice: create separate records for each selection
+      console.log(`Multiple choice answers for ${question.question_code}:`, value);
+      value.forEach(selectedValue => {
+        const option = options.find(opt => opt.value === selectedValue);
+        if (option) {
+          // Check if this is an "Other" option with custom text
+          const isOtherOption = selectedValue.toLowerCase().includes('other');
+          const answerRecord = {
+            response_id: '', // Will be filled later
+            question_id: questionId,
+            option_id: option.id,
+            answer_text: isOtherOption && customText ? customText : undefined
+          };
+          console.log(`Adding answer record:`, answerRecord);
+          answerInserts.push(answerRecord);
+        } else {
+          console.log(`No option found for value: "${selectedValue}"`);
+        }
+      });
     } else {
-      processed[key] = String(value);
+      // Single choice: find matching option
+      const selectedValue = String(value);
+      const option = options.find(opt => opt.value === selectedValue);
+      if (option) {
+        const isOtherOption = selectedValue.toLowerCase().includes('other');
+        answerInserts.push({
+          response_id: '', // Will be filled later
+          question_id: questionId,
+          option_id: option.id,
+          answer_text: isOtherOption && customText ? customText : undefined
+        });
+      }
     }
   });
 
-  return processed;
-}
-
-/**
- * Combines "Other" options with custom text
- */
-function processAnswerWithCustomText(value: string | string[] | unknown, customText: string): string {
-  if (Array.isArray(value)) {
-    const processedArray = value.map(option => {
-      const optionLower = option.toLowerCase();
-      return optionLower.includes('other') ? `${option}: ${customText}` : option;
-    });
-    return processedArray.join(' | ');
-  }
-  
-  const singleValue = String(value);
-  const isOtherOption = singleValue.toLowerCase().includes('other');
-  return isOtherOption ? `${singleValue}: ${customText}` : singleValue;
+  return answerInserts;
 }
 
 /**
@@ -149,11 +165,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Fetch questions for mapping
+    // Fetch questions with their options
     const { data: questions, error: questionsError } = await supabaseAdmin
       .from('questions')
-      .select('id, text')
-      .eq('survey_id', survey.id);
+      .select(`
+        id, 
+        text, 
+        question_code, 
+        type,
+        options (
+          id,
+          value
+        )
+      `)
+      .eq('survey_id', survey.id)
+      .order('order_no');
 
     if (questionsError) {
       console.error('Supabase: ❌ Failed to fetch questions');
@@ -163,17 +189,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Process and map answers
-    const processedAnswers = processAnswers(answers);
-    const humanReadableAnswers = mapAnswersToQuestions(processedAnswers, questions || []);
+    // Create options lookup
+    const questionOptions: Record<string, Option[]> = {};
+    questions?.forEach(question => {
+      questionOptions[question.id] = question.options || [];
+    });
 
-    // Insert response
+    // Extract email from answers (if provided)
+    const emailQuestion = questions?.find(q => q.question_code === 'Q18');
+    const email = emailQuestion ? answers[emailQuestion.id] as string : null;
+
+    // Insert response record
     const { data: response, error: insertError } = await supabaseAdmin
       .from('responses')
       .insert({
         survey_id: survey.id,
         submitted_at: new Date().toISOString(),
-        answers: humanReadableAnswers
+        email: email || null
       })
       .select('id')
       .single();
@@ -183,8 +215,35 @@ export async function POST(request: NextRequest) {
       throw new Error(`Response insertion failed: ${insertError?.message}`);
     }
 
-    console.log(`Supabase: ✅ Survey response saved (ID: ${response.id})`);
-    return NextResponse.json({ response_id: response.id });
+    // Process answers for individual inserts
+    const answerInserts = processAnswersForInsert(answers, questions || [], questionOptions);
+    
+    // Fill in response_id for all answer inserts
+    const answersToInsert = answerInserts.map(answer => ({
+      ...answer,
+      response_id: response.id
+    }));
+
+    console.log(`Total answers to insert: ${answersToInsert.length}`);
+    console.log('Answers to insert:', JSON.stringify(answersToInsert, null, 2));
+
+    // Bulk insert answers
+    if (answersToInsert.length > 0) {
+      const { error: answersError } = await supabaseAdmin
+        .from('answers')
+        .insert(answersToInsert);
+
+      if (answersError) {
+        console.error('Supabase: ❌ Answers insertion failed');
+        throw new Error(`Answers insertion failed: ${answersError.message}`);
+      }
+    }
+
+    console.log(`Supabase: ✅ Survey response saved (ID: ${response.id}, ${answersToInsert.length} answers)`);
+    return NextResponse.json({ 
+      response_id: response.id,
+      answers_count: answersToInsert.length
+    });
 
   } catch (error) {
     console.error('API: ❌ Survey submission failed');

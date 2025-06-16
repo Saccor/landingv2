@@ -40,11 +40,18 @@ const MultipleChoiceScreen: React.FC<MultipleChoiceScreenProps> = ({
 
   const handleOptionToggle = (option: string) => {
     // Multiple choice: allow multiple selections
+    let newSelectedOptions: string[];
     if (selectedOptions.includes(option)) {
-      onSelect(selectedOptions.filter(opt => opt !== option));
+      newSelectedOptions = selectedOptions.filter(opt => opt !== option);
     } else {
-      onSelect([...selectedOptions, option]);
+      newSelectedOptions = [...selectedOptions, option];
     }
+    
+    // Update local state
+    setSelectedOptions(newSelectedOptions);
+    
+    // Update parent state
+    onSelect(newSelectedOptions);
   };
 
   const handleOtherChange = (e: React.ChangeEvent<HTMLInputElement>) => {
