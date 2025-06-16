@@ -186,8 +186,8 @@ const CountdownDigit = ({ char }: { char: string }) => {
         <div
           key={i}
           style={{
-            width: CELL_SIZE,
-            height: CELL_SIZE,
+            width: `${CELL_SIZE}px`,
+            height: `${CELL_SIZE}px`,
             backgroundColor: cell ? '#FFFFFF' : '#000000',
             border: cell ? 'none' : '0.5px solid #2a2a2a',
           }}
@@ -199,50 +199,72 @@ const CountdownDigit = ({ char }: { char: string }) => {
 
 // Countdown Component
 export default function CountdownTimerPixel({ targetDate }: { targetDate: string }) {
-  const [segments, setSegments] = useState(() => getTimeSegments(new Date(targetDate)));
+  const [segments, setSegments] = useState<{
+    days: string;
+    hours: string;
+    minutes: string;
+    seconds: string;
+  } | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
+    setSegments(getTimeSegments(new Date(targetDate)));
+
     const interval = setInterval(() => {
       setSegments(getTimeSegments(new Date(targetDate)));
     }, 1000);
+    
     return () => clearInterval(interval);
   }, [targetDate]);
+
+  if (!isMounted || !segments) {
+    return (
+      <div className="flex flex-col items-center">
+        <div className="flex items-center justify-center flex-wrap gap-0" style={{ minHeight: '60px' }}>
+          <div className="text-white font-mono">Loading...</div>
+        </div>
+        <div className="flex justify-center mt-2 text-xs text-white font-mono">
+          <div style={{ width: '100px', textAlign: 'center' }}>Days</div>
+          <div style={{ width: '100px', textAlign: 'center' }}>Hours</div>
+          <div style={{ width: '100px', textAlign: 'center' }}>Minutes</div>
+          <div style={{ width: '100px', textAlign: 'center' }}>Seconds</div>
+        </div>
+      </div>
+    );
+  }
 
   const rawDigits = `${segments.days}:${segments.hours}:${segments.minutes}:${segments.seconds}`;
 
   const timeStringWithSpacers = [
-  '_', // spacer before first digit
-  ...rawDigits.split('').flatMap((char, idx, arr) =>
-    idx < arr.length - 1 ? [char, '_'] : [char]
-  ),
-  '_', // spacer after last digit
-];
-
+    '_',
+    ...rawDigits.split('').flatMap((char, idx, arr) =>
+      idx < arr.length - 1 ? [char, '_'] : [char]
+    ),
+    '_',
+  ];
 
   return (
-  <div className="flex flex-col items-center">
-    {/* Countdown Digits */}
-    <div className="flex items-center justify-center flex-wrap gap-0">
-      {timeStringWithSpacers.map((char, i) => (
-        <div
-          key={i}
-          style={{
-            marginRight: i < timeStringWithSpacers.length - 1 ? '1px' : '0px',
-          }}
-        >
-          <CountdownDigit char={char} />
-        </div>
-      ))}
+    <div className="flex flex-col items-center">
+      <div className="flex items-center justify-center flex-wrap gap-0">
+        {timeStringWithSpacers.map((char, i) => (
+          <div
+            key={i}
+            style={{
+              marginRight: i < timeStringWithSpacers.length - 1 ? '1px' : '0px',
+            }}
+          >
+            <CountdownDigit char={char} />
+          </div>
+        ))}
+      </div>
+
+      <div className="flex justify-center mt-2 text-xs text-white font-mono">
+        <div style={{ width: '100px', textAlign: 'center' }}>Days</div>
+        <div style={{ width: '100px', textAlign: 'center' }}>Hours</div>
+        <div style={{ width: '100px', textAlign: 'center' }}>Minutes</div>
+        <div style={{ width: '100px', textAlign: 'center' }}>Seconds</div>
+      </div>
     </div>
-
-    {/* Labels */}
-<div className="flex justify-center mt-2 text-xs text-white font-mono">
-  <div style={{ width: '100px', textAlign: 'center' }}>Days</div>
-  <div style={{ width: '100px', textAlign: 'center' }}>Hours</div>
-  <div style={{ width: '100px', textAlign: 'center' }}>Minutes</div>
-  <div style={{ width: '100px', textAlign: 'center' }}>Seconds</div>
-</div>
-  </div>
-);
-
+  );
 }
