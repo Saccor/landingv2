@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import RevealSection from '@/components/common/RevealSection';
 
 export default function VisionSection() {
@@ -9,7 +9,7 @@ export default function VisionSection() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1);
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
   const [showControls, setShowControls] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -25,12 +25,6 @@ export default function VisionSection() {
     }
   };
 
-  const handleLoadedMetadata = () => {
-    if (videoRef.current) {
-      setDuration(videoRef.current.duration);
-    }
-  };
-
   const handlePlayPause = async () => {
     if (!videoRef.current) return;
     
@@ -40,6 +34,11 @@ export default function VisionSection() {
         setIsPlaying(false);
       } else {
         setIsLoading(true);
+        // If video hasn't been played yet (at 1:03 thumbnail), start from beginning
+        if (!isPlaying && videoRef.current.currentTime === 63) {
+          videoRef.current.currentTime = 0;
+          setCurrentTime(0);
+        }
         await videoRef.current.play();
         setIsPlaying(true);
       }
@@ -51,7 +50,7 @@ export default function VisionSection() {
   };
 
   // Enhanced progress handling for both mouse and touch
-  const getProgressFromEvent = (e: React.MouseEvent | React.TouchEvent | MouseEvent | TouchEvent, targetElement?: HTMLElement) => {
+  const getProgressFromEvent = useCallback((e: React.MouseEvent | React.TouchEvent | MouseEvent | TouchEvent, targetElement?: HTMLElement) => {
     if (!videoRef.current || !duration) return 0;
     
     const target = targetElement || (e.currentTarget as HTMLElement);
@@ -69,7 +68,7 @@ export default function VisionSection() {
     const clickX = clientX - rect.left;
     const progress = Math.max(0, Math.min(1, clickX / rect.width));
     return progress * duration;
-  };
+  }, [duration]);
 
   const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!videoRef.current) return;
@@ -299,7 +298,7 @@ export default function VisionSection() {
           {/* Video Container - Right on desktop, top on mobile */}
           <div 
             ref={containerRef}
-            className="order-1 lg:order-2 relative w-[353px] h-[210px] lg:w-[875px] lg:h-[505px] bg-gray-900 rounded-sm overflow-hidden cursor-pointer transition-all duration-300 p-0 m-0"
+            className="order-1 lg:order-2 relative w-[353px] h-[210px] lg:w-[875px] lg:h-[505px] bg-black rounded-sm overflow-hidden cursor-pointer transition-all duration-300 p-0 m-0"
             onMouseMove={() => setShowControls(true)}
             onMouseLeave={() => isPlaying && !isMobile && setShowControls(false)}
             onClick={handlePlayPause}
@@ -312,7 +311,14 @@ export default function VisionSection() {
               muted={isMuted}
               playsInline
               onTimeUpdate={handleTimeUpdate}
-              onLoadedMetadata={handleLoadedMetadata}
+              onLoadedMetadata={() => {
+                if (videoRef.current) {
+                  setDuration(videoRef.current.duration);
+                  // Set thumbnail to 1:03 (63 seconds) but don't play
+                  videoRef.current.currentTime = 63;
+                  setCurrentTime(63);
+                }
+              }}
               onEnded={() => setIsPlaying(false)}
             >
               <source src="/video/hero-optimized.mp4" type="video/mp4" />

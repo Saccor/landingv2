@@ -36,20 +36,15 @@ export class MailerLiteService {
 
   async getSubscriberCount(): Promise<number> {
     if (!this.apiKey) {
-      console.error('MailerLite API key not configured');
+      console.error('MailerLite: ❌ API key not configured');
       throw new Error('MailerLite API key not configured');
     }
-
-    console.log('MailerLite Service: Starting subscriber count fetch...');
-    console.log('- API Key starts with:', this.apiKey.substring(0, 10) + '...');
-    console.log('- Group ID:', this.groupId);
 
     try {
       if (this.groupId) {
         // Try approach 1: Use the groups endpoint to get group stats
         try {
           const url = `${this.baseUrl}/groups/${this.groupId}`;
-          console.log('- Trying group stats URL:', url);
 
           const response = await fetch(url, {
             method: 'GET',
@@ -59,84 +54,72 @@ export class MailerLiteService {
             },
           });
 
-          console.log('- Group response status:', response.status);
-
           if (response.ok) {
             const data = await response.json();
-            console.log('- Group response data:', JSON.stringify(data, null, 2));
             
-                         // Try different possible locations for the count
-             const possibleCounts = [
-               data.data?.active_count,  // This is the correct field!
-               data.data?.total,
-               data.data?.subscriber_count,
-               data.data?.subscribers_count,
-               data.data?.count,
-               data.total,
-               data.subscriber_count,
-               data.subscribers_count,
-               data.count
-             ];
-             
-             console.log('- Possible count values:', possibleCounts);
-             
-             const count = possibleCounts.find(val => typeof val === 'number' && val >= 0) || 0;
+            // Try different possible locations for the count
+            const possibleCounts = [
+              data.data?.active_count,  // This is the correct field!
+              data.data?.total,
+              data.data?.subscriber_count,
+              data.data?.subscribers_count,
+              data.data?.count,
+              data.total,
+              data.subscriber_count,
+              data.subscribers_count,
+              data.count
+            ];
+            
+            const count = possibleCounts.find(val => typeof val === 'number' && val >= 0) || 0;
             if (count > 0) {
-              console.log('- Found count from group stats:', count);
               return count;
             }
           }
-        } catch (error) {
-          console.log('- Group stats approach failed:', error instanceof Error ? error.message : 'Unknown error');
+        } catch {
+          // Silent fallback to manual counting
         }
 
         // Try approach 2: Get all subscribers and count them
         try {
-          console.log('- Trying to count subscribers manually...');
           let totalCount = 0;
           let cursor = null;
           let hasMore = true;
           
-                     while (hasMore && totalCount < 2000) { // Safety limit
-             const url: string = `${this.baseUrl}/groups/${this.groupId}/subscribers?limit=100${cursor ? `&cursor=${cursor}` : ''}`;
-             console.log(`- Fetching batch with cursor: ${cursor || 'none'}`);
-             
-             const response: Response = await fetch(url, {
-               method: 'GET',
-               headers: {
-                 'Authorization': `Bearer ${this.apiKey}`,
-                 'Accept': 'application/json',
-               },
-             });
+          while (hasMore && totalCount < 2000) { // Safety limit
+            const url: string = `${this.baseUrl}/groups/${this.groupId}/subscribers?limit=100${cursor ? `&cursor=${cursor}` : ''}`;
+            
+            const response: Response = await fetch(url, {
+              method: 'GET',
+              headers: {
+                'Authorization': `Bearer ${this.apiKey}`,
+                'Accept': 'application/json',
+              },
+            });
 
-             if (!response.ok) {
-               throw new Error(`HTTP ${response.status}`);
-             }
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}`);
+            }
 
-             const data: MailerLiteSubscriberResponse = await response.json();
+            const data: MailerLiteSubscriberResponse = await response.json();
             const batchCount = data.data?.length || 0;
             totalCount += batchCount;
-            
-            console.log(`- Batch size: ${batchCount}, Total so far: ${totalCount}`);
             
             cursor = data.meta?.next_cursor;
             hasMore = !!cursor && batchCount > 0;
           }
           
-          console.log('- Final manual count:', totalCount);
           return totalCount;
           
-                 } catch (error) {
-           console.log('- Manual counting approach failed:', error instanceof Error ? error.message : 'Unknown error');
+        } catch {
+          console.error('MailerLite: ❌ Failed to retrieve subscriber count');
         }
       }
 
-      // Fallback: return default
-      console.log('- All approaches failed, returning fallback count');
+      console.error('MailerLite: ❌ No group ID configured');
       return 0;
       
     } catch (error) {
-      console.error('- Detailed MailerLite error:', error);
+      console.error('MailerLite: ❌ Service error');
       if (error instanceof Error) {
         throw error;
       }
