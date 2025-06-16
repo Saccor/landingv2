@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import RevealSection from '@/components/ui/RevealSection';
 
 const AppSection: React.FC = () => {
@@ -14,15 +15,34 @@ const AppSection: React.FC = () => {
 
           {/* Image container */}
           <div className="flex-shrink-0 lg:flex-[0.9] text-center lg:text-left mb-8 lg:mb-0 lg:-mr-4">
-
-            <Image
-              src="/phone.png"
-              alt="App preview"
-              width={236}
-              height={400}
-              className="mx-auto lg:mx-0 w-full max-w-[150px] lg:max-w-[220] lg:ml-11 object-contain"
-              priority
-            />
+            <motion.div
+              className="perspective-1000"
+              whileHover={{
+                rotateY: 15,
+                rotateX: 5,
+                scale: 1.05,
+                z: 50
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 20,
+                duration: 0.3
+              }}
+              style={{
+                transformStyle: "preserve-3d",
+                transformOrigin: "center center"
+              }}
+            >
+              <Image
+                src="/phone.png"
+                alt="App preview"
+                width={236}
+                height={400}
+                className="mx-auto lg:mx-0 w-full max-w-[150px] lg:max-w-[220] lg:ml-11 object-contain drop-shadow-2xl"
+                priority
+              />
+            </motion.div>
           </div>
 
           {/* Text container */}
