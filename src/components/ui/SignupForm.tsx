@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { trackEvent } from '@/lib/analytics';
-import Button from '@/components/ui/Button';
+import Button from './Button';
 
 interface SignupFormProps {
   className?: string;
