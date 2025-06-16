@@ -12,12 +12,12 @@ export default {
       'xs': '480px',
       'sm': '640px',
       'md': '768px',
-      'lg': '1024px',
+      'lg': '1366px',
       'xl': '1280px',
       '2xl': '1536px',
       
       'mobile': {'max': '767px'},
-      'desktop': {'min': '1025px'},
+      'desktop': {'min': '1366px'},
     },
   	extend: {
       container: {
