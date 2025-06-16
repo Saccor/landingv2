@@ -12,7 +12,7 @@ interface SurveySubmissionBody {
 
 // Add the mapping function as provided by the user
 function mapAnswersToQuestions(
-  rawAnswers: Record<string, any>,
+  rawAnswers: Record<string, string>,
   questions: { id: string; text: string }[]
 ) {
   // build a lookup map from question-id → question-text
@@ -21,7 +21,7 @@ function mapAnswersToQuestions(
   );
 
   // for each entry in rawAnswers, replace the key with the text
-  const humanAnswers: Record<string, any> = {};
+  const humanAnswers: Record<string, string> = {};
   for (const [qid, val] of Object.entries(rawAnswers)) {
     // skip any "_other" entries if you're handling those specially
     if (qid.endsWith('_other')) continue;

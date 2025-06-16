@@ -11,6 +11,19 @@ interface SubscriberData {
   groups?: string[];
 }
 
+interface MailerLiteSubscriberResponse {
+  data: Array<{
+    id: string;
+    email: string;
+    status: string;
+    [key: string]: unknown;
+  }>;
+  meta?: {
+    next_cursor?: string;
+    [key: string]: unknown;
+  };
+}
+
 export class MailerLiteService {
   private readonly apiKey: string;
   private readonly groupId: string;
@@ -100,7 +113,7 @@ export class MailerLiteService {
                throw new Error(`HTTP ${response.status}`);
              }
 
-             const data: any = await response.json();
+             const data: MailerLiteSubscriberResponse = await response.json();
             const batchCount = data.data?.length || 0;
             totalCount += batchCount;
             
