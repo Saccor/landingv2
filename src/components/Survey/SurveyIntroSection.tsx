@@ -561,7 +561,7 @@ function IntroScreen({
 
       <ErrorDisplay error={state.error} />
 
-      <div className="mt-8 text-center">
+      <div className="mt-8 text-center pb-8">
   <button
     onClick={onStartSurvey}
     disabled={state.loading}
