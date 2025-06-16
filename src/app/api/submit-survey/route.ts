@@ -10,6 +10,29 @@ interface SurveySubmissionBody {
   answers: SurveyAnswers;
 }
 
+// Add the mapping function as provided by the user
+function mapAnswersToQuestions(
+  rawAnswers: Record<string, any>,
+  questions: { id: string; text: string }[]
+) {
+  // build a lookup map from question-id → question-text
+  const qLookup = Object.fromEntries(
+    questions.map((q) => [q.id, q.text])
+  );
+
+  // for each entry in rawAnswers, replace the key with the text
+  const humanAnswers: Record<string, any> = {};
+  for (const [qid, val] of Object.entries(rawAnswers)) {
+    // skip any "_other" entries if you're handling those specially
+    if (qid.endsWith('_other')) continue;
+
+    const questionText = qLookup[qid] ?? qid; 
+    humanAnswers[questionText] = val;
+  }
+
+  return humanAnswers;
+}
+
 // Create admin client with proper error handling
 function createSupabaseAdmin() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -97,8 +120,25 @@ export async function POST(request: NextRequest) {
 
     console.log('Found survey ID:', survey.id);
 
-    // 2) Process answers for clean storage
-    console.log('Processing answers...');
+    // 2) Fetch questions to map UUIDs to human-readable text
+    console.log('🔍 Step 2: Fetching questions for mapping...');
+    const { data: questions, error: questionsError } = await supabaseAdmin
+      .from('questions')
+      .select('id, text')
+      .eq('survey_id', survey.id);
+
+    if (questionsError) {
+      console.error('Failed to fetch questions:', questionsError);
+      return NextResponse.json(
+        { error: 'Failed to fetch questions', details: questionsError.message },
+        { status: 500 }
+      );
+    }
+
+    console.log('✅ Fetched questions for mapping:', questions);
+
+    // 3) Process answers for clean storage
+    console.log('🔍 Step 3: Processing answers...');
     console.log('Raw answers received:', JSON.stringify(answers, null, 2));
     const processedAnswers: Record<string, string> = {};
     
@@ -179,16 +219,21 @@ export async function POST(request: NextRequest) {
       }
     });
 
-    console.log('Final processed answers:', JSON.stringify(processedAnswers, null, 2));
+    console.log('Processed answers (still with UUIDs):', JSON.stringify(processedAnswers, null, 2));
 
-    // 3) Insert response WITH answers
-    console.log('Step 3: Inserting response with answers...');
+    // 4) Map UUID keys to human-readable question text
+    console.log('🔍 Step 4: Mapping UUIDs to human-readable questions...');
+    const humanReadableAnswers = mapAnswersToQuestions(processedAnswers, questions || []);
+    console.log('✅ Human-readable answers:', JSON.stringify(humanReadableAnswers, null, 2));
+
+    // 5) Insert response WITH human-readable answers
+    console.log('🔍 Step 5: Inserting response with human-readable answers...');
     const { data: resp, error: respErr } = await supabaseAdmin
       .from('responses')
       .insert({
         survey_id: survey.id,
         submitted_at: new Date().toISOString(),
-        answers: processedAnswers
+        answers: humanReadableAnswers
       })
       .select('id')
       .single();
