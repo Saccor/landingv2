@@ -108,34 +108,32 @@ const MultipleChoiceScreen: React.FC<MultipleChoiceScreenProps> = ({
       </div>
 
       {/* Navigation Buttons */}
-      <div className="flex gap-4 mb-8">
+      <div className="flex w-[300px] h-[44px] items-center gap-[18px] mb-8">
         {showPrevious && (
           <button
-  onClick={onPrevious}
-  className="w-[141px] h-[44px] rounded-lg 
-             bg-[rgba(31,36,41,0.05)] border border-[#6C6C6E]
-             hover:bg-[rgba(255,255,255,0.08)] hover:border-[#8C8C8E]
-             transition-all duration-200
-             flex items-center justify-center"
->
-  <span className="font-montserrat font-medium text-[16px] leading-[24px] text-[#F2F4F7] hover:text-[#F2F4F7]">
-    Previous
-  </span>
-</button>
-
-
+            onClick={onPrevious}
+            className="flex-1 flex justify-center items-center py-[10px] px-[20px] 
+                       border border-white rounded-full 
+                       bg-[rgba(31,36,41,0.05)] 
+                       hover:bg-[rgba(255,255,255,0.08)] hover:border-[#8C8C8E] 
+                       transition-all duration-200"
+          >
+            <span className="font-montserrat font-normal text-[14px] leading-[20px] text-white">
+              Previous
+            </span>
+          </button>
         )}
         
         <button
           onClick={onNext}
           disabled={selectedOptions.length === 0}
-          className={`w-[141px] h-[44px] rounded-lg transition-all duration-200 flex items-center justify-center
-            ${selectedOptions.length > 0 
-              ? 'bg-white hover:bg-[#E5E7EB] text-[#1F2429]' 
-              : 'bg-[rgba(255,255,255,0.3)] text-[#98A2B3] cursor-not-allowed'
+          className={`flex-1 flex justify-center items-center py-[10px] px-[20px] rounded-full transition-all duration-200 ${
+            selectedOptions.length > 0 
+              ? 'bg-[#F5F5F5] text-black hover:bg-white' 
+              : 'bg-gray-400 text-gray-600 cursor-not-allowed'
             }`}
         >
-          <span className="font-montserrat font-medium text-[16px] leading-[24px]">
+          <span className="font-montserrat font-medium text-[14px] leading-[20px]">
             Next
           </span>
         </button>
