@@ -25,6 +25,19 @@ export default function SurveyIntroSection() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
+  // Navigation handlers for breadcrumbs
+  const handleGoToHomepage = () => {
+    window.location.href = '/';
+  };
+
+  const handleGoToSurvey = () => {
+    setCurrentView('intro');
+    setCurrentQuestionIndex(0);
+    setAnswers({});
+    setError('');
+    setSubmitted(false);
+  };
+
   const fetchQuestions = async () => {
     setLoading(true);
     setError('');
@@ -145,9 +158,9 @@ export default function SurveyIntroSection() {
         <div className="w-full px-4 mb-6 lg:px-6 lg:pt-10 lg:mb-6">
           <div className="lg:max-w-[1270px] lg:mx-auto flex items-center gap-2 text-sm text-white">
             <Home size={18} className="lg:w-4 lg:h-4" />
-            <span className="font-semibold underline cursor-pointer">Homepage</span>
+            <span className="font-semibold underline cursor-pointer" onClick={handleGoToHomepage}>Homepage</span>
             <span className="text-lg">›</span>
-            <span className="text-white/80 lg:text-white">Survey</span>
+            <span className="text-white/80 lg:text-white cursor-pointer hover:text-white" onClick={handleGoToSurvey}>Survey</span>
           </div>
         </div>
         
@@ -186,9 +199,9 @@ export default function SurveyIntroSection() {
         <div className="w-full px-4 py-4 lg:px-6 lg:pt-10 lg:pb-8">
           <div className="lg:max-w-[1270px] lg:mx-auto flex items-center gap-2 text-sm text-white">
             <Home size={18} className="lg:w-4 lg:h-4" />
-            <span className="font-semibold underline cursor-pointer">Homepage</span>
+            <span className="font-semibold underline cursor-pointer" onClick={handleGoToHomepage}>Homepage</span>
             <span className="text-lg">›</span>
-            <span className="text-white/80 lg:text-white">Survey</span>
+            <span className="text-white/80 lg:text-white cursor-pointer hover:text-white" onClick={handleGoToSurvey}>Survey</span>
           </div>
         </div>
 
@@ -302,9 +315,9 @@ export default function SurveyIntroSection() {
       <div className="w-full px-4 mb-6 lg:px-6 lg:pt-10 lg:mb-6">
         <div className="lg:max-w-[1270px] lg:mx-auto flex items-center gap-2 text-sm text-white">
           <Home size={18} className="lg:w-4 lg:h-4" />
-          <span className="font-semibold underline cursor-pointer">Homepage</span>
+          <span className="font-semibold underline cursor-pointer" onClick={handleGoToHomepage}>Homepage</span>
           <span className="text-lg">›</span>
-          <span className="text-white/80 lg:text-white">Survey</span>
+          <span className="text-white/80 lg:text-white cursor-pointer hover:text-white" onClick={handleGoToSurvey}>Survey</span>
         </div>
       </div>
       {/* Main Content */}
