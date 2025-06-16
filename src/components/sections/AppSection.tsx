@@ -39,7 +39,7 @@ const AppSection: React.FC = () => {
                 alt="App preview"
                 width={236}
                 height={400}
-                className="mx-auto lg:mx-0 w-full max-w-[150px] lg:max-w-[220] lg:ml-11 object-contain drop-shadow-2xl"
+                className="mx-auto lg:mx-0 w-full max-w-[150px] lg:max-w-[220px] lg:ml-11 object-contain drop-shadow-2xl"
                 priority
               />
             </motion.div>
