@@ -3,123 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-
-    --background: 0 0% 100%;
-
-    --foreground: 0 0% 3.9%;
-
-    --card: 0 0% 100%;
-
-    --card-foreground: 0 0% 3.9%;
-
-    --popover: 0 0% 100%;
-
-    --popover-foreground: 0 0% 3.9%;
-
-    --primary: 0 0% 9%;
-
-    --primary-foreground: 0 0% 98%;
-
-    --secondary: 0 0% 96.1%;
-
-    --secondary-foreground: 0 0% 9%;
-
-    --muted: 0 0% 96.1%;
-
-    --muted-foreground: 0 0% 45.1%;
-
-    --accent: 0 0% 96.1%;
-
-    --accent-foreground: 0 0% 9%;
-
-    --destructive: 0 84.2% 60.2%;
-
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 89.8%;
-
-    --input: 0 0% 89.8%;
-
-    --ring: 0 0% 3.9%;
-
-    --chart-1: 12 76% 61%;
-
-    --chart-2: 173 58% 39%;
-
-    --chart-3: 197 37% 24%;
-
-    --chart-4: 43 74% 66%;
-
-    --chart-5: 27 87% 67%;
-
-    --radius: 0.5rem
-  }
-  .dark {
-
-    --background: 0 0% 3.9%;
-
-    --foreground: 0 0% 98%;
-
-    --card: 0 0% 3.9%;
-
-    --card-foreground: 0 0% 98%;
-
-    --popover: 0 0% 3.9%;
-
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 0 0% 98%;
-
-    --primary-foreground: 0 0% 9%;
-
-    --secondary: 0 0% 14.9%;
-
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 0 0% 14.9%;
-
-    --muted-foreground: 0 0% 63.9%;
-
-    --accent: 0 0% 14.9%;
-
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 14.9%;
-
-    --input: 0 0% 14.9%;
-
-    --ring: 0 0% 83.1%;
-
-    --chart-1: 220 70% 50%;
-
-    --chart-2: 160 60% 45%;
-
-    --chart-3: 30 80% 55%;
-
-    --chart-4: 280 65% 60%;
-
-    --chart-5: 340 75% 55%
-  }
-  .theme {
-
-    --animate-highlight: highlight 0.6s ease forwards;
-
-    --animate-flash: flash 0.6s ease forwards
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+  /* Base HTML and body styles for full-page layout */
   html, body {
     width: 100%;
     min-width: 100vw;
@@ -131,153 +15,14 @@
     overflow-x: hidden;
   }
   
-  /* Smooth responsive transitions */
+  /* Smooth responsive transitions for better UX */
   *, *::before, *::after {
     transition: font-size 0.3s ease, padding 0.3s ease, margin 0.3s ease;
   }
 }
 
 @layer utilities {
-  /* Responsive Container Utilities */
-  .container-responsive {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-  
-  @media (min-width: 640px) {
-    .container-responsive {
-      max-width: 640px;
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
-    }
-  }
-  
-  @media (min-width: 768px) {
-    .container-responsive {
-      max-width: 768px;
-      padding-left: 2rem;
-      padding-right: 2rem;
-    }
-  }
-  
-  @media (min-width: 1024px) {
-    .container-responsive {
-      max-width: 1024px;
-      padding-left: 3rem;
-      padding-right: 3rem;
-    }
-  }
-  
-  @media (min-width: 1280px) {
-    .container-responsive {
-      max-width: 1280px;
-      padding-left: 4rem;
-      padding-right: 4rem;
-    }
-  }
-  
-  @media (min-width: 1536px) {
-    .container-responsive {
-      max-width: 1536px;
-      padding-left: 5rem;
-      padding-right: 5rem;
-    }
-  }
-
-  /* Fluid Typography */
-  .text-fluid-sm {
-    font-size: clamp(0.875rem, 0.8rem + 0.5vw, 1rem);
-  }
-  
-  .text-fluid-base {
-    font-size: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
-  }
-  
-  .text-fluid-lg {
-    font-size: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);
-  }
-  
-  .text-fluid-xl {
-    font-size: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
-  }
-  
-  .text-fluid-2xl {
-    font-size: clamp(1.5rem, 1.3rem + 1vw, 2rem);
-  }
-  
-  .text-fluid-3xl {
-    font-size: clamp(1.875rem, 1.5rem + 1.5vw, 2.5rem);
-  }
-  
-  .text-fluid-4xl {
-    font-size: clamp(2.25rem, 1.8rem + 2vw, 3rem);
-  }
-  
-  .text-fluid-5xl {
-    font-size: clamp(3rem, 2.4rem + 2.5vw, 4rem);
-  }
-  
-  .text-fluid-6xl {
-    font-size: clamp(3.75rem, 3rem + 3vw, 5rem);
-  }
-
-  /* Responsive Spacing */
-  .space-fluid {
-    gap: clamp(1rem, 2vw, 2rem);
-  }
-  
-  .space-fluid-sm {
-    gap: clamp(0.5rem, 1vw, 1rem);
-  }
-  
-  .space-fluid-lg {
-    gap: clamp(1.5rem, 3vw, 3rem);
-  }
-
-  /* Safe Area Utilities */
-  .safe-top {
-    padding-top: env(safe-area-inset-top);
-  }
-  
-  .safe-bottom {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-  
-  .safe-left {
-    padding-left: env(safe-area-inset-left);
-  }
-  
-  .safe-right {
-    padding-right: env(safe-area-inset-right);
-  }
-
-
-}
-
-@theme inline {
-  @keyframes highlight {
-  0% {
-    backgroundColor: transparent;
-    }
-  100% {
-    backgroundColor: var(--highlight);
-    }
-  }
-  @keyframes flash {
-  0% {
-    backgroundColor: hsl(var(--card));
-    }
-  50% {
-    backgroundColor: var(--highlight);
-    }
-  100% {
-    backgroundColor: hsl(var(--card));
-    }
-  }
-  
+  /* Animation utilities used in the project */
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -299,10 +44,11 @@
       transform: scale(1);
     }
   }
-}
 
-@keyframes flip {
-  0% { transform: rotateY(0deg); }
-  100% { transform: rotateY(180deg); }
+  /* Flip animation for countdown timer */
+  @keyframes flip {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(180deg); }
+  }
 }
 

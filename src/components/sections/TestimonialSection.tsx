@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import RevealSection from '@/components/common/RevealSection';
+import RevealSection from '@/components/ui/RevealSection';
 
 const testimonials = [
   {

@@ -6,7 +6,7 @@ import TikTokIcon from '@/components/icons/TikTokIcon';
 import FacebookIcon from '@/components/icons/FacebookIcon';
 import YouTubeIcon from '@/components/icons/YouTubeIcon';
 import { motion } from 'framer-motion';
-import RevealSection from '@/components/common/RevealSection';
+import RevealSection from '@/components/ui/RevealSection';
 
 interface SocialMediaSectionProps {
   className?: string;

@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import SignupForm from '@/components/common/SignupForm';
-import RevealSection from '@/components/common/RevealSection';
+import SignupForm from '@/components/ui/SignupForm';
+import RevealSection from '@/components/ui/RevealSection';
 import CountdownTimerPixel from '@/components/common/CountdownTimerPixel';
 import { useSubscriberCount } from '@/hooks/useSubscriberCount';
 

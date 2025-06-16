@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import RevealSection from '@/components/common/RevealSection';
+import RevealSection from '@/components/ui/RevealSection';
 import WavesIcon from '@/components/icons/featuresIcons/waves';
 import BatteryIcon from '@/components/icons/featuresIcons/Battery';
 import CircleIcon from '@/components/icons/featuresIcons/Circle';

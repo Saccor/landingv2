@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Montserrat, Poppins } from "next/font/google";
 import "./globals.css";
-import GoogleTagManager, { GoogleTagManagerNoScript } from "@/components/common/GoogleTagManager";
+import GoogleTagManager, { GoogleTagManagerNoScript } from "@/components/ui/GoogleTagManager";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CookieConsent from "@/components/CookieConsent";
