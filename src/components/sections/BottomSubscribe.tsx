@@ -10,52 +10,61 @@ interface BottomSubscribeProps {
 }
 
 export default function BottomSubscribe({ className = '' }: BottomSubscribeProps) {
-  const { count, total } = useSubscriberCount();
+  const { count, total, loading } = useSubscriberCount();
   
   return (
     <RevealSection className={`bg-black overflow-hidden ${className}`}>
-      {/* Container: Clean, simple approach with proper spacing */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+      {/* Container: Responsive with media queries */}
+      <div className="container mx-auto responsive-container responsive-section px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
         
-        {/* Content: Custom container with specific styling */}
-        <div className="
-          flex flex-col items-start
-          p-0 gap-[30px]
-          w-[353px] h-[176px]
-          drop-shadow-[0_4px_49.6px_rgba(0,0,0,0.1)]
-          rounded-[20px]
-          flex-none order-0 self-stretch flex-grow-0
-          mx-auto
-        ">
-          
-          {/* Heading: Custom styling with specific dimensions */}
+        <div className="w-full flex justify-center">
+          {/* Content: Media query responsive container */}
           <div className="
-            w-[353px] sm:w-[421.79px] h-[102px]
-            flex flex-col justify-center
-            flex-none order-0 self-stretch flex-grow-0
+            flex flex-col items-start
+            responsive-content responsive-gap
+            p-4 gap-6 sm:gap-[30px]
+            w-full max-w-[353px] sm:max-w-[421.79px]
+            min-h-fit
+            drop-shadow-[0_4px_49.6px_rgba(0,0,0,0.1)]
+            rounded-[20px]
+            mx-auto
           ">
-            <p className="
-              text-[#F5F5F5] font-montserrat
-              text-[18px] leading-[28px]
-              text-left
-              mb-4
+            
+            {/* Heading: Responsive text container */}
+            <div className="
+              w-full
+              flex flex-col justify-center items-center
+              responsive-gap
+              space-y-3 sm:space-y-4
             ">
-              <span className="font-bold">Sign up now —</span> to be part of the future of sustainable sound.
-            </p>
-            <p className="
-              text-[#F5F5F5] font-montserrat font-normal
-              text-[18px] leading-[28px]
-              text-left
-            ">
-              {count} of {total} spots already gone.
-            </p>
-          </div>
+              <p className="
+                text-[#F5F5F5] font-montserrat
+                responsive-text
+                text-base sm:text-[18px] leading-relaxed sm:leading-[28px]
+                text-center
+              ">
+                <span className="font-bold">Sign up now —</span> to be part of the future of sustainable sound.
+              </p>
+              <p className="
+                text-[#F5F5F5] font-montserrat font-normal
+                responsive-text
+                text-base sm:text-[18px] leading-relaxed sm:leading-[28px]
+                text-center
+              ">
+                {loading || count === 0 ? (
+                  <span className="opacity-50">Loading spots...</span>
+                ) : (
+                  `${count} of ${total} spots already gone.`
+                )}
+              </p>
+            </div>
 
-          {/* Form: Inherits proper responsive behavior */}
-          <div className="w-full max-w-md">
-            <SignupForm buttonText="Sign-up" />
+            {/* Form: Inherits proper responsive behavior */}
+            <div className="w-full max-w-md">
+              <SignupForm buttonText="Sign-up" />
+            </div>
+            
           </div>
-          
         </div>
       </div>
     </RevealSection>

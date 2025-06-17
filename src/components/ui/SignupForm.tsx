@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { trackEvent } from '@/lib/analytics';
 
 // Simple Button component without external dependencies
@@ -76,6 +76,23 @@ export default function SignupForm({
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
+  const [isMounted, setIsMounted] = useState(false);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    setIsMounted(true);
+    
+    const updateScale = () => {
+      if (typeof window !== 'undefined') {
+        setScale(Math.min(1, (window.innerWidth * 0.9) / 369));
+      }
+    };
+
+    updateScale();
+    window.addEventListener('resize', updateScale);
+    
+    return () => window.removeEventListener('resize', updateScale);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -132,39 +149,54 @@ export default function SignupForm({
 
   return (
     <div className={`w-full flex flex-col items-center gap-3 ${className}`}>
-      <form onSubmit={handleSubmit} className="flex flex-row items-center justify-center gap-3 w-[369px] h-[44px] p-0 bg-transparent">
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          placeholder="email"
-          className="
-            w-[227px] h-[44px] px-5 py-2.5 rounded-full
-            border border-white bg-transparent
-            text-white placeholder:text-gray-400
-            text-sm font-poppins
-            focus:outline-none focus:border-white/40
-            transition-all duration-200
-            box-border
-          "
-        />
-        <Button
-          type="submit"
-          variant="primary"
-          size="md"
-          isLoading={status === 'loading'}
-          className="h-full px-6 rounded-full whitespace-nowrap"
-        >
-          {buttonText}
-        </Button>
-      </form>
+      <div 
+        className="w-full flex justify-center"
+        style={isMounted ? { 
+          transform: `scale(${scale})`,
+          transformOrigin: 'center',
+        } : undefined}
+      >
+        <form onSubmit={handleSubmit} className="flex flex-row items-center justify-center gap-3 w-[369px] h-[44px] p-0 bg-transparent">
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            placeholder="email"
+            className="
+              w-[227px] h-[44px] px-5 py-2.5 rounded-full
+              border border-white bg-transparent
+              text-white placeholder:text-gray-400
+              text-sm font-poppins
+              focus:outline-none focus:border-white/40
+              transition-all duration-200
+              box-border
+            "
+          />
+          <Button
+            type="submit"
+            variant="primary"
+            size="md"
+            isLoading={status === 'loading'}
+            className="h-full px-6 rounded-full whitespace-nowrap"
+          >
+            {buttonText}
+          </Button>
+        </form>
+      </div>
       {message && (
-        <p className={`text-sm text-center w-full px-4 sm:px-0 ${
-          status === 'success' ? 'text-green-600' : 'text-red-600'
-        }`}>
-          {message}
-        </p>
+        <div 
+          style={isMounted ? { 
+            transform: `scale(${scale})`,
+            transformOrigin: 'center',
+          } : undefined}
+        >
+          <p className={`text-sm text-center w-full px-4 sm:px-0 ${
+            status === 'success' ? 'text-green-600' : 'text-red-600'
+          }`}>
+            {message}
+          </p>
+        </div>
       )}
     </div>
   );

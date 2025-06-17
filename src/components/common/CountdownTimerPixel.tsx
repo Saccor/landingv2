@@ -31,11 +31,11 @@ interface CountdownDigitProps {
  */
 type PixelGrid = number[][];
 
-// Constants
-const CELL_SIZE = 6; // pixels
+// Constants - back to fixed size but with container scaling
+const CELL_SIZE = 5; // Fixed at 5px for optimal display
 const UPDATE_INTERVAL = 1000; // milliseconds
 const GRID_GAP = '1px';
-const DIGIT_MARGIN = '1px';
+const DIGIT_MARGIN = '2px';
 
 // Colors
 const PIXEL_COLORS = {
@@ -44,18 +44,7 @@ const PIXEL_COLORS = {
   BORDER: '#2a2a2a',
 } as const;
 
-// Spacing
-const LABEL_STYLES = {
-  width: '100px',
-  textAlign: 'center' as const,
-};
-
-const LOADING_MIN_HEIGHT = '60px';
-
-/**
- * 5x10 pixel grid patterns for digits 0-9, colon (:), and spacer (_)
- * Each number represents a pixel: 1 = lit (white), 0 = unlit (black)
- */
+// 5x10 pixel grid patterns for digits 0-9, colon (:), and spacer (_)
 const DIGIT_MAP: Record<string, PixelGrid> = {
   '0': [
     [0, 0, 0, 0, 0],
@@ -243,7 +232,6 @@ PixelCell.displayName = 'PixelCell';
 const CountdownDigit = React.memo(({ char }: CountdownDigitProps) => {
   const grid = DIGIT_MAP[char];
   
-  // Call hooks unconditionally before any early returns
   const gridStyle = useMemo(() => {
     if (!grid) return {};
     return {
@@ -260,7 +248,6 @@ const CountdownDigit = React.memo(({ char }: CountdownDigitProps) => {
     ));
   }, [grid]);
 
-  // Early return after hooks
   if (!grid) return null;
 
   return (
@@ -273,15 +260,12 @@ const CountdownDigit = React.memo(({ char }: CountdownDigitProps) => {
 CountdownDigit.displayName = 'CountdownDigit';
 
 /**
- * Loading state component with consistent styling
+ * Loading state component
  */
 const LoadingState = React.memo(() => (
   <div className="flex flex-col items-center">
-    <div 
-      className="flex items-center justify-center flex-wrap gap-0" 
-      style={{ minHeight: LOADING_MIN_HEIGHT }}
-    >
-      <div className="text-white font-mono">Loading...</div>
+    <div className="flex items-center justify-center flex-wrap gap-0 min-h-[60px]">
+      <div className="text-white font-mono text-sm">Loading...</div>
     </div>
     <TimeLabels />
   </div>
@@ -290,33 +274,26 @@ const LoadingState = React.memo(() => (
 LoadingState.displayName = 'LoadingState';
 
 /**
- * Time unit labels component
+ * Time unit labels component with proper alignment
  */
 const TimeLabels = React.memo(() => (
   <div className="flex justify-center mt-2 text-xs text-white font-mono">
-    <div style={LABEL_STYLES}>Days</div>
-    <div style={LABEL_STYLES}>Hours</div>
-    <div style={LABEL_STYLES}>Minutes</div>
-    <div style={LABEL_STYLES}>Seconds</div>
+    <div className="text-center w-[56px]">Days</div>
+    <div className="text-center w-[56px]">Hours</div>
+    <div className="text-center w-[56px]">Minutes</div>
+    <div className="text-center w-[56px]">Seconds</div>
   </div>
 ));
 
 TimeLabels.displayName = 'TimeLabels';
 
 /**
- * Pixel art countdown timer with retro aesthetic
- * 
- * Features:
- * - Custom 5x10 pixel grid for each digit
- * - Hydration-safe with loading states
- * - Real-time updates every second
- * - Days:Hours:Minutes:Seconds format
- * - Responsive design with consistent spacing
- * - Performance optimized with React.memo
+ * Pixel art countdown timer with container-based responsive scaling
  */
 export default function CountdownTimerPixel({ targetDate }: CountdownTimerPixelProps) {
   const [segments, setSegments] = useState<TimeSegments | null>(null);
   const [isMounted, setIsMounted] = useState(false);
+  const [scale, setScale] = useState(1);
 
   /**
    * Update countdown segments
@@ -329,9 +306,21 @@ export default function CountdownTimerPixel({ targetDate }: CountdownTimerPixelP
     setIsMounted(true);
     updateSegments();
 
+    const updateScale = () => {
+      if (typeof window !== 'undefined') {
+        setScale(Math.min(1, (window.innerWidth * 0.9) / 350));
+      }
+    };
+
+    updateScale();
+    window.addEventListener('resize', updateScale);
+
     const interval = setInterval(updateSegments, UPDATE_INTERVAL);
     
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('resize', updateScale);
+    };
   }, [updateSegments]);
 
   /**
@@ -357,7 +346,7 @@ export default function CountdownTimerPixel({ targetDate }: CountdownTimerPixelP
   const digitComponents = useMemo(() => 
     timeChars.map((char, i) => (
       <div
-        key={`${char}-${i}`} // Include index to handle duplicate characters
+        key={`${char}-${i}`}
         style={{
           marginRight: i < timeChars.length - 1 ? DIGIT_MARGIN : '0px',
         }}
@@ -373,11 +362,20 @@ export default function CountdownTimerPixel({ targetDate }: CountdownTimerPixelP
   }
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="flex items-center justify-center flex-wrap gap-0">
-        {digitComponents}
+    <div 
+      className="w-full flex justify-center" 
+      style={isMounted ? { 
+        transform: `scale(${scale})`,
+        transformOrigin: 'center',
+        whiteSpace: 'nowrap'
+      } : { whiteSpace: 'nowrap' }}
+    >
+      <div className="flex flex-col items-center">
+        <div className="flex items-center justify-center gap-0" style={{ whiteSpace: 'nowrap' }}>
+          {digitComponents}
+        </div>
+        <TimeLabels />
       </div>
-      <TimeLabels />
     </div>
   );
 }

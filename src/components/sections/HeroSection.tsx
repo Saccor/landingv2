@@ -7,7 +7,7 @@ import CountdownTimerPixel from '@/components/common/CountdownTimerPixel';
 import { useSubscriberCount } from '@/hooks/useSubscriberCount';
 
 export default function HeroSection() {
-  const { count, total } = useSubscriberCount();
+  const { count, total, loading } = useSubscriberCount();
   
   return (
     <RevealSection className="w-full max-w-[1440px] lg:h-[675px] mx-auto relative">
@@ -40,7 +40,7 @@ export default function HeroSection() {
           </h1>
 
           {/* Countdown Timer */}
-          <div className="flex justify-center w-full">
+          <div className="w-full px-4">
             <CountdownTimerPixel targetDate="2025-08-11T00:00:00" />
           </div>
 
@@ -50,7 +50,11 @@ export default function HeroSection() {
               <span className="font-bold">Sign up now</span> — countdown&apos;s ticking and secrets awaits.
             </p>
             <p className="font-montserrat font-normal text-[18px] leading-[28px] text-[#F5F5F5]">
-              {count} of {total} spots already gone.
+              {loading || count === 0 ? (
+                <span className="opacity-50">Loading spots...</span>
+              ) : (
+                `${count} of ${total} spots already gone.`
+              )}
             </p>
           </div>
 

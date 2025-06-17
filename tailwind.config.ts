@@ -9,7 +9,6 @@ export default {
   ],
   theme: {
     screens: {
-      'xs': '480px',
       'sm': '640px',
       'md': '768px',
       'lg': '1366px',
@@ -38,6 +37,7 @@ export default {
           '2xl': '1400px',
         },
       },
+      
       // Font families used in the project
       fontFamily: {
         'montserrat': ['Montserrat', 'sans-serif'],

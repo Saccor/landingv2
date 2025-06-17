@@ -10,46 +10,103 @@ interface UseSubscriberCountReturn {
   total: number;
   loading: boolean;
   error: string | null;
+  isLive: boolean;
 }
 
 export function useSubscriberCount(): UseSubscriberCountReturn {
-  const [data, setData] = useState<SubscriberCount>({ count: 485, total: 1000 });
+  const [data, setData] = useState<SubscriberCount>({ count: 0, total: 1000 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isLive, setIsLive] = useState(false);
+  const [hasRealData, setHasRealData] = useState(false);
 
   useEffect(() => {
-    const fetchCount = async () => {
+    // Try real-time connection first
+    const connectToLiveUpdates = () => {
       try {
-        setLoading(true);
-        setError(null);
+        const eventSource = new EventSource('/api/live-count');
         
-        const response = await fetch('/api/subscriber-count');
-        if (!response.ok) {
-          throw new Error('Failed to fetch subscriber count');
-        }
+        eventSource.onopen = () => {
+          setIsLive(true);
+          setError(null);
+          console.log('✅ Live subscriber count connected');
+        };
         
-        const result: SubscriberCount = await response.json();
-        setData(result);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Unknown error occurred');
-        // Keep fallback data on error
-      } finally {
-        setLoading(false);
+        eventSource.onmessage = (event) => {
+          try {
+            const newData = JSON.parse(event.data);
+            setData(newData);
+            setLoading(false);
+            setHasRealData(true);
+          } catch (e) {
+            console.error('Failed to parse live update:', e);
+          }
+        };
+        
+        eventSource.onerror = () => {
+          setIsLive(false);
+          setError('Live connection failed, falling back to polling');
+          eventSource.close();
+          
+          // Fallback to polling
+          startPolling();
+        };
+        
+        return eventSource;
+      } catch (e) {
+        console.error('Failed to create live connection:', e);
+        startPolling();
+        return null;
       }
     };
 
-    fetchCount();
+    // Fallback polling method
+    const startPolling = () => {
+      const fetchCount = async () => {
+        try {
+          setLoading(true);
+          setError(null);
+          
+          const response = await fetch('/api/subscriber-count');
+          if (!response.ok) {
+            throw new Error('Failed to fetch subscriber count');
+          }
+          
+          const result: SubscriberCount = await response.json();
+          setData(result);
+          setHasRealData(true);
+        } catch (err) {
+          setError(err instanceof Error ? err.message : 'Unknown error occurred');
+          if (!hasRealData) {
+            setData({ count: 485, total: 1000 });
+          }
+        } finally {
+          setLoading(false);
+        }
+      };
 
-    // Refresh every 5 minutes
-    const interval = setInterval(fetchCount, 5 * 60 * 1000);
+      fetchCount();
+      const interval = setInterval(fetchCount, 30 * 1000);
+      
+      return () => clearInterval(interval);
+    };
+
+    // Try live connection first
+    const eventSource = connectToLiveUpdates();
     
-    return () => clearInterval(interval);
-  }, []);
+    // Cleanup
+    return () => {
+      if (eventSource) {
+        eventSource.close();
+      }
+    };
+  }, [hasRealData]);
 
   return {
     count: data.count,
     total: data.total,
     loading,
     error,
+    isLive,
   };
 } 

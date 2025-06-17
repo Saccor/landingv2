@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { MailerLiteService } from '@/services/mailerlite';
+import { broadcastUpdate } from '@/lib/liveCountManager';
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,6 +24,14 @@ export async function POST(request: NextRequest) {
 
     const mailerLite = new MailerLiteService();
     const result = await mailerLite.subscribe({ email, name });
+
+    // Fetch real count from database and broadcast the actual number
+    try {
+      const actualCount = await mailerLite.getSubscriberCount();
+      broadcastUpdate({ count: actualCount, total: 1000 });
+    } catch (error) {
+      console.error('Failed to broadcast real count update:', error);
+    }
 
     return NextResponse.json(
       { message: 'Successfully subscribed!', data: result },

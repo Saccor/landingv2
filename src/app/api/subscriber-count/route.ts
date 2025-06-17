@@ -11,7 +11,7 @@ export async function GET() {
       { 
         status: 200,
         headers: {
-          'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=60', // Cache for 5 minutes
+          'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=15', // Cache for 30 seconds
         },
       }
     );
@@ -20,7 +20,7 @@ export async function GET() {
     
     // Return fallback count on error
     return NextResponse.json(
-      { count: 485, total: 1000 },
+      { count: 490, total: 1000 },
       { status: 200 }
     );
   }

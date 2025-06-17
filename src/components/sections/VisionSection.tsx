@@ -22,16 +22,16 @@ interface ExtendedElement extends HTMLElement {
 export default function VisionSection() {
   // Video state
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
+  const [currentTime, setCurrentTime] = useState(THUMBNAIL_TIME);
   const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(1);
-  const [isMuted, setIsMuted] = useState(false);
-  const [showControls, setShowControls] = useState(true);
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [volume, setVolume] = useState(0.7);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showControls, setShowControls] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  
   // Refs
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -101,7 +101,9 @@ export default function VisionSection() {
     if (!videoRef.current) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const pos = (e.clientX - rect.left) / rect.width;
-    videoRef.current.currentTime = pos * (videoRef.current.duration || 0);
+    const newTime = pos * (videoRef.current.duration || 0);
+    videoRef.current.currentTime = newTime;
+    setCurrentTime(newTime);
     setShowControls(true);
   }, []);
 
@@ -111,13 +113,24 @@ export default function VisionSection() {
   const handleProgressMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(true);
-    handleProgressClick(e);
+    
+    const progressBar = e.currentTarget;
+    const rect = progressBar.getBoundingClientRect();
+    const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    
+    if (videoRef.current) {
+      const newTime = pos * (videoRef.current.duration || 0);
+      videoRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
+    }
     
     const handleMouseMove = (e: MouseEvent) => {
       if (!videoRef.current || !isDragging) return;
-      const rect = (e.target as HTMLDivElement).getBoundingClientRect();
+      const rect = progressBar.getBoundingClientRect();
       const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-      videoRef.current.currentTime = pos * (videoRef.current.duration || 0);
+      const newTime = pos * (videoRef.current.duration || 0);
+      videoRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
     };
 
     const handleMouseUp = () => {
@@ -128,7 +141,7 @@ export default function VisionSection() {
 
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
-  }, [handleProgressClick, isDragging]);
+  }, [isDragging]);
 
   /**
    * Initiates progress bar dragging for touch events
@@ -136,20 +149,26 @@ export default function VisionSection() {
   const handleProgressTouchStart = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(true);
+    
+    const progressBar = e.currentTarget;
     const touch = e.touches[0];
-    const rect = e.currentTarget.getBoundingClientRect();
+    const rect = progressBar.getBoundingClientRect();
     const pos = Math.max(0, Math.min(1, (touch.clientX - rect.left) / rect.width));
     
     if (videoRef.current) {
-      videoRef.current.currentTime = pos * (videoRef.current.duration || 0);
+      const newTime = pos * (videoRef.current.duration || 0);
+      videoRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
     }
     
     const handleTouchMove = (e: TouchEvent) => {
       if (!videoRef.current || !isDragging) return;
       const touch = e.touches[0];
-      const rect = (e.target as HTMLDivElement).getBoundingClientRect();
+      const rect = progressBar.getBoundingClientRect();
       const pos = Math.max(0, Math.min(1, (touch.clientX - rect.left) / rect.width));
-      videoRef.current.currentTime = pos * (videoRef.current.duration || 0);
+      const newTime = pos * (videoRef.current.duration || 0);
+      videoRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
     };
 
     const handleTouchEnd = () => {
@@ -247,23 +266,55 @@ export default function VisionSection() {
   const handleLoadedMetadata = useCallback(() => {
     if (videoRef.current) {
       setDuration(videoRef.current.duration);
-      // Set thumbnail to 1:03 but don't play
+    }
+  }, []);
+
+  /**
+   * Handles when video data is loaded and ready
+   */
+  const handleLoadedData = useCallback(() => {
+    if (videoRef.current && !isPlaying) {
+      // Set thumbnail to 1:03 when data is loaded and video hasn't been played
       videoRef.current.currentTime = THUMBNAIL_TIME;
       setCurrentTime(THUMBNAIL_TIME);
     }
-  }, []);
+  }, [isPlaying]);
 
   // Effects
   
   /**
-   * Detect mobile devices
+   * Initialize responsive scaling and detect mobile devices
    */
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(MOBILE_REGEX.test(navigator.userAgent));
     };
+
     checkMobile();
   }, []);
+
+  /**
+   * Ensure thumbnail is set on mount/refresh
+   */
+  useEffect(() => {
+    if (videoRef.current && !isPlaying) {
+      // Set thumbnail on mount/refresh
+      const setThumbnail = () => {
+        if (videoRef.current && !isPlaying) {
+          videoRef.current.currentTime = THUMBNAIL_TIME;
+          setCurrentTime(THUMBNAIL_TIME);
+        }
+      };
+      
+      if (videoRef.current.readyState >= 2) {
+        // Video is ready
+        setThumbnail();
+      } else {
+        // Wait for video to be ready
+        videoRef.current.addEventListener('loadeddata', setThumbnail, { once: true });
+      }
+    }
+  }, [isPlaying]);
 
   /**
    * Handle fullscreen state changes
@@ -396,121 +447,124 @@ export default function VisionSection() {
   );
 
   return (
-    <RevealSection className="bg-black overflow-hidden mt-5">
-      <div className="w-full flex flex-col items-center">
-        <div className="flex flex-col lg:flex-row items-center gap-5 lg:gap-5">
-          
-          {/* Vision Text Box */}
-          <div className="order-2 w-[353px] h-[460px] lg:w-[505px] lg:h-[505px] bg-[var(--Gray-900,#1b1b1b)] rounded-sm flex justify-center items-center">
-            <div className="w-[305px] h-[360px] mx-auto bg-gradient-to-b from-white to-[#C8A596] bg-clip-text text-transparent text-center text-[20px] leading-[30px] font-semibold font-['Montserrat'] flex flex-col justify-between">
-              <p className="m-0 p-0">Arfve isn&apos;t just earbuds.</p>
-              <p className="m-0 p-0">
-                It&apos;s a modular system of personalized sound, intelligent design, and circular thinking —<br className="hidden lg:block" />
-                built to last, adapt, and be yours.
-              </p>
-              <p className="m-0 p-0">Rooted in Scandinavian minimalism.</p>
-              <p className="m-0 p-0">Made by Arfve. Defined by you.</p>
-            </div>
-          </div>
-
-          {/* Video Container */}
-          <div 
-            ref={containerRef}
-            className="order-1 lg:order-2 relative w-[353px] h-[210px] lg:w-[875px] lg:h-[505px] bg-black rounded-sm overflow-hidden cursor-pointer transition-all duration-300"
-            onMouseMove={() => setShowControls(true)}
-            onMouseLeave={() => isPlaying && !isMobile && setShowControls(false)}
-            onClick={handlePlayPause}
-            onTouchStart={() => setShowControls(true)}
-          >
-            <video
-              ref={videoRef}
-              className="w-full h-full object-cover"
-              src="/video/hero-optimized.mp4"
-              muted={isMuted}
-              playsInline
-              onTimeUpdate={handleTimeUpdate}
-              onLoadedMetadata={handleLoadedMetadata}
-              onEnded={() => setIsPlaying(false)}
+    <RevealSection className="bg-black overflow-hidden">
+      <div className="w-full flex flex-col items-center responsive-container responsive-section px-4 pt-8 pb-0 mb-[20px] mt-[20px]">
+        <div className="flex justify-center w-full">
+          <div className="w-[353px] lg:w-[1400px] px-0 py-0 flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-5">
+            
+            {/* Video Container */}
+            <div 
+              ref={containerRef}
+              className="relative w-full lg:w-[875px] h-[210px] lg:h-[505px] bg-black rounded-sm overflow-hidden cursor-pointer transition-all duration-300 lg:order-2"
+              onMouseMove={() => setShowControls(true)}
+              onMouseLeave={() => isPlaying && !isMobile && setShowControls(false)}
+              onClick={handlePlayPause}
+              onTouchStart={() => setShowControls(true)}
             >
-              <source src="/video/hero-optimized.mp4" type="video/mp4" />
-            </video>
-
-            {/* Play Button Overlay */}
-            {!isPlaying && renderPlayButton()}
-
-            {/* Video Controls */}
-            {isPlaying && (
-              <div 
-                className={`absolute inset-0 transition-opacity duration-300 ${(showControls || isDragging) ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'} z-30`}
-                onMouseMove={() => setShowControls(true)}
-                onClick={(e) => e.stopPropagation()}
+              <video
+                ref={videoRef}
+                className="w-full h-full object-cover"
+                src="/video/hero-optimized.mp4"
+                muted={isMuted}
+                playsInline
+                onTimeUpdate={handleTimeUpdate}
+                onLoadedMetadata={handleLoadedMetadata}
+                onLoadedData={handleLoadedData}
+                onEnded={() => setIsPlaying(false)}
               >
+                <source src="/video/hero-optimized.mp4" type="video/mp4" />
+              </video>
+
+              {/* Play Button Overlay */}
+              {!isPlaying && renderPlayButton()}
+
+              {/* Video Controls */}
+              {isPlaying && (
                 <div 
-                  className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent pointer-events-auto ${isFullscreen ? 'p-6' : 'p-3'}`}
+                  className={`absolute inset-0 transition-opacity duration-300 ${(showControls || isDragging) ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'} z-30`}
+                  onMouseMove={() => setShowControls(true)}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  {/* Progress Bar */}
-                  {renderProgressBar()}
-
-                  {/* Controls Row */}
                   <div 
-                    className={`flex items-center justify-between text-white ${isFullscreen ? 'text-base' : 'text-sm'}`}
+                    className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent pointer-events-auto ${isFullscreen ? 'p-6' : 'p-3'}`}
                     onClick={(e) => e.stopPropagation()}
                   >
-                    {/* Left Controls */}
-                    <div className="flex items-center gap-2">
-                      {renderControlButton(
-                        handleControlPlayPause,
-                        isPlaying ? 'Pause video' : 'Play video',
-                        <svg className={`${isFullscreen ? 'w-6 h-6' : 'w-4 h-4'}`} fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-                        </svg>
-                      )}
+                    {/* Progress Bar */}
+                    {renderProgressBar()}
+
+                    {/* Controls Row */}
+                    <div 
+                      className={`flex items-center justify-between text-white ${isFullscreen ? 'text-base' : 'text-sm'}`}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {/* Left Controls */}
+                      <div className="flex items-center gap-2">
+                        {renderControlButton(
+                          handleControlPlayPause,
+                          isPlaying ? 'Pause video' : 'Play video',
+                          <svg className={`${isFullscreen ? 'w-6 h-6' : 'w-4 h-4'}`} fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                          </svg>
+                        )}
+                        
+                        {renderControlButton(
+                          toggleMute,
+                          isMuted ? 'Unmute video' : 'Mute video',
+                          <svg className={`${isFullscreen ? 'w-6 h-6' : 'w-4 h-4'}`} fill="currentColor" viewBox="0 0 24 24">
+                            {isMuted ? (
+                              <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+                            ) : (
+                              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                            )}
+                          </svg>
+                        )}
+                        
+                        {renderVolumeControl()}
+                      </div>
                       
-                      {renderControlButton(
-                        toggleMute,
-                        isMuted ? 'Unmute video' : 'Mute video',
-                        <svg className={`${isFullscreen ? 'w-6 h-6' : 'w-4 h-4'}`} fill="currentColor" viewBox="0 0 24 24">
-                          {isMuted ? (
-                            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
-                          ) : (
-                            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-                          )}
-                        </svg>
-                      )}
-                      
-                      {renderVolumeControl()}
-                    </div>
-                    
-                    {/* Right Controls */}
-                    <div className="flex items-center gap-2">
-                      <span 
-                        className={`font-mono select-none ${isFullscreen ? 'text-sm' : 'text-xs'}`}
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        {formatTime(currentTime)} / {formatTime(duration)}
-                      </span>
-                      
-                      {renderControlButton(
-                        (e) => {
-                          e.stopPropagation();
-                          toggleFullscreen();
-                          setShowControls(true);
-                        },
-                        isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen',
-                        <svg className={`${isFullscreen ? 'w-6 h-6' : 'w-4 h-4'}`} fill="currentColor" viewBox="0 0 24 24">
-                          {isFullscreen ? (
-                            <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
-                          ) : (
-                            <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
-                          )}
-                        </svg>
-                      )}
+                      {/* Right Controls */}
+                      <div className="flex items-center gap-2">
+                        <span 
+                          className={`font-mono select-none ${isFullscreen ? 'text-sm' : 'text-xs'}`}
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {formatTime(currentTime)} / {formatTime(duration)}
+                        </span>
+                        
+                        {renderControlButton(
+                          (e) => {
+                            e.stopPropagation();
+                            toggleFullscreen();
+                            setShowControls(true);
+                          },
+                          isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen',
+                          <svg className={`${isFullscreen ? 'w-6 h-6' : 'w-4 h-4'}`} fill="currentColor" viewBox="0 0 24 24">
+                            {isFullscreen ? (
+                              <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
+                            ) : (
+                              <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                            )}
+                          </svg>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
+              )}
+            </div>
+            
+            {/* Vision Text Box */}
+            <div className="bg-[var(--Gray-900,#1b1b1b)] shadow-lg w-full lg:w-[505px] min-h-[400px] lg:h-[505px] rounded-sm flex flex-col items-center justify-center px-6 py-7 lg:px-0 lg:py-0 lg:order-1">
+              <div className="w-full max-w-[305px] lg:max-w-none bg-gradient-to-b from-white to-[#C8A596] bg-clip-text text-transparent text-center font-semibold font-montserrat flex flex-col gap-4 lg:gap-8">
+                <p className="m-0 p-0 text-[20px] leading-[30px]">Arfve isn&apos;t just earbuds.</p>
+                <p className="m-0 p-0 text-[20px] leading-[30px]">
+                  It&apos;s a modular system of personalized sound, intelligent design, and circular thinking —<br className="hidden lg:block" />
+                  built to last, adapt, and be yours.
+                </p>
+                <p className="m-0 p-0 text-[20px] leading-[30px]">Rooted in Scandinavian minimalism.</p>
+                <p className="m-0 p-0 text-[20px] leading-[30px]">Made by Arfve. Defined by you.</p>
               </div>
-            )}
+            </div>
           </div>
         </div>
       </div>

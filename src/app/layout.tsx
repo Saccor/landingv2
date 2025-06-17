@@ -3,7 +3,6 @@ import { Geist, Geist_Mono, Montserrat, Poppins } from "next/font/google";
 import "./globals.css";
 import GoogleTagManager, { GoogleTagManagerNoScript } from "@/components/ui/GoogleTagManager";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import CookieConsent from "@/components/CookieConsent";
 
 const geistSans = Geist({
@@ -48,13 +47,11 @@ export default function RootLayout({
         <GoogleTagManagerNoScript />
 
         {/* Page wrapper */}
-        <div className="flex flex-col min-h-screen">
+        <div className="min-h-screen">
           <Header />
           
-          {/* Main content grows to fill space */}
-          <main className="flex-grow">{children}</main>
-
-          <Footer />
+          {/* Main content */}
+          <main>{children}</main>
         </div>
 
         <CookieConsent />
