@@ -274,16 +274,55 @@ const LoadingState = React.memo(() => (
 LoadingState.displayName = 'LoadingState';
 
 /**
- * Time unit labels component with proper alignment
+ * Time unit labels component with proper alignment under digit groups
  */
-const TimeLabels = React.memo(() => (
-  <div className="flex justify-center mt-2 text-xs text-white font-mono">
-    <div className="text-center w-[56px]">Days</div>
-    <div className="text-center w-[56px]">Hours</div>
-    <div className="text-center w-[56px]">Minutes</div>
-    <div className="text-center w-[56px]">Seconds</div>
-  </div>
-));
+const TimeLabels = React.memo(() => {
+  // Create label elements that exactly match the digit positions
+  // We'll use the same structure as the timeChars array to ensure perfect alignment
+  const labelChars = [
+    '', // spacer
+    'Days', // first day digit - positioned for proper centering
+    '', // between day digits
+    '', // second day digit  
+    '', // spacer
+    '', // colon
+    '', // spacer
+    '', // first hour digit
+    'Hours', // between hour digits - this position is correct
+    '', // second hour digit
+    '', // spacer
+    '', // colon
+    '', // spacer
+    '', // first minute digit
+    '', // between minute digits
+    'Minutes', // second minute digit - moved to the right for better centering
+    '', // spacer
+    '', // colon
+    '', // spacer
+    '', // first second digit
+    '', // between second digits
+    'Seconds', // second second digit - moved to the right for better centering
+    '', // spacer
+  ];
+  
+  return (
+    <div className="flex items-center justify-center gap-0 mt-2 text-xs text-white font-mono">
+      {labelChars.map((label, i) => (
+        <div
+          key={i}
+          className="flex items-center justify-center h-4"
+          style={{
+            width: label ? 'auto' : `${CELL_SIZE}px`,
+            marginRight: i < labelChars.length - 1 ? DIGIT_MARGIN : '0px',
+            minWidth: label ? '40px' : `${CELL_SIZE}px`,
+          }}
+        >
+          {label && <span className="whitespace-nowrap">{label}</span>}
+        </div>
+      ))}
+    </div>
+  );
+});
 
 TimeLabels.displayName = 'TimeLabels';
 
