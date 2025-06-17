@@ -6,8 +6,6 @@ export async function GET() {
     const mailerLite = new MailerLiteService();
     const count = await mailerLite.getSubscriberCount();
     
-    console.log(`MailerLite: ✅ OK (${count} subscribers)`);
-    
     return NextResponse.json(
       { count, total: 1000 },
       { 
@@ -18,7 +16,7 @@ export async function GET() {
       }
     );
   } catch {
-    console.error('MailerLite: ❌ Service failed');
+    console.error('MailerLite: Service failed');
     
     // Return fallback count on error
     return NextResponse.json(

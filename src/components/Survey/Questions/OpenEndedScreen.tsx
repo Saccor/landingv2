@@ -123,7 +123,7 @@ const OpenEndedScreen: React.FC<OpenEndedScreenProps> = ({
           {/* Email Help Text */}
           {isEmailField && (
             <p className="mt-2 text-[#98A2B3] font-montserrat font-normal text-[12px] leading-[16px]">
-              Enter your email to receive exclusive updates and participate in the Legacy 1 Earbuds giveaway
+              Enter your email to subscribe to our newsletter, receive exclusive updates, and participate in the Legacy 1 Earbuds giveaway
             </p>
           )}
         </div>

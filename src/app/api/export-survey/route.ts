@@ -63,7 +63,7 @@ export async function GET(request: NextRequest) {
       .order('ID');
 
     if (error) {
-      console.error('Supabase: ❌ Failed to fetch survey results');
+      console.error('Supabase: Failed to fetch survey results');
       return NextResponse.json(
         { error: 'Failed to fetch survey results', details: error.message },
         { status: 500 }
@@ -90,7 +90,7 @@ export async function GET(request: NextRequest) {
     }
 
   } catch (error) {
-    console.error('API: ❌ Survey export failed');
+    console.error('API: Survey export failed');
     
     return NextResponse.json(
       { 

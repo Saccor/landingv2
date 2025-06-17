@@ -42,7 +42,7 @@ export async function GET() {
       .single();
 
     if (surveyError || !survey) {
-      console.error('Supabase: ❌ Survey not found:', surveyError);
+      console.error('Supabase: Survey not found:', surveyError);
       return NextResponse.json({ 
         error: 'Survey not found', 
         details: surveyError?.message 
@@ -68,7 +68,7 @@ export async function GET() {
       .order('order_no', { ascending: true });
 
     if (questionsError) {
-      console.error('Supabase: ❌ Failed to fetch questions:', questionsError);
+      console.error('Supabase: Failed to fetch questions:', questionsError);
       return NextResponse.json({ 
         error: 'Failed to fetch questions', 
         details: questionsError.message 
@@ -82,13 +82,11 @@ export async function GET() {
         .sort((a, b) => (a.order_no || 0) - (b.order_no || 0))
         .map(({ id, value, order_no }) => ({ id, value, order_no }))
     })) || [];
-
-    console.log(`Questions API: ✅ Fetched ${transformedQuestions.length} questions for survey: ${survey.id}`);
     
     return NextResponse.json(transformedQuestions);
     
   } catch (err) {
-    console.error('Questions API: ❌ Unexpected error:', err);
+    console.error('Questions API: Unexpected error:', err);
     return NextResponse.json({ 
       error: 'Internal server error',
       details: err instanceof Error ? err.message : 'Unknown error'

@@ -111,12 +111,10 @@ export default function SurveyIntroSection() {
     setState(prev => ({ ...prev, loading: true, error: '' }));
 
     try {
-      console.log('SurveyIntroSection: 🔄 Fetching questions from API');
       const response = await fetch(API_ENDPOINTS.QUESTIONS);
       
       if (response.ok) {
         const data = await response.json();
-        console.log('SurveyIntroSection: ✅ Questions fetched successfully', { count: data?.length });
         
         if (data && data.length > 0) {
           setState(prev => ({
@@ -134,7 +132,7 @@ export default function SurveyIntroSection() {
         }
       } else {
         const errorData = await response.json();
-        console.error('SurveyIntroSection: ❌ API error', errorData);
+        console.error('SurveyIntroSection: API error', errorData);
         setState(prev => ({
           ...prev,
           error: `Failed to fetch questions: ${errorData.error || response.statusText}`,
@@ -142,7 +140,7 @@ export default function SurveyIntroSection() {
         }));
       }
     } catch (error) {
-      console.error('SurveyIntroSection: ❌ Network error', error);
+      console.error('SurveyIntroSection: Network error', error);
       setState(prev => ({
         ...prev,
         error: 'Network error: Unable to connect to the server',
@@ -221,19 +219,6 @@ export default function SurveyIntroSection() {
     setState(prev => ({ ...prev, submitting: true, error: '' }));
     
     try {
-      console.log('SurveyIntroSection: 🔄 Submitting survey', { 
-        answerCount: Object.keys(state.answers).length,
-        answers: state.answers 
-      });
-      
-      // Log specific question answers for debugging
-      Object.entries(state.answers).forEach(([questionId, answer]) => {
-        const question = state.questions.find(q => q.id === questionId);
-        if (question) {
-          console.log(`Q${question.order_no} (${question.question_code}):`, answer);
-        }
-      });
-      
       const response = await fetch(API_ENDPOINTS.SUBMIT_SURVEY, {
         method: 'POST',
         headers: {
@@ -243,12 +228,11 @@ export default function SurveyIntroSection() {
       });
 
       if (response.ok) {
-        const data = await response.json();
-        console.log('SurveyIntroSection: ✅ Survey submitted successfully', data);
+        await response.json();
         setState(prev => ({ ...prev, submitted: true, submitting: false }));
       } else {
         const errorData = await response.json();
-        console.error('SurveyIntroSection: ❌ Submission error', errorData);
+        console.error('SurveyIntroSection: Submission error', errorData);
         setState(prev => ({
           ...prev,
           error: `Failed to submit survey: ${errorData.details || errorData.error || 'Unknown error'}`,
@@ -256,7 +240,7 @@ export default function SurveyIntroSection() {
         }));
       }
     } catch (error) {
-      console.error('SurveyIntroSection: ❌ Network error during submission', error);
+      console.error('SurveyIntroSection: Network error during submission', error);
       setState(prev => ({
         ...prev,
         error: `Network error: ${error instanceof Error ? error.message : 'Unable to submit survey'}`,

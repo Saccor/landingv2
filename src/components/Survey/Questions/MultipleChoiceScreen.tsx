@@ -63,16 +63,21 @@ const MultipleChoiceScreen: React.FC<MultipleChoiceScreenProps> = ({
   };
 
   const hasOtherOption = options.some(opt => opt.toLowerCase().includes('other'));
-  const showOtherInput = hasOtherOption && selectedOptions.some(opt => opt.toLowerCase().includes('other'));
+  const showOtherInput = hasOtherOption && selectedOptions.some(opt => opt.toLowerCase().includes('other')) && (questionNumber === 3 || questionNumber === 6);
 
   return (
     <div className="w-full max-w-[329px] lg:max-w-none mx-auto flex flex-col items-center justify-center">
       
       {/* Question */}
       <div className="w-full mb-8">
-        <h2 className="font-montserrat font-semibold text-[20px] leading-[28px] text-center text-[#F2F4F7] mb-6">
+        <h2 className="font-montserrat font-semibold text-[20px] leading-[28px] text-center text-[#F2F4F7] mb-2">
           {questionNumber}. {question}
         </h2>
+        
+        {/* Multiple Choice Indicator */}
+        <p className="font-montserrat font-normal text-[14px] leading-[20px] text-center text-[#98A2B3] mb-6">
+          (Multiple Choice)
+        </p>
 
         {/* Options Container - responsive layout */}
         <div className="w-full max-w-[329px] lg:max-w-none mx-auto flex flex-col justify-center items-center gap-3 mb-8">

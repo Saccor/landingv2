@@ -40,15 +40,20 @@ export default function SingleChoiceScreen({
   };
 
   const hasOtherOption = options.some(opt => opt.toLowerCase().includes('other'));
-  const showOtherInput = hasOtherOption && selected && selected.toLowerCase().includes('other');
+  const showOtherInput = hasOtherOption && selected && selected.toLowerCase().includes('other') && (questionNumber === 3 || questionNumber === 6);
 
   return (
     <div className="flex flex-col items-center justify-center px-4 lg:px-6">
       <div className="w-full max-w-[329px] lg:max-w-none min-h-[328px] mx-auto flex flex-col items-center py-8 gap-6">
         {/* Question Title - flexible height */}
         <div className="w-full min-h-[28px]">
-          <p className="font-montserrat font-semibold text-[18px] leading-[28px] text-white text-center">
+          <p className="font-montserrat font-semibold text-[18px] leading-[28px] text-white text-center mb-2">
             {questionNumber}. {question}
+          </p>
+          
+          {/* Single Choice Indicator */}
+          <p className="font-montserrat font-normal text-[14px] leading-[20px] text-center text-[#98A2B3] mb-6">
+            (Single choice)
           </p>
         </div>
         

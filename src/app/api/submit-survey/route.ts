@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { MailerLiteService } from '@/services/mailerlite';
 
 // Type definitions
 interface Question {
@@ -40,7 +41,6 @@ function createSupabaseAdmin() {
     throw new Error('Missing required Supabase environment variables');
   }
   
-  console.log('Supabase: ✅ OK');
   return createClient(supabaseUrl, serviceRoleKey);
 }
 
@@ -70,13 +70,6 @@ function processAnswersForInsert(
     const customText = answers[otherKey] ? String(answers[otherKey]).trim() : '';
     const options = questionOptions[questionId] || [];
     
-    console.log(`Processing question ${question.question_code}:`, {
-      questionId,
-      value,
-      customText,
-      optionsCount: options.length
-    });
-    
     if (question.type === 'open-ended') {
       // Open-ended questions: store as answer_text
       answerInserts.push({
@@ -86,7 +79,6 @@ function processAnswersForInsert(
       });
     } else if (Array.isArray(value)) {
       // Multiple choice: create separate records for each selection
-      console.log(`Multiple choice answers for ${question.question_code}:`, value);
       value.forEach(selectedValue => {
         const option = options.find(opt => opt.value === selectedValue);
         if (option) {
@@ -98,10 +90,7 @@ function processAnswersForInsert(
             option_id: option.id,
             answer_text: isOtherOption && customText ? customText : undefined
           };
-          console.log(`Adding answer record:`, answerRecord);
           answerInserts.push(answerRecord);
-        } else {
-          console.log(`No option found for value: "${selectedValue}"`);
         }
       });
     } else {
@@ -158,7 +147,7 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (surveyError || !survey) {
-      console.error('Supabase: ❌ Survey not found');
+      console.error('Supabase: Survey not found');
       return NextResponse.json(
         { error: 'Survey not found', details: surveyError?.message },
         { status: 404 }
@@ -182,7 +171,7 @@ export async function POST(request: NextRequest) {
       .order('order_no');
 
     if (questionsError) {
-      console.error('Supabase: ❌ Failed to fetch questions');
+      console.error('Supabase: Failed to fetch questions');
       return NextResponse.json(
         { error: 'Failed to fetch questions', details: questionsError.message },
         { status: 500 }
@@ -199,6 +188,20 @@ export async function POST(request: NextRequest) {
     const emailQuestion = questions?.find(q => q.question_code === 'Q18');
     const email = emailQuestion ? answers[emailQuestion.id] as string : null;
 
+    // Subscribe to MailerLite if email is provided
+    let mailerLiteSuccess = false;
+    if (email && email.trim()) {
+      try {
+        const mailerLite = new MailerLiteService();
+        await mailerLite.subscribe({ email: email.trim() });
+        mailerLiteSuccess = true;
+      } catch (mailerLiteError) {
+        console.error('MailerLite: Survey subscription failed:', mailerLiteError);
+        // Don't fail the entire survey submission if MailerLite fails
+        // Just log the error and continue
+      }
+    }
+
     // Insert response record
     const { data: response, error: insertError } = await supabaseAdmin
       .from('responses')
@@ -211,7 +214,7 @@ export async function POST(request: NextRequest) {
       .single();
     
     if (insertError || !response) {
-      console.error('Supabase: ❌ Response insertion failed');
+      console.error('Supabase: Response insertion failed');
       throw new Error(`Response insertion failed: ${insertError?.message}`);
     }
 
@@ -224,9 +227,6 @@ export async function POST(request: NextRequest) {
       response_id: response.id
     }));
 
-    console.log(`Total answers to insert: ${answersToInsert.length}`);
-    console.log('Answers to insert:', JSON.stringify(answersToInsert, null, 2));
-
     // Bulk insert answers
     if (answersToInsert.length > 0) {
       const { error: answersError } = await supabaseAdmin
@@ -234,19 +234,20 @@ export async function POST(request: NextRequest) {
         .insert(answersToInsert);
 
       if (answersError) {
-        console.error('Supabase: ❌ Answers insertion failed');
+        console.error('Supabase: Answers insertion failed');
         throw new Error(`Answers insertion failed: ${answersError.message}`);
       }
     }
 
-    console.log(`Supabase: ✅ Survey response saved (ID: ${response.id}, ${answersToInsert.length} answers)`);
+    // Return success with MailerLite status
     return NextResponse.json({ 
       response_id: response.id,
-      answers_count: answersToInsert.length
+      answers_count: answersToInsert.length,
+      mailerlite_subscribed: mailerLiteSuccess
     });
 
   } catch (error) {
-    console.error('API: ❌ Survey submission failed');
+    console.error('API: Survey submission failed');
     
     return NextResponse.json(
       { 
