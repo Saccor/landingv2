@@ -7,11 +7,13 @@ export async function GET() {
     const count = await mailerLite.getSubscriberCount();
     
     return NextResponse.json(
-      { count, total: 1000 },
+      { count, total: 1000, timestamp: Date.now() },
       { 
         status: 200,
         headers: {
-          'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=15', // Cache for 30 seconds
+          'Cache-Control': 'private, no-cache, no-store, must-revalidate', // Disable caching for accurate counts
+          'Pragma': 'no-cache',
+          'Expires': '0',
         },
       }
     );
@@ -20,7 +22,7 @@ export async function GET() {
     
     // Return fallback count on error
     return NextResponse.json(
-      { count: 490, total: 1000 },
+      { count: 490, total: 1000, timestamp: Date.now() },
       { status: 200 }
     );
   }

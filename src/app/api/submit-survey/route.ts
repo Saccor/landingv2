@@ -195,14 +195,19 @@ export async function POST(request: NextRequest) {
         const mailerLite = new MailerLiteService();
         // Use Survey group ID from environment variable
         const surveyGroupId = process.env.MAILERLITE_SURVEY_GROUP_ID;
+        const defaultGroupId = process.env.MAILERLITE_GROUP_ID;
+        
+        console.log(`MailerLite: Survey Group ID: ${surveyGroupId || 'NOT SET'}`);
+        console.log(`MailerLite: Default Group ID: ${defaultGroupId || 'NOT SET'}`);
         
         if (!surveyGroupId) {
           console.warn('MailerLite: Survey group ID not configured, using default group');
+          console.warn('MailerLite: Set MAILERLITE_SURVEY_GROUP_ID in environment variables');
         }
         
         await mailerLite.subscribe({ email: email.trim() }, surveyGroupId);
         mailerLiteSuccess = true;
-        console.log(`MailerLite: Survey email ${email.trim()} subscribed to ${surveyGroupId ? 'Survey group' : 'default group'}`);
+        console.log(`MailerLite: Survey email ${email.trim()} subscribed to ${surveyGroupId ? `Survey group (${surveyGroupId})` : `default group (${defaultGroupId})`}`);
       } catch (mailerLiteError) {
         console.error('MailerLite: Survey subscription failed:', mailerLiteError);
         // Don't fail the entire survey submission if MailerLite fails
