@@ -30,7 +30,7 @@ export function QuestionsScreen({
   const isLastQuestion = state.currentQuestionIndex === state.questions.length - 1;
 
   return (
-    <div className="flex flex-col bg-black text-white pb-8">
+    <div className="flex flex-col bg-black text-white pb-4">
       <Breadcrumb onGoToHomepage={onGoToHomepage} onGoToSurvey={onGoToSurvey} />
       <ProgressBar progressPercentage={progressPercentage} />
       <ErrorDisplay error={state.error} />

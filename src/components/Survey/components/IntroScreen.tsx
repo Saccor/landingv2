@@ -18,7 +18,7 @@ export function IntroScreen({
   onStartSurvey,
 }: IntroScreenProps) {
   return (
-    <div className="flex flex-col bg-black text-white pb-8 lg:relative">
+    <div className="flex flex-col bg-black text-white">
       <Breadcrumb onGoToHomepage={onGoToHomepage} onGoToSurvey={onGoToSurvey} />
       
       {/* Main Content - Mobile Layout */}
@@ -32,9 +32,9 @@ export function IntroScreen({
             <p className="mb-4">As a thank you, you&apos;ll get early access to exclusive discounts, product updates and a chance to win a pair of Legacy 1 Earbuds.</p>
             <p className="font-bold mb-4">The winner will be announced right before launch day.</p>
             <p className="mb-4">This survey is anonymous. If you&apos;d like to receive your reward, please leave your email at the end.</p>
-            <div className="mb-6">
-              <p className="font-bold mb-6">Thank you for being part of this movement.</p>
-              <p className="italic mb-8">– The Arfve Team</p>
+            <div className="mb-4">
+              <p className="font-bold mb-4">Thank you for being part of this movement.</p>
+              <p className="italic mb-4">– The Arfve Team</p>
             </div>
             
             <ErrorDisplay error={state.error} />
@@ -52,46 +52,34 @@ export function IntroScreen({
         </div>
       </div>
 
-      {/* Main Content - Desktop Layout with Absolute Positioning */}
-      <div className="hidden lg:block">
-        <div 
-          className="absolute font-montserrat text-base leading-6 text-white"
-          style={{
-            width: '788px',
-            height: '383px',
-            left: '50%',
-            top: '211px',
-            transform: 'translateX(-50%)',
-            textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25)'
-          }}
-        >
-          <h1 className="font-bold text-xl mb-4">Welcome to the Arfve Survey</h1>
-          <p className="font-bold mb-2">Help us shape the future of audio – your voice matters.</p>
-          <p className="mb-4 text-[#CCCCCC]">This quick {SURVEY_CONFIG.ESTIMATED_DURATION}-minute survey will directly influence our final design and features.</p>
-          <p className="mb-4 text-[#CCCCCC]">At Arfve, we believe the world doesn&apos;t need more disposable earbuds. It needs sound that lasts, design that adapts, and tech that doesn&apos;t expire. Your insights will help us build something different.</p>
-          <p className="mb-4 text-[#CCCCCC]">As a thank you, you&apos;ll get early access to exclusive discounts, product updates and a chance to win a pair of Legacy 1 Earbuds.</p>
-          <p className="font-bold mb-4">The winner will be announced right before launch day.</p>
-          <p className="mb-4 text-[#CCCCCC]">This survey is anonymous. If you&apos;d like to receive your reward, please leave your email at the end.</p>
-          <div className="mb-6">
-            <p className="font-bold mb-6">Thank you for being part of this movement.</p>
-            <p className="italic mb-8 text-[#CCCCCC]">– The Arfve Team</p>
+      {/* Main Content - Desktop Layout with Minimal Padding */}
+      <div className="hidden lg:flex lg:flex-col lg:items-center lg:py-4">
+        <div className="w-full max-w-[788px] px-4">
+          <div className="font-montserrat text-base leading-6 text-white text-shadow">
+            <h1 className="font-bold text-xl mb-3">Welcome to the Arfve Survey</h1>
+            <p className="font-bold mb-2">Help us shape the future of audio – your voice matters.</p>
+            <p className="mb-3 text-[#CCCCCC]">This quick {SURVEY_CONFIG.ESTIMATED_DURATION}-minute survey will directly influence our final design and features.</p>
+            <p className="mb-3 text-[#CCCCCC]">At Arfve, we believe the world doesn&apos;t need more disposable earbuds. It needs sound that lasts, design that adapts, and tech that doesn&apos;t expire. Your insights will help us build something different.</p>
+            <p className="mb-3 text-[#CCCCCC]">As a thank you, you&apos;ll get early access to exclusive discounts, product updates and a chance to win a pair of Legacy 1 Earbuds.</p>
+            <p className="font-bold mb-3">The winner will be announced right before launch day.</p>
+            <p className="mb-3 text-[#CCCCCC]">This survey is anonymous. If you&apos;d like to receive your reward, please leave your email at the end.</p>
+            <div className="mb-4">
+              <p className="font-bold mb-2">Thank you for being part of this movement.</p>
+              <p className="italic mb-4 text-[#CCCCCC]">– The Arfve Team</p>
+            </div>
+            
+            <ErrorDisplay error={state.error} />
+            
+            <div className="flex justify-center">
+              <button 
+                onClick={onStartSurvey}
+                disabled={state.loading}
+                className="bg-white text-black rounded-full px-6 py-2 font-semibold text-base hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {state.loading ? 'Loading...' : 'Start the survey'}
+              </button>
+            </div>
           </div>
-        </div>
-        
-        {/* Error Display - Desktop */}
-        <div className="absolute" style={{ left: '50%', top: '620px', width: '788px', transform: 'translateX(-50%)' }}>
-          <ErrorDisplay error={state.error} />
-        </div>
-        
-        {/* Button - Desktop */}
-        <div className="absolute flex justify-center" style={{ left: '50%', top: '680px', width: '788px', transform: 'translateX(-50%)' }}>
-          <button 
-            onClick={onStartSurvey}
-            disabled={state.loading}
-            className="bg-white text-black rounded-full px-6 py-2 font-semibold text-base hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {state.loading ? 'Loading...' : 'Start the survey'}
-          </button>
         </div>
       </div>
     </div>

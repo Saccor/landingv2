@@ -68,13 +68,13 @@ const OpenEndedScreen: React.FC<OpenEndedScreenProps> = ({
     <div className="w-full max-w-[329px] lg:max-w-none mx-auto flex flex-col items-center justify-center">
       
       {/* Question */}
-      <div className="w-full mb-8">
+      <div className="w-full mb-4">
         <h2 className="font-montserrat font-semibold text-[20px] leading-[28px] text-center text-[#F2F4F7] mb-6">
           {questionNumber}. {questionText}
         </h2>
 
         {/* Input Container - responsive width */}
-        <div className="w-full max-w-[329px] lg:max-w-md mx-auto flex flex-col justify-center items-start gap-3 mb-8">
+        <div className="w-full max-w-[329px] lg:max-w-md mx-auto flex flex-col justify-center items-start gap-3 mb-4">
           {isEmailField ? (
             <input
   type="email"

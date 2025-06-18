@@ -44,7 +44,7 @@ export default function SingleChoiceScreen({
 
   return (
     <div className="flex flex-col items-center justify-center px-4 lg:px-6">
-      <div className="w-full max-w-[329px] lg:max-w-none min-h-[328px] mx-auto flex flex-col items-center py-8 gap-6">
+      <div className="w-full max-w-[329px] lg:max-w-none min-h-[328px] mx-auto flex flex-col items-center py-4 gap-4">
         {/* Question Title - flexible height */}
         <div className="w-full min-h-[28px]">
           <p className="font-montserrat font-semibold text-[18px] leading-[28px] text-white text-center mb-2">

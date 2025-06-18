@@ -7,7 +7,7 @@ import { Breadcrumb } from './Breadcrumb';
  */
 export function SuccessScreen({ onGoToHomepage, onGoToSurvey }: NavigationCallbacks) {
   return (
-    <div className="flex flex-col bg-black text-white pb-8">
+    <div className="flex flex-col bg-black text-white pb-4">
       <Breadcrumb onGoToHomepage={onGoToHomepage} onGoToSurvey={onGoToSurvey} />
       
       {/* Success Content */}
