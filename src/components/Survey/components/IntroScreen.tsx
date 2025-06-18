@@ -18,7 +18,7 @@ export function IntroScreen({
   onStartSurvey,
 }: IntroScreenProps) {
   return (
-    <div className="flex flex-col bg-black text-white pb-8 lg:relative lg:min-h-screen">
+    <div className="flex flex-col bg-black text-white pb-8 lg:relative">
       <Breadcrumb onGoToHomepage={onGoToHomepage} onGoToSurvey={onGoToSurvey} />
       
       {/* Main Content - Mobile Layout */}
