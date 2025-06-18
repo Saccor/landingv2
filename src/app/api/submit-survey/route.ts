@@ -188,13 +188,21 @@ export async function POST(request: NextRequest) {
     const emailQuestion = questions?.find(q => q.question_code === 'Q18');
     const email = emailQuestion ? answers[emailQuestion.id] as string : null;
 
-    // Subscribe to MailerLite if email is provided
+    // Subscribe to MailerLite Survey group if email is provided
     let mailerLiteSuccess = false;
     if (email && email.trim()) {
       try {
         const mailerLite = new MailerLiteService();
-        await mailerLite.subscribe({ email: email.trim() });
+        // Use Survey group ID from environment variable
+        const surveyGroupId = process.env.MAILERLITE_SURVEY_GROUP_ID;
+        
+        if (!surveyGroupId) {
+          console.warn('MailerLite: Survey group ID not configured, using default group');
+        }
+        
+        await mailerLite.subscribe({ email: email.trim() }, surveyGroupId);
         mailerLiteSuccess = true;
+        console.log(`MailerLite: Survey email ${email.trim()} subscribed to ${surveyGroupId ? 'Survey group' : 'default group'}`);
       } catch (mailerLiteError) {
         console.error('MailerLite: Survey subscription failed:', mailerLiteError);
         // Don't fail the entire survey submission if MailerLite fails

@@ -6,12 +6,9 @@ import Link from 'next/link';
 const Header = () => {
   return (
     <header className="w-full h-[51px] lg:h-20 bg-black relative z-50">
-      {/* Mobile: Logo centered, Survey link right */}
-      <div className="lg:hidden absolute inset-0 flex items-center justify-between px-4">
-        {/* Left spacer for balance */}
-        <div className="w-[77px]"></div>
-        
-        {/* Mobile Logo - Centered */}
+      {/* Mobile: Logo perfectly centered with floating Survey link */}
+      <div className="lg:hidden absolute inset-0 flex items-center justify-center px-4">
+        {/* Perfectly Centered Logo */}
         <Link href="/" className="flex items-center justify-center">
           <svg width="77" height="27" viewBox="0 0 78 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-[77px] h-[27px]">
             <path d="M56.4101 7.48417L56.1825 8.14693L50.9273 23.4307L45.6686 8.12203C45.5372 7.74026 45.1817 7.48417 44.7816 7.48417H37.7148V6.40407C37.7148 5.28722 37.9565 4.50827 38.4399 4.06604C38.9233 3.60128 39.7634 3.36771 40.9602 3.36771V0.0527344C38.474 0.0527344 36.6436 0.564919 35.4703 1.5881C34.3193 2.58876 33.7444 4.1929 33.7444 6.40289V7.48298H31.4999C30.1882 7.48298 29.0489 7.7284 28.0821 8.28683C27.1388 8.82154 26.3785 9.57796 25.8036 10.5549V7.48298H21.8672V27.0527H25.8036V16.8695C25.8036 14.9156 26.1955 13.5427 26.978 12.7519C27.7841 11.961 28.9574 11.3054 30.5003 11.3054H33.7456V27.0516H37.716V11.3054H42.0114C42.401 11.3054 42.7506 11.5496 42.8891 11.9172L48.4857 26.8275L48.5701 27.0516H53.2176L53.3173 26.7883L60.3148 8.23703L60.5893 7.48298H56.4113L56.4101 7.48417Z" fill="white"/>
@@ -19,11 +16,13 @@ const Header = () => {
             <path d="M16.3154 7.49065V10.5484C15.6584 9.67811 14.7737 8.95607 13.6626 8.38342C12.5749 7.78824 11.2937 7.48947 9.82005 7.48947C8.188 7.48947 6.69205 7.90206 5.33221 8.72606C3.99466 9.52754 2.92931 10.6622 2.13616 12.1276C1.36531 13.5942 0.980469 15.2778 0.980469 17.1783C0.980469 19.0789 1.36531 20.7861 2.13616 22.2978C2.92931 23.7869 3.99466 24.9548 5.33221 25.8025C6.66976 26.6277 8.14342 27.0391 9.75317 27.0391C11.2045 27.0391 12.4963 26.7415 13.6297 26.1463C14.7631 25.5511 15.6584 24.8066 16.3154 23.9126V27.0391H20.226V7.48828H16.3154V7.49065ZM15.4988 20.6854C14.9778 21.6469 14.2856 22.3808 13.4244 22.8847C12.5632 23.3886 11.634 23.6411 10.6367 23.6411C9.63936 23.6411 8.73241 23.3897 7.84892 22.8847C6.98772 22.3583 6.28492 21.6018 5.74052 20.6166C5.21957 19.6313 4.95793 18.486 4.95793 17.1807C4.95793 15.8753 5.2184 14.7525 5.74052 13.8135C6.28492 12.852 6.98772 12.13 7.84892 11.6486C8.71012 11.1447 9.63936 10.8922 10.6367 10.8922C11.634 10.8922 12.5632 11.1435 13.4244 11.6486C14.2856 12.1525 14.9767 12.8852 15.4988 13.8479C16.0432 14.8095 16.3154 15.9441 16.3154 17.2494C16.3154 18.5548 16.0432 19.7001 15.4988 20.6854Z" fill="white"/>
           </svg>
         </Link>
+      </div>
 
-        {/* Survey Link - Right side */}
+      {/* Survey Link - Floating on right side */}
+      <div className="lg:hidden absolute right-4 top-0 h-full flex items-center">
         <Link 
           href="/survey" 
-          className="text-white text-sm font-medium hover:underline transition-colors flex items-center"
+          className="text-white text-sm font-medium hover:underline transition-colors"
         >
           Survey
         </Link>

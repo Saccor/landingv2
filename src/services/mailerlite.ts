@@ -80,7 +80,7 @@ export class MailerLiteService {
     }
   }
 
-  async subscribe({ email, name, fields = {} }: SubscribeParams) {
+  async subscribe({ email, name, fields = {} }: SubscribeParams, customGroupId?: string) {
     if (!this.apiKey) {
       throw new Error('MailerLite API key not configured');
     }
@@ -99,9 +99,10 @@ export class MailerLiteService {
         };
       }
 
-      // Add to group if groupId is provided
-      if (this.groupId) {
-        subscriberData.groups = [this.groupId];
+      // Use custom group ID if provided, otherwise use default group ID
+      const targetGroupId = customGroupId || this.groupId;
+      if (targetGroupId) {
+        subscriberData.groups = [targetGroupId];
       }
 
       const response = await fetch(`${this.baseUrl}/subscribers`, {
