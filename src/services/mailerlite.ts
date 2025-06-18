@@ -47,7 +47,7 @@ export class MailerLiteService {
       let hasMore = true;
       
       while (hasMore && totalCount < 5000) { // Safety limit increased for all subscribers
-        const url: string = `${this.baseUrl}/subscribers?limit=100${cursor ? `&cursor=${cursor}` : ''}`;
+        const url: string = `${this.baseUrl}/subscribers?limit=100&filter[status]=active${cursor ? `&cursor=${cursor}` : ''}`;
         
         const response: Response = await fetch(url, {
           method: 'GET',
