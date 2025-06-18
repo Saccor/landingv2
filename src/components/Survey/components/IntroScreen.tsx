@@ -21,20 +21,20 @@ export function IntroScreen({
     <div className="flex flex-col bg-black text-white">
       <Breadcrumb onGoToHomepage={onGoToHomepage} onGoToSurvey={onGoToSurvey} />
       
-      {/* Main Content - Mobile Layout */}
-      <div className="px-4 lg:hidden">
+      {/* Main Content - Mobile Layout with Compact Spacing */}
+      <div className="px-4 pb-6 lg:hidden">
         <div className={`w-full max-w-[${LAYOUT_CONSTANTS.MAX_WIDTH_MOBILE}] mx-auto`}>
           <div className="font-montserrat">
-            <h1 className="font-bold text-xl mb-4">Welcome to the Arfve Survey</h1>
-            <p className="font-bold mb-2">Help us shape the future of audio – your voice matters.</p>
-            <p className="mb-4">This quick {SURVEY_CONFIG.ESTIMATED_DURATION}-minute survey will directly influence our final design and features.</p>
-            <p className="mb-4">At Arfve, we believe the world doesn&apos;t need more disposable earbuds. It needs sound that lasts, design that adapts, and tech that doesn&apos;t expire. Your insights will help us build something different.</p>
-            <p className="mb-4">As a thank you, you&apos;ll get early access to exclusive discounts, product updates and a chance to win a pair of Legacy 1 Earbuds.</p>
-            <p className="font-bold mb-4">The winner will be announced right before launch day.</p>
-            <p className="mb-4">This survey is anonymous. If you&apos;d like to receive your reward, please leave your email at the end.</p>
-            <div className="mb-4">
-              <p className="font-bold mb-4">Thank you for being part of this movement.</p>
-              <p className="italic mb-4">– The Arfve Team</p>
+            <h1 className="font-bold text-xl mb-2">Welcome to the Arfve Survey</h1>
+            <p className="font-bold mb-1">Help us shape the future of audio – your voice matters.</p>
+            <p className="mb-2">This quick {SURVEY_CONFIG.ESTIMATED_DURATION}-minute survey will directly influence our final design and features.</p>
+            <p className="mb-2">At Arfve, we believe the world doesn&apos;t need more disposable earbuds. It needs sound that lasts, design that adapts, and tech that doesn&apos;t expire. Your insights will help us build something different.</p>
+            <p className="mb-2">As a thank you, you&apos;ll get early access to exclusive discounts, product updates and a chance to win a pair of Legacy 1 Earbuds.</p>
+            <p className="font-bold mb-2">The winner will be announced right before launch day.</p>
+            <p className="mb-2">This survey is anonymous. If you&apos;d like to receive your reward, please leave your email at the end.</p>
+            <div className="mb-2">
+              <p className="font-bold mb-1">Thank you for being part of this movement.</p>
+              <p className="italic mb-2">– The Arfve Team</p>
             </div>
             
             <ErrorDisplay error={state.error} />

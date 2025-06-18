@@ -7,7 +7,7 @@ import { LAYOUT_CONSTANTS } from '../constants';
  */
 export function Breadcrumb({ onGoToHomepage, onGoToSurvey }: NavigationCallbacks) {
   return (
-    <div className="w-full px-4 mb-6 lg:px-6 lg:pt-10 lg:mb-6">
+    <div className="w-full px-4 mb-3 lg:px-6 lg:pt-10 lg:mb-6">
       <div className={`lg:max-w-[${LAYOUT_CONSTANTS.BREADCRUMB_MAX_WIDTH}] lg:mx-auto flex items-center gap-2 text-sm text-white`}>
         <Home size={18} className="lg:w-4 lg:h-4" />
         <span className="font-semibold underline cursor-pointer" onClick={onGoToHomepage}>
