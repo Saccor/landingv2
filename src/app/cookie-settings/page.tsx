@@ -47,7 +47,10 @@ export default function CookieSettings() {
     const result = saveConsentSettings(newSettings);
     if (result) {
       setSaved(true);
-      setTimeout(() => setSaved(false), 3000);
+      // Redirect back to home page after a brief delay to show success message
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 1000);
     }
   };
 
@@ -62,7 +65,10 @@ export default function CookieSettings() {
     const result = saveConsentSettings(newSettings);
     if (result) {
       setSaved(true);
-      setTimeout(() => setSaved(false), 3000);
+      // Redirect back to home page after a brief delay to show success message
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 1000);
     }
   };
 
