@@ -7,7 +7,7 @@ import RevealSection from '@/components/ui/RevealSection';
 const testimonials = [
   {
     name: 'Marco Andresen',
-    title: 'Chief Operating Officer @ Lentro',
+    title: 'Chief Operating Officer @ Lenovo',
     quote:
       "Driven by a passion for tech and circular economy, I joined Arfve's Advisory Board, inspired by their innovative vision, sustainable model, and dynamic team.",
     image: '/person1carousel.png',
