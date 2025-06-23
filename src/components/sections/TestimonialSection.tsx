@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import RevealSection from '@/components/ui/RevealSection';
+import OptimizedImage from '@/components/ui/OptimizedImage';
 
 const testimonials = [
   {
@@ -66,8 +66,8 @@ const TestimonialSection: React.FC = () => {
               <div className="flex gap-5 animate-scroll">
                 {duplicatedTestimonials.map((t, index) => (
                   <div key={index} className="shrink-0 w-[200px] flex flex-col items-center p-0 gap-3">
-                    <Image
-                      src={t.image}
+                    <OptimizedImage
+                      src={t.image.replace('.png', '')}
                       alt={t.name}
                       width={200}
                       height={150}
@@ -92,8 +92,8 @@ const TestimonialSection: React.FC = () => {
               <div className="flex gap-5 lg:justify-center">
                 {testimonials.map((t, index) => (
                   <div key={index} className="shrink-0 lg:w-[400px] lg:h-[482px] flex flex-col items-center text-center">
-                    <Image
-                      src={t.image}
+                    <OptimizedImage
+                      src={t.image.replace('.png', '')}
                       alt={t.name}
                       width={400}
                       height={300}

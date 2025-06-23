@@ -13,13 +13,15 @@ export default function HeroSection() {
     <RevealSection className="w-full max-w-[1440px] lg:h-[675px] mx-auto relative">
       <div className="flex flex-col lg:flex-row items-center lg:items-stretch w-full max-w-[1440px] h-auto lg:h-[539.81px] lg:mt-[97px] mx-auto p-0">
 
-        {/* Hero Image */}
+        {/* Hero Image - Optimized with modern formats */}
         <div
           className="
             w-full max-w-[393px] h-[294.65px]
             lg:w-[720px] lg:h-[539.81px] lg:max-w-none
             flex-none self-stretch
             mx-auto lg:mx-0
+            bg-no-repeat bg-contain bg-center lg:bg-left
+            hero-image-modern
           "
           style={{
             backgroundImage: "url('/heroimg.png')",

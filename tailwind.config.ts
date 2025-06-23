@@ -40,8 +40,10 @@ export default {
       
       // Font families used in the project
       fontFamily: {
-        'montserrat': ['Montserrat', 'sans-serif'],
-        'poppins': ['Poppins', 'sans-serif'],
+        'montserrat': ['var(--font-montserrat)', 'sans-serif'],
+        'poppins': ['var(--font-poppins)', 'sans-serif'],
+        'geist-sans': ['var(--font-geist-sans)', 'sans-serif'],
+        'geist-mono': ['var(--font-geist-mono)', 'monospace'],
       },
 
       // Animation keyframes for project-specific animations
