@@ -39,4 +39,8 @@ next-env.d.ts
 .vscode/
 .idea/
 
+# Internal development files
+CODE_STRUCTURE_ANALYSIS.md
+context.md
+
 .vercel
