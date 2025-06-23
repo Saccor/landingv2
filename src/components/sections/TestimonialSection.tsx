@@ -6,7 +6,7 @@ import RevealSection from '@/components/ui/RevealSection';
 
 const testimonials = [
   {
-    name: 'Marco Anderson',
+    name: 'Marco Andresen',
     title: 'Chief Operating Officer @ Lentro',
     quote:
       "Driven by a passion for tech and circular economy, I joined Arfve's Advisory Board, inspired by their innovative vision, sustainable model, and dynamic team.",
@@ -14,9 +14,9 @@ const testimonials = [
   },
   {
     name: 'Jenny Kaiser',
-    title: 'CEO & Assistant Host – The North Alliance',
+    title: 'Former CEO @Åkestam Holst NoA',
     quote:
-      "It's the rite of a modern brand meeting human needs, maintaining quality with minimal impact on nature.",
+      "It's the rise of a modern brand meeting human needs, maintaining quality with minimal impact on nature.",
     image: '/person2carousel.png',
   },
 ];
