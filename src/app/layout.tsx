@@ -4,6 +4,7 @@ import "./globals.css";
 import GoogleTagManager, { GoogleTagManagerNoScript } from "@/components/ui/GoogleTagManager";
 import Header from "@/components/Header";
 import CookieConsent from "@/components/CookieConsent";
+import { Analytics } from '@vercel/analytics/react';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -55,6 +56,7 @@ export default function RootLayout({
         </div>
 
         <CookieConsent />
+        <Analytics />
       </body>
     </html>
   );
