@@ -39,30 +39,37 @@ const TestimonialSection: React.FC = () => {
           0% { transform: translateX(0); }
           100% { transform: translateX(-440px); }
         }
+        @keyframes scroll-tablet {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-840px); }
+        }
         .animate-scroll {
           animation: scroll 20s linear infinite;
+        }
+        .animate-scroll-tablet {
+          animation: scroll-tablet 30s linear infinite;
         }
       `}</style>
       
       <div className="w-full flex justify-center">
         <div className="w-full flex justify-center">
-          <div className="w-[353px] lg:w-[1400px] px-0 py-0">
-            <h2 className="w-full max-w-[305px] lg:max-w-none font-montserrat font-medium text-2xl leading-8 text-center text-white mx-auto mb-[42px] lg:text-3xl lg:font-normal lg:mb-6">
+          <div className="w-[353px] md:w-[820px] lg:w-[1400px] px-0 py-0">
+            <h2 className="w-full max-w-[305px] md:max-w-none lg:max-w-none font-montserrat font-medium text-2xl leading-8 text-center text-white mx-auto mb-[42px] md:text-[30px] md:font-medium md:leading-[38px] lg:text-3xl lg:font-normal lg:mb-6">
               Endorsed by Industry Leaders
             </h2>
 
-            <blockquote className="w-full max-w-[305px] lg:max-w-2xl font-montserrat italic font-bold text-xl leading-[30px] text-center text-white mx-auto mb-4 lg:text-xl lg:font-semibold lg:text-[#DDDDDD] lg:leading-snug">
+            <blockquote className="w-full max-w-[305px] lg:max-w-2xl font-montserrat italic font-bold text-xl leading-[30px] text-center text-white mx-auto mb-4 md:max-w-none md:text-[24px] md:font-normal md:not-italic md:leading-[32px] md:text-[#FFF] lg:text-xl lg:font-semibold lg:text-[#DDDDDD] lg:leading-snug">
               &ldquo;Arfve&rsquo;s earbuds is a dream come to life,<br />
               leading the way in audio innovation.&rdquo;
             </blockquote>
 
-            <div className="w-full max-w-[305px] lg:max-w-none font-montserrat font-medium text-sm leading-5 text-center text-[#FCFCFD] mx-auto mb-12">
+            <div className="w-full max-w-[305px] lg:max-w-none font-montserrat font-medium text-sm leading-5 text-center text-[#FCFCFD] mx-auto mb-12 md:max-w-none md:mb-8 md:font-sans md:text-[16px] md:font-normal md:leading-normal md:text-[#FCFCFD]">
               Jean-Michel Donner<br />
               former Global Sales Director @ Monster (Beats by Dre)
             </div>
 
             {/* Mobile: CSS Animation with Perfect Seamless Infinite Scroll */}
-            <div className="overflow-hidden lg:hidden">
+            <div className="overflow-hidden md:hidden lg:hidden">
               <div className="flex gap-5 animate-scroll">
                 {duplicatedTestimonials.map((t, index) => (
                   <div key={index} className="shrink-0 w-[200px] flex flex-col items-center p-0 gap-3">
@@ -78,6 +85,32 @@ const TestimonialSection: React.FC = () => {
                         &ldquo;{t.quote}&rdquo;
                       </p>
                       <div className="w-[200px] font-montserrat font-normal text-sm leading-5 text-[#FCFCFD]">
+                        <p>{t.name}</p>
+                        <p>{t.title}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Tablet: Moving carousel */}
+            <div className="hidden md:block lg:hidden overflow-hidden">
+              <div className="flex gap-5 animate-scroll-tablet">
+                {duplicatedTestimonials.map((t, index) => (
+                  <div key={index} className="shrink-0 w-[400px] flex flex-col items-start p-0 gap-3">
+                    <OptimizedImage
+                      src={t.image.replace('.png', '')}
+                      alt={t.name}
+                      width={400}
+                      height={300}
+                      className="w-[400px] h-[300px] object-contain"
+                    />
+                    <div className="w-[400px] flex flex-col items-start p-0 gap-3">
+                      <p className="w-[400px] font-montserrat font-bold text-sm leading-5 text-[#FCFCFD]">
+                        &ldquo;{t.quote}&rdquo;
+                      </p>
+                      <div className="w-[400px] font-montserrat font-normal text-sm leading-5 text-[#FCFCFD]">
                         <p>{t.name}</p>
                         <p>{t.title}</p>
                       </div>
