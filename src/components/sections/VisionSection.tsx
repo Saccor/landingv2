@@ -90,31 +90,31 @@ export default function VisionSection() {
               /* Mobile: Full width, auto height (0-767px) */
               w-full min-h-[400px] px-6 py-7
               
-              /* Tablet: Fill 794px width, center content in 364px height (768px-1023px) */
-              md:w-[794px] md:max-w-none md:h-[364px] md:min-h-0 md:px-[50px] md:py-[50px] md:justify-center md:items-center
+              /* Tablet: Fixed 794x364px with centered content (768px-1023px) */
+              md:w-[794px] md:max-w-none md:h-[364px] md:min-h-0 md:px-[50px] md:py-[50px]
               
-              /* Desktop: Proportional width scaling (1024px+) */
+              /* Desktop: Restore original layout (1024px+) */
               lg:w-[36%] lg:min-w-[400px] lg:max-w-[505px] lg:h-[505px] lg:px-0 lg:py-0 lg:order-1
             ">
               <div className="
                 w-full bg-gradient-to-b from-white to-[#C8A596] 
                 bg-clip-text text-transparent text-center font-semibold font-montserrat 
-                flex flex-col justify-center items-center
+                flex flex-col
                 
                 /* Mobile: Compact spacing (0-767px) */
                 max-w-[305px] gap-4
                 
-                /* Tablet: 694px width, auto height, centered, 24px paragraph spacing (768px-1023px) */
-                md:w-[694px] md:max-w-[694px] md:gap-[24px] md:justify-center
+                /* Tablet: 694px width, 24px gap, natural centering (768px-1023px) */
+                md:w-[694px] md:max-w-[694px] md:gap-[24px]
                 
-                /* Desktop: Full spacing (1024px+) */
-                lg:max-w-none lg:gap-8
+                /* Desktop: Fit within gray container with padding (1024px+) */
+                lg:max-w-full lg:px-8 lg:gap-8
               ">
                 <p className="m-0 p-0 text-[20px] leading-[30px]">
                   Arfve isn&apos;t just earbuds.
                 </p>
                 <p className="m-0 p-0 text-[20px] leading-[30px]">
-                  It&apos;s a modular system of personalized sound, intelligent design, and circular thinking — built to last, adapt, and be yours.
+                  It&apos;s a modular system of personalized sound, intelligent design, and circular thinking —<br className="hidden lg:block" /> built to last, adapt, and be yours.
                 </p>
                 <p className="m-0 p-0 text-[20px] leading-[30px]">
                   Rooted in Scandinavian minimalism.
