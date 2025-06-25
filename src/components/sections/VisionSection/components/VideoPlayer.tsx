@@ -50,7 +50,18 @@ export default function VideoPlayer({
   return (
     <div 
       ref={containerRef}
-      className="relative w-full lg:w-[875px] h-[210px] lg:h-[505px] bg-black rounded-sm overflow-hidden cursor-pointer transition-all duration-300 lg:order-2"
+      className="
+        relative w-full bg-black rounded-sm overflow-hidden cursor-pointer transition-all duration-300
+        
+        /* Mobile: Compact video size (0-767px) */
+        h-[210px] max-w-[353px]
+        
+        /* Tablet: Match container dimensions exactly (768px-1023px) */
+        md:w-[794px] md:h-[422px] md:max-w-none
+        
+        /* Desktop: Flexible width, proportional video size (1024px+) */
+        lg:w-full lg:h-[505px] lg:max-w-none lg:order-2
+      "
       onMouseMove={() => setShowControls(true)}
       onMouseLeave={() => isPlaying && !state.isMobile && setShowControls(false)}
       onClick={handlePlayPause}

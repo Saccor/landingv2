@@ -84,7 +84,12 @@ export default function SignupForm({
     
     const updateScale = () => {
       if (typeof window !== 'undefined') {
-        setScale(Math.min(1, (window.innerWidth * 0.9) / 369));
+        // Only apply scaling on mobile, let tablet and desktop use full size
+        if (window.innerWidth < 768) {
+          setScale(Math.min(1, (window.innerWidth * 0.9) / 300));
+        } else {
+          setScale(1); // No scaling for tablet and desktop
+        }
       }
     };
 
@@ -156,7 +161,19 @@ export default function SignupForm({
           transformOrigin: 'center',
         } : undefined}
       >
-        <form onSubmit={handleSubmit} className="flex flex-row items-center justify-center gap-3 w-[369px] h-[44px] p-0 bg-transparent">
+        <form onSubmit={handleSubmit} className="
+          flex flex-row items-center justify-center gap-2 p-0 bg-transparent
+          
+          /* Mobile: Compact form (0-767px) */
+          w-[300px] h-[38px]
+          
+          /* Tablet: Match image layout (768px-1023px) */
+          md:w-[420px] md:h-[44px] md:gap-2
+          
+          /* Desktop: Full form (1024px+) */
+          lg:w-[350px] lg:h-[42px] lg:gap-3
+          xl:w-[369px] xl:h-[44px]
+        ">
           <input
             type="email"
             value={email}
@@ -164,13 +181,23 @@ export default function SignupForm({
             required
             placeholder="email"
             className="
-              w-[227px] h-[44px] px-5 py-2.5 rounded-full
+              px-5 py-2.5 rounded-full
               border border-white bg-transparent
               text-white placeholder:text-gray-400
-              text-sm font-poppins
+              font-poppins
               focus:outline-none focus:border-white/40
               transition-all duration-200
               box-border
+              
+              /* Mobile: Compact input (0-767px) */
+              w-[190px] h-[38px] text-sm
+              
+              /* Tablet: Long input like in image (768px-1023px) */
+              md:w-[330px] md:h-[44px] md:text-base md:px-6
+              
+              /* Desktop: Full input (1024px+) */
+              lg:w-[220px] lg:h-[42px] lg:text-sm lg:px-5
+              xl:w-[227px] xl:h-[44px] xl:text-sm
             "
           />
           <Button
@@ -178,7 +205,19 @@ export default function SignupForm({
             variant="primary"
             size="md"
             isLoading={status === 'loading'}
-            className="h-full px-6 rounded-full whitespace-nowrap"
+            className="
+              rounded-full whitespace-nowrap
+              
+              /* Mobile: Compact button (0-767px) */
+              h-[38px] px-4 text-sm
+              
+              /* Tablet: Small compact button like in image (768px-1023px) */
+              md:w-[80px] md:h-[44px] md:px-4 md:text-sm md:font-medium
+              
+              /* Desktop: Full button (1024px+) */
+              lg:h-[42px] lg:px-5 lg:text-sm lg:w-auto
+              xl:h-[44px] xl:px-6 xl:text-base
+            "
           >
             {buttonText}
           </Button>
@@ -191,9 +230,17 @@ export default function SignupForm({
             transformOrigin: 'center',
           } : undefined}
         >
-          <p className={`text-sm text-center w-full px-4 sm:px-0 ${
-            status === 'success' ? 'text-green-600' : 'text-red-600'
-          }`}>
+          <p className={`
+            text-center w-full px-4 sm:px-0
+            
+            /* Mobile: Smaller text */
+            text-sm
+            
+            /* Tablet & Desktop: Standard size */
+            md:text-sm
+            
+            ${status === 'success' ? 'text-green-600' : 'text-red-600'}
+          `}>
             {message}
           </p>
         </div>

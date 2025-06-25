@@ -26,12 +26,43 @@ export default function VisionSection() {
 
   return (
     <RevealSection className="bg-black overflow-hidden">
-      <div className="w-full flex flex-col items-center responsive-container responsive-section px-4 pt-8 pb-0 mb-[20px] mt-[20px]">
-        <div className="flex justify-center w-full">
-          <div className="w-[353px] lg:w-[1400px] px-0 py-0 flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-5">
+      <div className="
+        w-full flex flex-col items-center
+        
+        /* Mobile: Tight padding (0-767px) */
+        px-4 pt-8 pb-0 mb-[20px] mt-[20px]
+        
+        /* Tablet: No horizontal padding to allow full 794px width (768px-1023px) */
+        md:px-0 md:pt-10 md:pb-0 md:mb-[30px] md:mt-[30px]
+        
+        /* Desktop: Standard padding (1024px+) */
+        lg:px-4 lg:pt-8 lg:pb-0
+      ">
+        <div className="w-full flex justify-center">
+          <div className="
+            /* Mobile: Single column layout (0-767px) */
+            w-full max-w-[353px] px-0 py-0 flex flex-col items-center justify-center gap-4
+            
+            /* Tablet: Larger single column layout (768px-1023px) */
+            md:w-[794px] md:max-w-none md:gap-6 md:px-0 md:py-5
+            
+            /* Desktop: Side-by-side layout with percentage scaling (1024px+) */
+            lg:w-full lg:max-w-[1400px] lg:flex-row lg:gap-5 lg:px-0 lg:py-0
+          ">
             
             {/* Video Player Container */}
-            <div className="relative lg:order-2">
+            <div className="
+              relative w-full
+              
+              /* Mobile: Standard width (0-767px) */
+              max-w-[353px]
+              
+              /* Tablet: Match Figma exact specs (768px-1023px) */
+              md:w-[794px] md:h-[422px] md:max-w-none md:p-0 md:rounded-[2px]
+              
+              /* Desktop: Order and flexible width (1024px+) */
+              lg:order-2 lg:flex-1 lg:max-w-none lg:h-auto lg:p-0 lg:rounded-sm
+            ">
               <VideoPlayer
                 state={state}
                 actions={actions}
@@ -52,14 +83,38 @@ export default function VisionSection() {
             </div>
             
             {/* Vision Text Section */}
-            <div className="bg-[var(--Gray-900,#1b1b1b)] shadow-lg w-full lg:w-[505px] min-h-[400px] lg:h-[505px] rounded-sm flex flex-col items-center justify-center px-6 py-7 lg:px-0 lg:py-0 lg:order-1">
-              <div className="w-full max-w-[305px] lg:max-w-none bg-gradient-to-b from-white to-[#C8A596] bg-clip-text text-transparent text-center font-semibold font-montserrat flex flex-col gap-4 lg:gap-8">
+            <div className="
+              bg-[var(--Gray-900,#1b1b1b)] shadow-lg rounded-sm
+              flex flex-col items-center justify-center
+              
+              /* Mobile: Full width, auto height (0-767px) */
+              w-full min-h-[400px] px-6 py-7
+              
+              /* Tablet: Fill 794px width, center content in 364px height (768px-1023px) */
+              md:w-[794px] md:max-w-none md:h-[364px] md:min-h-0 md:px-[50px] md:py-[50px] md:justify-center md:items-center
+              
+              /* Desktop: Proportional width scaling (1024px+) */
+              lg:w-[36%] lg:min-w-[400px] lg:max-w-[505px] lg:h-[505px] lg:px-0 lg:py-0 lg:order-1
+            ">
+              <div className="
+                w-full bg-gradient-to-b from-white to-[#C8A596] 
+                bg-clip-text text-transparent text-center font-semibold font-montserrat 
+                flex flex-col justify-center items-center
+                
+                /* Mobile: Compact spacing (0-767px) */
+                max-w-[305px] gap-4
+                
+                /* Tablet: 694px width, auto height, centered, 24px paragraph spacing (768px-1023px) */
+                md:w-[694px] md:max-w-[694px] md:gap-[24px] md:justify-center
+                
+                /* Desktop: Full spacing (1024px+) */
+                lg:max-w-none lg:gap-8
+              ">
                 <p className="m-0 p-0 text-[20px] leading-[30px]">
                   Arfve isn&apos;t just earbuds.
                 </p>
                 <p className="m-0 p-0 text-[20px] leading-[30px]">
-                  It&apos;s a modular system of personalized sound, intelligent design, and circular thinking —<br className="hidden lg:block" />
-                  built to last, adapt, and be yours.
+                  It&apos;s a modular system of personalized sound, intelligent design, and circular thinking — built to last, adapt, and be yours.
                 </p>
                 <p className="m-0 p-0 text-[20px] leading-[30px]">
                   Rooted in Scandinavian minimalism.
