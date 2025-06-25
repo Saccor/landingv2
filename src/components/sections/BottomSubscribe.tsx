@@ -14,42 +14,32 @@ export default function BottomSubscribe({ className = '' }: BottomSubscribeProps
   
   return (
     <RevealSection className={`bg-black overflow-hidden ${className}`}>
-      {/* Container: Responsive with media queries */}
-      <div className="container mx-auto responsive-container responsive-section px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-        
-        <div className="w-full flex justify-center">
-          {/* Content: Media query responsive container */}
+      <div className="w-full flex justify-center">
+        <div className="w-[353px] md:w-[600px] lg:w-[1400px] px-0 py-12">
           <div className="
-            flex flex-col items-start
-            responsive-content responsive-gap
-            p-4 gap-6 sm:gap-[30px]
-            w-full max-w-[353px] sm:max-w-[421.79px]
-            min-h-fit
-            drop-shadow-[0_4px_49.6px_rgba(0,0,0,0.1)]
-            rounded-[20px]
+            flex flex-col items-center
+            gap-6
+            w-full
             mx-auto
           ">
             
-            {/* Heading: Responsive text container */}
-            <div className="
-              w-full
-              flex flex-col justify-center items-center
-              responsive-gap
-              space-y-3 sm:space-y-4
-            ">
+            {/* Heading */}
+            <div className="w-full flex flex-col items-center gap-3 md:w-[422px] md:h-[102px] md:justify-center md:gap-2">
               <p className="
-                text-[#F5F5F5] font-montserrat
-                responsive-text
-                text-base sm:text-[18px] leading-relaxed sm:leading-[28px]
+                text-[#F5F5F5] font-montserrat font-bold
+                text-base leading-relaxed
                 text-center
+                md:text-[18px] md:leading-[28px] md:font-normal md:text-[#F5F5F5]
+                lg:text-[18px] lg:leading-[28px]
               ">
-                <span className="font-bold">Sign up now —</span> to be part of the future of sustainable sound.
+                <span className="font-bold md:font-semibold">Sign up now —</span> countdown&apos;s ticking and secrets awaits.
               </p>
               <p className="
                 text-[#F5F5F5] font-montserrat font-normal
-                responsive-text
-                text-base sm:text-[18px] leading-relaxed sm:leading-[28px]
+                text-base leading-relaxed
                 text-center
+                md:text-[16px] md:leading-normal md:font-normal md:text-[#F5F5F5]
+                lg:text-[18px] lg:leading-[28px]
               ">
                 {loading || count === 0 ? (
                   <span className="opacity-50">Loading spots...</span>
@@ -59,7 +49,7 @@ export default function BottomSubscribe({ className = '' }: BottomSubscribeProps
               </p>
             </div>
 
-            {/* Form: Inherits proper responsive behavior */}
+            {/* Form */}
             <div className="w-full max-w-md">
               <SignupForm buttonText="Sign-up" />
             </div>

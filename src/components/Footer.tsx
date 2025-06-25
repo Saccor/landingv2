@@ -45,6 +45,7 @@ const Footer = () => {
               className="
                 text-white font-poppins
                 text-sm sm:text-base
+                md:font-montserrat md:text-[18px] md:font-normal md:leading-[28px] md:text-[#F5F5F5]
                 hover:opacity-80 transition-opacity
                 leading-normal
               "
@@ -56,6 +57,7 @@ const Footer = () => {
               className="
                 text-white font-poppins
                 text-sm sm:text-base
+                md:font-montserrat md:text-[18px] md:font-normal md:leading-[28px] md:text-[#F5F5F5]
                 hover:opacity-80 transition-opacity
                 leading-normal
               "
@@ -65,6 +67,7 @@ const Footer = () => {
             <span className="
               text-white font-poppins
               text-sm sm:text-base
+              md:font-montserrat md:text-[18px] md:font-normal md:leading-[28px] md:text-[#F5F5F5]
               leading-normal
             ">
               © 2025 Arfve

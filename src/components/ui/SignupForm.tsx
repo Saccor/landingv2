@@ -211,8 +211,8 @@ export default function SignupForm({
               /* Mobile: Compact button (0-767px) */
               h-[38px] px-4 text-sm
               
-              /* Tablet: Small compact button like in image (768px-1023px) */
-              md:w-[80px] md:h-[44px] md:px-4 md:text-sm md:font-medium
+              /* Tablet: Fixed 97x44 button (768px-1023px) */
+              md:w-[97px] md:h-[44px] md:px-4 md:text-sm md:font-medium
               
               /* Desktop: Full button (1024px+) */
               lg:h-[42px] lg:px-5 lg:text-sm lg:w-auto
