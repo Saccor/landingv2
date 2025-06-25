@@ -25,54 +25,60 @@ export default function FeatureSection() {
             bg-[var(--Gray-900,#1b1b1b)] shadow-lg
             flex flex-col items-start
             
-            /* Mobile: Compact size and padding (0-1023px) */
+            /* Mobile: Compact size and padding (0-767px) */
             w-[353px] px-6 py-7
             
-            /* Desktop: Full size with specific layout (1024px+) */
-            lg:w-[1200px] lg:px-16 lg:py-0 lg:justify-center
-            xl:w-[1400px] xl:h-[587px]
+            /* Tablet: Match Figma tablet design (768px-1023px) */
+            md:w-[794px] md:px-[50px] md:py-[50px] md:items-start
+            
+            /* Desktop: Progressive scaling with centering (1024px+) */
+            lg:w-[1200px] lg:px-[50px] lg:py-[40px] lg:justify-center lg:items-center
+            xl:w-[1400px] xl:h-[587px] xl:py-[50px] xl:justify-start
           ">
             {/* Heading - Responsive Typography */}
             <h2 className="
-              font-montserrat font-bold bg-gradient-to-r from-white to-[#C8A596] 
-              bg-clip-text text-transparent text-left w-full
+              font-montserrat font-semibold text-left w-full
+              bg-gradient-to-r from-white to-[#C8A596] bg-clip-text text-transparent
              
-              /* Mobile: Smaller text with specific line breaks (0-1023px) */
-              text-[22px] leading-[30px] mb-[40px] max-w-[305px]
+              /* Mobile: Smaller text, allow full width for horizontal text (0-767px) */
+              text-[22px] leading-[30px] mb-[40px] max-w-none
               
-              /* Desktop: Full size (1024px+) */
-              lg:text-[28px] lg:leading-[36px] lg:mb-[50px] lg:max-w-none
+              /* Tablet: Match Figma exact specs (768px-1023px) */
+              md:text-[30px] md:leading-[38px] md:mb-[50px] md:max-w-none
+              
+              /* Desktop: Fluid scaling (1024px+) */
+              lg:text-[26px] lg:leading-[34px] lg:mb-[40px] lg:max-w-none
+              xl:text-[30px] xl:leading-[38px] xl:mb-[50px]
             ">
-              <span className="block lg:hidden">
-                Earbuds Engineered<br />
-                Without Compromise —<br />
-                and Built for<br />
-                Sustainability
-              </span>
-              <span className="hidden lg:inline">
-                Earbuds <span className="text-inherit">Engineered Without Compromise</span> — and <span className="text-inherit">Built for Sustainability</span>
-              </span>
+              Earbuds <span className="text-inherit">Engineered Without Compromise</span> — and <span className="text-inherit">Built for Sustainability</span>
             </h2>
 
             {/* Features grid - Responsive Grid Layout */}
             <div className="
               w-full grid
            
-              /* Mobile: Single column, tight spacing (0-1023px) */
+              /* Mobile: Single column, tight spacing (0-767px) */
               grid-cols-1 gap-6 max-w-[305px]
               
-              /* Desktop: 2 columns with specific spacing (1024px+) */
-              lg:grid-cols-2 lg:grid-rows-3 lg:gap-x-16 lg:gap-y-8 lg:max-w-none
+              /* Tablet: Single column with 50px gap (768px-1023px) */
+              md:grid-cols-1 md:gap-[50px] md:max-w-[694px]
+              
+              /* Desktop: Compact layout to match Figma exactly (1024px+) */
+              lg:grid-cols-2 lg:grid-rows-3 lg:gap-x-[40px] lg:gap-y-[12px] lg:max-w-[1100px]
+              xl:gap-x-[50px] xl:gap-y-[14px] xl:max-w-[1300px]
             ">
               {/* Feature 1: Studio-Grade Sound */}
               <div className="
                 flex flex-col
                 
-                /* Mobile: Tight spacing (0-1023px) */
+                /* Mobile: Tight spacing (0-767px) */
                 gap-2
                 
-                /* Desktop: Standard spacing (1024px+) */
-                lg:gap-3
+                /* Tablet: Proper feature spacing (768px-1023px) */
+                md:gap-3
+                
+                /* Desktop: Compact internal spacing to match Figma (1024px+) */
+                lg:gap-2
               ">
                 <div className="
                   flex flex-row items-center
@@ -87,21 +93,27 @@ export default function FeatureSection() {
                   <span className="
                     font-montserrat font-semibold text-white
                
-                    /* Mobile: Smaller text (0-1023px) */
+                    /* Mobile: Smaller text (0-767px) */
                     text-lg
+                    
+                    /* Tablet: Medium sizing (768px-1023px) */
+                    md:text-[22px] md:leading-[28px]
                
-                    /* Desktop: Standard size (1024px+) */
-                    lg:text-xl
+                    /* Desktop: Match Figma specs (1024px+) */
+                    lg:text-[24px] lg:leading-[32px]
                   ">Studio-Grade Sound</span>
                 </div>
                 <p className="
-                  font-montserrat font-medium text-white
+                  font-montserrat font-normal text-white
                
-                  /* Mobile: Smaller text (0-1023px) */
+                  /* Mobile: Smaller text (0-767px) */
                   text-[13px] leading-[19px]
                   
-                  /* Desktop: Full size (1024px+) */
-                  lg:text-[14px] lg:leading-[20px]
+                  /* Tablet: Medium sizing (768px-1023px) */
+                  md:text-[15px] md:leading-[22px]
+                  
+                  /* Desktop: Match Figma specs (1024px+) */
+                  lg:text-[16px] lg:leading-[24px]
                 ">
                   Immersive, high-fidelity audio with premium dynamic drivers. Calibrated to your unique hearing profile with a 9-band EQ.
                 </p>
@@ -111,11 +123,14 @@ export default function FeatureSection() {
               <div className="
                 flex flex-col
                 
-                /* Mobile: Tight spacing (0-1023px) */
+                /* Mobile: Tight spacing (0-767px) */
                 gap-2
                 
-                /* Desktop: Standard spacing (1024px+) */
-                lg:gap-3
+                /* Tablet: Proper feature spacing (768px-1023px) */
+                md:gap-3
+                
+                /* Desktop: Compact internal spacing to match Figma (1024px+) */
+                lg:gap-2
               ">
                 <div className="
                   flex flex-row items-center
@@ -130,21 +145,27 @@ export default function FeatureSection() {
                   <span className="
                     font-montserrat font-semibold text-white
                
-                    /* Mobile: Smaller text (0-1023px) */
+                    /* Mobile: Smaller text (0-767px) */
                     text-lg
+                    
+                    /* Tablet: Medium sizing (768px-1023px) */
+                    md:text-[22px] md:leading-[28px]
                
-                    /* Desktop: Standard size (1024px+) */
-                    lg:text-xl
+                    /* Desktop: Match Figma specs (1024px+) */
+                    lg:text-[24px] lg:leading-[32px]
                   ">Modular Power</span>
                 </div>
                 <p className="
-                  font-montserrat font-medium text-white
+                  font-montserrat font-normal text-white
                
-                  /* Mobile: Smaller text (0-1023px) */
+                  /* Mobile: Smaller text (0-767px) */
                   text-[13px] leading-[19px]
                   
-                  /* Desktop: Full size (1024px+) */
-                  lg:text-[14px] lg:leading-[20px]
+                  /* Tablet: Medium sizing (768px-1023px) */
+                  md:text-[15px] md:leading-[22px]
+                  
+                  /* Desktop: Match Figma specs (1024px+) */
+                  lg:text-[16px] lg:leading-[24px]
                 ">
                   Rechargeable, swappable batteries in both earbuds and case.<br/>
                   <span className="block ml-2">→ Up to 9 hours playback</span>
@@ -157,11 +178,14 @@ export default function FeatureSection() {
               <div className="
                 flex flex-col
                 
-                /* Mobile: Tight spacing (0-1023px) */
+                /* Mobile: Tight spacing (0-767px) */
                 gap-2
                 
-                /* Desktop: Standard spacing (1024px+) */
-                lg:gap-3
+                /* Tablet: Proper feature spacing (768px-1023px) */
+                md:gap-3
+                
+                /* Desktop: Compact internal spacing to match Figma (1024px+) */
+                lg:gap-2
               ">
                 <div className="
                   flex flex-row items-center
@@ -176,21 +200,27 @@ export default function FeatureSection() {
                   <span className="
                     font-montserrat font-semibold text-white
                
-                    /* Mobile: Smaller text (0-1023px) */
+                    /* Mobile: Smaller text (0-767px) */
                     text-lg
+                    
+                    /* Tablet: Medium sizing (768px-1023px) */
+                    md:text-[22px] md:leading-[28px]
                
-                    /* Desktop: Standard size (1024px+) */
-                    lg:text-xl
+                    /* Desktop: Match Figma specs (1024px+) */
+                    lg:text-[24px] lg:leading-[32px]
                   ">Hybrid ANC</span>
                 </div>
                 <p className="
-                  font-montserrat font-medium text-white
+                  font-montserrat font-normal text-white
                
-                  /* Mobile: Smaller text (0-1023px) */
+                  /* Mobile: Smaller text (0-767px) */
                   text-[13px] leading-[19px]
-               
-                  /* Desktop: Full size (1024px+) */
-                  lg:text-[14px] lg:leading-[20px]
+                  
+                  /* Tablet: Medium sizing (768px-1023px) */
+                  md:text-[15px] md:leading-[22px]
+                  
+                  /* Desktop: Match Figma specs (1024px+) */
+                  lg:text-[16px] lg:leading-[24px]
                 ">
                   Up to 45 dB of ambient noise cancelled. Silence distractions. Let in what matters.
                 </p>
@@ -200,11 +230,14 @@ export default function FeatureSection() {
               <div className="
                 flex flex-col
                 
-                /* Mobile: Tight spacing (0-1023px) */
+                /* Mobile: Tight spacing (0-767px) */
                 gap-2
                 
-                /* Desktop: Standard spacing (1024px+) */
-                lg:gap-3
+                /* Tablet: Proper feature spacing (768px-1023px) */
+                md:gap-3
+                
+                /* Desktop: Compact internal spacing to match Figma (1024px+) */
+                lg:gap-2
               ">
                 <div className="
                   flex flex-row items-center
@@ -219,21 +252,27 @@ export default function FeatureSection() {
                   <span className="
                     font-montserrat font-semibold text-white
                  
-                    /* Mobile: Smaller text (0-1023px) */
+                    /* Mobile: Smaller text (0-767px) */
                     text-lg
-                     
-                    /* Desktop: Standard size (1024px+) */
-                    lg:text-xl
+                    
+                    /* Tablet: Medium sizing (768px-1023px) */
+                    md:text-[22px] md:leading-[28px]
+                 
+                    /* Desktop: Match Figma specs (1024px+) */
+                    lg:text-[24px] lg:leading-[32px]
                   ">Low latency mode</span>
                 </div>
                 <p className="
-                  font-montserrat font-medium text-white
+                  font-montserrat font-normal text-white
                   
-                  /* Mobile: Smaller text (0-1023px) */
+                  /* Mobile: Smaller text (0-767px) */
                   text-[13px] leading-[19px]
                   
-                  /* Desktop: Full size (1024px+) */
-                  lg:text-[14px] lg:leading-[20px]
+                  /* Tablet: Medium sizing (768px-1023px) */
+                  md:text-[15px] md:leading-[22px]
+                  
+                  /* Desktop: Match Figma specs (1024px+) */
+                  lg:text-[16px] lg:leading-[24px]
                 ">
                   Ultra-responsive for gaming and streaming
                 </p>
@@ -243,11 +282,14 @@ export default function FeatureSection() {
               <div className="
                 flex flex-col
                 
-                /* Mobile: Tight spacing (0-1023px) */
+                /* Mobile: Tight spacing (0-767px) */
                 gap-2
                 
-                /* Desktop: Standard spacing (1024px+) */
-                lg:gap-3
+                /* Tablet: Proper feature spacing (768px-1023px) */
+                md:gap-3
+                
+                /* Desktop: Compact internal spacing to match Figma (1024px+) */
+                lg:gap-2
               ">
                 <div className="
                   flex flex-row items-center
@@ -262,21 +304,27 @@ export default function FeatureSection() {
                   <span className="
                     font-montserrat font-semibold text-white
                      
-                    /* Mobile: Smaller text (0-1023px) */
+                    /* Mobile: Smaller text (0-767px) */
                     text-lg
+                    
+                    /* Tablet: Medium sizing (768px-1023px) */
+                    md:text-[22px] md:leading-[28px]
                      
-                    /* Desktop: Standard size (1024px+) */
-                    lg:text-xl
+                    /* Desktop: Match Figma specs (1024px+) */
+                    lg:text-[24px] lg:leading-[32px]
                   ">IPX54 rated</span>
                 </div>
                 <p className="
-                  font-montserrat font-medium text-white
+                  font-montserrat font-normal text-white
                   
-                  /* Mobile: Smaller text (0-1023px) */
+                  /* Mobile: Smaller text (0-767px) */
                   text-[13px] leading-[19px]
                   
-                  /* Desktop: Full size (1024px+) */
-                  lg:text-[14px] lg:leading-[20px]
+                  /* Tablet: Medium sizing (768px-1023px) */
+                  md:text-[15px] md:leading-[22px]
+                  
+                  /* Desktop: Match Figma specs (1024px+) */
+                  lg:text-[16px] lg:leading-[24px]
                 ">
                   Water and sweat resistant - ready for active days
                 </p>
@@ -286,11 +334,14 @@ export default function FeatureSection() {
               <div className="
                 flex flex-col
                 
-                /* Mobile: Tight spacing (0-1023px) */
+                /* Mobile: Tight spacing (0-767px) */
                 gap-2
                 
-                /* Desktop: Standard spacing (1024px+) */
-                lg:gap-3
+                /* Tablet: Proper feature spacing (768px-1023px) */
+                md:gap-3
+                
+                /* Desktop: Compact internal spacing to match Figma (1024px+) */
+                lg:gap-2
               ">
                 <div className="
                   flex flex-row items-center
@@ -301,25 +352,31 @@ export default function FeatureSection() {
                   /* Desktop: More space (1024px+) */
                   lg:gap-4
                 ">
-                  <LeafIcon className="w-[41px] h-[44px]" />
+                  <LeafIcon className="w-[41px] h-[44px] lg:w-[36px] lg:h-[36px]" />
                   <span className="
                     font-montserrat font-semibold text-white
                      
-                    /* Mobile: Smaller text (0-1023px) */
+                    /* Mobile: Smaller text (0-767px) */
                     text-lg
+                    
+                    /* Tablet: Medium sizing (768px-1023px) */
+                    md:text-[22px] md:leading-[28px]
                      
-                    /* Desktop: Standard size (1024px+) */
-                    lg:text-xl
+                    /* Desktop: Match Figma specs (1024px+) */
+                    lg:text-[24px] lg:leading-[32px]
                   ">Recycled materials</span>
                 </div>
                 <p className="
-                  font-montserrat font-medium text-white
+                  font-montserrat font-normal text-white
                
-                  /* Mobile: Smaller text (0-1023px) */
+                  /* Mobile: Smaller text (0-767px) */
                   text-[13px] leading-[19px]
-               
-                  /* Desktop: Full size (1024px+) */
-                  lg:text-[14px] lg:leading-[20px]
+                  
+                  /* Tablet: Medium sizing (768px-1023px) */
+                  md:text-[15px] md:leading-[22px]
+                  
+                  /* Desktop: Match Figma specs (1024px+) */
+                  lg:text-[16px] lg:leading-[24px]
                 ">
                   Crafted from recycled materials and designed to be 100% serviceable. Replace only what&apos;s needed, and extend lifespan with every update.
                 </p>
