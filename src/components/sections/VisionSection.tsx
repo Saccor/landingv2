@@ -32,8 +32,8 @@ export default function VisionSection() {
         /* Mobile: Tight padding (0-767px) */
         px-4 pt-8 pb-0 mb-[20px] mt-[20px]
         
-        /* Tablet: No horizontal padding to allow full 794px width (768px-1023px) */
-        md:px-0 md:pt-10 md:pb-0 md:mb-[30px] md:mt-[30px]
+        /* Tablet: No horizontal padding, 20px bottom margin to match video/vision gap (768px-1023px) */
+        md:px-0 md:pt-10 md:pb-0 md:mb-[20px] md:mt-[30px]
         
         /* Desktop: Standard padding (1024px+) */
         lg:px-4 lg:pt-8 lg:pb-0
@@ -43,8 +43,8 @@ export default function VisionSection() {
             /* Mobile: Single column layout (0-767px) */
             w-full max-w-[353px] px-0 py-0 flex flex-col items-center justify-center gap-4
             
-            /* Tablet: Larger single column layout (768px-1023px) */
-            md:w-[794px] md:max-w-none md:gap-6 md:px-0 md:py-5
+            /* Tablet: Larger single column layout with 20px gap (768px-1023px) */
+            md:w-[794px] md:max-w-none md:gap-5 md:px-0 md:py-0
             
             /* Desktop: Side-by-side layout with percentage scaling (1024px+) */
             lg:w-full lg:max-w-[1400px] lg:flex-row lg:gap-5 lg:px-0 lg:py-0
@@ -104,11 +104,11 @@ export default function VisionSection() {
                 /* Mobile: Compact spacing (0-767px) */
                 max-w-[305px] gap-4
                 
-                /* Tablet: 694px width, 24px gap, natural centering (768px-1023px) */
-                md:w-[694px] md:max-w-[694px] md:gap-[24px]
+                /* Tablet: Fixed 694x264px container (768px-1023px) */
+                md:w-[694px] md:h-[264px] md:max-w-[694px] md:gap-[24px] md:justify-center
                 
                 /* Desktop: Fit within gray container with padding (1024px+) */
-                lg:max-w-full lg:px-8 lg:gap-8
+                lg:max-w-full lg:px-8 lg:gap-8 lg:h-auto lg:justify-start
               ">
                 <p className="m-0 p-0 text-[20px] leading-[30px]">
                   Arfve isn&apos;t just earbuds.
