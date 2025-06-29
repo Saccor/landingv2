@@ -2,12 +2,12 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { VideoPlayerState, VideoPlayerActions, ExtendedDocument, ExtendedElement } from '../types';
-import { VIDEO_CONFIG, DEVICE_DETECTION, SELECTORS, FULLSCREEN_EVENTS } from '../constants';
+import { VIDEO_CONFIG, DEVICE_DETECTION, FULLSCREEN_EVENTS } from '../constants';
 
 /**
  * Custom hook for video player functionality
  * 
- * Manages all video player state, controls, and interactions
+ * Manages all video player state, controls, and interactions with professional features
  */
 export function useVideoPlayer() {
   // State
@@ -21,10 +21,13 @@ export function useVideoPlayer() {
   const [isDragging, setIsDragging] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [wasPlayingBeforeSeeking, setWasPlayingBeforeSeeking] = useState(false);
+  const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
   
   // Refs
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   /**
    * Formats time display (mm:ss)
@@ -39,40 +42,72 @@ export function useVideoPlayer() {
    * Updates current video time state
    */
   const handleTimeUpdate = useCallback(() => {
-    if (videoRef.current) {
+    if (videoRef.current && !isDragging) {
       setCurrentTime(videoRef.current.currentTime);
     }
-  }, []);
+  }, [isDragging]);
 
   /**
-   * Toggles video play/pause with thumbnail reset logic
+   * Professional play/pause with improved thumbnail handling
    */
   const handlePlayPause = useCallback(async () => {
     if (!videoRef.current) return;
     
     try {
       if (isPlaying) {
+        // Pausing - maintain current position
         videoRef.current.pause();
         setIsPlaying(false);
+        setShowControls(true); // Show controls when paused for better UX
       } else {
         setIsLoading(true);
-        // Reset from thumbnail position to start
-        if (!isPlaying && videoRef.current.currentTime === VIDEO_CONFIG.THUMBNAIL_TIME) {
+        
+        // If this is the first play and we're at thumbnail time, start from beginning
+        if (!hasPlayedOnce && videoRef.current.currentTime === VIDEO_CONFIG.THUMBNAIL_TIME) {
           videoRef.current.currentTime = 0;
           setCurrentTime(0);
         }
+        
         await videoRef.current.play();
         setIsPlaying(true);
+        setHasPlayedOnce(true);
+        
+        // Auto-hide controls after delay (except in fullscreen when paused)
+        if (!isFullscreen) {
+          setTimeout(() => setShowControls(false), 3000);
+        }
       }
-    } catch {
-      console.error('Video: ❌ Playback failed');
+    } catch (error) {
+      console.error('Video: ❌ Playback failed', error);
     } finally {
       setIsLoading(false);
     }
-  }, [isPlaying]);
+  }, [isPlaying, hasPlayedOnce, isFullscreen]);
 
   /**
-   * Toggles video mute state
+   * Professional seeking with play state preservation
+   */
+  const seekToTime = useCallback((time: number) => {
+    if (!videoRef.current || !duration) return;
+    
+    const clampedTime = Math.max(0, Math.min(time, duration));
+    videoRef.current.currentTime = clampedTime;
+    setCurrentTime(clampedTime);
+    
+    // Show controls when seeking
+    setShowControls(true);
+  }, [duration]);
+
+  /**
+   * Skip forward/backward (professional feature)
+   */
+  const skipTime = useCallback((seconds: number) => {
+    if (!videoRef.current) return;
+    seekToTime(videoRef.current.currentTime + seconds);
+  }, [seekToTime]);
+
+  /**
+   * Toggle mute with professional UX
    */
   const toggleMute = useCallback((e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
@@ -82,10 +117,17 @@ export function useVideoPlayer() {
     videoRef.current.muted = newMuted;
     setIsMuted(newMuted);
     setShowControls(true);
-  }, [isMuted]);
+    
+    // Auto-hide controls after mute toggle
+    setTimeout(() => {
+      if (!isFullscreen || isPlaying) {
+        setShowControls(false);
+      }
+    }, 2000);
+  }, [isMuted, isFullscreen, isPlaying]);
 
   /**
-   * Handles fullscreen API across browsers
+   * Enhanced fullscreen with better UX
    */
   const toggleFullscreen = useCallback(async () => {
     if (!containerRef.current) return;
@@ -109,119 +151,113 @@ export function useVideoPlayer() {
           await (element as ExtendedElement).mozRequestFullScreen?.();
         }
       }
-    } catch {
-      console.error('Video: ❌ Fullscreen toggle failed');
+      
+      // Always show controls when toggling fullscreen
+      setShowControls(true);
+    } catch (error) {
+      console.error('Video: ❌ Fullscreen toggle failed', error);
     }
   }, [isFullscreen]);
 
   /**
-   * Calculates progress position from mouse/touch event
-   */
-  const getProgressFromEvent = useCallback((
-    e: React.MouseEvent | React.TouchEvent | MouseEvent | TouchEvent, 
-    targetElement?: HTMLElement
-  ) => {
-    if (!videoRef.current || !duration) return 0;
-    
-    const target = targetElement || (e.currentTarget as HTMLElement);
-    if (!target?.getBoundingClientRect) return 0;
-    
-    const rect = target.getBoundingClientRect();
-    const clientX = 'touches' in e 
-      ? e.touches[0]?.clientX || e.changedTouches[0]?.clientX || 0
-      : e.clientX;
-    
-    const clickX = clientX - rect.left;
-    const progress = Math.max(0, Math.min(1, clickX / rect.width));
-    return progress * duration;
-  }, [duration]);
-
-  /**
-   * Handles progress bar click to seek video
+   * Professional progress bar interaction with seeking state
    */
   const handleProgressClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!videoRef.current) return;
+    if (!videoRef.current || !duration) return;
+    
+    e.stopPropagation();
     const rect = e.currentTarget.getBoundingClientRect();
     const pos = (e.clientX - rect.left) / rect.width;
-    const newTime = pos * (videoRef.current.duration || 0);
-    videoRef.current.currentTime = newTime;
-    setCurrentTime(newTime);
-    setShowControls(true);
-  }, []);
+    const newTime = pos * duration;
+    
+    seekToTime(newTime);
+  }, [duration, seekToTime]);
 
   /**
-   * Initiates progress bar dragging for mouse events
+   * Enhanced progress bar dragging with play state preservation
    */
   const handleProgressMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!videoRef.current || !duration) return;
+    
     e.preventDefault();
+    e.stopPropagation();
+    
+    // Remember if we were playing before seeking
+    setWasPlayingBeforeSeeking(isPlaying);
     setIsDragging(true);
     
     const progressBar = e.currentTarget;
     const rect = progressBar.getBoundingClientRect();
     const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    const newTime = pos * duration;
     
-    if (videoRef.current) {
-      const newTime = pos * (videoRef.current.duration || 0);
-      videoRef.current.currentTime = newTime;
-      setCurrentTime(newTime);
-    }
+    seekToTime(newTime);
     
     const handleMouseMove = (e: MouseEvent) => {
-      if (!videoRef.current || !isDragging) return;
+      if (!videoRef.current || !duration) return;
       const rect = progressBar.getBoundingClientRect();
       const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-      const newTime = pos * (videoRef.current.duration || 0);
-      videoRef.current.currentTime = newTime;
-      setCurrentTime(newTime);
+      const newTime = pos * duration;
+      seekToTime(newTime);
     };
 
     const handleMouseUp = () => {
       setIsDragging(false);
+      // Resume playback if it was playing before seeking
+      if (wasPlayingBeforeSeeking && videoRef.current) {
+        videoRef.current.play().catch(console.error);
+        setIsPlaying(true);
+      }
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
     };
 
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
-  }, [isDragging]);
+  }, [duration, isPlaying, seekToTime, wasPlayingBeforeSeeking]);
 
   /**
-   * Initiates progress bar dragging for touch events
+   * Enhanced touch dragging for mobile
    */
   const handleProgressTouchStart = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    if (!videoRef.current || !duration) return;
+    
     e.preventDefault();
+    e.stopPropagation();
+    
+    setWasPlayingBeforeSeeking(isPlaying);
     setIsDragging(true);
     
     const progressBar = e.currentTarget;
     const touch = e.touches[0];
     const rect = progressBar.getBoundingClientRect();
     const pos = Math.max(0, Math.min(1, (touch.clientX - rect.left) / rect.width));
+    const newTime = pos * duration;
     
-    if (videoRef.current) {
-      const newTime = pos * (videoRef.current.duration || 0);
-      videoRef.current.currentTime = newTime;
-      setCurrentTime(newTime);
-    }
+    seekToTime(newTime);
     
     const handleTouchMove = (e: TouchEvent) => {
-      if (!videoRef.current || !isDragging) return;
+      if (!videoRef.current || !duration) return;
       const touch = e.touches[0];
       const rect = progressBar.getBoundingClientRect();
       const pos = Math.max(0, Math.min(1, (touch.clientX - rect.left) / rect.width));
-      const newTime = pos * (videoRef.current.duration || 0);
-      videoRef.current.currentTime = newTime;
-      setCurrentTime(newTime);
+      const newTime = pos * duration;
+      seekToTime(newTime);
     };
 
     const handleTouchEnd = () => {
       setIsDragging(false);
+      if (wasPlayingBeforeSeeking && videoRef.current) {
+        videoRef.current.play().catch(console.error);
+        setIsPlaying(true);
+      }
       document.removeEventListener('touchmove', handleTouchMove);
       document.removeEventListener('touchend', handleTouchEnd);
     };
 
     document.addEventListener('touchmove', handleTouchMove);
     document.addEventListener('touchend', handleTouchEnd);
-  }, [isDragging]);
+  }, [duration, isPlaying, seekToTime, wasPlayingBeforeSeeking]);
 
   /**
    * Handles volume slider interaction
@@ -239,45 +275,149 @@ export function useVideoPlayer() {
     setVolume(newVolume);
     setIsMuted(false);
     setShowControls(true);
-  }, []);
+    
+    // Auto-hide after volume change
+    setTimeout(() => {
+      if (!isFullscreen || isPlaying) {
+        setShowControls(false);
+      }
+    }, 2000);
+  }, [isFullscreen, isPlaying]);
 
   /**
-   * Handles video metadata loaded event
+   * Professional keyboard controls
+   */
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (!videoRef.current) return;
+    
+    // Only handle if video container is focused or in fullscreen
+    if (!isFullscreen && !containerRef.current?.contains(document.activeElement)) return;
+    
+    switch (e.code) {
+      case 'Space':
+        e.preventDefault();
+        handlePlayPause();
+        break;
+      case 'ArrowLeft':
+        e.preventDefault();
+        skipTime(-10); // Skip back 10 seconds
+        break;
+      case 'ArrowRight':
+        e.preventDefault();
+        skipTime(10); // Skip forward 10 seconds
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        const newVolumeUp = Math.min(1, volume + 0.1);
+        videoRef.current.volume = newVolumeUp;
+        setVolume(newVolumeUp);
+        setIsMuted(false);
+        videoRef.current.muted = false;
+        setShowControls(true);
+        break;
+      case 'ArrowDown':
+        e.preventDefault();
+        const newVolumeDown = Math.max(0, volume - 0.1);
+        videoRef.current.volume = newVolumeDown;
+        setVolume(newVolumeDown);
+        setShowControls(true);
+        break;
+      case 'KeyM':
+        e.preventDefault();
+        toggleMute();
+        break;
+      case 'KeyF':
+        e.preventDefault();
+        toggleFullscreen();
+        break;
+      case 'Escape':
+        if (isFullscreen) {
+          e.preventDefault();
+          toggleFullscreen();
+        }
+        break;
+    }
+  }, [handlePlayPause, skipTime, volume, toggleMute, toggleFullscreen, isFullscreen]);
+
+  /**
+   * Professional control visibility management
+   */
+  const showControlsTemporarily = useCallback((duration = 3000) => {
+    setShowControls(true);
+    
+    if (controlsTimeoutRef.current) {
+      clearTimeout(controlsTimeoutRef.current);
+    }
+    
+    // Don't auto-hide if paused or in fullscreen while paused
+    if (isPlaying || (isFullscreen && !isPlaying)) {
+      controlsTimeoutRef.current = setTimeout(() => {
+        if (isPlaying || !isFullscreen) {
+          setShowControls(false);
+        }
+      }, duration);
+    }
+  }, [isPlaying, isFullscreen]);
+
+  /**
+   * Professional show/hide controls that matches the interface
+   */
+  const handleSetShowControls = useCallback((show: boolean) => {
+    if (show) {
+      showControlsTemporarily();
+    } else {
+      setShowControls(false);
+      if (controlsTimeoutRef.current) {
+        clearTimeout(controlsTimeoutRef.current);
+      }
+    }
+  }, [showControlsTemporarily]);
+
+  /**
+   * Enhanced metadata handling
    */
   const handleLoadedMetadata = useCallback(() => {
     if (videoRef.current) {
       setDuration(videoRef.current.duration);
+      videoRef.current.volume = volume;
     }
-  }, []);
+  }, [volume]);
 
   /**
-   * Handles when video data is loaded and ready
+   * Professional data loading with thumbnail
    */
   const handleLoadedData = useCallback(() => {
-    if (videoRef.current && !isPlaying) {
+    if (videoRef.current && !hasPlayedOnce) {
       // Set thumbnail to 1:03 when data is loaded and video hasn't been played
       videoRef.current.currentTime = VIDEO_CONFIG.THUMBNAIL_TIME;
       setCurrentTime(VIDEO_CONFIG.THUMBNAIL_TIME);
     }
-  }, [isPlaying]);
+  }, [hasPlayedOnce]);
 
   /**
-   * Initialize mobile device detection
+   * Initialize mobile device detection and keyboard controls
    */
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(DEVICE_DETECTION.MOBILE_REGEX.test(navigator.userAgent));
     };
     checkMobile();
-  }, []);
+
+    // Add keyboard event listeners
+    document.addEventListener('keydown', handleKeyDown);
+    
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleKeyDown]);
 
   /**
-   * Ensure thumbnail is set on mount/refresh
+   * Professional thumbnail management
    */
   useEffect(() => {
-    if (videoRef.current && !isPlaying) {
+    if (videoRef.current && !hasPlayedOnce) {
       const setThumbnail = () => {
-        if (videoRef.current && !isPlaying) {
+        if (videoRef.current && !hasPlayedOnce) {
           videoRef.current.currentTime = VIDEO_CONFIG.THUMBNAIL_TIME;
           setCurrentTime(VIDEO_CONFIG.THUMBNAIL_TIME);
         }
@@ -289,14 +429,21 @@ export function useVideoPlayer() {
         videoRef.current.addEventListener('loadeddata', setThumbnail, { once: true });
       }
     }
-  }, [isPlaying]);
+  }, [hasPlayedOnce]);
 
   /**
-   * Handle fullscreen state changes
+   * Enhanced fullscreen state management
    */
   useEffect(() => {
     const handleFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
+      const isNowFullscreen = !!document.fullscreenElement;
+      setIsFullscreen(isNowFullscreen);
+      
+      // Always show controls when entering fullscreen
+      if (isNowFullscreen) {
+        setShowControls(true);
+        showControlsTemporarily(5000);
+      }
     };
 
     FULLSCREEN_EVENTS.forEach(event => 
@@ -308,60 +455,31 @@ export function useVideoPlayer() {
         document.removeEventListener(event, handleFullscreenChange)
       );
     };
-  }, []);
+  }, [showControlsTemporarily]);
 
   /**
-   * Handle global drag events for progress bar
-   */
-  useEffect(() => {
-    if (!isDragging) return;
-
-    const handleGlobalMouseMove = (e: MouseEvent) => {
-      const progressBar = document.querySelector(SELECTORS.PROGRESS_BAR) as HTMLElement;
-      if (progressBar) {
-        const newTime = getProgressFromEvent(e, progressBar);
-        if (videoRef.current && newTime > 0) {
-          videoRef.current.currentTime = newTime;
-          setCurrentTime(newTime);
-        }
-      }
-    };
-
-    const handleGlobalTouchMove = (e: TouchEvent) => {
-      const progressBar = document.querySelector(SELECTORS.PROGRESS_BAR) as HTMLElement;
-      if (progressBar) {
-        const newTime = getProgressFromEvent(e, progressBar);
-        if (videoRef.current && newTime > 0) {
-          videoRef.current.currentTime = newTime;
-          setCurrentTime(newTime);
-        }
-      }
-    };
-
-    const handleGlobalEnd = () => setIsDragging(false);
-
-    document.addEventListener('mousemove', handleGlobalMouseMove);
-    document.addEventListener('mouseup', handleGlobalEnd);
-    document.addEventListener('touchmove', handleGlobalTouchMove, { passive: false });
-    document.addEventListener('touchend', handleGlobalEnd);
-
-    return () => {
-      document.removeEventListener('mousemove', handleGlobalMouseMove);
-      document.removeEventListener('mouseup', handleGlobalEnd);
-      document.removeEventListener('touchmove', handleGlobalTouchMove);
-      document.removeEventListener('touchend', handleGlobalEnd);
-    };
-  }, [isDragging, getProgressFromEvent]);
-
-  /**
-   * Auto-hide controls after delay
+   * Professional control auto-hide logic
    */
   useEffect(() => {
     if (!isPlaying || !showControls || isDragging) return;
 
+    // Don't auto-hide in fullscreen when paused
+    if (isFullscreen && !isPlaying) return;
+
     const timeout = setTimeout(() => setShowControls(false), VIDEO_CONFIG.CONTROLS_HIDE_DELAY);
     return () => clearTimeout(timeout);
-  }, [isPlaying, showControls, isDragging]);
+  }, [isPlaying, showControls, isDragging, isFullscreen]);
+
+  /**
+   * Cleanup timeouts on unmount
+   */
+  useEffect(() => {
+    return () => {
+      if (controlsTimeoutRef.current) {
+        clearTimeout(controlsTimeoutRef.current);
+      }
+    };
+  }, []);
 
   // Return state and actions
   const state: VideoPlayerState = {
@@ -385,7 +503,7 @@ export function useVideoPlayer() {
     handleProgressMouseDown,
     handleProgressTouchStart,
     handleVolumeChange,
-    setShowControls,
+    setShowControls: handleSetShowControls,
   };
 
   return {

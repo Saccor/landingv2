@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { VideoPlayerProps } from '../types';
 import { VIDEO_CONFIG } from '../constants';
 
@@ -24,7 +24,40 @@ export default function VideoPlayer({
   const { handlePlayPause, setShowControls } = actions;
 
   /**
-   * Renders the play button overlay when video is paused
+   * Professional click handling - click to pause/play
+   */
+  const handleVideoClick = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    handlePlayPause();
+  }, [handlePlayPause]);
+
+  /**
+   * Enhanced mouse interaction for professional UX
+   */
+  const handleMouseEnter = useCallback(() => {
+    setShowControls(true);
+  }, [setShowControls]);
+
+  const handleMouseMove = useCallback(() => {
+    setShowControls(true);
+  }, [setShowControls]);
+
+  const handleMouseLeave = useCallback(() => {
+    // Only auto-hide on mouse leave if playing and not mobile
+    if (isPlaying && !state.isMobile && !state.isFullscreen) {
+      setTimeout(() => setShowControls(false), 1000);
+    }
+  }, [isPlaying, state.isMobile, state.isFullscreen, setShowControls]);
+
+  /**
+   * Professional touch handling for mobile
+   */
+  const handleTouchStart = useCallback(() => {
+    setShowControls(true);
+  }, [setShowControls]);
+
+  /**
+   * Renders the professional play button overlay
    */
   const renderPlayButton = () => (
     <div className="absolute inset-0 flex items-center justify-center z-10">
@@ -32,11 +65,8 @@ export default function VideoPlayer({
         <div className="w-12 h-12 border-2 border-white/30 border-t-white rounded-full animate-spin" />
       ) : (
         <button 
-          className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
-          onClick={(e) => {
-            e.stopPropagation();
-            handlePlayPause();
-          }}
+          className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 hover:scale-110 transition-all duration-200"
+          onClick={handleVideoClick}
           aria-label="Play video"
         >
           <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
@@ -62,10 +92,14 @@ export default function VideoPlayer({
         /* Desktop: Flexible width, proportional video size (1024px+) */
         lg:h-[505px] lg:order-2
       "
-      onMouseMove={() => setShowControls(true)}
-      onMouseLeave={() => isPlaying && !state.isMobile && setShowControls(false)}
-      onClick={handlePlayPause}
-      onTouchStart={() => setShowControls(true)}
+      onMouseEnter={handleMouseEnter}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleVideoClick}
+      onTouchStart={handleTouchStart}
+      tabIndex={0}
+      role="button"
+      aria-label={isPlaying ? "Pause video" : "Play video"}
     >
       <video
         ref={videoRef}
@@ -77,17 +111,15 @@ export default function VideoPlayer({
         onLoadedMetadata={handleLoadedMetadata}
         onLoadedData={handleLoadedData}
         onEnded={() => {
-          // Video ended, reset to paused state
-          if (videoRef.current) {
-            videoRef.current.currentTime = VIDEO_CONFIG.THUMBNAIL_TIME;
-          }
+          // Professional video end behavior - stay at end position
+          // The thumbnail will be handled by the pause state
         }}
       >
         <source src={VIDEO_CONFIG.VIDEO_SOURCE} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
-      {/* Play Button Overlay */}
+      {/* Professional Play Button Overlay */}
       {!isPlaying && renderPlayButton()}
     </div>
   );

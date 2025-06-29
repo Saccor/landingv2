@@ -104,10 +104,10 @@ export default function VisionSection() {
                 /* Mobile: Compact spacing (0-767px) */
                 max-w-[305px] gap-4
                 
-                /* Tablet: Match Figma container specs (768px-1023px) */
+                /* Tablet: Match Figma layout specs (768px-1023px) */
                 md:max-w-[694px] md:mx-auto md:gap-[24px] md:justify-center
                 
-                /* Desktop: Fit within gray container with padding (1024px+) */
+                /* Desktop: Fit within gray section with padding (1024px+) */
                 lg:max-w-full lg:px-8 lg:gap-8 lg:h-auto lg:justify-start
               ">
                 <p className="m-0 p-0 text-[20px] leading-[30px]">

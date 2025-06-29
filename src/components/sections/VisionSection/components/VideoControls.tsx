@@ -140,19 +140,40 @@ export default function VideoControls({
     </svg>
   );
 
-  // Don't render controls if video is not playing
-  if (!isPlaying) return null;
+  // Show controls if video is playing OR if we're in fullscreen mode (professional behavior)
+  const shouldShowControls = isPlaying || isFullscreen;
+
+  if (!shouldShowControls) return null;
 
   return (
     <div 
-      className={`absolute inset-0 transition-opacity duration-300 ${(showControls || isDragging) ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'} z-30`}
+      className={`absolute inset-0 transition-opacity duration-300 ${(showControls || isDragging || isFullscreen) ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'} ${isFullscreen ? 'z-[9999]' : 'z-30'}`}
       onMouseMove={() => setShowControls(true)}
       onClick={(e) => e.stopPropagation()}
+      style={isFullscreen ? { zIndex: 9999 } : {}}
     >
+      {/* Debug indicator for fullscreen */}
+      {isFullscreen && (
+        <div className="absolute top-4 left-4 bg-red-500 text-white px-2 py-1 text-xs rounded z-[10000]">
+          FULLSCREEN ACTIVE - Controls: {showControls ? 'ON' : 'OFF'}
+        </div>
+      )}
+      
       <div 
-        className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent pointer-events-auto ${isFullscreen ? 'p-6' : 'p-3'}`}
+        className={`absolute bottom-0 left-0 right-0 pointer-events-auto ${isFullscreen ? 'p-8' : 'p-3'}`}
         onClick={(e) => e.stopPropagation()}
+        style={isFullscreen ? { 
+          background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 50%, transparent 100%)',
+          minHeight: '120px' // Ensure minimum height in fullscreen
+        } : {
+          background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%)'
+        }}
       >
+        {/* Debug bar for fullscreen */}
+        {isFullscreen && (
+          <div className="absolute top-0 left-0 right-0 h-1 bg-yellow-400"></div>
+        )}
+        
         {/* Progress Bar */}
         {renderProgressBar()}
 
