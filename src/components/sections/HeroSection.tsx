@@ -95,7 +95,7 @@ export default function HeroSection() {
             lg:text-[26px] lg:leading-[34px] lg:max-w-[350px]
             xl:text-[30px] xl:leading-[38px] xl:max-w-[369px]
           ">
-            Shape the future of sustainable sound
+            The world&apos;s first modular AI earbuds
           </h1>
 
           {/* Countdown Timer - Responsive sizing */}
