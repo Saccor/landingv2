@@ -13,8 +13,11 @@ export default function FeatureSection() {
       <div className="
         w-full flex flex-col items-center
         
-        /* Mobile: Tight padding (0-1023px) */
+        /* Mobile: Tight padding (0-767px) */
         px-4 pt-0 pb-8
+        
+        /* Tablet: Match VisionSection padding (768px-1023px) */
+        md:px-6 md:pt-0 md:pb-8
         
         /* Desktop: Standard padding (1024px+) */
         lg:px-4 lg:pb-8
@@ -28,8 +31,8 @@ export default function FeatureSection() {
             /* Mobile: Compact size and padding (0-767px) */
             w-[353px] px-6 py-7
             
-            /* Tablet: Match Figma tablet design (768px-1023px) */
-            md:w-[794px] md:px-[50px] md:py-[50px] md:items-start
+            /* Tablet: Use Figma base size (794px), scale down only when screen is smaller - matches VisionSection (768px-1023px) */
+            md:w-[min(794px,calc(100vw-48px))] md:px-[50px] md:py-[50px] md:items-start
             
             /* Desktop: Progressive scaling with centering (1024px+) */
             lg:w-[1200px] lg:px-[50px] lg:py-[40px] lg:justify-center lg:items-center
