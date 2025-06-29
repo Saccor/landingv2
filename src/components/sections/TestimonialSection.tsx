@@ -58,7 +58,7 @@ const TestimonialSection: React.FC = () => {
               Endorsed by Industry Leaders
             </h2>
 
-            <blockquote className="w-full max-w-[305px] lg:max-w-2xl font-montserrat italic font-bold text-xl leading-[30px] text-center text-white mx-auto mb-4 md:max-w-none md:text-[24px] md:font-normal md:not-italic md:leading-[32px] md:text-[#FFF] lg:text-xl lg:text-[#DDDDDD] lg:leading-snug">
+            <blockquote className="w-full max-w-[305px] lg:max-w-2xl font-montserrat italic font-bold text-xl leading-[30px] text-center text-white mx-auto mb-4 md:max-w-none md:text-[24px] md:font-normal md:not-italic md:leading-[32px] md:text-[#FFF] lg:text-xl lg:text-[#fcfcfd] lg:leading-snug">
               &ldquo;Arfve&rsquo;s earbuds is a dream come to life,<br />
               leading the way in audio innovation.&rdquo;
             </blockquote>
@@ -133,11 +133,11 @@ const TestimonialSection: React.FC = () => {
                       className="w-full h-[300px] object-contain mb-4"
                     />
                     <div className="px-4 lg:px-0">
-                      <p className="text-sm text-[#CCCCCC] mb-2 font-semibold leading-relaxed">
+                      <p className="text-sm text-[#fcfcfd] mb-2 font-semibold leading-relaxed">
                         &ldquo;{t.quote}&rdquo;
                       </p>
-                      <p className="text-xs text-[#AAAAAA]">{t.name}</p>
-                      <p className="text-xs text-[#AAAAAA]">{t.title}</p>
+                      <p className="text-xs text-[#fcfcfd]">{t.name}</p>
+                      <p className="text-xs text-[#fcfcfd]">{t.title}</p>
                     </div>
                   </div>
                 ))}

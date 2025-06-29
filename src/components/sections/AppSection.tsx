@@ -32,7 +32,7 @@ const AppSection: React.FC = () => {
               <h2 className="text-[1.75rem] font-bold bg-gradient-to-r from-white to-[#C8CBAC] bg-clip-text text-transparent leading-tight">
                 Smarter Control — Powered by AI and the Arfve App
               </h2>
-              <p className="text-[#cccccc] mt-2 text-[1.1rem] leading-relaxed">
+              <p className="text-[#ffffff] mt-2 text-[1.1rem] leading-relaxed">
                 Behind every sound is a system that adapts in real time. <br />
                 The Arfve App and on-device AI learn from you — and put you in control.
               </p>
