@@ -41,13 +41,13 @@ export default function VisionSection() {
         <div className="w-full flex justify-center">
           <div className="
             /* Mobile: Single column layout (0-767px) */
-            w-full max-w-[353px] px-0 py-0 flex flex-col items-center justify-center gap-4
+            w-full max-w-[353px] p-0 flex flex-col items-center justify-center gap-4
             
             /* Tablet: Use Figma base size (794px), scale down only when screen is smaller (768px-1023px) */
-            md:w-[min(794px,calc(100vw-48px))] md:max-w-none md:gap-5 md:px-0 md:py-0
+            md:w-[min(794px,calc(100vw-48px))] md:max-w-none md:gap-5
             
             /* Desktop: Side-by-side layout with percentage scaling (1024px+) */
-            lg:w-full lg:max-w-[1400px] lg:flex-row lg:gap-5 lg:px-0 lg:py-0
+            lg:w-full lg:max-w-[1400px] lg:flex-row lg:gap-5
           ">
             
             {/* Video Player Container */}
@@ -91,10 +91,10 @@ export default function VisionSection() {
               w-full min-h-[400px] px-6 py-7
               
               /* Tablet: Match Figma exact specs - 794x364px, scale proportionally (768px-1023px) */
-              md:w-full md:h-[364px] md:min-h-0 md:px-[50px] md:py-[50px]
+              md:h-[364px] md:min-h-0 md:p-[50px]
               
               /* Desktop: Restore original layout (1024px+) */
-              lg:w-[36%] lg:min-w-[400px] lg:max-w-[505px] lg:h-[505px] lg:px-0 lg:py-0 lg:order-1
+              lg:w-[36%] lg:min-w-[400px] lg:max-w-[505px] lg:h-[505px] lg:p-0 lg:order-1
             ">
               <div className="
                 w-full bg-gradient-to-b from-white to-[#C8A596] 
@@ -105,7 +105,7 @@ export default function VisionSection() {
                 max-w-[305px] gap-4
                 
                 /* Tablet: Match Figma container specs (768px-1023px) */
-                md:w-full md:max-w-[694px] md:mx-auto md:gap-[24px] md:justify-center
+                md:max-w-[694px] md:mx-auto md:gap-[24px] md:justify-center
                 
                 /* Desktop: Fit within gray container with padding (1024px+) */
                 lg:max-w-full lg:px-8 lg:gap-8 lg:h-auto lg:justify-start

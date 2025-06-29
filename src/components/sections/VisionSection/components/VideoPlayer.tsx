@@ -57,10 +57,10 @@ export default function VideoPlayer({
         h-[210px] max-w-[353px]
         
         /* Tablet: Match Figma exact specs - 794x422px (768px-1023px) */
-        md:w-full md:h-[422px] md:max-w-none
+        md:h-[422px] md:max-w-none
         
         /* Desktop: Flexible width, proportional video size (1024px+) */
-        lg:w-full lg:h-[505px] lg:max-w-none lg:order-2
+        lg:h-[505px] lg:order-2
       "
       onMouseMove={() => setShowControls(true)}
       onMouseLeave={() => isPlaying && !state.isMobile && setShowControls(false)}
