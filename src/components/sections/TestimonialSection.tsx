@@ -58,7 +58,7 @@ const TestimonialSection: React.FC = () => {
               Endorsed by Industry Leaders
             </h2>
 
-            <blockquote className="w-full max-w-[305px] lg:max-w-2xl font-montserrat italic font-bold text-xl leading-[30px] text-center text-white mx-auto mb-4 md:max-w-none md:text-[24px] md:font-normal md:not-italic md:leading-[32px] md:text-[#FFF] lg:text-xl lg:font-semibold lg:text-[#DDDDDD] lg:leading-snug">
+            <blockquote className="w-full max-w-[305px] lg:max-w-2xl font-montserrat italic font-bold text-xl leading-[30px] text-center text-white mx-auto mb-4 md:max-w-none md:text-[24px] md:font-normal md:not-italic md:leading-[32px] md:text-[#FFF] lg:text-xl lg:text-[#DDDDDD] lg:leading-snug">
               &ldquo;Arfve&rsquo;s earbuds is a dream come to life,<br />
               leading the way in audio innovation.&rdquo;
             </blockquote>

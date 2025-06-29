@@ -76,7 +76,8 @@ const AppSection: React.FC = () => {
           </div>
 
           {/* Desktop Layout */}
-          <div className="hidden lg:grid grid-cols-[30%_70%] gap-8 text-white font-montserrat">
+          <div className="hidden lg:grid grid-cols-[30%_70%] gap-8 text-white font-montserrat px-4 xl:px-8 2xl:px-12">
+
             {/* Left: Image */}
             <div className="flex justify-center">
               <Image
@@ -90,7 +91,7 @@ const AppSection: React.FC = () => {
             </div>
 
             {/* Right: Heading + Features */}
-            <div className="flex flex-col gap-8 max-w-[900px] mx-auto">
+            <div className="flex flex-col gap-8 max-w-[900px] mx-auto px-4 xl:px-0">
               <div className="text-left">
                 <h2 className="text-[1.75rem] font-bold bg-gradient-to-r from-white to-[#C8CBAC] bg-clip-text text-transparent leading-tight">
                   Smarter Control — Powered by AI and the Arfve App
