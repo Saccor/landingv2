@@ -11,19 +11,6 @@ export default function HeroSection() {
   
   return (
     <RevealSection className="w-full max-w-[1440px] mx-auto relative">
-      {/* BREAKPOINT TEST - Keep for debugging */}
-      <div className="w-full text-center p-4">
-        <div className="
-          bg-red-500 p-4 text-white font-bold text-xl
-          md:bg-blue-500
-          lg:bg-green-500
-        ">
-          <span className="block md:hidden">MOBILE LAYOUT (0-767px)</span>
-          <span className="hidden md:block lg:hidden">TABLET LAYOUT (768px-1023px)</span>
-          <span className="hidden lg:block">DESKTOP LAYOUT (1024px+)</span>
-        </div>
-      </div>
-
       <div className="
         w-full max-w-[1440px] mx-auto p-0
         
