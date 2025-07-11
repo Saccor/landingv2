@@ -17,7 +17,7 @@ const socialPlatforms = [
   { name: 'LinkedIn', icon: <LinkedInIcon />, url: 'https://www.linkedin.com/company/arfve' },
   { name: 'Instagram', icon: <InstagramIcon />, url: 'https://www.instagram.com/arfve_legacy/' },
   { name: 'TikTok', icon: <TikTokIcon />, url: 'https://www.tiktok.com/@arfve_legacy' },
-  { name: 'Facebook', icon: <FacebookIcon />, url: 'https://www.facebook.com/profile.php?id=61554925177330' },
+  { name: 'Facebook', icon: <FacebookIcon />, url: 'https://www.facebook.com/arfve.legacy/' },
   { name: 'YouTube', icon: <YouTubeIcon />, url: 'https://www.youtube.com/@arfve' },
 ];
 
