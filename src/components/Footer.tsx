@@ -108,7 +108,7 @@ const Footer = () => {
               <TikTokIcon />
             </Link>
             <Link 
-              href="https://www.facebook.com/profile.php?id=61554925177330" 
+              href="https://www.facebook.com/arfve.legacy/" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="text-white hover:opacity-80 transition-opacity"
