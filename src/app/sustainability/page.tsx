@@ -1,9 +1,17 @@
-import ArfveHero from '@/components/sustainability/SustainabilityHero'; // Update this path if the file is named differently or in another folder, e.g. './components/shared/ArfveHero' or with the correct casing/extension
+import SustainabilityHero from '@/components/sustainability/SustainabilityHero';
+import SustainabilityAwareness from '@/components/sustainability/SustainabilityAwareness';
+import SustainabilityDesign from '@/components/sustainability/SustainabilityDesign';
+import SustainabilityModularity from '@/components/sustainability/SustainabilityModularity';
+import Footer from '@/components/Footer';
 
 export default function SustainabilityPage() {
   return (
     <main className="min-h-screen bg-black">
-      <ArfveHero />
+      <SustainabilityHero />
+      <SustainabilityAwareness />
+      <SustainabilityDesign />
+      <SustainabilityModularity />
+      <Footer />
       {/* Add more content below */}
     </main>
   );
