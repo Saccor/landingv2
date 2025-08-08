@@ -14,6 +14,7 @@ interface OptimizedImageProps {
   quality?: number;
   fill?: boolean;
   style?: React.CSSProperties;
+  fallbackOnly?: boolean; // If true, render only the provided src (no <source> variants)
 }
 
 /**
@@ -31,21 +32,19 @@ export default function OptimizedImage({
   quality = 85,
   fill = false,
   style,
+  fallbackOnly = false,
 }: OptimizedImageProps) {
   // Remove any existing extension from src
   const baseSrc = src.replace(/\.(png|jpg|jpeg)$/i, '');
 
-  return (
-    <picture>
-      {/* AVIF - Best compression, modern browsers */}
-      <source srcSet={`${baseSrc}.avif`} type="image/avif" />
-      
-      {/* WebP - Great compression, wide browser support */}
-      <source srcSet={`${baseSrc}.webp`} type="image/webp" />
-      
-      {/* Fallback to original format */}
+  const wrapperStyle: React.CSSProperties | undefined = fill
+    ? { position: 'relative', display: 'block', width: '100%', height: '100%', ...style }
+    : style;
+
+  if (fallbackOnly) {
+    return (
       <Image
-        src={`${baseSrc}.png`} // Default to PNG fallback
+        src={`${baseSrc}.png`}
         alt={alt}
         width={!fill ? width : undefined}
         height={!fill ? height : undefined}
@@ -54,7 +53,26 @@ export default function OptimizedImage({
         sizes={sizes}
         priority={priority}
         quality={quality}
-        style={style}
+        style={fill ? { objectFit: 'cover', ...style } : style}
+      />
+    );
+  }
+
+  return (
+    <picture style={wrapperStyle}>
+      <source srcSet={`${baseSrc}.avif`} type="image/avif" />
+      <source srcSet={`${baseSrc}.webp`} type="image/webp" />
+      <Image
+        src={`${baseSrc}.png`}
+        alt={alt}
+        width={!fill ? width : undefined}
+        height={!fill ? height : undefined}
+        fill={fill}
+        className={className}
+        sizes={sizes}
+        priority={priority}
+        quality={quality}
+        style={fill ? { objectFit: 'cover', ...style } : style}
       />
     </picture>
   );
