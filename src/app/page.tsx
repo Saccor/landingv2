@@ -7,6 +7,7 @@ import NewHeroSection from '@/components/sections/NewHeroSection';
 import SignupCTASection from '@/components/sections/SignupCTASection';
 import InfoImageSection from '@/components/sections/InfoImageSection';
 import ModularFeaturesSection from '@/components/sections/ModularFeaturesSection';
+import DetailsSection from '@/components/sections/DetailsSection';
 import FeatureSection from '@/components/sections/FeatureSection';
 import AppSection from '@/components/sections/AppSection';
 import TestimonialSection from '@/components/sections/TestimonialSection';
@@ -40,6 +41,7 @@ export default function Home() {
         footerHeading="Back the beginning. Shape the future."
       />
       <ModularFeaturesSection />
+      <DetailsSection />
       <VisionSection />
       <FeatureSection />
       <AppSection />

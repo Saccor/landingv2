@@ -167,12 +167,12 @@ export default function SignupForm({
           /* Mobile: Compact form (0-767px) */
           w-[300px] h-[38px]
           
-          /* Tablet: Match image layout (768px-1023px) */
+          /* Tablet: Wider (768px-1023px) */
           md:w-[420px] md:h-[44px] md:gap-2
           
-          /* Desktop: Full form (1024px+) */
-          lg:w-[350px] lg:h-[42px] lg:gap-3
-          xl:w-[369px] xl:h-[44px]
+          /* Desktop: Expand to fit CTA section (1024px+) */
+          lg:w-[460px] lg:h-[42px] lg:gap-3
+          xl:w-[535px] xl:h-[44px]
         ">
           <input
             type="email"
@@ -195,9 +195,9 @@ export default function SignupForm({
               /* Tablet: Long input like in image (768px-1023px) */
               md:w-[330px] md:h-[44px] md:text-base md:px-6
               
-              /* Desktop: Full input (1024px+) */
-              lg:w-[220px] lg:h-[42px] lg:text-sm lg:px-5
-              xl:w-[227px] xl:h-[44px] xl:text-sm
+              /* Desktop: Wider input (1024px+) to fit long button label */
+              lg:w-[320px] lg:h-[42px] lg:text-sm lg:px-5
+              xl:w-[355px] xl:h-[44px] xl:text-sm
             "
           />
           <Button
@@ -212,11 +212,11 @@ export default function SignupForm({
               h-[38px] px-4 text-sm
               
               /* Tablet: Fixed 97x44 button (768px-1023px) */
-              md:w-[97px] md:h-[44px] md:px-4 md:text-sm md:font-medium
+              md:w-auto md:min-w-[165px] md:h-[44px] md:px-5 md:text-sm md:font-medium
               
               /* Desktop: Full button (1024px+) */
               lg:h-[42px] lg:px-5 lg:text-sm lg:w-auto
-              xl:h-[44px] xl:px-6 xl:text-base
+              xl:h-[44px] xl:px-6 xl:text-sm
             "
           >
             {buttonText}
