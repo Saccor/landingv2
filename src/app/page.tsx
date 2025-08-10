@@ -1,16 +1,10 @@
 'use client';
 
-import BottomSubscribe from '@/components/sections/BottomSubscribe';
-import SocialMediaSection from '@/components/sections/SocialMediaSection';
-import VisionSection from '@/components/sections/VisionSection';
 import NewHeroSection from '@/components/sections/NewHeroSection';
 import SignupCTASection from '@/components/sections/SignupCTASection';
 import InfoImageSection from '@/components/sections/InfoImageSection';
 import ModularFeaturesSection from '@/components/sections/ModularFeaturesSection';
 import DetailsSection from '@/components/sections/DetailsSection';
-import FeatureSection from '@/components/sections/FeatureSection';
-import AppSection from '@/components/sections/AppSection';
-import TestimonialSection from '@/components/sections/TestimonialSection';
 import Footer from '@/components/Footer';
 
 export default function Home() {
@@ -42,12 +36,6 @@ export default function Home() {
       />
       <ModularFeaturesSection />
       <DetailsSection />
-      <VisionSection />
-      <FeatureSection />
-      <AppSection />
-      <TestimonialSection />
-      <SocialMediaSection />
-      <BottomSubscribe />
       <Footer />
     </div>
   );
