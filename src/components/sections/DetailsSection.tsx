@@ -3,7 +3,7 @@
 import React from 'react';
 import RevealSection from '@/components/ui/RevealSection';
 import OptimizedImage from '@/components/ui/OptimizedImage';
-import Button from '@/components/ui/button';
+import Button from '@/components/ui/Button';
 
 interface FeatureProps {
   title: string;
