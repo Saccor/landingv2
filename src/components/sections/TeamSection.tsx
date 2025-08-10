@@ -46,7 +46,7 @@ const team: TeamCard[] = [
   },
 ];
 
-function SmallCard({ member, index }: { member: TeamCard; index: number }) {
+function SmallCard({ member }: { member: TeamCard }) {
   return (
     <motion.div
       className="w-[271px] h-[554px] opacity-50 hover:opacity-100 flex flex-col cursor-pointer"
@@ -134,11 +134,11 @@ const TeamSection: React.FC = () => {
 
         {/* Cards row */}
         <div className="absolute left-[-51px] top-[310px] w-[1542px] h-[554px] flex flex-row items-end gap-[40px]">
-          <SmallCard member={team[0]} index={0} />
-          <SmallCard member={team[1]} index={1} />
+          <SmallCard member={team[0]} />
+          <SmallCard member={team[1]} />
           <CenterCard member={team[2]} />
-          <SmallCard member={team[3]} index={3} />
-          <SmallCard member={team[4]} index={4} />
+          <SmallCard member={team[3]} />
+          <SmallCard member={team[4]} />
         </div>
       </div>
 
