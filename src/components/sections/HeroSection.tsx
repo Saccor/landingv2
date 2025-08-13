@@ -3,7 +3,6 @@
 import React from 'react';
 import SignupForm from '@/components/ui/SignupForm';
 import RevealSection from '@/components/ui/RevealSection';
-import CountdownTimerPixel from '@/components/common/CountdownTimerPixel';
 import { useSubscriberCount } from '@/hooks/useSubscriberCount';
 
 export default function HeroSection() {
@@ -85,22 +84,6 @@ export default function HeroSection() {
             The world&apos;s first modular AI earbuds
           </h1>
 
-          {/* Countdown Timer - Responsive sizing */}
-          <div className="
-            w-full flex justify-center
-            
-            /* Mobile: Standard padding (0-767px) */
-            px-4
-            
-            /* Tablet: Full width, larger scale (768px-1023px) */
-            md:px-0 md:w-full md:max-w-[800px] md:mx-auto
-            md:[&>*]:!scale-[1.4] md:[&>*]:!transform-origin-center
-            
-            /* Desktop: Standard padding (1024px+) */
-            lg:px-4 lg:[&>*]:!scale-100
-          ">
-            <CountdownTimerPixel targetDate="2025-08-11T00:00:00" />
-          </div>
 
           {/* Text content - Mobile vs Tablet vs Desktop Sizing */}
           <div className="
