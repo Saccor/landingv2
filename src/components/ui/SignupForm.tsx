@@ -66,12 +66,14 @@ interface SignupFormProps {
   className?: string;
   buttonText?: string;
   onSuccess?: () => void;
+  theme?: 'dark' | 'lightV6';
 }
 
 export default function SignupForm({
   className = '',
   buttonText = 'Sign-up',
-  onSuccess
+  onSuccess,
+  theme = 'dark'
 }: SignupFormProps) {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -151,6 +153,41 @@ export default function SignupForm({
       });
     }
   };
+
+  if (theme === 'lightV6') {
+    return (
+      <div className={`w-full flex flex-col items-center gap-3 ${className}`}>
+        <div className="w-full flex justify-center" style={isMounted ? { transform: `scale(${scale})`, transformOrigin: 'center' } : undefined}>
+          <form onSubmit={handleSubmit} className="w-[431px] h-[44px] flex items-center justify-between rounded-[28px] border border-[#626262] pl-[20px] pr-[4px] gap-[10px] bg-transparent">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              placeholder="Email"
+              className="flex-1 h-[36px] bg-transparent outline-none border-0 font-montserrat text-[14px] leading-[20px] text-[#1A1A1A] placeholder-[#868889]"
+            />
+            <Button
+              type="submit"
+              variant="secondary"
+              size="md"
+              isLoading={status === 'loading'}
+              className="h-[36px] w-[178px] rounded-[55px] bg-[#545454] text-white text-[14px] leading-[20px] font-montserrat border-none hover:opacity-90"
+            >
+              {buttonText}
+            </Button>
+          </form>
+        </div>
+        {message && (
+          <div style={isMounted ? { transform: `scale(${scale})`, transformOrigin: 'center' } : undefined}>
+            <p className={`text-center w-full px-4 sm:px-0 text-sm md:text-sm ${status === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+              {message}
+            </p>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className={`w-full flex flex-col items-center gap-3 ${className}`}>

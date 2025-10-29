@@ -68,7 +68,7 @@ const Header = () => {
         {/* Outer canvas: 1440x105 with horizontal padding 124px */}
         <div className="w-full max-w-[1440px] px-[124px] h-[105px] flex items-center justify-center">
           {/* Inner pill: 1192x91, bg #E6E6E6, radius 30, spacing px-40, gap 387 */}
-          <div className="w-[1192px] h-[91px] mx-auto bg-[#E6E6E6] rounded-[30px] flex items-center justify-between px-[40px]" style={{ gap: 387 }}>
+          <div className="w-[1192px] h-[91px] mx-auto bg-[#E6E6E6] rounded-[30px] flex items-center justify-between px-[40px] py-[30px]" style={{ gap: 387 }}>
             {/* Logo area (118x31) */}
             <Link href="/" className="flex items-center">
               <svg

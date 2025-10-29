@@ -3,6 +3,7 @@
 import React from 'react';
 import RevealSection from '@/components/ui/RevealSection';
 import OptimizedImage from '@/components/ui/OptimizedImage';
+import Link from 'next/link';
 
 /**
  * NewHeroSection
@@ -11,103 +12,64 @@ import OptimizedImage from '@/components/ui/OptimizedImage';
  */
 const NewHeroSection: React.FC = () => {
   return (
-    <RevealSection className="relative w-full flex justify-center bg-black overflow-hidden">
-      {/* Desktop fixed canvas */}
-      <div className="hidden lg:block relative w-full max-w-[1440px] h-[691px]">
-        {/* Image container (white rectangle) */}
-        <div className="absolute left-[137px] top-[66px] w-[503px] h-[625px] bg-white rounded-sm overflow-hidden z-0">
-          <div className="absolute inset-0">
+    <RevealSection className="relative w-full flex justify-center bg-white overflow-hidden">
+      {/* Desktop fixed canvas (1440 x 675) */}
+      <div className="hidden lg:block relative w-full max-w-[1440px] h-[675px]">
+        {/* Radial gradient ellipse (934 x 934) */}
+        <div
+          className="absolute w-[934px] h-[934px] pointer-events-none"
+          style={{
+            left: 'calc(50% - 934px/2 + 21px)',
+            top: 'calc(50% - 934px/2 - 76.5px)',
+            background: 'radial-gradient(50% 50% at 50% 50%, #949292 0%, rgba(228, 228, 228, 0) 100%)',
+          }}
+        />
+
+        {/* Absolute product image: 550 x 306 at (445, 97) */}
+        <div className="absolute" style={{ left: 445, top: 97, width: 550, height: 306 }}>
+          <div className="relative w-full h-full">
             <OptimizedImage
-              src="/headphones"
-              alt="Arfve Legacy1 product"
+              src="/v6/heroheadphones"
+              alt="Hero visual"
               fill
               fallbackOnly
               className="object-contain"
-              sizes="(min-width: 1024px) 503px, 100vw"
-              quality={85}
+              sizes="(min-width: 1024px) 550px, 100vw"
             />
           </div>
         </div>
 
-        {/* Heading block */}
-        <div className="absolute left-[657px] top-[193px] w-[620px] h-[227px] flex items-center justify-center z-10">
-          <div className="relative w-full h-full">
-            {/* Small gradient label positioned above container top by 51px */}
-            <div
-              className="absolute w-[620px] h-[59px] left-[14px] text-center text-[48px] leading-[60px] font-semibold font-montserrat"
-              style={{
-                top: '-51px',
-                background: 'linear-gradient(90deg, #FCFCFD 0%, #969797 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                color: 'transparent',
-                textShadow: '0px 0px 37.4px #FFFFFF',
-                letterSpacing: '-0.02em',
-              }}
-            >
-              Legacy1
-            </div>
-
-            {/* Main heading at top: 39px */}
-            <h1
-              className="absolute left-0 w-[620px] text-center text-[48px] leading-[60px] font-semibold font-montserrat tracking-[-0.02em] text-[#FCFCFD]"
-              style={{ top: '39px' }}
-            >
-              The World’s First
-              <br />
-              AI-Powered 3-Pieces
-              <br />
-              Modular Earbuds.
-            </h1>
-          </div>
+        {/* Frame 8: centered column with gap 21 at top: 448px */}
+        <div
+          className="absolute flex flex-col items-center justify-center"
+          style={{ left: '4.79%', right: '4.86%', top: 448, height: 214, gap: 21 }}
+        >
+          <h1 className="font-montserrat font-semibold text-[72px] leading-[90px] text-center text-[#1A1A1A] w-[332px] h-[90px]">
+            Legacy 1
+          </h1>
+          <h2 className="font-montserrat font-semibold text-[30px] leading-[38px] text-center text-[#1A1A1A] w-[1301px] h-[38px]">
+            First AI earphones
+          </h2>
+          <Link href="#signup" className="flex items-center border border-black rounded-[55px] h-[44px] px-5" style={{ gap: 10 }}>
+            <span className="font-montserrat font-normal text-[16px] leading-[24px] text-black">Buy it</span>
+          </Link>
         </div>
-
-        {/* Subheading */}
-        <p className="absolute left-[743px] top-[430px] w-[506px] h-[56px] text-center font-montserrat text-[18px] leading-[28px] text-white z-10">
-          Swap parts. Upgrade freely. AI adapts to you. Tech that
-          listens, learns, and puts you in control.
-        </p>
-
-        {/* Decorative vertical bar (Frame 481677) */}
-        <div className="absolute left-[883px] top-[108px] w-[24px] h-[72px] rounded-full bg-gradient-to-b from-[#2a2a2a] to-[#0f0f0f] opacity-60 z-0" />
       </div>
 
-      {/* Mobile/Tablet responsive layout */}
-      <div className="lg:hidden w-full max-w-[1440px] px-6 py-12 flex flex-col items-center gap-6">
-        {/* Mobile image container above text */}
-        <div className="w-[300px] md:w-[360px] aspect-[503/625] bg-white rounded-sm overflow-hidden">
-          <div className="relative w-full h-full">
-            <OptimizedImage
-              src="/headphones"
-              alt="Arfve Legacy1 product"
-              fill
-              fallbackOnly
-              className="object-contain"
-              sizes="100vw"
-              quality={85}
-            />
-          </div>
+      {/* Mobile/Tablet responsive layout (temporary fallback) */}
+      <div className="lg:hidden w-full max-w-[1440px] px-6 py-12 flex flex-col items-center gap-6 bg-white">
+        <div className="relative w-[260px] md:w-[320px] aspect-[550/306]">
+          <OptimizedImage src="/v6/heroheadphones" alt="Hero visual" fill fallbackOnly className="object-contain" sizes="100vw" />
         </div>
-        <div
-          className="text-[32px] leading-[40px] md:text-[40px] md:leading-[52px] font-semibold font-montserrat text-center"
-          style={{
-            background: 'linear-gradient(90deg, #FCFCFD 0%, #969797 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-            color: 'transparent',
-            textShadow: '0px 0px 24px #FFFFFF',
-          }}
-        >
-          Legacy1
-        </div>
-        <h1 className="text-center text-[28px] leading-[36px] md:text-[36px] md:leading-[46px] font-semibold font-montserrat tracking-[-0.02em] text-[#FCFCFD]">
-          The World’s First AI-Powered 3-Pieces Modular Earbuds.
+        <h1 className="font-montserrat font-semibold text-[36px] leading-[46px] md:text-[48px] md:leading-[58px] text-center text-[#1A1A1A]">
+          Legacy 1
         </h1>
-        <p className="text-center text-[14px] leading-[22px] md:text-[18px] md:leading-[28px] text-white font-montserrat max-w-[520px]">
-          Swap parts. Upgrade freely. AI adapts to you. Tech that listens, learns, and puts you in control.
-        </p>
+        <h2 className="font-montserrat font-semibold text-[18px] leading-[28px] md:text-[22px] md:leading-[32px] text-center text-[#1A1A1A]/90">
+          First AI earphones
+        </h2>
+        <Link href="#signup" className="h-[40px] px-4 rounded-[55px] border border-black text-[#1A1A1A] font-montserrat text-[14px] leading-[20px] flex items-center">
+          Buy it
+        </Link>
       </div>
     </RevealSection>
   );
