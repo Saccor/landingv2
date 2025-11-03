@@ -73,7 +73,7 @@ src/
 │
 ├── components/
 │   ├── sections/                        # Landing Page Sections
-│   │   ├── HeroSection.tsx              # Hero with live subscriber counter
+│   │   ├── NewHeroSection.tsx           # Video hero with overlay pills
 │   │   ├── VisionSection.tsx            # Main video section component
 │   │   ├── VisionSection/               # Modular video player architecture
 │   │   │   ├── types.ts                 # TypeScript interfaces
