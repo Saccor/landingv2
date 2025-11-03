@@ -5,48 +5,38 @@ import RevealSection from '@/components/ui/RevealSection';
 
 export default function AIPowered() {
   return (
-    <RevealSection className="w-full max-w-[1440px] mx-auto relative">
-      <section
-        className="
-          w-full max-w-[1440px] mx-auto
-          /* Mobile container */
-          px-4 py-10 flex flex-col items-center gap-8 text-left
-          /* Tablet spacing */
-          md:px-6 md:py-14 md:gap-10
-          /* Desktop spacing */
-          lg:px-12 lg:py-16 lg:gap-14
-        "
-      >
+    <RevealSection className="w-full relative bg-white">
+  <section
+    className="
+      w-full flex flex-col items-center gap-10
+      px-4 py-12
+      md:px-6 md:py-16 md:gap-14
+      lg:px-12 lg:py-20 lg:gap-20
+    "
+  >
         {/* Section header */}
         <header
           className="
             w-full max-w-[1120px] mx-auto
-            flex flex-col gap-2
+            flex flex-col gap-3 text-center
           "
         >
           <h2
             className="
               font-montserrat font-bold text-[#101010]
-              /* Mobile */
-              text-[26px] leading-[34px] tracking-[-0.2px]
-              /* Tablet */
+              text-[26px] leading-[34px]
               md:text-[30px] md:leading-[38px]
-              /* Desktop */
               lg:text-[36px] lg:leading-[44px]
             "
           >
-            AI Powered earphones
+            AI Powered Earphones
           </h2>
-
           <p
             className="
               font-montserrat text-[#3A3A3A]
-              max-w-[920px]
-              /* Mobile */
+              max-w-[860px] mx-auto
               text-[15px] leading-[23px]
-              /* Tablet */
               md:text-[17px] md:leading-[26px]
-              /* Desktop */
               lg:text-[18px] lg:leading-[28px]
             "
           >
@@ -59,115 +49,87 @@ export default function AIPowered() {
         <div
           className="
             w-full max-w-[1120px] mx-auto
-            /* Mobile: stack */
             grid grid-cols-1 gap-8
-            /* Tablet+: 2-up */
-            md:grid-cols-2 md:gap-6
-            /* Desktop: more space */
-            lg:gap-10
+            md:grid-cols-2 md:gap-10
           "
         >
-          {/* Feature: ANC */}
+          {/* Feature 1: Noise Cancellation video */}
           <article
             className="
-              flex flex-col gap-4
+              flex flex-col gap-5 p-6 rounded-2xl bg-white shadow-[0_4px_20px_rgba(0,0,0,0.05)]
             "
           >
             <h3
               className="
                 font-montserrat font-semibold text-[#101010]
-                /* Mobile */
                 text-[20px] leading-[28px]
-                /* Tablet */
                 md:text-[22px] md:leading-[32px]
-                /* Desktop */
                 lg:text-[24px] lg:leading-[34px]
               "
             >
               The best industry ANC
             </h3>
-
             <p
               className="
                 font-montserrat text-[#4F4F4F]
                 max-w-[560px]
-                /* Mobile */
                 text-[14px] leading-[22px]
-                /* Tablet */
                 md:text-[15px] md:leading-[24px]
-                /* Desktop */
                 lg:text-[16px] lg:leading-[25px]
               "
             >
-              Lorem ipsum text placeholder. Replace with your copy describing your active noise
-              cancelation performance and approach.
+              Experience studio-grade active noise cancellation with real-time environmental
+              adaptation. Focus fully on your sound, wherever you are.
             </p>
-
-            {/* Media card */}
-            <div
-              className="
-                w-full rounded-xl overflow-hidden
-                /* Fixed aspect on mobile for consistent height */
-                aspect-[16/10]
-                /* Tablet/desktop: taller media */
-                md:aspect-[16/9] lg:aspect-[16/8]
-                bg-no-repeat bg-center bg-cover
-              "
-              style={{
-                backgroundImage: "url('/aipowered/anc.png')",
-              }}
-              aria-label="ANC preview media"
-              role="img"
-            />
+            <div className="w-full rounded-xl overflow-hidden aspect-[16/9]">
+              <video
+                className="w-full h-full object-cover"
+                src="/NoiseCancellation.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
+            </div>
           </article>
 
-          {/* Feature: Real-time translation */}
+          {/* Feature 2: Real-time translation image */}
           <article
             className="
-              flex flex-col gap-4
+              flex flex-col gap-5 p-6 rounded-2xl bg-white shadow-[0_4px_20px_rgba(0,0,0,0.05)]
             "
           >
             <h3
               className="
                 font-montserrat font-semibold text-[#101010]
-                /* Mobile */
                 text-[20px] leading-[28px]
-                /* Tablet */
                 md:text-[22px] md:leading-[32px]
-                /* Desktop */
                 lg:text-[24px] lg:leading-[34px]
               "
             >
-              Real time translation
+              Real-time translation
             </h3>
-
             <p
               className="
                 font-montserrat text-[#4F4F4F]
                 max-w-[560px]
-                /* Mobile */
                 text-[14px] leading-[22px]
-                /* Tablet */
                 md:text-[15px] md:leading-[24px]
-                /* Desktop */
                 lg:text-[16px] lg:leading-[25px]
               "
             >
-              Placeholder copy for translation feature. Describe supported languages and latency.
+              Break language barriers with instant AI-driven translation directly in your ears.
+              Communicate effortlessly anywhere in the world.
             </p>
-
-            {/* Media card */}
             <div
               className="
-                w-full rounded-xl overflow-hidden
-                aspect-[16/10]
-                md:aspect-[16/9] lg:aspect-[16/8]
-                bg-no-repeat bg-center bg-cover
+                w-full rounded-xl overflow-hidden aspect-[16/9]
+                bg-cover bg-center
               "
               style={{
-                backgroundImage: "url('/aipowered/translation.png')",
+                backgroundImage: "url('/AIPoweredPic2.png')",
               }}
-              aria-label="Real-time translation preview media"
+              aria-label="Real-time translation preview"
               role="img"
             />
           </article>
