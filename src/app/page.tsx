@@ -4,7 +4,6 @@
 import SustainabilitySocialCarousel from '@/components/sustainability/SustainabilitySocialCarousel';
 import NewHeroSection from '@/components/sections/NewHeroSection';
 import SignupCTASection from '@/components/sections/SignupCTASection';
-import InfoImageSection from '@/components/sections/InfoImageSection';
 import ModularFeaturesSection from '@/components/sections/ModularFeaturesSection';
 import DetailsSection from '@/components/sections/DetailsSection';
 import AppIntelligenceSection from '@/components/sections/AppIntelligenceSection';

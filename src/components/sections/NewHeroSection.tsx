@@ -34,7 +34,7 @@ const NewHeroSection: React.FC = () => {
             {/* Top header pill */}
             <div className="hidden lg:flex items-center justify-between absolute left-[113px] top-[19px] w-[1192px] h-[91px] rounded-[30px] bg-[rgba(230,230,230,0.7)] backdrop-blur-[11.5px] px-[40px]">
               <Link href="/" aria-label="Arfve Home" className="shrink-0">
-                <Image src="/logo.svg" alt="Arfve" width={118} height={31} priority />
+                <Image src="/logo-black.svg" alt="Arfve" width={118} height={31} priority />
               </Link>
               <nav className="flex items-center gap-[22px]">
                 <Link href="/sustainability" className="font-montserrat text-[18px] leading-[28px] text-[#1A1A1A]">
@@ -61,7 +61,7 @@ const NewHeroSection: React.FC = () => {
             {/* Mobile/Tablet header pill only (remove centered gray block) */}
             <div className="lg:hidden absolute left-4 right-4 top-3 flex items-center justify-between rounded-[20px] bg-[rgba(230,230,230,0.7)] backdrop-blur-[11.5px] px-4 py-3">
               <Link href="/" aria-label="Arfve Home" className="shrink-0">
-                <Image src="/logo.svg" alt="Arfve" width={90} height={24} priority />
+                <Image src="/logo-black.svg" alt="Arfve" width={90} height={24} priority />
               </Link>
               <nav className="flex items-center gap-4">
                 <Link href="/sustainability" className="font-montserrat text-[14px] leading-[20px] text-[#1A1A1A]">
