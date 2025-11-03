@@ -7,6 +7,7 @@ import SignupCTASection from '@/components/sections/SignupCTASection';
 import InfoImageSection from '@/components/sections/InfoImageSection';
 import ModularFeaturesSection from '@/components/sections/ModularFeaturesSection';
 import DetailsSection from '@/components/sections/DetailsSection';
+import AIPowered from '@/components/sections/AIPowered'; 
 import AppIntelligenceSection from '@/components/sections/AppIntelligenceSection';
 import TeamSection from '@/components/sections/TeamSection';
 // Removed legacy sections in favor of new flow
@@ -41,6 +42,7 @@ export default function Home() {
       />
       <ModularFeaturesSection />
       <DetailsSection />
+      <AIPowered /> 
       <AppIntelligenceSection />
       <TeamSection />
       <SustainabilitySocialCarousel />
