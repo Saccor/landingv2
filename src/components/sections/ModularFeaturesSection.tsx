@@ -3,169 +3,106 @@
 import React from 'react';
 import RevealSection from '@/components/ui/RevealSection';
 import OptimizedImage from '@/components/ui/OptimizedImage';
-import Button from '@/components/ui/Button';
+
+const PlusIcon: React.FC = () => (
+  <svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
+    <path d="M10.9961 1V21" stroke="#1A1A1A" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M1 11.005L21 11.005" stroke="#1A1A1A" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
 
 const ModularFeaturesSection: React.FC = () => {
   return (
-    <RevealSection className="relative w-full flex justify-center bg-[#020202] overflow-hidden">
-      {/* Desktop/Large layout (absolute to match Figma) */}
-      <div className="hidden lg:block relative w-full max-w-[1440px] h-[979px]">
-        {/* Headings */}
-        <div className="absolute left-[86px] top-[75px] w-[685px] h-[60px] z-10">
-          <div className="absolute left-0 top-0 w-[312px] h-[60px] text-white font-montserrat font-semibold text-[48px] leading-[60px] tracking-[-0.02em]">
-            Only Change
+    <RevealSection className="relative w-full flex justify-center bg-[#F4F4F4] overflow-hidden">
+      {/* Desktop layout: 1440x820 with padding 50 124 and gap 95 */}
+      <div className="hidden lg:block relative w-full max-w-[1440px] h-[820px] px-[124px] py-[50px] isolation-isolate">
+        {/* Top text group (1192 x 134) */}
+        <div className="w-[1192px] h-[134px] flex flex-col items-start gap-[10px]">
+          <div className="w-[1192px] h-[60px] flex flex-row flex-wrap items-start gap-x-[17px]">
+            <div className="w-[572px] h-[60px] font-montserrat font-semibold text-[48px] leading-[60px] tracking-[-0.02em] text-[#1A1A1A]">
+              AI Powered earphones
+            </div>
           </div>
-          <div className="absolute left-[329px] top-0 w-[572px] h-[60px] text-white font-montserrat font-semibold text-[48px] leading-[60px] tracking-[-0.02em]" style={{ textShadow: '0px 0px 37.4px #FFFFFF' }}>
-            What Needs Changing
-          </div>
-        </div>
-        <p className="absolute left-[86px] top-[145px] w-[1332px] h-[64px] font-montserrat text-white text-[24px] leading-[32px] z-10">
-          Swappable sound drivers, batteries, chipsets, and design covers. Legacy1 is built to stay.
-          <br />
-          Why throw away the whole product when just one part needs an upgrade?
-        </p>
-
-        {/* Three product images positioned centered above each text column */}
-        {/* Calculated left offsets: columnLeft + (345 - 145.16)/2 ≈ columnLeft + 99.92 */}
-        <div className="absolute left-[202px] top-[187.63px] w-[145.16px] h-[492px] z-0 pointer-events-none">
-          <div className="relative w-full h-full">
-            <OptimizedImage src="/headphones2-1" alt="Sound Drivers" fill fallbackOnly className="object-contain" />
-          </div>
-        </div>
-        <div className="absolute left-[646.92px] top-[187.63px] w-[145.16px] h-[492px] z-0 pointer-events-none">
-          <div className="relative w-full h-full">
-            <OptimizedImage src="/headphones2" alt="Chipsets and Design" fill fallbackOnly className="object-contain" />
-          </div>
-        </div>
-        <div className="absolute left-[1091.92px] top-[187.63px] w-[145.16px] h-[492px] z-0 pointer-events-none">
-          <div className="relative w-full h-full">
-            <OptimizedImage src="/headphones2-2" alt="Batteries" fill fallbackOnly className="object-contain" />
-          </div>
-        </div>
-
-        {/* Feature cards text blocks */}
-        <div className="absolute left-[102px] top-[639px] w-[345px] h-[133px] flex flex-col items-start gap-[8px]">
-          <div className="flex items-center gap-2 h-[32px] w-full">
-            <div className="w-[10px] h-[10px] rounded-full bg-[#06DF73]" />
-            <div className="text-white font-montserrat font-semibold text-[24px] leading-[32px]">Sound Drivers</div>
-          </div>
-          <p className="w-[327px] h-[96px] text-white font-montserrat font-medium text-[16px] leading-[24px] text-left">
-            Crystal-clear audio, hybrid noise canceling up to 45 dB, and AI-powered sound that adjusts to you for a smarter, more immersive experience.
+          <p className="w-[1192px] h-[64px] font-montserrat font-normal text-[24px] leading-[32px] text-[#1A1A1A] whitespace-pre-line">
+            {`Swappable sound drivers, batteries, chipsets, and design covers. Legacy 1 is built to stay.
+Why throw away the whole product when just one part needs an upgrade?`}
           </p>
         </div>
 
-        <div className="absolute left-[547px] top-[639px] w-[345px] h-[133px] flex flex-col items-start gap-[8px]">
-          <div className="flex items-center gap-2 h-[32px] w-full">
-            <div className="w-[10px] h-[10px] rounded-full bg-[#06DF73]" />
-            <div className="text-white font-montserrat font-semibold leading-[32px] whitespace-nowrap text-[22px] tracking-[-0.01em]">Chipsets and Design Cover</div>
+        {/* Features column (361 x 491) */}
+        <div className="absolute left-[124px]" style={{ top: 50 + 134 + 95 }}>
+          <div className="w-[361px] h-[491px] flex flex-col items-start gap-[58px]">
+            {/* Feature 1 */}
+            <div className="w-[361px] h-[133px] flex flex-col items-start gap-[5px]">
+              <div className="w-[361px] h-[32px] flex flex-row items-center gap-[8px]">
+                <PlusIcon />
+                <div className="w-[175px] h-[32px] font-montserrat font-semibold text-[24px] leading-[32px] text-[#1A1A1A]">Sound Drivers</div>
+              </div>
+              <p className="w-[327px] h-[96px] font-montserrat font-medium text-[16px] leading-[24px] text-[#1A1A1A]">
+                Crystal-clear audio, hybrid noise canceling up to 45 dB, and AI-powered sound that adjusts to you for a smarter, more immersive experience.
+              </p>
+            </div>
+
+            {/* Feature 2 */}
+            <div className="w-[361px] h-[133px] flex flex-col items-start gap-[5px]">
+              <div className="w-[361px] h-[32px] flex flex-row items-center gap-[8px]">
+                <PlusIcon />
+                <div className="w-[112px] h-[32px] font-montserrat font-semibold text-[24px] leading-[32px] text-[#1A1A1A]">Batteries</div>
+              </div>
+              <p className="w-[327px] h-[96px] font-montserrat font-medium text-[16px] leading-[24px] text-[#1A1A1A]">
+                Swappable battery modules with up to 9 hours of playback and 30+ with the case. Because great tech shouldn’t come with an expiry date.
+              </p>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="w-[361px] h-[109px] flex flex-col items-start gap-[5px]">
+              <div className="w-[361px] h-[32px] flex flex-row items-center gap-[8px]">
+                <PlusIcon />
+                <div className="w-[333px] h-[32px] font-montserrat font-semibold text-[24px] leading-[32px] text-[#1A1A1A]">Chipsets and Design Cover</div>
+              </div>
+              <p className="w-[327px] h-[72px] font-montserrat font-medium text-[16px] leading-[24px] text-[#1A1A1A]">
+                Replaceable chipsets. Customizable design covers. Upgrade what’s inside. Express what’s outside.
+              </p>
+            </div>
           </div>
-          <p className="w-[327px] h-[72px] text-white font-montserrat font-medium text-[16px] leading-[24px] text-left">
-            Replaceable chipsets. Customizable design covers. Upgrade what’s inside. Express what’s outside.
-          </p>
         </div>
 
-        <div className="absolute left-[992px] top-[639px] w-[345px] h-[133px] flex flex-col items-start gap-[8px]">
-          <div className="flex items-center gap-2 h-[32px] w-full">
-            <div className="w-[10px] h-[10px] rounded-full bg-[#06DF73]" />
-            <div className="text-white font-montserrat font-semibold text-[24px] leading-[32px]">Batteries</div>
+        {/* Absolute image 639 x 639 at (626, 181) */}
+        <div className="absolute" style={{ left: 626, top: 181, width: 639, height: 639 }}>
+          <div className="relative w-full h-full">
+            <OptimizedImage src="/v6/whiteheadphone" alt="Modular visual" fill fallbackOnly className="object-contain" sizes="(min-width:1024px) 639px, 100vw" />
           </div>
-          <p className="w-[327px] h-[96px] text-white font-montserrat font-medium text-[16px] leading-[24px] text-left">
-            Swappable battery modules with up to 9 hours of playback and 30+ with the case. Because great tech shouldn’t come with an expiry date.
-          </p>
-        </div>
-
-        {/* Bottom tagline */}
-        <p className="absolute left-[399px] top-[825px] w-[641px] h-[32px] font-montserrat text-[24px] leading-[32px] text-[#A1A3A5] text-center">
-          Arfve’s 3-piece modular system makes it easy to swap
-        </p>
-
-        {/* CTA buttons */}
-        <div className="absolute left-[535px] top-[884px] w-[347px] h-[44px] flex items-center justify-center gap-3">
-          <Button variant="secondary" size="md" className="flex items-center justify-center w-[165px] h-[44px] px-5 border border-[#808080] rounded-[55px] font-montserrat text-[14px] leading-[20px] tracking-normal">
-            See How It Works
-          </Button>
-          <Button variant="primary" size="md" className="flex items-center justify-center w-[170px] h-[44px] px-5 rounded-[55px] font-montserrat text-[14px] leading-[20px] tracking-normal">
-            Reserve Your Spot
-          </Button>
         </div>
       </div>
 
-      {/* Mobile/Tablet responsive layout */}
-      <div className="lg:hidden w-full max-w-[1440px] px-6 py-12 flex flex-col items-center gap-8">
-        {/* Headings */}
-        <div className="text-center">
-          <div className="text-white font-montserrat font-semibold text-[28px] leading-[36px] md:text-[36px] md:leading-[46px]">
-            Only Change
-          </div>
-          <div className="text-white font-montserrat font-semibold text-[28px] leading-[36px] md:text-[36px] md:leading-[46px]" style={{ textShadow: '0px 0px 24px #FFFFFF' }}>
-            What Needs Changing
-          </div>
+      {/* Mobile/Tablet fallback */}
+      <div className="lg:hidden w-full max-w-[1440px] px-6 py-12 flex flex-col items-start gap-6 bg-[#F4F4F4]">
+        <div>
+          <div className="font-montserrat font-semibold text-[28px] leading-[36px] text-[#1A1A1A]">Only Change</div>
+          <div className="font-montserrat font-semibold text-[28px] leading-[36px] text-[#1A1A1A]" style={{ textShadow: '0px 0px 24px #949494' }}>What Needs Changing</div>
         </div>
-        <p className="text-center font-montserrat text-white/90 text-[16px] leading-[24px] md:text-[18px] md:leading-[28px]">
-          Swappable sound drivers, batteries, chipsets, and design covers. Legacy1 is built to stay.
-          <br />
-          Why throw away the whole product when just one part needs an upgrade?
+        <p className="font-montserrat text-[16px] leading-[24px] text-[#1A1A1A] whitespace-pre-line">
+          {`Swappable sound drivers, batteries, chipsets, and design covers. Legacy 1 is built to stay.
+Why throw away the whole product when just one part needs an upgrade?`}
         </p>
-
-        {/* Images row */}
-        <div className="w-full flex items-center justify-center gap-6 md:gap-10">
-          <div className="w-[90px] md:w-[110px] aspect-[145/492]">
-            <div className="relative w-full h-full">
-              <OptimizedImage src="/headphones2-1" alt="Sound Drivers" fill fallbackOnly className="object-contain" />
-            </div>
-          </div>
-          <div className="w-[90px] md:w-[110px] aspect-[145/492]">
-            <div className="relative w-full h-full">
-              <OptimizedImage src="/headphones2" alt="Chipsets and Design" fill fallbackOnly className="object-contain" />
-            </div>
-          </div>
-          <div className="w-[90px] md:w-[110px] aspect-[145/492]">
-            <div className="relative w-full h-full">
-              <OptimizedImage src="/headphones2-2" alt="Batteries" fill fallbackOnly className="object-contain" />
-            </div>
+        <div className="relative w-full flex items-center justify-center">
+          <div className="relative w-[280px] md:w-[360px] aspect-square">
+            <OptimizedImage src="/v6/whiteheadphone" alt="Modular visual" fill fallbackOnly className="object-contain" sizes="100vw" />
           </div>
         </div>
-
-        {/* Features stacked */}
-        <div className="w-full max-w-[850px] grid grid-cols-1 gap-8">
-          <div className="flex flex-col items-start gap-2">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#06DF73]" />
-              <span className="text-white font-montserrat font-semibold text-[20px] leading-[28px]">Sound Drivers</span>
-            </div>
-            <p className="text-white/90 font-montserrat text-[16px] leading-[24px]">
-              Crystal-clear audio, hybrid noise canceling up to 45 dB, and AI-powered sound that adjusts to you for a smarter, more immersive experience.
-            </p>
+        <div className="flex flex-col items-start gap-6">
+          <div>
+            <div className="flex items-center gap-2"><PlusIcon /><span className="font-montserrat font-semibold text-[18px] leading-[28px] text-[#1A1A1A] ml-1">Sound Drivers</span></div>
+            <p className="font-montserrat text-[16px] leading-[24px] text-[#1A1A1A] mt-1">Crystal-clear audio, hybrid noise canceling up to 45 dB, and AI-powered sound that adjusts to you for a smarter, more immersive experience.</p>
           </div>
-
-          <div className="flex flex-col items-start gap-2">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#06DF73]" />
-              <span className="text-white font-montserrat font-semibold text-[20px] leading-[28px] whitespace-nowrap">Chipsets and Design Cover</span>
-            </div>
-            <p className="text-white/90 font-montserrat text-[16px] leading-[24px]">
-              Replaceable chipsets. Customizable design covers. Upgrade what’s inside. Express what’s outside.
-            </p>
+          <div>
+            <div className="flex items-center gap-2"><PlusIcon /><span className="font-montserrat font-semibold text-[18px] leading-[28px] text-[#1A1A1A] ml-1">Batteries</span></div>
+            <p className="font-montserrat text-[16px] leading-[24px] text-[#1A1A1A] mt-1">Swappable battery modules with up to 9 hours of playback and 30+ with the case. Because great tech shouldn’t come with an expiry date.</p>
           </div>
-
-          <div className="flex flex-col items-start gap-2">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#06DF73]" />
-              <span className="text-white font-montserrat font-semibold text-[20px] leading-[28px]">Batteries</span>
-            </div>
-            <p className="text-white/90 font-montserrat text-[16px] leading-[24px]">
-              Swappable battery modules with up to 9 hours of playback and 30+ with the case. Because great tech shouldn’t come with an expiry date.
-            </p>
+          <div>
+            <div className="flex items-center gap-2"><PlusIcon /><span className="font-montserrat font-semibold text-[18px] leading-[28px] text-[#1A1A1A] ml-1">Chipsets and Design Cover</span></div>
+            <p className="font-montserrat text-[16px] leading-[24px] text-[#1A1A1A] mt-1">Replaceable chipsets. Customizable design covers. Upgrade what’s inside. Express what’s outside.</p>
           </div>
-        </div>
-
-        <p className="text-center font-montserrat text-[#A1A3A5] text-[16px] leading-[24px] md:text-[18px] md:leading-[28px]">
-          Arfve’s 3-piece modular system makes it easy to swap
-        </p>
-
-        <div className="flex items-center justify-center gap-3">
-          <Button variant="secondary" size="md" className="h-[40px] px-4 rounded-[55px] border border-[#808080] font-montserrat text-[14px] leading-[20px] tracking-normal">See How It Works</Button>
-          <Button variant="primary" size="md" className="h-[40px] px-5 rounded-[55px] font-montserrat text-[14px] leading-[20px] tracking-normal">Reserve Your Spot</Button>
         </div>
       </div>
     </RevealSection>
