@@ -67,7 +67,7 @@ const ModularFeaturesSection: React.FC = () => {
         {/* Exploded view image (834 x 469) */}
         <div className="w-[834px] h-[469px]">
           <div className="relative w-full h-full">
-            <OptimizedImage src="/v6/whiteheadphone" alt="Exploded modular view" fill fallbackOnly className="object-contain" sizes="(min-width:1024px) 834px, 100vw" />
+            <OptimizedImage src="/v6/ExplodedView16_9-2 1.png" alt="Exploded modular view" fill fallbackOnly className="object-contain" sizes="(min-width:1024px) 834px, 100vw" />
           </div>
         </div>
 
@@ -91,7 +91,8 @@ const ModularFeaturesSection: React.FC = () => {
               <div className="w-[112px] h-[32px] font-montserrat font-semibold text-[24px] leading-[32px] text-[#1A1A1A]">Batteries</div>
             </div>
             <p className="w-[327px] h-[120px] font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
-              The battery system is built to deliver long-lasting performance throughout the day. Power that adapts to your rhythm, so the music keeps going when you do.
+              The battery system is built to deliver long-+
+               performance throughout the day. Power that adapts to your rhythm, so the music keeps going when you do.
             </p>
           </div>
 

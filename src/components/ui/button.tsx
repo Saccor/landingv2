@@ -2,7 +2,7 @@ import React from 'react';
 
 // Types
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline';
+  variant?: 'primary' | 'secondary' | 'outline' | 'solidGray';
   size?: 'sm' | 'md' | 'lg';
   children: React.ReactNode;
   className?: string;
@@ -27,6 +27,12 @@ const buttonVariants = {
     bg-transparent text-white border border-white 
     hover:bg-white hover:text-black hover:scale-105 hover:shadow-lg hover:shadow-white/20
     active:scale-100
+    transform transition-all duration-200 ease-out
+  `,
+  solidGray: `
+    bg-[#545454] text-white 
+    hover:opacity-90 active:opacity-100
+    font-montserrat
     transform transition-all duration-200 ease-out
   `,
 } as const;

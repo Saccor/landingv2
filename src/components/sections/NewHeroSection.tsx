@@ -19,7 +19,7 @@ const NewHeroSection: React.FC = () => {
         {/* Full-bleed background video */}
         <video
           className="absolute inset-0 w-full h-full object-cover"
-          src="/video/hero-optimized.mp4"
+          src="/v6/HeroBothVersionsLoop.mp4"
           autoPlay
           muted
           loop
