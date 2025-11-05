@@ -1,6 +1,5 @@
 'use client';
 
-// Reuse the sustainability carousel for social posts on homepage
 import SustainabilitySocialCarousel from '@/components/sustainability/SustainabilitySocialCarousel';
 import NewHeroSection from '@/components/sections/NewHeroSection';
 import SignupCTASection from '@/components/sections/SignupCTASection';
@@ -8,9 +7,7 @@ import ModularFeaturesSection from '@/components/sections/ModularFeaturesSection
 import DetailsSection from '@/components/sections/DetailsSection';
 import AIPowered from '@/components/sections/AIPowered'; 
 import OtherFeatures from '@/components/sections/OtherFeatures';
-import AppIntelligenceSection from '@/components/sections/AppIntelligenceSection';
-import TeamSection from '@/components/sections/TeamSection';
-// Removed legacy sections in favor of new flow
+import OurPartners from '@/components/sections/OurPartners';
 import Footer from '@/components/Footer';
 
 export default function Home() {
@@ -22,9 +19,8 @@ export default function Home() {
       <ModularFeaturesSection />
       <DetailsSection />
       <AIPowered /> 
-      <OtherFeatures /> 
-      <AppIntelligenceSection />
-      <TeamSection />
+      <OtherFeatures />
+      <OurPartners />
       <SustainabilitySocialCarousel />
       <Footer />
     </div>
