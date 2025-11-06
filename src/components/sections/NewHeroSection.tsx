@@ -36,7 +36,7 @@ const NewHeroSection: React.FC = () => {
         {/* Tablet video - square version */}
         <video
           className="hidden md:block lg:hidden absolute inset-0 w-full h-full object-cover"
-          src="/v6/hero/HeroVideoSquare.mp4"
+          src="/v6/hero/HeroVideoSquare_compressed.mp4"
           autoPlay
           muted
           loop
