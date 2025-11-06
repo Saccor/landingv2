@@ -13,9 +13,9 @@ const PlusIcon: React.FC = () => (
 
 const ModularFeaturesSection: React.FC = () => {
   return (
-    <RevealSection className="relative w-full flex justify-center bg-[#F4F4F4] overflow-hidden">
+    <RevealSection className="relative w-full flex justify-center bg-white overflow-hidden">
       {/* Mobile layout - Frame 481700 */}
-      <div className="md:hidden w-full max-w-[393px] px-5 py-[50px] flex flex-col items-start gap-[95px] bg-[#F4F4F4]">
+      <div className="md:hidden w-full max-w-[393px] px-5 py-[50px] flex flex-col items-start gap-[95px] bg-white">
         {/* Frame 481699 - Heading section */}
         <div className="w-full flex flex-col items-start gap-[10px]">
           {/* Frame 481698 - Heading container */}
@@ -110,7 +110,7 @@ const ModularFeaturesSection: React.FC = () => {
       </div>
 
       {/* Tablet layout - Frame 481700 */}
-      <div className="hidden md:flex lg:hidden w-full max-w-[834px] px-20 py-[50px] flex flex-col items-start gap-[95px] bg-[#F4F4F4]">
+      <div className="hidden md:flex lg:hidden w-full max-w-[834px] px-20 py-[50px] flex flex-col items-start gap-[95px] bg-white">
         {/* Frame 481699 - Heading section */}
         <div className="w-full max-w-[674px] flex flex-col items-start gap-[10px]">
           {/* Frame 481698 - Two headings in a row */}
@@ -209,7 +209,7 @@ const ModularFeaturesSection: React.FC = () => {
       </div>
 
       {/* Desktop layout - Frame 481700 */}
-      <div className="hidden lg:flex w-full max-w-[1440px] px-[124px] py-[50px] flex flex-col items-center gap-[95px] bg-[#F4F4F4]">
+      <div className="hidden lg:flex w-full max-w-[1440px] px-[124px] py-[50px] flex flex-col items-center gap-[95px] bg-white">
         {/* Frame 481699 - Heading section */}
         <div className="w-full max-w-[1192px] flex flex-col items-start gap-[10px]">
           {/* Frame 481698 - Two headings in a row */}

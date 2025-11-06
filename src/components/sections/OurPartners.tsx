@@ -5,7 +5,7 @@ import RevealSection from '@/components/ui/RevealSection';
 
 export default function OurPartners() {
   return (
-    <RevealSection className="w-full relative bg-[#F4F4F4]">
+    <RevealSection className="w-full relative bg-[white]">
       <section
         className="
           w-full flex flex-col items-center

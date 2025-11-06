@@ -9,6 +9,7 @@ import ProductShowcaseSection from '@/components/sections/ProductShowcaseSection
 import AIPowered from '@/components/sections/AIPowered'; 
 import OtherFeatures from '@/components/sections/OtherFeatures';
 import OurPartners from '@/components/sections/OurPartners';
+import NewsletterSignup from '@/components/sections/NewsletterSignup';
 import Footer from '@/components/Footer';
 
 export default function Home() {
@@ -24,6 +25,7 @@ export default function Home() {
       <OtherFeatures />
       <OurPartners />
       <SustainabilitySocialCarousel />
+      <NewsletterSignup />
       <Footer />
     </div>
   );

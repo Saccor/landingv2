@@ -66,7 +66,7 @@ export default function SustainabilitySocialCarousel() {
   const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
 
   return (
-    <RevealSection className="w-full relative bg-[#F4F4F4]">
+    <RevealSection className="w-full relative bg-[white]">
       <section
         className="
           w-full flex flex-col items-center
@@ -150,7 +150,7 @@ export default function SustainabilitySocialCarousel() {
                     whileHover={{ y: -3 }}
                     transition={{ type: 'spring', stiffness: 260, damping: 20 }}
                     className="
-                      bg-white rounded-2xl overflow-hidden flex flex-col shadow-[0_4px_20px_rgba(0,0,0,0.05)]
+                      bg-[#f4f4f4] rounded-2xl overflow-hidden flex flex-col shadow-[0_4px_20px_rgba(0,0,0,0.05)]
                       border border-[#EAEAEA]
                     "
                   >

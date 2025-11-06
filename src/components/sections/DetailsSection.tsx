@@ -2,7 +2,6 @@
 
 import React from 'react';
 import RevealSection from '@/components/ui/RevealSection';
-import OptimizedImage from '@/components/ui/OptimizedImage';
 
 const PlusIcon: React.FC = () => (
   <svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
@@ -13,7 +12,7 @@ const PlusIcon: React.FC = () => (
 
 const DetailsSection: React.FC = () => {
   return (
-    <RevealSection className="relative w-full flex justify-center bg-[#F4F4F4] overflow-hidden">
+    <RevealSection className="relative w-full flex justify-center bg-white overflow-hidden">
       {/* Desktop layout: 1440x1009 absolute positioning per Frame 481717 */}
       <div className="hidden lg:block relative w-full max-w-[1440px] h-[1009px]">
         {/* Top heading group (Frame 481699) at (124, 50) */}
