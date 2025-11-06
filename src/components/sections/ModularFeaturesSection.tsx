@@ -133,7 +133,7 @@ const ModularFeaturesSection: React.FC = () => {
         </div>
         <div className="relative w-full flex items-center justify-center">
           <div className="relative w-[320px] md:w-[480px] aspect-[834/469]">
-            <OptimizedImage src="/v6/whiteheadphone" alt="Exploded modular view" fill fallbackOnly className="object-contain" sizes="100vw" />
+            <OptimizedImage src="/v6/whiteheadphone.png" alt="Exploded modular view" fill fallbackOnly className="object-contain" sizes="100vw" />
           </div>
         </div>
         <div className="flex flex-col items-stretch gap-8">

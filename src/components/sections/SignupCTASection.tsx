@@ -8,6 +8,8 @@ import { useSubscriberCount } from '@/hooks/useSubscriberCount';
 const SignupCTASection: React.FC = () => {
   const { count, total, loading } = useSubscriberCount();
   const claimText = loading ? 'Loading…' : `${count} of ${total} super early bird spots claimed`;
+  const claimTextMain = loading ? 'Loading…' : `${count} of ${total} super early bird spots`;
+  const claimTextSuffix = 'claimed';
   return (
     <RevealSection className="relative w-full flex justify-center bg-white overflow-hidden">
       {/* Radials per Figma (bottom left and right) */}
@@ -25,7 +27,7 @@ const SignupCTASection: React.FC = () => {
               <span className="inline-block w-[10px] h-[10px] rounded-full bg-[#06DF73] z-0" />
               <span className="absolute left-[22px] top-0 font-montserrat font-medium text-[16px] leading-[24px] text-[#868889] z-1">{claimText}</span>
             </div>
-            <SignupForm theme="lightV6" buttonText="Sign-up" />
+            <SignupForm theme="lightV6" buttonText="Join the Movement" />
           </div>
         </div>
       </div>
@@ -33,14 +35,28 @@ const SignupCTASection: React.FC = () => {
       {/* Mobile/Tablet stacked layout */}
       <div className="lg:hidden w-full max-w-[1440px] px-6 py-12 flex flex-col items-center gap-6 bg-white">
         <h2 className="text-center font-montserrat font-bold text-[22px] leading-[30px] text-[#3E3E3E] md:text-[26px] md:leading-[34px]">
-          Sign up now to get 50% off, early access, and exclusive updates, countdown’s ticking.
+          Sign up now to get 50% off, early access, and exclusive updates, countdown's ticking.
         </h2>
-        <div className="w-full max-w-[431px] flex flex-col items-center gap-3">
-          <div className="relative w-full h-[24px] flex items-center justify-center text-[#868889] font-montserrat text-[14px] leading-[20px]">
-            <span className="inline-block w-2.5 h-2.5 rounded-full bg-[#06DF73] mr-2" />
-            {claimText}
+        {/* Container: 315px × 116px with counter and form */}
+        <div className="w-[315px] h-[116px] flex flex-col items-start gap-[12px] p-0 flex-none z-[3]">
+          {/* Counter/Heading section: 315px × 60px */}
+          <div className="w-[315px] h-[60px] flex flex-row items-center gap-[10px] py-[6px] flex-none self-stretch">
+            {/* Green dot - 10px × 10px, vertically centered */}
+            <div className="w-[10px] h-[10px] rounded-full bg-[#06DF73] flex-none self-center" style={{ transform: 'matrix(-1, 0, 0, 1, 0, 0)' }} />
+            {/* Text container with two rows */}
+            <div className="flex-1 flex flex-col items-start">
+              {/* First row: main text */}
+              <div className="w-full font-montserrat font-medium text-[16px] leading-[24px] text-[#868889]">
+                {claimTextMain}
+              </div>
+              {/* Second row: "claimed" */}
+              <div className="w-full font-montserrat font-medium text-[16px] leading-[24px] text-[#868889]">
+                {claimTextSuffix}
+              </div>
+            </div>
           </div>
-          <SignupForm theme="lightV6" buttonText="Sign-up" />
+          {/* Form container */}
+          <SignupForm theme="lightV6" buttonText="Join the Movement" />
         </div>
       </div>
     </RevealSection>

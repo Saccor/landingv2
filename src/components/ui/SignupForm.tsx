@@ -99,22 +99,49 @@ export default function SignupForm({
   if (theme === 'lightV6') {
     return (
       <div className={`w-full flex flex-col items-center gap-3 ${className}`}>
-        <div className="w-full flex justify-center" style={isMounted ? { transform: `scale(${scale})`, transformOrigin: 'center' } : undefined}>
-          <form onSubmit={handleSubmit} className="w-[431px] h-[44px] flex items-center justify-between rounded-[28px] border border-[#626262] pl-[20px] pr-[4px] gap-[10px] bg-transparent">
+        <div className="flex justify-center" style={isMounted ? { transform: `scale(${scale})`, transformOrigin: 'center' } : undefined}>
+          <form 
+            onSubmit={handleSubmit} 
+            className="
+              box-border
+              flex flex-row items-center
+              rounded-[28px] border border-[#626262]
+              gap-[10px]
+              bg-transparent
+              overflow-hidden
+              /* Mobile: 315px width, 44px height, padding 4px 4px 4px 20px */
+              w-[315px] h-[44px] py-[4px] pl-[20px] pr-[4px]
+              /* Desktop: Keep original wider size */
+              lg:w-[431px]
+            "
+          >
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
               placeholder="Email"
-              className="flex-1 h-[36px] bg-transparent outline-none border-0 font-montserrat text-[14px] leading-[20px] text-[#1A1A1A] placeholder-[#868889]"
+              className="
+                flex-1 min-w-0 h-[36px] bg-transparent outline-none border-0
+                font-montserrat font-normal text-[14px] leading-[20px]
+                text-[#1A1A1A] placeholder-[#868889]
+              "
             />
             <Button
               type="submit"
               variant="solidGray"
-              size="md"
+              size="sm"
               isLoading={status === 'loading'}
-              className="h-[36px] w-[178px] rounded-[55px] bg-[#545454] text-white text-[14px] leading-[20px] font-montserrat"
+              className="
+                !box-border
+                !flex !items-center !justify-center
+                !w-[178px] !h-[36px] !py-[4px] !px-[20px]
+                !rounded-[55px] !bg-[#545454]
+                font-montserrat font-medium !text-[14px] !leading-[20px]
+                !text-white !text-center
+                !flex-none
+                !shrink-0
+              "
             >
               {buttonText}
             </Button>
