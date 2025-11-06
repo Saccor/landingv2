@@ -17,13 +17,20 @@ const DetailsSection: React.FC = () => {
       {/* Desktop layout: 1440x1009 absolute positioning per Frame 481717 */}
       <div className="hidden lg:block relative w-full max-w-[1440px] h-[1009px]">
         {/* Top heading group (Frame 481699) at (124, 50) */}
-        <div className="absolute left-[124px] top-[50px] w-[1192px] h-[134px] flex flex-col items-start gap-[10px]">
+        <div className="absolute left-[124px] top-[50px] w-[1192px] flex flex-col items-start gap-[10px]">
+          {/* Frame 481698 - Heading container */}
           <div className="w-[1192px] h-[60px] flex flex-row flex-wrap items-start gap-x-[17px]">
-            <div className="w-[604px] h-[60px] font-montserrat font-semibold text-[48px] leading-[60px] tracking-[-0.02em] text-[#1A1A1A]">
-              Modularity
+            {/* First heading - no text shadow */}
+            <div className="font-montserrat font-semibold text-[48px] leading-[60px] tracking-[-0.02em] text-[#1A1A1A]">
+              Only Change
+            </div>
+            {/* Second heading - with text shadow */}
+            <div className="font-montserrat font-semibold text-[48px] leading-[60px] tracking-[-0.02em] text-[#1A1A1A]" style={{ textShadow: '0px 0px 37.4px #949494' }}>
+              What Needs Changing
             </div>
           </div>
-          <p className="w-[1192px] h-[64px] font-montserrat font-normal text-[24px] leading-[32px] text-[#1A1A1A]">
+          {/* Description */}
+          <p className="w-[1192px] font-montserrat font-normal text-[24px] leading-[32px] text-[#1A1A1A]">
             Swap sound drivers, batteries, chipsets, or covers instead of replacing the entire product. Because true innovation respects both you and the planet.
           </p>
         </div>
@@ -91,29 +98,6 @@ const DetailsSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile/Tablet stacked layout */}
-      <div className="lg:hidden w-full max-w-[1440px] px-6 py-12 flex flex-col items-start gap-8 bg-[#F4F4F4]">
-        <div className="flex flex-col items-start gap-2">
-          <div className="font-montserrat font-semibold text-[28px] leading-[36px] md:text-[32px] md:leading-[40px] text-[#1A1A1A]">Modularity</div>
-          <p className="font-montserrat text-[16px] leading-[24px] md:text-[18px] md:leading-[28px] text-[#1A1A1A]">
-            Swap sound drivers, batteries, chipsets, or covers instead of replacing the entire product. Because true innovation respects both you and the planet.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div>
-            <div className="flex items-center gap-2"><PlusIcon /><span className="font-montserrat font-semibold text-[18px] leading-[28px] text-[#1A1A1A] ml-1 whitespace-nowrap">Sound drivers</span></div>
-            <p className="font-montserrat text-[16px] leading-[24px] text-[#1A1A1A] mt-1">Precision-built sound drivers deliver clear, balanced audio designed for real-world listening. Each component is engineered to bring detail, depth and control to every frequency.</p>
-          </div>
-          <div>
-            <div className="flex items-center gap-2"><PlusIcon /><span className="font-montserrat font-semibold text-[18px] leading-[28px] text-[#1A1A1A] ml-1 whitespace-nowrap">Batteries</span></div>
-            <p className="font-montserrat text-[16px] leading-[24px] text-[#1A1A1A] mt-1">The battery system is built to deliver long-lasting performance throughout the day. Power that adapts to your rhythm, so the music keeps going when you do.</p>
-          </div>
-          <div>
-            <div className="flex items-center gap-2"><PlusIcon /><span className="font-montserrat font-semibold text-[18px] leading-[28px] text-[#1A1A1A] ml-1 whitespace-nowrap">Chipsets and design covers</span></div>
-            <p className="font-montserrat text-[16px] leading-[24px] text-[#1A1A1A] mt-1">Powered by the Snapdragon platform, Legacy 1 delivers faster processing, smarter noise control and seamless AI integration.</p>
-          </div>
-        </div>
-      </div>
     </RevealSection>
   );
 };

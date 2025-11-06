@@ -10,37 +10,36 @@ export default function AIPowered() {
     className="
       w-full flex flex-col items-center gap-10
       px-4 py-12
-      md:px-6 md:py-16 md:gap-14
+      md:px-20 md:py-[50px] md:gap-[95px]
       lg:px-12 lg:py-20 lg:gap-20
     "
   >
-        {/* Section header */}
+        {/* Section header - Frame 481710 */}
         <header
           className="
-            w-full max-w-[1120px] mx-auto
-            flex flex-col gap-3 text-center
+            w-full max-w-[353px] md:max-w-[674px] lg:max-w-[1120px] mx-auto
+            flex flex-col items-start gap-[10px]
           "
         >
           <h2
             className="
-              font-montserrat font-bold text-[#101010]
-              text-[26px] leading-[34px]
-              md:text-[30px] md:leading-[38px]
-              lg:text-[36px] lg:leading-[44px]
+              w-full h-[88px] md:h-auto
+              font-montserrat font-semibold text-[#1A1A1A]
+              text-[36px] leading-[44px]
+              tracking-[-0.02em]
             "
+            style={{ textShadow: '0px 0px 37.4px #FFFFFF' }}
           >
             AI Powered Earphones
           </h2>
           <p
             className="
-              font-montserrat text-[#3A3A3A]
-              max-w-[860px] mx-auto
-              text-[15px] leading-[23px]
-              md:text-[17px] md:leading-[26px]
-              lg:text-[18px] lg:leading-[28px]
+              w-full h-[140px] md:h-auto
+              font-montserrat font-medium text-[#1A1A1A]
+              text-[18px] leading-[28px]
             "
           >
-            Swappable sound drivers, batteries, chipsets, and design covers. Legacy1 is built to stay.
+            Swappable sound drivers, batteries, chipsets, and design covers. Legacy 1 is built to stay.
             Why throw away the whole product when just one part needs an upgrade?
           </p>
         </header>
@@ -48,9 +47,10 @@ export default function AIPowered() {
         {/* Features grid */}
         <div
           className="
-            w-full max-w-[1120px] mx-auto
+            w-full max-w-[353px] md:max-w-[674px] lg:max-w-[1120px] mx-auto
             grid grid-cols-1 gap-8
-            md:grid-cols-2 md:gap-10
+            md:grid-cols-1 md:gap-[58px]
+            lg:grid-cols-2 lg:gap-10
           "
         >
           {/* Feature 1: Noise Cancellation video */}

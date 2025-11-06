@@ -14,140 +14,295 @@ const PlusIcon: React.FC = () => (
 const ModularFeaturesSection: React.FC = () => {
   return (
     <RevealSection className="relative w-full flex justify-center bg-[#F4F4F4] overflow-hidden">
-      {/* Desktop layout: 1440x1302 with padding 50 124 and gap 95 */}
-      <div className="hidden lg:flex relative w-full max-w-[1440px] h-[1302px] px-[124px] py-[50px] flex-col items-center gap-[95px] isolation-isolate">
-        {/* Frame 481699 - Top heading & subheading (1192 x 134) */}
-        <div className="w-[1192px] h-[134px] flex flex-col items-start gap-[10px]">
-          <div className="w-[1192px] h-[60px] flex flex-row flex-wrap items-start gap-x-[17px]">
-            <div className="w-[156px] h-[60px] font-montserrat font-semibold text-[48px] leading-[60px] text-[#1A1A1A]">
-              Modularity
+      {/* Mobile layout - Frame 481700 */}
+      <div className="md:hidden w-full max-w-[393px] px-5 py-[50px] flex flex-col items-start gap-[95px] bg-[#F4F4F4]">
+        {/* Frame 481699 - Heading section */}
+        <div className="w-full flex flex-col items-start gap-[10px]">
+          {/* Frame 481698 - Heading container */}
+          <div className="w-full h-[64px] flex flex-col items-start gap-0">
+            {/* Heading with text shadow */}
+            <div className="w-full h-[32px] font-montserrat font-semibold text-[24px] leading-[32px] text-[#1A1A1A]" style={{ textShadow: '0px 0px 37.4px #949494' }}>
+              Only Change What Needs Changing
             </div>
           </div>
-          <p className="w-[1192px] h-[64px] font-montserrat font-semibold text-[24px] leading-[32px] text-[#1A1A1A]">
-            Swap sound drivers, batteries, chipsets, or covers instead of replacing the entire product. Because true innovation respects both you and the planet.
+          {/* Description */}
+          <p className="w-full h-[140px] font-montserrat font-normal text-[18px] leading-[28px] text-[#1A1A1A]">
+            Swappable sound drivers, batteries, chipsets, and design covers. Legacy 1 is built to stay. Why throw away the whole product when just one part needs an upgrade?
           </p>
         </div>
 
-        {/* Frame 481697 - Row of 3 features (1199 x 157) */}
-        <div className="w-[1199px] h-[157px] flex flex-row items-start gap-[58px]">
-          {/* Feature 1 */}
-          <div className="w-[361px] h-[157px] flex flex-col items-start gap-[5px]">
-            <div className="w-[361px] h-[32px] flex flex-row items-center gap-[8px]">
+        {/* Frame 481702 - First feature section with gap 58px */}
+        <div className="w-full flex flex-col items-start gap-[58px]">
+          {/* Frame 481610 - Snapdragon feature */}
+          <div className="w-full flex flex-col items-start gap-[5px]">
+            <div className="w-full h-[24px] flex flex-row items-center gap-2">
               <PlusIcon />
-              <div className="w-[247px] h-[32px] font-montserrat font-semibold text-[24px] leading-[32px] text-[#1A1A1A]">Sound drivers</div>
+              <div className="font-montserrat font-semibold text-[16px] leading-[24px] text-[#1A1A1A]">Snapdragon feature</div>
             </div>
-            <p className="w-[327px] h-[120px] font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
+            <p className="w-full font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
               Precision-built sound drivers deliver clear, balanced audio designed for real-world listening. Each component is engineered to bring detail, depth and control to every frequency.
             </p>
           </div>
 
-          {/* Feature 2 */}
-          <div className="w-[361px] h-[157px] flex flex-col items-start gap-[5px]">
-            <div className="w-[361px] h-[32px] flex flex-row items-center gap-[8px]">
+          {/* Frame 481609 - Batteries */}
+          <div className="w-full flex flex-col items-start gap-[5px]">
+            <div className="w-full h-[24px] flex flex-row items-center gap-2">
               <PlusIcon />
-              <div className="w-[112px] h-[32px] font-montserrat font-semibold text-[24px] leading-[32px] text-[#1A1A1A]">Batteries</div>
+              <div className="font-montserrat font-semibold text-[16px] leading-[24px] text-[#1A1A1A]">Batteries</div>
             </div>
-            <p className="w-[327px] h-[120px] font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
+            <p className="w-full font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
               The battery system is built to deliver long-lasting performance throughout the day. Power that adapts to your rhythm, so the music keeps going when you do.
             </p>
           </div>
 
-          {/* Feature 3 */}
-          <div className="w-[361px] h-[133px] flex flex-col items-start gap-[5px]">
-            <div className="w-[361px] h-[32px] flex flex-row items-center gap-[8px]">
+          {/* Frame 481613 - Chipsets and design covers */}
+          <div className="w-full flex flex-col items-start gap-[5px]">
+            <div className="w-full h-[24px] flex flex-row items-center gap-2">
               <PlusIcon />
-              <div className="w-[333px] h-[32px] font-montserrat font-semibold text-[24px] leading-[32px] text-[#1A1A1A] whitespace-nowrap">Chipsets and design covers</div>
+              <div className="font-montserrat font-semibold text-[16px] leading-[24px] text-[#1A1A1A]">Chipsets and design covers</div>
             </div>
-            <p className="w-[327px] h-[96px] font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
+            <p className="w-full font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
               Powered by the Snapdragon platform, Legacy 1 delivers faster processing, smarter noise control and seamless AI integration.
             </p>
           </div>
         </div>
 
-        {/* Exploded view image (834 x 469) */}
-        <div className="w-[834px] h-[469px]">
-          <div className="relative w-full h-full">
-            <OptimizedImage src="/v6/ExplodedView16_9-2 1.png" alt="Exploded modular view" fill fallbackOnly className="object-contain" sizes="(min-width:1024px) 834px, 100vw" />
-          </div>
+        {/* ExplodedView16_9-2 1 - Image */}
+        <div className="relative w-[351px] h-[198px]">
+          <OptimizedImage src="/v6/ExplodedView16_9-2 1.png" alt="Exploded modular view" fill fallbackOnly className="object-contain" sizes="351px" />
         </div>
 
-        {/* Frame 481701 - Second row of 3 features (1199 x 157) */}
-        <div className="w-[1199px] h-[157px] flex flex-row items-start gap-[58px]">
-          {/* Feature 4 */}
-          <div className="w-[361px] h-[157px] flex flex-col items-start gap-[5px]">
-            <div className="w-[361px] h-[32px] flex flex-row items-center gap-[8px]">
+        {/* Frame 481703 - Second feature section with gap 58px */}
+        <div className="w-full flex flex-col items-start gap-[58px]">
+          {/* Frame 481610 - Snapdragon feature */}
+          <div className="w-full flex flex-col items-start gap-[5px]">
+            <div className="w-full h-[24px] flex flex-row items-center gap-2">
               <PlusIcon />
-              <div className="w-[247px] h-[32px] font-montserrat font-semibold text-[24px] leading-[32px] text-[#1A1A1A]">Sound drivers</div>
+              <div className="font-montserrat font-semibold text-[16px] leading-[24px] text-[#1A1A1A]">Snapdragon feature</div>
             </div>
-            <p className="w-[327px] h-[120px] font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
+            <p className="w-full font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
               Precision-built sound drivers deliver clear, balanced audio designed for real-world listening. Each component is engineered to bring detail, depth and control to every frequency.
             </p>
           </div>
 
-          {/* Feature 5 */}
-          <div className="w-[361px] h-[157px] flex flex-col items-start gap-[5px]">
-            <div className="w-[361px] h-[32px] flex flex-row items-center gap-[8px]">
+          {/* Frame 481609 - Batteries */}
+          <div className="w-full flex flex-col items-start gap-[5px]">
+            <div className="w-full h-[24px] flex flex-row items-center gap-2">
               <PlusIcon />
-              <div className="w-[112px] h-[32px] font-montserrat font-semibold text-[24px] leading-[32px] text-[#1A1A1A]">Batteries</div>
+              <div className="font-montserrat font-semibold text-[16px] leading-[24px] text-[#1A1A1A]">Batteries</div>
             </div>
-            <p className="w-[327px] h-[120px] font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
-              The battery system is built to deliver long-+
-               performance throughout the day. Power that adapts to your rhythm, so the music keeps going when you do.
+            <p className="w-full font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
+              The battery system is built to deliver long-lasting performance throughout the day. Power that adapts to your rhythm, so the music keeps going when you do.
             </p>
           </div>
 
-          {/* Feature 6 */}
-          <div className="w-[361px] h-[133px] flex flex-col items-start gap-[5px]">
-            <div className="w-[361px] h-[32px] flex flex-row items-center gap-[8px]">
+          {/* Frame 481613 - Chipsets and design covers */}
+          <div className="w-full flex flex-col items-start gap-[5px]">
+            <div className="w-full h-[24px] flex flex-row items-center gap-2">
               <PlusIcon />
-              <div className="w-[333px] h-[32px] font-montserrat font-semibold text-[24px] leading-[32px] text-[#1A1A1A] whitespace-nowrap">Chipsets and design covers</div>
+              <div className="font-montserrat font-semibold text-[16px] leading-[24px] text-[#1A1A1A]">Chipsets and design covers</div>
             </div>
-            <p className="w-[327px] h-[96px] font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
+            <p className="w-full font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
               Powered by the Snapdragon platform, Legacy 1 delivers faster processing, smarter noise control and seamless AI integration.
             </p>
           </div>
         </div>
       </div>
 
-      {/* Mobile/Tablet stacked layout */}
-      <div className="lg:hidden w-full max-w-[1440px] px-6 py-12 flex flex-col items-center gap-10 bg-[#F4F4F4]">
-        <div className="w-full flex flex-col items-start gap-2">
-          <div className="font-montserrat font-semibold text-[32px] leading-[40px] text-[#1A1A1A]">Modularity</div>
-          <p className="font-montserrat font-semibold text-[18px] leading-[28px] text-[#1A1A1A]">
+      {/* Tablet layout - Frame 481700 */}
+      <div className="hidden md:flex lg:hidden w-full max-w-[834px] px-20 py-[50px] flex flex-col items-start gap-[95px] bg-[#F4F4F4]">
+        {/* Frame 481699 - Heading section */}
+        <div className="w-full max-w-[674px] flex flex-col items-start gap-[10px]">
+          {/* Frame 481698 - Two headings in a row */}
+          <div className="w-full h-[76px] flex flex-row flex-wrap items-start gap-x-[17px] gap-y-0">
+            {/* First heading - no text shadow */}
+            <div className="w-[201px] h-[38px] font-montserrat font-semibold text-[30px] leading-[38px] text-[#1A1A1A]">
+              Only Change
+            </div>
+            {/* Second heading - with text shadow */}
+            <div className="w-[572px] h-[38px] font-montserrat font-semibold text-[30px] leading-[38px] text-[#1A1A1A]" style={{ textShadow: '0px 0px 37.4px #949494' }}>
+              What Needs Changing
+            </div>
+          </div>
+          {/* Description */}
+          <p className="w-full h-[112px] font-montserrat font-semibold text-[18px] leading-[28px] text-[#1A1A1A]">
+            Swappable sound drivers, batteries, chipsets, and design covers. Legacy 1 is built to stay. Why throw away the whole product when just one part needs an upgrade?
+          </p>
+        </div>
+
+        {/* Frame 481702 - First feature section with gap 58px */}
+        <div className="w-full max-w-[674px] flex flex-col items-start gap-[58px]">
+          {/* Frame 481610 - Snapdragon feature */}
+          <div className="w-full h-[105px] flex flex-col items-start gap-[5px]">
+            <div className="w-full h-[28px] flex flex-row items-center gap-2">
+              <PlusIcon />
+              <div className="font-montserrat font-semibold text-[18px] leading-[28px] text-[#1A1A1A]">Snapdragon feature</div>
+            </div>
+            <p className="w-full h-[72px] font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
+              Precision-built sound drivers deliver clear, balanced audio designed for real-world listening. Each component is engineered to bring detail, depth and control to every frequency.
+            </p>
+          </div>
+
+          {/* Frame 481609 - Batteries */}
+          <div className="w-full h-[81px] flex flex-col items-start gap-[5px]">
+            <div className="w-full h-[28px] flex flex-row items-center gap-2">
+              <PlusIcon />
+              <div className="font-montserrat font-semibold text-[18px] leading-[28px] text-[#1A1A1A]">Batteries</div>
+            </div>
+            <p className="w-full h-[48px] font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
+              The battery system is built to deliver long-lasting performance throughout the day. Power that adapts to your rhythm, so the music keeps going when you do.
+            </p>
+          </div>
+
+          {/* Frame 481613 - Chipsets and design covers */}
+          <div className="w-full h-[81px] flex flex-col items-start gap-[5px]">
+            <div className="w-full h-[28px] flex flex-row items-center gap-2">
+              <PlusIcon />
+              <div className="font-montserrat font-semibold text-[18px] leading-[28px] text-[#1A1A1A]">Chipsets and design covers</div>
+            </div>
+            <p className="w-full h-[48px] font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
+              Powered by the Snapdragon platform, Legacy 1 delivers faster processing, smarter noise control and seamless AI integration.
+            </p>
+          </div>
+        </div>
+
+        {/* ExplodedView16_9-2 1 - Image */}
+        <div className="relative w-[719px] h-[404px]">
+          <OptimizedImage src="/v6/ExplodedView16_9-2 1.png" alt="Exploded modular view" fill fallbackOnly className="object-contain" sizes="719px" />
+        </div>
+
+        {/* Frame 481701 - Second feature section with gap 58px */}
+        <div className="w-full max-w-[674px] flex flex-col items-start gap-[58px]">
+          {/* Frame 481610 - Snapdragon feature */}
+          <div className="w-full h-[105px] flex flex-col items-start gap-[5px]">
+            <div className="w-full h-[28px] flex flex-row items-center gap-2">
+              <PlusIcon />
+              <div className="font-montserrat font-semibold text-[18px] leading-[28px] text-[#1A1A1A]">Snapdragon feature</div>
+            </div>
+            <p className="w-full h-[72px] font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
+              Precision-built sound drivers deliver clear, balanced audio designed for real-world listening. Each component is engineered to bring detail, depth and control to every frequency.
+            </p>
+          </div>
+
+          {/* Frame 481609 - Batteries */}
+          <div className="w-full h-[81px] flex flex-col items-start gap-[5px]">
+            <div className="w-full h-[28px] flex flex-row items-center gap-2">
+              <PlusIcon />
+              <div className="font-montserrat font-semibold text-[18px] leading-[28px] text-[#1A1A1A]">Batteries</div>
+            </div>
+            <p className="w-full h-[48px] font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
+              The battery system is built to deliver long-lasting performance throughout the day. Power that adapts to your rhythm, so the music keeps going when you do.
+            </p>
+          </div>
+
+          {/* Frame 481613 - Chipsets and design covers */}
+          <div className="w-full h-[81px] flex flex-col items-start gap-[5px]">
+            <div className="w-full h-[28px] flex flex-row items-center gap-2">
+              <PlusIcon />
+              <div className="font-montserrat font-semibold text-[18px] leading-[28px] text-[#1A1A1A]">Chipsets and design covers</div>
+            </div>
+            <p className="w-full h-[48px] font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
+              Powered by the Snapdragon platform, Legacy 1 delivers faster processing, smarter noise control and seamless AI integration.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop layout - Frame 481700 */}
+      <div className="hidden lg:flex w-full max-w-[1440px] px-[124px] py-[50px] flex flex-col items-center gap-[95px] bg-[#F4F4F4]">
+        {/* Frame 481699 - Heading section */}
+        <div className="w-full max-w-[1192px] flex flex-col items-start gap-[10px]">
+          {/* Frame 481698 - Two headings in a row */}
+          <div className="w-full flex flex-row flex-wrap items-start gap-x-[17px] gap-y-0">
+            {/* First heading - no text shadow */}
+            <div className="font-montserrat font-semibold text-[36px] leading-[44px] text-[#1A1A1A]">
+              Only Change
+            </div>
+            {/* Second heading - with text shadow */}
+            <div className="font-montserrat font-semibold text-[36px] leading-[44px] text-[#1A1A1A]" style={{ textShadow: '0px 0px 37.4px #949494' }}>
+              What Needs Changing
+            </div>
+          </div>
+          {/* Description */}
+          <p className="w-full font-montserrat font-semibold text-[20px] leading-[30px] text-[#1A1A1A]">
             Swap sound drivers, batteries, chipsets, or covers instead of replacing the entire product. Because true innovation respects both you and the planet.
           </p>
         </div>
-        <div className="flex flex-col items-stretch gap-8">
-          <div>
-            <div className="flex items-center gap-2"><PlusIcon /><span className="font-montserrat font-semibold text-[18px] leading-[28px] text-[#1A1A1A] ml-1">Sound drivers</span></div>
-            <p className="font-montserrat text-[16px] leading-[24px] text-[#1A1A1A] mt-1">Precision-built sound drivers deliver clear, balanced audio designed for real-world listening. Each component is engineered to bring detail, depth and control to every frequency.</p>
+
+        {/* Frame 481697 - First row of 3 features (horizontal) */}
+        <div className="w-full max-w-[1199px] flex flex-row items-start gap-[58px]">
+          {/* Frame 481610 - Snapdragon feature */}
+          <div className="flex-1 max-w-[378px] h-[155px] flex flex-col items-start gap-[5px]">
+            <div className="w-full h-[30px] flex flex-row items-center gap-2">
+              <PlusIcon />
+              <div className="font-montserrat font-semibold text-[20px] leading-[30px] text-[#1A1A1A]">Snapdragon feature</div>
+            </div>
+            <p className="w-[327px] h-[120px] font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
+              Precision-built sound drivers deliver clear, balanced audio designed for real-world listening. Each component is engineered to bring detail, depth and control to every frequency.
+            </p>
           </div>
-          <div>
-            <div className="flex items-center gap-2"><PlusIcon /><span className="font-montserrat font-semibold text-[18px] leading-[28px] text-[#1A1A1A] ml-1">Batteries</span></div>
-            <p className="font-montserrat text-[16px] leading-[24px] text-[#1A1A1A] mt-1">The battery system is built to deliver long-lasting performance throughout the day. Power that adapts to your rhythm, so the music keeps going when you do.</p>
+
+          {/* Frame 481609 - Batteries */}
+          <div className="flex-1 max-w-[378px] h-[155px] flex flex-col items-start gap-[5px]">
+            <div className="w-full h-[30px] flex flex-row items-center gap-2">
+              <PlusIcon />
+              <div className="font-montserrat font-semibold text-[20px] leading-[30px] text-[#1A1A1A]">Batteries</div>
+            </div>
+            <p className="w-[327px] h-[120px] font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
+              The battery system is built to deliver long-lasting performance throughout the day. Power that adapts to your rhythm, so the music keeps going when you do.
+            </p>
           </div>
-          <div>
-            <div className="flex items-center gap-2"><PlusIcon /><span className="font-montserrat font-semibold text-[18px] leading-[28px] text-[#1A1A1A] ml-1 whitespace-nowrap">Chipsets and design covers</span></div>
-            <p className="font-montserrat text-[16px] leading-[24px] text-[#1A1A1A] mt-1">Powered by the Snapdragon platform, Legacy 1 delivers faster processing, smarter noise control and seamless AI integration.</p>
+
+          {/* Frame 481613 - Chipsets and design covers */}
+          <div className="w-[327px] h-[131px] flex flex-col items-start gap-[5px]">
+            <div className="w-full h-[30px] flex flex-row items-center gap-2">
+              <PlusIcon />
+              <div className="font-montserrat font-semibold text-[20px] leading-[30px] text-[#1A1A1A]">Chipsets and design covers</div>
+            </div>
+            <p className="w-full h-[96px] font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
+              Powered by the Snapdragon platform, Legacy 1 delivers faster processing, smarter noise control and seamless AI integration.
+            </p>
           </div>
         </div>
-        <div className="relative w-full flex items-center justify-center">
-          <div className="relative w-[320px] md:w-[480px] aspect-[834/469]">
-            <OptimizedImage src="/v6/whiteheadphone.png" alt="Exploded modular view" fill fallbackOnly className="object-contain" sizes="100vw" />
-          </div>
+
+        {/* ExplodedView16_9-2 1 - Image */}
+        <div className="relative w-[719px] h-[404px]">
+          <OptimizedImage src="/v6/ExplodedView16_9-2 1.png" alt="Exploded modular view" fill fallbackOnly className="object-contain" sizes="719px" />
         </div>
-        <div className="flex flex-col items-stretch gap-8">
-          <div>
-            <div className="flex items-center gap-2"><PlusIcon /><span className="font-montserrat font-semibold text-[18px] leading-[28px] text-[#1A1A1A] ml-1">Sound drivers</span></div>
-            <p className="font-montserrat text-[16px] leading-[24px] text-[#1A1A1A] mt-1">Precision-built sound drivers deliver clear, balanced audio designed for real-world listening. Each component is engineered to bring detail, depth and control to every frequency.</p>
+
+        {/* Frame 481701 - Second row of 3 features (horizontal) */}
+        <div className="w-full max-w-[1199px] flex flex-row items-start gap-[58px]">
+          {/* Frame 481610 - Snapdragon feature */}
+          <div className="flex-1 max-w-[378px] h-[155px] flex flex-col items-start gap-[5px]">
+            <div className="w-full h-[30px] flex flex-row items-center gap-2">
+              <PlusIcon />
+              <div className="font-montserrat font-semibold text-[20px] leading-[30px] text-[#1A1A1A]">Snapdragon feature</div>
+            </div>
+            <p className="w-[327px] h-[120px] font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
+              Precision-built sound drivers deliver clear, balanced audio designed for real-world listening. Each component is engineered to bring detail, depth and control to every frequency.
+            </p>
           </div>
-          <div>
-            <div className="flex items-center gap-2"><PlusIcon /><span className="font-montserrat font-semibold text-[18px] leading-[28px] text-[#1A1A1A] ml-1">Batteries</span></div>
-            <p className="font-montserrat text-[16px] leading-[24px] text-[#1A1A1A] mt-1">The battery system is built to deliver long-lasting performance throughout the day. Power that adapts to your rhythm, so the music keeps going when you do.</p>
+
+          {/* Frame 481609 - Batteries */}
+          <div className="flex-1 max-w-[378px] h-[155px] flex flex-col items-start gap-[5px]">
+            <div className="w-full h-[30px] flex flex-row items-center gap-2">
+              <PlusIcon />
+              <div className="font-montserrat font-semibold text-[20px] leading-[30px] text-[#1A1A1A]">Batteries</div>
+            </div>
+            <p className="w-[327px] h-[120px] font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
+              The battery system is built to deliver long-lasting performance throughout the day. Power that adapts to your rhythm, so the music keeps going when you do.
+            </p>
           </div>
-          <div>
-            <div className="flex items-center gap-2"><PlusIcon /><span className="font-montserrat font-semibold text-[18px] leading-[28px] text-[#1A1A1A] ml-1 whitespace-nowrap">Chipsets and design covers</span></div>
-            <p className="font-montserrat text-[16px] leading-[24px] text-[#1A1A1A] mt-1">Powered by the Snapdragon platform, Legacy 1 delivers faster processing, smarter noise control and seamless AI integration.</p>
+
+          {/* Frame 481613 - Chipsets and design covers */}
+          <div className="w-[327px] h-[131px] flex flex-col items-start gap-[5px]">
+            <div className="w-full h-[30px] flex flex-row items-center gap-2">
+              <PlusIcon />
+              <div className="font-montserrat font-semibold text-[20px] leading-[30px] text-[#1A1A1A]">Chipsets and design covers</div>
+            </div>
+            <p className="w-full h-[96px] font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
+              Powered by the Snapdragon platform, Legacy 1 delivers faster processing, smarter noise control and seamless AI integration.
+            </p>
           </div>
         </div>
       </div>

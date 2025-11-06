@@ -5,6 +5,7 @@ import NewHeroSection from '@/components/sections/NewHeroSection';
 import SignupCTASection from '@/components/sections/SignupCTASection';
 import ModularFeaturesSection from '@/components/sections/ModularFeaturesSection';
 import DetailsSection from '@/components/sections/DetailsSection';
+import ProductShowcaseSection from '@/components/sections/ProductShowcaseSection';
 import AIPowered from '@/components/sections/AIPowered'; 
 import OtherFeatures from '@/components/sections/OtherFeatures';
 import OurPartners from '@/components/sections/OurPartners';
@@ -18,6 +19,7 @@ export default function Home() {
       {/* InfoImage sections removed per v6 layout */}
       <ModularFeaturesSection />
       <DetailsSection />
+      <ProductShowcaseSection />
       <AIPowered /> 
       <OtherFeatures />
       <OurPartners />
