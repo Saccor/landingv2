@@ -48,9 +48,7 @@ const Header = () => {
       {isMenuOpen && (
         <div className="lg:hidden absolute top-full left-0 w-full bg-black border-t border-white z-40">
           <div className="flex flex-col text-white text-sm md:text-base">
-            <Link href="/survey" className="px-4 py-3 hover:underline" onClick={() => setIsMenuOpen(false)}>
-              Survey
-            </Link>
+            {/* Menu items can be added here */}
           </div>
         </div>
       )}
@@ -73,9 +71,7 @@ const Header = () => {
         </div>
 
         <div className="w-1/3 hidden lg:flex justify-end items-center gap-4">
-          <Link href="/survey" className="text-white text-sm font-medium hover:underline transition">
-            Survey
-          </Link>
+          {/* Navigation items can be added here */}
         </div>
       </div>
     </header>

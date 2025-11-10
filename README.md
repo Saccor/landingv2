@@ -1,12 +1,12 @@
 # 🚀 Arfve Landing Page
 
-*A professional Next.js 15 landing page with real-time subscriber tracking, interactive video experience, and comprehensive survey system*
+*A professional Next.js 15 landing page with real-time subscriber tracking and interactive video experience*
 
-![Next.js](https://img.shields.io/badge/Next.js-15.3.2-black?logo=next.js) ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript) ![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.4-06B6D4?logo=tailwindcss) ![MailerLite](https://img.shields.io/badge/MailerLite-API%20v3-green) ![Supabase](https://img.shields.io/badge/Supabase-2.50.0-3ECF8E?logo=supabase)
+![Next.js](https://img.shields.io/badge/Next.js-15.3.2-black?logo=next.js) ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript) ![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.4-06B6D4?logo=tailwindcss) ![MailerLite](https://img.shields.io/badge/MailerLite-API%20v3-green)
 
 ## 📋 Overview
 
-Professional landing page for **Arfve** featuring real-time subscriber tracking, modular video experience, comprehensive survey system, and advanced analytics integration. Built with modern web technologies and optimized for performance across all devices.
+Professional landing page for **Arfve** featuring real-time subscriber tracking, modular video experience, and advanced analytics integration. Built with modern web technologies and optimized for performance across all devices.
 
 ---
 
@@ -16,12 +16,10 @@ Professional landing page for **Arfve** featuring real-time subscriber tracking,
 - **Real-Time Subscriber Counter** - Live MailerLite integration with webhook updates
 - **Modular Video Section** - Custom video player with fullscreen support and professional controls
 - **Email Subscription System** - Professional signup flow with validation and auto-confirmation
-- **Complete Survey System** - Multi-type questionnaire with Supabase storage and analytics
 - **Pixel-Art Countdown Timer** - Hydration-safe countdown with custom styling
 
 ### 🔧 **Professional Integrations**
 - **MailerLite API v3** - Email marketing, subscriber management, and webhook events
-- **Supabase** - PostgreSQL database for survey responses and real-time analytics  
 - **Google Tag Manager** - Advanced conversion tracking and analytics
 - **GDPR Compliance** - Complete cookie consent system and privacy policy
 
@@ -40,7 +38,6 @@ Professional landing page for **Arfve** featuring real-time subscriber tracking,
 | **Framework** | Next.js | 15.3.2 | React framework with App Router |
 | **Language** | TypeScript | 5.x | Type-safe development |
 | **Styling** | Tailwind CSS | 3.4.1 | Utility-first CSS framework |
-| **Database** | Supabase | 2.50.0 | PostgreSQL with real-time features |
 | **Email** | MailerLite | API v3 | Email marketing automation |
 | **Analytics** | Google Tag Manager | - | Advanced tracking and conversions |
 | **Animations** | Framer Motion | 12.18.1 | Smooth animations and transitions |
@@ -55,16 +52,12 @@ src/
 ├── app/                                    # Next.js 15 App Router
 │   ├── api/                               # API Routes
 │   │   ├── debug/mailerlite/             # Development debugging tools  
-│   │   ├── export-survey/                # Survey data export endpoint
 │   │   ├── live-count/                   # Real-time subscriber count
-│   │   ├── questions/                    # Survey questions API
 │   │   ├── refresh-count/                # Manual count refresh
-│   │   ├── submit-survey/                # Survey submission handler
 │   │   ├── subscribe/                    # Email subscription endpoint
 │   │   ├── subscriber-count/             # MailerLite subscriber count
 │   │   └── webhooks/mailerlite/          # MailerLite webhook handler
 
-│   ├── survey/page.tsx                   # Complete survey experience
 │   ├── privacy-policy/page.tsx           # GDPR privacy policy
 │   ├── cookie-settings/page.tsx          # Cookie preferences management
 │   ├── layout.tsx                       # Root layout with GTM integration
@@ -89,30 +82,6 @@ src/
 │   │   ├── TestimonialSection.tsx       # Customer testimonials
 │   │   ├── SocialMediaSection.tsx       # Social media integration
 │   │   └── BottomSubscribe.tsx          # Final CTA subscription
-│   │
-│   ├── Survey/                          # Survey System (15 files)
-│   │   ├── SurveyIntroSection.tsx       # Survey introduction and entry
-│   │   ├── components/                  # Survey UI components
-│   │   │   ├── Breadcrumb.tsx           # Progress navigation
-│   │   │   ├── ErrorDisplay.tsx         # Error state handling
-│   │   │   ├── IntroScreen.tsx          # Welcome screen
-│   │   │   ├── LoadingOverlay.tsx       # Loading states
-│   │   │   ├── ProgressBar.tsx          # Visual progress indicator
-│   │   │   ├── QuestionRenderer.tsx     # Question type router
-│   │   │   ├── QuestionsScreen.tsx      # Main questions container
-│   │   │   ├── SuccessScreen.tsx        # Completion confirmation
-│   │   │   └── index.ts                 # Component exports
-│   │   ├── Questions/                   # Question Type Components
-│   │   │   ├── LikertScaleScreen.tsx    # 1-5 rating scale questions
-│   │   │   ├── MultipleChoiceScreen.tsx # Multiple selection questions
-│   │   │   ├── OpenEndedScreen.tsx      # Text input questions
-│   │   │   └── SingleChoiceScreen.tsx   # Single selection questions
-│   │   ├── hooks/
-│   │   │   └── useSurveyState.ts        # Survey state management
-│   │   ├── services/
-│   │   │   └── surveyApi.ts             # Survey API integration
-│   │   ├── constants.ts                 # Survey configuration
-│   │   └── types.ts                     # Survey TypeScript types
 │   │
 │   ├── ui/                              # Shared UI Components
 │   │   ├── Button.tsx                   # Professional button component
@@ -146,12 +115,10 @@ src/
 │   └── useSubscriberCount.ts            # Live subscriber count hook
 │
 ├── lib/                                 # Core Utilities & Config
-│   ├── analytics.ts                     # GA4 event tracking
+│   ├── analytics.ts                     # Google Analytics & Tag Manager tracking
 │   ├── animations.ts                    # Framer Motion configurations
 │   ├── consent.ts                       # GDPR consent management
-│   ├── gtm.ts                           # Google Tag Manager setup
 │   ├── liveCountManager.ts              # Real-time count management
-│   ├── supabaseClient.ts                # Database client configuration
 │   └── utils.ts                         # Utility functions
 │
 └── services/                            # External Service Integrations
@@ -168,7 +135,6 @@ src/
 - Node.js 18+ 
 - npm or yarn
 - MailerLite account with API key
-- Supabase project
 - Google Analytics/GTM setup (optional)
 
 ### Installation
@@ -181,7 +147,7 @@ cd landingv2
 # Install dependencies  
 npm install
 
-# Copy environment template
+# Copy environment template (see .env.example for all variables)
 cp .env.example .env.local
 
 # Start development server (runs on port 3001)
@@ -192,20 +158,29 @@ Visit `http://localhost:3001` to see your landing page.
 
 ### Environment Variables
 
+Copy `.env.example` to `.env.local` and fill in your values:
+
+```bash
+cp .env.example .env.local
+```
+
+Then edit `.env.local` with your actual credentials. See `.env.example` for all available variables and their descriptions.
+
+**Required Variables:**
 ```env
 # MailerLite Integration (Required)
 MAILERLITE_API_KEY=ml1_your_api_key_here
 MAILERLITE_GROUP_ID=153205008280585364
+```
 
-# Supabase Database (Required)
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
-SUPABASE_SERVICE_ROLE=your_service_role_key
-
-# Analytics (Optional)
+**Optional Variables:**
+```env
+# Analytics (Optional - for tracking)
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 ```
+
+> **Note:** See `.env.example` for complete documentation of all environment variables.
 
 ---
 
@@ -268,13 +243,6 @@ const videoState = useVideoPlayer(videoConfig);
 - Professional loading and error states
 - Mobile-optimized touch controls
 
-### 📝 **Complete Survey System**
-Multi-question survey with Supabase integration:
-- **Question Types**: Single choice, multiple choice, Likert scale, open-ended
-- **Progress Tracking**: Visual breadcrumb and progress bar
-- **Data Storage**: Supabase with real-time updates
-- **Analytics**: Question completion rates and response analysis
-
 ### 📧 **Professional Email Integration**
 MailerLite API v3 with webhook support:
 - **Auto-Confirmation**: Immediate double opt-in emails
@@ -301,11 +269,139 @@ npm run type-check
 npm run lint
 ```
 
-### Environment Setup
-1. **MailerLite**: Create API key and configure webhook endpoints
-2. **Supabase**: Set up database tables for survey responses
-3. **Analytics**: Configure Google Analytics and GTM containers
-4. **DNS**: Point domain to deployment platform
+### Deployment Platforms
+
+#### Vercel (Recommended)
+1. Push your code to GitHub/GitLab/Bitbucket
+2. Import your repository in [Vercel](https://vercel.com)
+3. Add environment variables in Vercel dashboard:
+   - Go to Project Settings → Environment Variables
+   - Add all variables from `.env.example`
+4. Deploy automatically on every push to main branch
+
+#### Netlify
+1. Connect your repository to Netlify
+2. Build command: `npm run build`
+3. Publish directory: `.next`
+4. Add environment variables in Netlify dashboard (Site Settings → Environment Variables)
+
+#### Other Platforms
+- **Railway**: Supports Next.js out of the box
+- **Render**: Add build command and environment variables
+- **AWS Amplify**: Configure build settings for Next.js
+- **Docker**: Use `node:18-alpine` base image
+
+### Pre-Deployment Checklist
+
+1. **Environment Variables**: Set all required variables in your deployment platform
+   - `MAILERLITE_API_KEY` (Required)
+   - `MAILERLITE_GROUP_ID` (Required)
+   - `NEXT_PUBLIC_GA_ID` (Optional)
+   - `NEXT_PUBLIC_GTM_ID` (Optional)
+
+2. **MailerLite Configuration**:
+   - Create API key in MailerLite dashboard
+   - Configure webhook endpoint: `https://yourdomain.com/api/webhooks/mailerlite`
+   - Set webhook events: `subscriber.created`, `subscriber.updated`
+
+3. **Analytics Setup** (Optional):
+   - Create Google Analytics property
+   - Create Google Tag Manager container
+   - Add GTM and GA IDs to environment variables
+
+4. **Domain Configuration**:
+   - Point your domain to deployment platform
+   - Configure SSL/HTTPS (usually automatic)
+   - Update CORS settings if needed
+
+5. **Testing**:
+   - Test subscription form in production
+   - Verify webhook delivery
+   - Check analytics tracking
+   - Test on mobile devices
+
+---
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+#### **"Service temporarily unavailable" Error**
+- **Cause**: MailerLite API key not configured or invalid
+- **Solution**: 
+  1. Check that `MAILERLITE_API_KEY` is set in `.env.local`
+  2. Verify API key format starts with `ml1_`
+  3. Ensure API key has proper permissions in MailerLite dashboard
+  4. Check MailerLite account status
+
+#### **Subscription Form Not Working**
+- **Cause**: Missing or incorrect environment variables
+- **Solution**:
+  1. Verify `MAILERLITE_API_KEY` and `MAILERLITE_GROUP_ID` are set
+  2. Check browser console for errors
+  3. Verify API endpoint is accessible: `/api/subscribe`
+  4. Test with `npm run test:subscription` (if script exists)
+
+#### **Webhook Not Receiving Updates**
+- **Cause**: Webhook URL not configured or incorrect
+- **Solution**:
+  1. Check webhook URL in MailerLite: `https://yourdomain.com/api/webhooks/mailerlite`
+  2. Verify webhook is enabled and subscribed to correct events
+  3. Check server logs for incoming webhook requests
+  4. Test webhook manually using MailerLite's test feature
+
+#### **Analytics Not Tracking**
+- **Cause**: Missing analytics environment variables
+- **Solution**:
+  1. Verify `NEXT_PUBLIC_GA_ID` and/or `NEXT_PUBLIC_GTM_ID` are set
+  2. Check browser console for GTM/GA errors
+  3. Verify consent settings allow analytics tracking
+  4. Use browser extensions (GTM Debugger, GA Debugger) to test
+
+#### **Build Errors**
+- **Cause**: TypeScript errors or missing dependencies
+- **Solution**:
+  1. Run `npm install` to ensure all dependencies are installed
+  2. Check TypeScript errors: `npm run lint`
+  3. Clear `.next` folder and rebuild: `rm -rf .next && npm run build`
+  4. Verify Node.js version (requires 18+)
+
+#### **Port Already in Use**
+- **Cause**: Another process using port 3000/3001
+- **Solution**:
+  1. Kill process on port: `npx kill-port 3000` (or 3001)
+  2. Use different port: `PORT=3002 npm run dev`
+  3. Check what's using the port: `lsof -i :3000` (Mac/Linux) or `netstat -ano | findstr :3000` (Windows)
+
+#### **Environment Variables Not Loading**
+- **Cause**: File not named correctly or in wrong location
+- **Solution**:
+  1. Ensure file is named `.env.local` (not `.env.local.txt`)
+  2. File must be in project root (same level as `package.json`)
+  3. Restart development server after changing variables
+  4. Check for typos in variable names
+
+#### **Module Not Found Errors**
+- **Cause**: Missing dependencies or incorrect imports
+- **Solution**:
+  1. Run `npm install` to install all dependencies
+  2. Check import paths use `@/` alias correctly
+  3. Verify file paths are correct (case-sensitive on Linux/Mac)
+  4. Clear node_modules and reinstall: `rm -rf node_modules && npm install`
+
+### Getting Help
+
+1. **Check Logs**: Review browser console and server logs for error messages
+2. **Verify Configuration**: Double-check all environment variables are set correctly
+3. **Test Locally**: Ensure everything works in development before deploying
+4. **Documentation**: Review `MAILERLITE_SETUP.md` for MailerLite-specific issues
+
+### Debug Mode
+
+Enable verbose logging by checking:
+- Browser console for client-side errors
+- Terminal/server logs for API errors
+- Network tab in browser DevTools for API requests/responses
 
 ---
 

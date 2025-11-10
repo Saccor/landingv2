@@ -12,16 +12,10 @@
    - Click on your "Simplelanding" group
    - The Group ID is in the URL: `/groups/{GROUP_ID}/subscribers`
 
-3. **Find your Survey Group ID:**
-   - In MailerLite dashboard, go to Subscribers → Groups
-   - Click on your "Survey" group (create one if it doesn't exist)
-   - The Group ID is in the URL: `/groups/{SURVEY_GROUP_ID}/subscribers`
-
-4. **Update your environment variables:**
+3. **Update your environment variables:**
    ```env
    MAILERLITE_API_KEY=your_api_key_here
-   MAILERLITE_GROUP_ID=153205008280585364        # For regular signups (hero/bottom forms)
-   MAILERLITE_SURVEY_GROUP_ID=your_survey_group_id  # For survey emails
+   MAILERLITE_GROUP_ID=153205008280585364
    NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
    NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
    ```
@@ -63,17 +57,12 @@ The service uses MailerLite API v3:
 - API key doesn't have proper permissions
 - API key might be expired
 
-## Current Groups
+## Current Group
 
-**"Simplelanding" group (Regular signups):**
+**"Simplelanding" group:**
 - **Group ID**: `153205008280585364`
-- **Subscribers**: Auto-assigned when users sign up via hero/bottom forms
+- **Subscribers**: Auto-assigned when users sign up via subscription forms
 - **Created**: 2025-05-01
-
-**"Survey" group (Survey emails):**
-- **Group ID**: `[ADD YOUR SURVEY GROUP ID HERE]`
-- **Subscribers**: Auto-assigned when users complete survey with email
-- **Purpose**: Track survey respondents separately
 
 ## Integration Status
 
