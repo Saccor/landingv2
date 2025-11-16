@@ -1,30 +1,28 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
+import logoSvg from '../../public/v6/logo.svg';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="w-full bg-black relative z-50 h-[51px] md:h-[87px] lg:h-20">
-      
+    <header className="w-full bg-white relative z-50 h-[51px] md:h-[87px] lg:h-auto">
+
       {/* Mobile & Tablet Header */}
       <div className="lg:hidden relative h-full flex items-center justify-center">
         {/* Centered Logo */}
-        <Link href="/" className="z-10">
-          <svg 
-            width="77" 
-            height="27" 
-            viewBox="0 0 78 28" 
-            fill="none" 
-            xmlns="http://www.w3.org/2000/svg" 
-            className="w-[77px] h-[27px] md:w-[85px] md:h-[30px]"
-          >
-            <text x="0" y="20" fill="white" fontSize="20" fontFamily="Arial">arfve</text>
-          </svg>
+        <Link href="/" className="z-10 flex items-center">
+          <Image
+            src={logoSvg}
+            alt="Arfve"
+            className="w-[115px] h-[40px] md:w-[127px] md:h-[45px]"
+            width={178}
+            height={63}
+          />
         </Link>
 
         {/* Hamburger positioned from center */}
@@ -36,7 +34,7 @@ const Header = () => {
             left-1/2 
             translate-x-[150px] 
             md:translate-x-[350px]
-            text-white 
+            text-[#1A1A1A] 
             z-20
           "
         >
@@ -46,32 +44,48 @@ const Header = () => {
 
       {/* Mobile Dropdown Menu */}
       {isMenuOpen && (
-        <div className="lg:hidden absolute top-full left-0 w-full bg-black border-t border-white z-40">
-          <div className="flex flex-col text-white text-sm md:text-base">
-            {/* Menu items can be added here */}
+        <div className="lg:hidden absolute top-full left-0 w-full bg-white border-t border-[#1A1A1A]/10 z-40">
+          <div className="flex flex-col text-[#1A1A1A] text-sm md:text-base">
+            <Link href="/survey" className="px-4 py-3 hover:underline" onClick={() => setIsMenuOpen(false)}>
+              Survey
+            </Link>
+            <Link href="/sustainability" className="px-4 py-3 hover:underline" onClick={() => setIsMenuOpen(false)}>
+              Sustainability
+            </Link>
+            <Link href="/privacy" className="px-4 py-3 hover:underline" onClick={() => setIsMenuOpen(false)}>
+              Privacy
+            </Link>
           </div>
         </div>
       )}
 
-      {/* Desktop Header */}
-      <div className="hidden lg:flex max-w-[1440px] mx-auto px-4 lg:px-32 h-full items-center justify-between">
-        <div className="w-1/3" />
+      {/* Desktop Header (Figma v6 pill layout) */}
+      <div className="hidden lg:flex w-full justify-center">
+        {/* Outer canvas: 1440x105 with horizontal padding 124px */}
+        <div className="w-full max-w-[1440px] px-[124px] h-[105px] flex items-center justify-center">
+          {/* Inner pill: 1192x91, bg #E6E6E6, radius 30, spacing px-40, gap 387 */}
+          <div className="w-[1192px] h-[91px] mx-auto bg-[#E6E6E6] rounded-[30px] flex items-center justify-between px-[40px] py-[30px]" style={{ gap: 387 }}>
+            {/* Logo area - scaled up */}
+            <Link href="/" className="flex items-center">
+              <Image
+                src={logoSvg}
+                alt="Arfve"
+                className="w-[177px] h-[46px]"
+                width={178}
+                height={63}
+              />
+            </Link>
 
-        <div className="flex justify-center items-center w-1/3 h-full">
-          <Link href="/" className="relative w-full h-full lg:w-28 lg:h-10 flex items-center justify-center flex-shrink-0">
-            <Image
-              src="/logo.svg"
-              alt="Logo"
-              width={120}
-              height={42}
-              className="object-contain"
-              priority
-            />
-          </Link>
-        </div>
-
-        <div className="w-1/3 hidden lg:flex justify-end items-center gap-4">
-          {/* Navigation items can be added here */}
+            {/* Nav items: Sustainability, Privacy */}
+            <nav className="flex items-center" style={{ gap: 22 }}>
+              <Link href="/sustainability" className="font-montserrat text-[18px] leading-[28px] text-[#1A1A1A] hover:underline">
+                Sustainability
+              </Link>
+              <Link href="/privacy" className="font-montserrat text-[18px] leading-[28px] text-[#1A1A1A] hover:underline">
+                Privacy
+              </Link>
+            </nav>
+          </div>
         </div>
       </div>
     </header>

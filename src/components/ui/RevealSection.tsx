@@ -1,18 +1,85 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { sectionReveal } from '@/lib/animations';
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-export default function RevealSection({ children, className }: { children: React.ReactNode; className?: string }) {
+// Register ScrollTrigger if not already registered
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
+export default function RevealSection({
+  children,
+  className,
+  animationType = 'fade-in-up',
+  delay = 0
+}: {
+  children: React.ReactNode;
+  className?: string;
+  animationType?: 'fade-in-up' | 'fade-in-left' | 'fade-in-right' | 'scale-in';
+  delay?: number;
+}) {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const element = sectionRef.current;
+    if (!element || typeof window === 'undefined') return;
+
+    // Kill any existing ScrollTrigger for this element
+    ScrollTrigger.getAll().forEach(trigger => {
+      if (trigger.vars.trigger === element) {
+        trigger.kill();
+      }
+    });
+
+    // Set initial state
+    let initialProps: any = { opacity: 0 };
+
+    switch (animationType) {
+      case 'fade-in-up':
+        initialProps.y = 50;
+        break;
+      case 'fade-in-left':
+        initialProps.x = -50;
+        break;
+      case 'fade-in-right':
+        initialProps.x = 50;
+        break;
+      case 'scale-in':
+        initialProps.scale = 0.8;
+        break;
+    }
+
+    gsap.set(element, initialProps);
+
+    // Create scroll trigger animation
+    const animation = gsap.to(element, {
+      opacity: 1,
+      y: 0,
+      x: 0,
+      scale: 1,
+      duration: 0.8,
+      delay,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: element,
+        start: 'top 85%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+
+    return () => {
+      if (animation.scrollTrigger) {
+        animation.scrollTrigger.kill();
+      }
+      animation.kill();
+    };
+  }, [animationType, delay]);
+
   return (
-    <motion.section
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-      variants={sectionReveal}
-      className={className}
-    >
+    <section ref={sectionRef} className={className}>
       {children}
-    </motion.section>
+    </section>
   );
 } 

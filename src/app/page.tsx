@@ -1,24 +1,36 @@
 'use client';
 
-import BottomSubscribe from '@/components/sections/BottomSubscribe';
-import SocialMediaSection from '@/components/sections/SocialMediaSection';
-import VisionSection from '@/components/sections/VisionSection';
-import HeroSection from '@/components/sections/HeroSection';
-import FeatureSection from '@/components/sections/FeatureSection';
-import AppSection from '@/components/sections/AppSection';
-import TestimonialSection from '@/components/sections/TestimonialSection';
+import SustainabilitySocialCarousel from '@/components/sustainability/SustainabilitySocialCarousel';
+import NewHeroSection from '@/components/sections/NewHeroSection';
+import LegacyInfoSection from '@/components/sections/LegacyInfoSection';
+import SignupCTASection from '@/components/sections/SignupCTASection';
+import ModularFeaturesSection from '@/components/sections/ModularFeaturesSection';
+import DetailsSection from '@/components/sections/DetailsSection';
+import ColorSelectionSection from '@/components/sections/ColorSelectionSection';
+import ProductShowcaseSection from '@/components/sections/ProductShowcaseSection';
+import AIPowered from '@/components/sections/AIPowered';
+import OtherFeatures from '@/components/sections/OtherFeatures';
+import AdditionalFeaturesSection from '@/components/sections/AdditionalFeaturesSection';
+import OurPartners from '@/components/sections/OurPartners';
 import Footer from '@/components/Footer';
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
-      <HeroSection />
-      <VisionSection />
-      <FeatureSection />
-      <AppSection />
-      <TestimonialSection />
-      <SocialMediaSection />
-      <BottomSubscribe />
+    <div className="bg-white">
+      <NewHeroSection />
+      <SignupCTASection />
+      <LegacyInfoSection />
+      {/* InfoImage sections removed per v6 layout */}
+      <ModularFeaturesSection />
+      <DetailsSection />
+      <ColorSelectionSection />
+      <ProductShowcaseSection />
+      <AIPowered />
+      <OtherFeatures />
+      <AdditionalFeaturesSection />
+      <OurPartners />
+      <SustainabilitySocialCarousel />
+      <SignupCTASection />
       <Footer />
     </div>
   );

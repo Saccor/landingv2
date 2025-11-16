@@ -1,18 +1,18 @@
-import PrivacyHero from '@/components/privacy/PrivacyHero';
-import PrivacyStatement from '@/components/privacy/PrivacyStatement';
-import PrivacyTransparency from '@/components/privacy/PrivacyTransparency';
-import PrivacyControl from '@/components/privacy/PrivacyControl';
+import ComingSoonHero from '@/components/common/ComingSoonHero';
+import SustainabilitySocialCarousel from '@/components/sustainability/SustainabilitySocialCarousel';
 import Footer from '@/components/Footer';
 
 export default function PrivacyPage() {
   return (
-    <main className="bg-black text-white min-h-screen">
-      <PrivacyHero />
-       <PrivacyStatement />
-       <PrivacyTransparency />
-       <PrivacyControl />
-       <Footer />
-      {/* Add more content here */}
+    <main className="bg-white min-h-screen">
+      <ComingSoonHero
+        title="Coming Soon"
+        subtitle="We're developing comprehensive privacy policies and controls. Check back soon for detailed information."
+      />
+      <div className="mt-4 md:mt-8 lg:mt-10">
+        <SustainabilitySocialCarousel />
+      </div>
+      <Footer />
     </main>
   );
 }

@@ -19,6 +19,7 @@ export function useSubscriberCount(): UseSubscriberCountReturn {
   const [error, setError] = useState<string | null>(null);
   const [isLive, setIsLive] = useState(false);
   const [hasRealData, setHasRealData] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     // Try real-time connection first
@@ -63,15 +64,18 @@ export function useSubscriberCount(): UseSubscriberCountReturn {
     // Fallback polling method
     const startPolling = () => {
       const fetchCount = async () => {
+        // Only poll if page is visible
+        if (!isVisible) return;
+
         try {
           setLoading(true);
           setError(null);
-          
+
           const response = await fetch('/api/subscriber-count');
           if (!response.ok) {
             throw new Error('Failed to fetch subscriber count');
           }
-          
+
           const result: SubscriberCount = await response.json();
           setData(result);
           setHasRealData(true);
@@ -87,20 +91,28 @@ export function useSubscriberCount(): UseSubscriberCountReturn {
 
       fetchCount();
       const interval = setInterval(fetchCount, 30 * 1000);
-      
+
       return () => clearInterval(interval);
     };
 
+    // Handle page visibility changes
+    const handleVisibilityChange = () => {
+      setIsVisible(!document.hidden);
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
     // Try live connection first
     const eventSource = connectToLiveUpdates();
-    
+
     // Cleanup
     return () => {
       if (eventSource) {
         eventSource.close();
       }
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, [hasRealData]);
+  }, [hasRealData, isVisible]);
 
   return {
     count: data.count,

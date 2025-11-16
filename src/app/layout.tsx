@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Montserrat, Poppins } from "next/font/google";
 import "./globals.css";
 import GoogleTagManager, { GoogleTagManagerNoScript } from "@/components/ui/GoogleTagManager";
-import Header from "@/components/Header";
 import CookieConsent from "@/components/CookieConsent";
 import { Analytics } from '@vercel/analytics/react';
+import GSAPInitializer from "@/components/GSAPInitializer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -53,12 +53,11 @@ export default function RootLayout({
 
         {/* Page wrapper */}
         <div className="min-h-screen">
-          <Header />
-          
           {/* Main content */}
           <main>{children}</main>
         </div>
 
+        <GSAPInitializer />
         <CookieConsent />
         <Analytics />
       </body>

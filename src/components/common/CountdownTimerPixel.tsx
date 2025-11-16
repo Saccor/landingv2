@@ -333,13 +333,17 @@ export default function CountdownTimerPixel({ targetDate }: CountdownTimerPixelP
   const [segments, setSegments] = useState<TimeSegments | null>(null);
   const [isMounted, setIsMounted] = useState(false);
   const [scale, setScale] = useState(1);
+  const [isVisible, setIsVisible] = useState(true);
 
   /**
    * Update countdown segments
    */
   const updateSegments = useCallback(() => {
-    setSegments(getTimeSegments(new Date(targetDate)));
-  }, [targetDate]);
+    // Only update if page is visible
+    if (isVisible) {
+      setSegments(getTimeSegments(new Date(targetDate)));
+    }
+  }, [targetDate, isVisible]);
 
   useEffect(() => {
     setIsMounted(true);
@@ -354,11 +358,19 @@ export default function CountdownTimerPixel({ targetDate }: CountdownTimerPixelP
     updateScale();
     window.addEventListener('resize', updateScale);
 
+    // Handle page visibility changes
+    const handleVisibilityChange = () => {
+      setIsVisible(!document.hidden);
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
     const interval = setInterval(updateSegments, UPDATE_INTERVAL);
-    
+
     return () => {
       clearInterval(interval);
       window.removeEventListener('resize', updateScale);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, [updateSegments]);
 

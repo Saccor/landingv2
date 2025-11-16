@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 
 interface OptimizedImageProps {
-  src: string; // Base path without extension (e.g., '/heroimg')
+  src: string; // full or base path (e.g., '/heroimg' or '/image.png')
   alt: string;
   width?: number;
   height?: number;
@@ -14,11 +14,11 @@ interface OptimizedImageProps {
   quality?: number;
   fill?: boolean;
   style?: React.CSSProperties;
+  fallbackOnly?: boolean;
 }
 
 /**
- * OptimizedImage component that automatically serves the best image format
- * supported by the browser (AVIF > WebP > original PNG/JPG)
+ * Simplified OptimizedImage: uses only the provided file (no AVIF/WebP sources)
  */
 export default function OptimizedImage({
   src,
@@ -32,30 +32,22 @@ export default function OptimizedImage({
   fill = false,
   style,
 }: OptimizedImageProps) {
-  // Remove any existing extension from src
-  const baseSrc = src.replace(/\.(png|jpg|jpeg)$/i, '');
+  const wrapperStyle: React.CSSProperties | undefined = fill
+    ? { position: 'relative', display: 'block', width: '100%', height: '100%', ...style }
+    : style;
 
   return (
-    <picture>
-      {/* AVIF - Best compression, modern browsers */}
-      <source srcSet={`${baseSrc}.avif`} type="image/avif" />
-      
-      {/* WebP - Great compression, wide browser support */}
-      <source srcSet={`${baseSrc}.webp`} type="image/webp" />
-      
-      {/* Fallback to original format */}
-      <Image
-        src={`${baseSrc}.png`} // Default to PNG fallback
-        alt={alt}
-        width={!fill ? width : undefined}
-        height={!fill ? height : undefined}
-        fill={fill}
-        className={className}
-        sizes={sizes}
-        priority={priority}
-        quality={quality}
-        style={style}
-      />
-    </picture>
+    <Image
+      src={src} // direct path like '/socialmediademopic.png'
+      alt={alt}
+      width={!fill ? width : undefined}
+      height={!fill ? height : undefined}
+      fill={fill}
+      className={className}
+      sizes={sizes}
+      priority={priority}
+      quality={quality}
+      style={fill ? { objectFit: 'cover', ...style } : style}
+    />
   );
-} 
+}

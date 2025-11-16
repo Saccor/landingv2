@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import LinkedInIcon from './icons/LinkedInIcon';
@@ -8,119 +10,111 @@ import YouTubeIcon from './icons/YouTubeIcon';
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-black border-t border-gray-500">
-      {/* Container: Clean, simple approach with proper spacing */}
+    <footer className="w-full bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        
-        {/* Layout: Mobile stack, desktop row */}
-        <div className="
-          flex flex-col lg:flex-row 
-          items-center lg:justify-between
-          space-y-6 lg:space-y-0
-          text-center lg:text-left
-        ">
-          
-          {/* Logo: Simple responsive sizing */}
-          <Link href="/" className="
-            flex-shrink-0
-            order-1 lg:order-1
-          ">
-            <Image
-              src="/logo.svg"
-              alt="Logo"
-              width={118.15}
-              height={41}
-              className="object-contain w-[86px] h-[30px] lg:w-[118.15px] lg:h-[41px]"
-            />
-          </Link>
+        <div
+          className="
+            flex flex-col lg:flex-row 
+            items-center lg:items-center
+            justify-between
+            gap-6 lg:gap-0
+            text-center lg:text-left
+          "
+        >
+          {/* Left group: logo + links */}
+          <div className="flex flex-col lg:flex-row items-center lg:items-center lg:space-x-8 space-y-4 lg:space-y-0">
+            <Link href="/" className="flex-shrink-0">
+              <Image
+                src="/v6/logo.svg"
+                alt="Logo"
+                width={118}
+                height={41}
+                className="object-contain w-[86px] h-[30px] lg:w-[118px] lg:h-[41px]"
+              />
+            </Link>
 
-          {/* Navigation Links: Clean responsive layout */}
-          <div className="
-            flex flex-col sm:flex-row items-center
-            space-y-2 sm:space-y-0 sm:space-x-4 lg:space-x-6
-            order-2 lg:order-2
-          ">
-            <Link 
-              href="/privacy-policy" 
+            <div
               className="
-                text-white font-poppins
-                text-sm sm:text-base
-                md:font-montserrat md:text-[18px] md:font-normal md:leading-[28px] md:text-[#F5F5F5]
-                hover:opacity-80 transition-opacity
-                leading-normal
+                flex flex-col sm:flex-row items-center
+                space-y-2 sm:space-y-0 sm:space-x-4 lg:space-x-6
               "
             >
-              Privacy policy
-            </Link>
-            <Link 
-              href="/cookie-settings" 
-              className="
-                text-white font-poppins
-                text-sm sm:text-base
-                md:font-montserrat md:text-[18px] md:font-normal md:leading-[28px] md:text-[#F5F5F5]
-                hover:opacity-80 transition-opacity
-                leading-normal
-              "
-            >
-              Cookie settings
-            </Link>
-            <span className="
-              text-white font-poppins
-              text-sm sm:text-base
-              md:font-montserrat md:text-[18px] md:font-normal md:leading-[28px] md:text-[#F5F5F5]
-              leading-normal
-            ">
-              © 2025 Arfve
-            </span>
+              <Link
+                href="/privacy-policy"
+                className="
+                  text-black font-montserrat text-[16px] leading-[26px]
+                  hover:opacity-70 transition-opacity
+                "
+              >
+                Privacy policy
+              </Link>
+              <Link
+                href="/cookie-settings"
+                className="
+                  text-black font-montserrat text-[16px] leading-[26px]
+                  hover:opacity-70 transition-opacity
+                "
+              >
+                Cookie settings
+              </Link>
+              <span
+                className="
+                  text-black font-montserrat text-[16px] leading-[26px]
+                "
+              >
+                © 2025 Arfve
+              </span>
+            </div>
           </div>
 
-          {/* Social Links: Clean responsive grid */}
-          <div className="
-            flex flex-row items-center justify-center
-            space-x-4 sm:space-x-5 lg:space-x-6
-            order-3 lg:order-3
-          ">
-            <Link 
-              href="https://www.linkedin.com/company/arfve" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="text-white hover:opacity-80 transition-opacity"
+          {/* Right group: social icons */}
+          <div
+            className="
+              flex flex-row items-center justify-center
+              space-x-4 sm:space-x-5 lg:space-x-6
+            "
+          >
+            <Link
+              href="https://www.linkedin.com/company/arfve"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-black hover:opacity-80 transition-opacity"
               aria-label="LinkedIn"
             >
               <LinkedInIcon />
             </Link>
-            <Link 
-              href="https://www.instagram.com/arfve_legacy/" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="text-white hover:opacity-80 transition-opacity"
+            <Link
+              href="https://www.instagram.com/arfve_legacy/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-black hover:opacity-80 transition-opacity"
               aria-label="Instagram"
             >
               <InstagramIcon />
             </Link>
-            <Link 
-              href="https://www.tiktok.com/@arfve_legacy" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="text-white hover:opacity-80 transition-opacity"
+            <Link
+              href="https://www.tiktok.com/@arfve_legacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-black hover:opacity-80 transition-opacity"
               aria-label="TikTok"
             >
               <TikTokIcon />
             </Link>
-            <Link 
-              href="https://www.facebook.com/arfve.legacy/" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="text-white hover:opacity-80 transition-opacity"
+            <Link
+              href="https://www.facebook.com/arfve.legacy/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-black hover:opacity-80 transition-opacity"
               aria-label="Facebook"
             >
               <FacebookIcon />
             </Link>
-            <Link 
-              href="https://www.youtube.com/@Arfve-ll7vt" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="text-white hover:opacity-80 transition-opacity"
+            <Link
+              href="https://www.youtube.com/@Arfve-ll7vt"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-black hover:opacity-80 transition-opacity"
               aria-label="YouTube"
             >
               <YouTubeIcon />
@@ -132,4 +126,4 @@ const Footer = () => {
   );
 };
 
-export default Footer; 
+export default Footer;

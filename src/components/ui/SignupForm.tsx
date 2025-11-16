@@ -2,76 +2,20 @@
 
 import { useState, useEffect } from 'react';
 import { trackEvent } from '@/lib/analytics';
-
-// Simple Button component without external dependencies
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline';
-  size?: 'sm' | 'md' | 'lg';
-  children: React.ReactNode;
-  className?: string;
-  isLoading?: boolean;
-}
-
-function Button({
-  variant = 'primary',
-  size = 'md',
-  children,
-  className = '',
-  isLoading = false,
-  disabled,
-  ...props
-}: ButtonProps) {
-  const isDisabled = disabled || isLoading;
-  
-  const variantStyles = {
-    primary: 'bg-white text-black hover:bg-gray-100 hover:scale-105 hover:shadow-lg hover:shadow-white/20 active:bg-gray-200 active:scale-100 active:shadow-md transform transition-all duration-200 ease-out',
-    secondary: 'bg-transparent text-white border border-white/20 hover:border-white/40 hover:bg-white/5 hover:scale-105 hover:shadow-md hover:shadow-white/10 active:scale-100 transform transition-all duration-200 ease-out',
-    outline: 'bg-transparent text-white border border-white hover:bg-white hover:text-black hover:scale-105 hover:shadow-lg hover:shadow-white/20 active:scale-100 transform transition-all duration-200 ease-out'
-  };
-  
-  const sizeStyles = {
-    sm: 'h-10 px-4 text-sm',
-    md: 'h-12 px-6 text-base',
-    lg: 'h-14 px-8 text-lg'
-  };
-  
-  const classNames = [
-    'font-medium font-poppins rounded-full whitespace-nowrap',
-    'focus:outline-none focus:ring-2 focus:ring-white/20 focus:scale-105',
-    'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none',
-    variantStyles[variant],
-    sizeStyles[size],
-    className
-  ].filter(Boolean).join(' ');
-
-  return (
-    <button
-      className={classNames}
-      disabled={isDisabled}
-      {...props}
-    >
-      {isLoading ? (
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-          <span>Loading...</span>
-        </div>
-      ) : (
-        children
-      )}
-    </button>
-  );
-}
+import Button from '@/components/ui/button';
 
 interface SignupFormProps {
   className?: string;
   buttonText?: string;
   onSuccess?: () => void;
+  theme?: 'dark' | 'lightV6';
 }
 
 export default function SignupForm({
   className = '',
   buttonText = 'Sign-up',
-  onSuccess
+  onSuccess,
+  theme = 'dark'
 }: SignupFormProps) {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -81,7 +25,7 @@ export default function SignupForm({
 
   useEffect(() => {
     setIsMounted(true);
-    
+
     const updateScale = () => {
       if (typeof window !== 'undefined') {
         // Only apply scaling on mobile, let tablet and desktop use full size
@@ -95,7 +39,7 @@ export default function SignupForm({
 
     updateScale();
     window.addEventListener('resize', updateScale);
-    
+
     return () => window.removeEventListener('resize', updateScale);
   }, []);
 
@@ -129,7 +73,7 @@ export default function SignupForm({
       setStatus('success');
       setMessage('Thank you for subscribing!');
       setEmail('');
-      
+
       // Track successful signup
       trackEvent({
         action: 'newsletter_signup_success',
@@ -137,12 +81,12 @@ export default function SignupForm({
         label: 'signup_form',
         value: 1
       });
-      
+
       onSuccess?.();
     } catch (error) {
       setStatus('error');
       setMessage(error instanceof Error ? error.message : 'Something went wrong. Please try again.');
-      
+
       // Track signup error
       trackEvent({
         action: 'newsletter_signup_error',
@@ -152,11 +96,73 @@ export default function SignupForm({
     }
   };
 
+  if (theme === 'lightV6') {
+    return (
+      <div className={`w-full flex flex-col items-center gap-3 ${className}`}>
+        <div className="flex justify-center" style={isMounted ? { transform: `scale(${scale})`, transformOrigin: 'center' } : undefined}>
+          <form
+            onSubmit={handleSubmit}
+            className="
+              box-border
+              flex flex-row items-center
+              rounded-[28px] border border-[#626262]
+              gap-[10px]
+              bg-transparent
+              overflow-hidden
+              /* Mobile: 315px width, 44px height, padding 4px 4px 4px 20px */
+              w-[315px] h-[44px] py-[4px] pl-[20px] pr-[4px]
+              /* Desktop: Keep original wider size */
+              lg:w-[431px]
+            "
+          >
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              placeholder="Email"
+              className="
+                flex-1 min-w-0 h-[36px] bg-transparent outline-none border-0
+                font-montserrat font-normal text-[14px] leading-[20px]
+                text-[#1A1A1A] placeholder-[#868889]
+              "
+            />
+            <Button
+              type="submit"
+              variant="solidGray"
+              size="sm"
+              isLoading={status === 'loading'}
+              className="
+                !box-border
+                !flex !items-center !justify-center
+                !w-[178px] !h-[36px] !py-[4px] !px-[20px]
+                !rounded-[55px] !bg-[#545454]
+                font-montserrat font-medium !text-[14px] !leading-[20px]
+                !text-white !text-center
+                !flex-none
+                !shrink-0
+              "
+            >
+              {buttonText}
+            </Button>
+          </form>
+        </div>
+        {message && (
+          <div style={isMounted ? { transform: `scale(${scale})`, transformOrigin: 'center' } : undefined}>
+            <p className={`text-center w-full px-4 sm:px-0 text-sm md:text-sm ${status === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+              {message}
+            </p>
+          </div>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div className={`w-full flex flex-col items-center gap-3 ${className}`}>
-      <div 
+      <div
         className="w-full flex justify-center"
-        style={isMounted ? { 
+        style={isMounted ? {
           transform: `scale(${scale})`,
           transformOrigin: 'center',
         } : undefined}
@@ -167,12 +173,12 @@ export default function SignupForm({
           /* Mobile: Compact form (0-767px) */
           w-[300px] h-[38px]
           
-          /* Tablet: Match image layout (768px-1023px) */
+          /* Tablet: Wider (768px-1023px) */
           md:w-[420px] md:h-[44px] md:gap-2
           
-          /* Desktop: Full form (1024px+) */
-          lg:w-[350px] lg:h-[42px] lg:gap-3
-          xl:w-[369px] xl:h-[44px]
+          /* Desktop: Expand to fit CTA section (1024px+) */
+          lg:w-[460px] lg:h-[42px] lg:gap-3
+          xl:w-[535px] xl:h-[44px]
         ">
           <input
             type="email"
@@ -195,37 +201,25 @@ export default function SignupForm({
               /* Tablet: Long input like in image (768px-1023px) */
               md:w-[330px] md:h-[44px] md:text-base md:px-6
               
-              /* Desktop: Full input (1024px+) */
-              lg:w-[220px] lg:h-[42px] lg:text-sm lg:px-5
-              xl:w-[227px] xl:h-[44px] xl:text-sm
+              /* Desktop: Wider input (1024px+) to fit long button label */
+              lg:w-[320px] lg:h-[42px] lg:text-sm lg:px-5
+              xl:w-[355px] xl:h-[44px] xl:text-sm
             "
           />
           <Button
             type="submit"
-            variant="primary"
+            variant="solidGray"
             size="md"
             isLoading={status === 'loading'}
-            className="
-              rounded-full whitespace-nowrap
-              
-              /* Mobile: Compact button (0-767px) */
-              h-[38px] px-4 text-sm
-              
-              /* Tablet: Fixed 97x44 button (768px-1023px) */
-              md:w-[97px] md:h-[44px] md:px-4 md:text-sm md:font-medium
-              
-              /* Desktop: Full button (1024px+) */
-              lg:h-[42px] lg:px-5 lg:text-sm lg:w-auto
-              xl:h-[44px] xl:px-6 xl:text-base
-            "
+            className="h-[36px] px-[20px] rounded-[55px] bg-[#545454] text-white text-[14px] leading-[20px] font-montserrat"
           >
             {buttonText}
           </Button>
         </form>
       </div>
       {message && (
-        <div 
-          style={isMounted ? { 
+        <div
+          style={isMounted ? {
             transform: `scale(${scale})`,
             transformOrigin: 'center',
           } : undefined}
