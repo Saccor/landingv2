@@ -4,6 +4,13 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+interface GSAPAnimationProps {
+  opacity: number;
+  y?: number;
+  x?: number;
+  scale?: number;
+}
+
 // Register ScrollTrigger if not already registered
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -34,7 +41,7 @@ export default function RevealSection({
     });
 
     // Set initial state
-    let initialProps: any = { opacity: 0 };
+    const initialProps: GSAPAnimationProps = { opacity: 0 };
 
     switch (animationType) {
       case 'fade-in-up':

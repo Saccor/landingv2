@@ -32,9 +32,6 @@ export default function OptimizedImage({
   fill = false,
   style,
 }: OptimizedImageProps) {
-  const wrapperStyle: React.CSSProperties | undefined = fill
-    ? { position: 'relative', display: 'block', width: '100%', height: '100%', ...style }
-    : style;
 
   return (
     <Image

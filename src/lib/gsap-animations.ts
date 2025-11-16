@@ -48,7 +48,7 @@ export const initGSAPScrollAnimations = () => {
         }
 
         // Fade in from bottom animation
-        fadeInUpElements.forEach((element: any) => {
+        (fadeInUpElements as Element[]).forEach((element) => {
             gsap.to(element, {
                 opacity: 1,
                 y: 0,
@@ -63,7 +63,7 @@ export const initGSAPScrollAnimations = () => {
         });
 
         // Fade in from left animation
-        fadeInLeftElements.forEach((element: any) => {
+        (fadeInLeftElements as Element[]).forEach((element) => {
             gsap.to(element, {
                 opacity: 1,
                 x: 0,
@@ -78,7 +78,7 @@ export const initGSAPScrollAnimations = () => {
         });
 
         // Fade in from right animation
-        fadeInRightElements.forEach((element: any) => {
+        (fadeInRightElements as Element[]).forEach((element) => {
             gsap.to(element, {
                 opacity: 1,
                 x: 0,
@@ -93,7 +93,7 @@ export const initGSAPScrollAnimations = () => {
         });
 
         // Scale in animation
-        scaleInElements.forEach((element: any) => {
+        (scaleInElements as Element[]).forEach((element) => {
             gsap.to(element, {
                 opacity: 1,
                 scale: 1,
