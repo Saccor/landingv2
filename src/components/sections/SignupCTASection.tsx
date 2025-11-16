@@ -19,8 +19,8 @@ const SignupCTASection: React.FC = () => {
       {/* Desktop layout: 1440x302, padding 40 124, gap 30 */}
       <div className="hidden lg:flex relative w-full max-w-[1440px] h-[302px] items-center justify-center px-[124px] py-[40px]">
         <div className="w-full h-full flex flex-col items-center justify-center gap-[30px] isolation-isolate">
-          <h2 className="w-[600px] max-w-[600px] h-[114px] text-center font-montserrat font-bold text-[30px] leading-[38px] text-[#3E3E3E]">
-            Sign up now to get 50% off, early access, and exclusive updates, countdown’s ticking.
+          <h2 className="w-[700px] max-w-[700px] h-[76px] text-center font-montserrat font-bold text-[30px] leading-[38px] text-[#3E3E3E]">
+            Sign up now to get 50% off, early access, and exclusive updates, countdown&apos;s ticking.
           </h2>
           <div className="w-[431px] h-[78px] flex flex-col items-start gap-[12px]">
             <div className="relative w-full h-[24px] flex items-center">
@@ -35,7 +35,7 @@ const SignupCTASection: React.FC = () => {
       {/* Mobile/Tablet stacked layout */}
       <div className="lg:hidden w-full max-w-[1440px] px-6 py-12 flex flex-col items-center gap-6 bg-white">
         <h2 className="text-center font-montserrat font-bold text-[22px] leading-[30px] text-[#3E3E3E] md:text-[26px] md:leading-[34px]">
-          Sign up now to get 50% off, early access, and exclusive updates, countdown's ticking.
+          Sign up now to get 50% off, early access, and exclusive updates, countdown&apos;s ticking.
         </h2>
         {/* Container: 315px × 116px with counter and form */}
         <div className="w-[315px] h-[116px] flex flex-col items-start gap-[12px] p-0 flex-none z-[3]">

@@ -1,9 +1,102 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import RevealSection from '@/components/ui/RevealSection';
 
+const partnerLogos = [
+  { src: '/shift.png', alt: 'Shift', height: 'h-[40px] w-auto object-contain' },
+  { src: '/monster.png', alt: 'Monster', height: 'h-[28px] w-auto object-contain' },
+  { src: '/codico.png', alt: 'Codico', height: 'h-[28px] w-auto object-contain' },
+];
+
 export default function OurPartners() {
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    // Only enable carousel on mobile (screen width < 768px)
+    const checkMobile = () => window.innerWidth < 768;
+    if (!checkMobile()) return;
+
+    let animationId: number;
+    let position = 0;
+    const speed = 0.5; // Adjust speed here (pixels per frame)
+    let setWidth = 0;
+    let isVisible = true;
+
+    const calculateSetWidth = () => {
+      if (!carousel.firstElementChild) return;
+
+      // Calculate width of one complete set of logos
+      const logos = carousel.children;
+      let totalWidth = 0;
+      const computedStyle = window.getComputedStyle(carousel);
+      const gap = parseFloat(computedStyle.gap) || 32;
+
+      for (let i = 0; i < partnerLogos.length; i++) {
+        const logo = logos[i] as HTMLElement;
+        if (logo) {
+          totalWidth += logo.offsetWidth;
+          if (i < partnerLogos.length - 1) {
+            totalWidth += gap;
+          }
+        }
+      }
+
+      setWidth = totalWidth;
+    };
+
+    const animate = () => {
+      // Only animate if page is visible
+      if (!isVisible) {
+        animationId = requestAnimationFrame(animate);
+        return;
+      }
+
+      if (setWidth === 0) {
+        calculateSetWidth();
+        if (setWidth === 0) {
+          animationId = requestAnimationFrame(animate);
+          return;
+        }
+      }
+
+      position += speed;
+
+      // Seamless infinite loop: when we've scrolled one full set,
+      // jump back to the beginning instantly (user won't notice due to duplicated content)
+      if (position >= setWidth) {
+        position = 0;
+      }
+
+      carousel.style.transform = `translateX(-${position}px)`;
+      animationId = requestAnimationFrame(animate);
+    };
+
+    // Handle page visibility changes
+    const handleVisibilityChange = () => {
+      isVisible = !document.hidden;
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // Small delay to ensure DOM is ready and elements are sized
+    setTimeout(() => {
+      calculateSetWidth();
+      animate();
+    }, 200);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
+
+  // Create enough duplicates for smooth infinite scroll (only for mobile)
+  const duplicatedLogos = [...partnerLogos, ...partnerLogos, ...partnerLogos, ...partnerLogos, ...partnerLogos];
+
   return (
     <RevealSection className="w-full relative bg-[white]">
       <section
@@ -33,12 +126,29 @@ export default function OurPartners() {
           </h2>
         </header>
 
-        {/* Logos */}
+        {/* Mobile Carousel */}
+        <div className="w-full overflow-hidden mt-8 md:hidden">
+          <div
+            ref={carouselRef}
+            className="flex items-center gap-8 transition-none"
+            style={{ width: 'fit-content' }}
+          >
+            {duplicatedLogos.map((logo, index) => (
+              <img
+                key={`${logo.alt}-${index}`}
+                src={logo.src}
+                alt={logo.alt}
+                className={`${logo.height} flex-shrink-0`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Tablet & Desktop Static Layout */}
         <div
           className="
-            w-full flex flex-wrap items-center justify-center
-            gap-8 mt-8
-            md:gap-12 md:mt-10
+            hidden md:flex w-full flex-wrap items-center justify-center
+            gap-12 mt-10
             lg:gap-20 lg:mt-12
           "
         >
@@ -47,8 +157,7 @@ export default function OurPartners() {
             src="/shift.png"
             alt="Shift"
             className="
-              h-[40px] w-auto object-contain
-              md:h-[50px]
+              h-[50px] w-auto object-contain
               lg:h-[60px]
             "
           />
@@ -58,30 +167,17 @@ export default function OurPartners() {
             src="/monster.png"
             alt="Monster"
             className="
-              h-[28px] w-auto object-contain
-              md:h-[36px]
+              h-[36px] w-auto object-contain
               lg:h-[44px]
             "
           />
 
           {/* Partner 3 */}
           <img
-            src="/qualcomm.png"
-            alt="Qualcomm"
-            className="
-              h-[30px] w-auto object-contain
-              md:h-[38px]
-              lg:h-[46px]
-            "
-          />
-
-          {/* Partner 4 */}
-          <img
             src="/codico.png"
             alt="Codico"
             className="
-              h-[28px] w-auto object-contain
-              md:h-[36px]
+              h-[36px] w-auto object-contain
               lg:h-[44px]
             "
           />

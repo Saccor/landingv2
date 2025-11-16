@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { trackEvent } from '@/lib/analytics';
-import Button from '@/components/ui/Button';
+import Button from '@/components/ui/button';
 
 interface SignupFormProps {
   className?: string;
@@ -25,7 +25,7 @@ export default function SignupForm({
 
   useEffect(() => {
     setIsMounted(true);
-    
+
     const updateScale = () => {
       if (typeof window !== 'undefined') {
         // Only apply scaling on mobile, let tablet and desktop use full size
@@ -39,7 +39,7 @@ export default function SignupForm({
 
     updateScale();
     window.addEventListener('resize', updateScale);
-    
+
     return () => window.removeEventListener('resize', updateScale);
   }, []);
 
@@ -73,7 +73,7 @@ export default function SignupForm({
       setStatus('success');
       setMessage('Thank you for subscribing!');
       setEmail('');
-      
+
       // Track successful signup
       trackEvent({
         action: 'newsletter_signup_success',
@@ -81,12 +81,12 @@ export default function SignupForm({
         label: 'signup_form',
         value: 1
       });
-      
+
       onSuccess?.();
     } catch (error) {
       setStatus('error');
       setMessage(error instanceof Error ? error.message : 'Something went wrong. Please try again.');
-      
+
       // Track signup error
       trackEvent({
         action: 'newsletter_signup_error',
@@ -100,8 +100,8 @@ export default function SignupForm({
     return (
       <div className={`w-full flex flex-col items-center gap-3 ${className}`}>
         <div className="flex justify-center" style={isMounted ? { transform: `scale(${scale})`, transformOrigin: 'center' } : undefined}>
-          <form 
-            onSubmit={handleSubmit} 
+          <form
+            onSubmit={handleSubmit}
             className="
               box-border
               flex flex-row items-center
@@ -160,9 +160,9 @@ export default function SignupForm({
 
   return (
     <div className={`w-full flex flex-col items-center gap-3 ${className}`}>
-      <div 
+      <div
         className="w-full flex justify-center"
-        style={isMounted ? { 
+        style={isMounted ? {
           transform: `scale(${scale})`,
           transformOrigin: 'center',
         } : undefined}
@@ -218,8 +218,8 @@ export default function SignupForm({
         </form>
       </div>
       {message && (
-        <div 
-          style={isMounted ? { 
+        <div
+          style={isMounted ? {
             transform: `scale(${scale})`,
             transformOrigin: 'center',
           } : undefined}

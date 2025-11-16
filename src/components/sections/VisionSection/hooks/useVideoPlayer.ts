@@ -23,7 +23,7 @@ export function useVideoPlayer() {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [wasPlayingBeforeSeeking, setWasPlayingBeforeSeeking] = useState(false);
   const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
-  
+
   // Refs
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -52,7 +52,7 @@ export function useVideoPlayer() {
    */
   const handlePlayPause = useCallback(async () => {
     if (!videoRef.current) return;
-    
+
     try {
       if (isPlaying) {
         // Pausing - maintain current position
@@ -61,17 +61,17 @@ export function useVideoPlayer() {
         setShowControls(true); // Show controls when paused for better UX
       } else {
         setIsLoading(true);
-        
+
         // If this is the first play and we're at thumbnail time, start from beginning
         if (!hasPlayedOnce && videoRef.current.currentTime === VIDEO_CONFIG.THUMBNAIL_TIME) {
           videoRef.current.currentTime = 0;
           setCurrentTime(0);
         }
-        
+
         await videoRef.current.play();
         setIsPlaying(true);
         setHasPlayedOnce(true);
-        
+
         // Auto-hide controls after delay (except in fullscreen when paused)
         if (!isFullscreen) {
           setTimeout(() => setShowControls(false), 3000);
@@ -89,11 +89,11 @@ export function useVideoPlayer() {
    */
   const seekToTime = useCallback((time: number) => {
     if (!videoRef.current || !duration) return;
-    
+
     const clampedTime = Math.max(0, Math.min(time, duration));
     videoRef.current.currentTime = clampedTime;
     setCurrentTime(clampedTime);
-    
+
     // Show controls when seeking
     setShowControls(true);
   }, [duration]);
@@ -112,12 +112,12 @@ export function useVideoPlayer() {
   const toggleMute = useCallback((e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
     if (!videoRef.current) return;
-    
+
     const newMuted = !isMuted;
     videoRef.current.muted = newMuted;
     setIsMuted(newMuted);
     setShowControls(true);
-    
+
     // Auto-hide controls after mute toggle
     setTimeout(() => {
       if (!isFullscreen || isPlaying) {
@@ -151,7 +151,7 @@ export function useVideoPlayer() {
           await (element as ExtendedElement).mozRequestFullScreen?.();
         }
       }
-      
+
       // Always show controls when toggling fullscreen
       setShowControls(true);
     } catch (error) {
@@ -164,12 +164,12 @@ export function useVideoPlayer() {
    */
   const handleProgressClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (!videoRef.current || !duration) return;
-    
+
     e.stopPropagation();
     const rect = e.currentTarget.getBoundingClientRect();
     const pos = (e.clientX - rect.left) / rect.width;
     const newTime = pos * duration;
-    
+
     seekToTime(newTime);
   }, [duration, seekToTime]);
 
@@ -178,21 +178,21 @@ export function useVideoPlayer() {
    */
   const handleProgressMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (!videoRef.current || !duration) return;
-    
+
     e.preventDefault();
     e.stopPropagation();
-    
+
     // Remember if we were playing before seeking
     setWasPlayingBeforeSeeking(isPlaying);
     setIsDragging(true);
-    
+
     const progressBar = e.currentTarget;
     const rect = progressBar.getBoundingClientRect();
     const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
     const newTime = pos * duration;
-    
+
     seekToTime(newTime);
-    
+
     const handleMouseMove = (e: MouseEvent) => {
       if (!videoRef.current || !duration) return;
       const rect = progressBar.getBoundingClientRect();
@@ -205,7 +205,13 @@ export function useVideoPlayer() {
       setIsDragging(false);
       // Resume playback if it was playing before seeking
       if (wasPlayingBeforeSeeking && videoRef.current) {
-        videoRef.current.play().catch(console.error);
+        videoRef.current.play().catch((err) => {
+          // Ignore "interrupted by pause" and "new load request" errors - they're harmless
+          if (!err.message.includes('interrupted by a call to pause') &&
+            !err.message.includes('interrupted by a new load request')) {
+            console.error('Video play error:', err);
+          }
+        });
         setIsPlaying(true);
       }
       document.removeEventListener('mousemove', handleMouseMove);
@@ -221,21 +227,21 @@ export function useVideoPlayer() {
    */
   const handleProgressTouchStart = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
     if (!videoRef.current || !duration) return;
-    
+
     e.preventDefault();
     e.stopPropagation();
-    
+
     setWasPlayingBeforeSeeking(isPlaying);
     setIsDragging(true);
-    
+
     const progressBar = e.currentTarget;
     const touch = e.touches[0];
     const rect = progressBar.getBoundingClientRect();
     const pos = Math.max(0, Math.min(1, (touch.clientX - rect.left) / rect.width));
     const newTime = pos * duration;
-    
+
     seekToTime(newTime);
-    
+
     const handleTouchMove = (e: TouchEvent) => {
       if (!videoRef.current || !duration) return;
       const touch = e.touches[0];
@@ -248,7 +254,13 @@ export function useVideoPlayer() {
     const handleTouchEnd = () => {
       setIsDragging(false);
       if (wasPlayingBeforeSeeking && videoRef.current) {
-        videoRef.current.play().catch(console.error);
+        videoRef.current.play().catch((err) => {
+          // Ignore "interrupted by pause" and "new load request" errors - they're harmless
+          if (!err.message.includes('interrupted by a call to pause') &&
+            !err.message.includes('interrupted by a new load request')) {
+            console.error('Video play error:', err);
+          }
+        });
         setIsPlaying(true);
       }
       document.removeEventListener('touchmove', handleTouchMove);
@@ -265,17 +277,17 @@ export function useVideoPlayer() {
   const handleVolumeChange = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     if (!videoRef.current) return;
-    
+
     const rect = e.currentTarget.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
     const newVolume = Math.max(0, Math.min(1, clickX / rect.width));
-    
+
     videoRef.current.volume = newVolume;
     videoRef.current.muted = false;
     setVolume(newVolume);
     setIsMuted(false);
     setShowControls(true);
-    
+
     // Auto-hide after volume change
     setTimeout(() => {
       if (!isFullscreen || isPlaying) {
@@ -289,10 +301,10 @@ export function useVideoPlayer() {
    */
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (!videoRef.current) return;
-    
+
     // Only handle if video container is focused or in fullscreen
     if (!isFullscreen && !containerRef.current?.contains(document.activeElement)) return;
-    
+
     switch (e.code) {
       case 'Space':
         e.preventDefault();
@@ -344,11 +356,11 @@ export function useVideoPlayer() {
    */
   const showControlsTemporarily = useCallback((duration = 3000) => {
     setShowControls(true);
-    
+
     if (controlsTimeoutRef.current) {
       clearTimeout(controlsTimeoutRef.current);
     }
-    
+
     // Don't auto-hide if paused or in fullscreen while paused
     if (isPlaying || (isFullscreen && !isPlaying)) {
       controlsTimeoutRef.current = setTimeout(() => {
@@ -405,7 +417,7 @@ export function useVideoPlayer() {
 
     // Add keyboard event listeners
     document.addEventListener('keydown', handleKeyDown);
-    
+
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
@@ -422,7 +434,7 @@ export function useVideoPlayer() {
           setCurrentTime(VIDEO_CONFIG.THUMBNAIL_TIME);
         }
       };
-      
+
       if (videoRef.current.readyState >= 2) {
         setThumbnail();
       } else {
@@ -438,7 +450,7 @@ export function useVideoPlayer() {
     const handleFullscreenChange = () => {
       const isNowFullscreen = !!document.fullscreenElement;
       setIsFullscreen(isNowFullscreen);
-      
+
       // Always show controls when entering fullscreen
       if (isNowFullscreen) {
         setShowControls(true);
@@ -446,12 +458,12 @@ export function useVideoPlayer() {
       }
     };
 
-    FULLSCREEN_EVENTS.forEach(event => 
+    FULLSCREEN_EVENTS.forEach(event =>
       document.addEventListener(event, handleFullscreenChange)
     );
 
     return () => {
-      FULLSCREEN_EVENTS.forEach(event => 
+      FULLSCREEN_EVENTS.forEach(event =>
         document.removeEventListener(event, handleFullscreenChange)
       );
     };

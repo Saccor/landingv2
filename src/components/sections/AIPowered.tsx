@@ -2,18 +2,19 @@
 
 import React from 'react';
 import RevealSection from '@/components/ui/RevealSection';
+import FeatureBlock from './FeatureBlock';
 
 export default function AIPowered() {
   return (
     <RevealSection className="w-full relative bg-white">
-  <section
-    className="
+      <section
+        className="
       w-full flex flex-col items-center gap-10
       px-4 py-12
       md:px-20 md:py-[50px] md:gap-[95px]
       lg:px-12 lg:py-20 lg:gap-20
     "
-  >
+      >
         {/* Section header - Frame 481710 */}
         <header
           className="
@@ -21,17 +22,20 @@ export default function AIPowered() {
             flex flex-col items-start gap-[10px]
           "
         >
-          <h2
-            className="
-              w-full h-[88px] md:h-auto
-              font-montserrat font-semibold text-[#1A1A1A]
-              text-[36px] leading-[44px]
-              tracking-[-0.02em]
-            "
-            style={{ textShadow: '0px 0px 37.4px #FFFFFF' }}
-          >
-            AI Powered Earphones
-          </h2>
+          <div className="w-full flex flex-row flex-wrap items-baseline gap-x-[17px] gap-y-0">
+            <h2
+              className="
+                w-full
+                font-montserrat font-semibold text-[#1A1A1A]
+                text-[24px] md:text-[30px] lg:text-[36px]
+                leading-[32px] md:leading-[38px] lg:leading-[44px]
+                tracking-[-0.02em]
+              "
+              style={{ textShadow: '0px 0px 37.4px #FFFFFF' }}
+            >
+              AI-Powered Earbuds & Your <br />Personal Assistant
+            </h2>
+          </div>
           <p
             className="
               w-full h-[140px] md:h-auto
@@ -39,8 +43,7 @@ export default function AIPowered() {
               text-[18px] leading-[28px]
             "
           >
-            Swappable sound drivers, batteries, chipsets, and design covers. Legacy 1 is built to stay.
-            Why throw away the whole product when just one part needs an upgrade?
+            Our intelligent system learns from you, adapts to your environment, and evolves with your listening habits. It enhances every note, conversation, and experience, acting as a personal audio assistant that grows with you.
           </p>
         </header>
 
@@ -53,86 +56,33 @@ export default function AIPowered() {
             lg:grid-cols-2 lg:gap-10
           "
         >
-          {/* Feature 1: Noise Cancellation video */}
-          <article
-            className="
-              flex flex-col gap-5 p-6 rounded-2xl bg-white shadow-[0_4px_20px_rgba(0,0,0,0.05)]
-            "
-          >
-            <h3
-              className="
-                font-montserrat font-semibold text-[#101010]
-                text-[20px] leading-[28px]
-                md:text-[22px] md:leading-[32px]
-                lg:text-[24px] lg:leading-[34px]
-              "
-            >
-              The best industry ANC
-            </h3>
-            <p
-              className="
-                font-montserrat text-[#4F4F4F]
-                max-w-[560px]
-                text-[14px] leading-[22px]
-                md:text-[15px] md:leading-[24px]
-                lg:text-[16px] lg:leading-[25px]
-              "
-            >
-              Experience studio-grade active noise cancellation with real-time environmental
-              adaptation. Focus fully on your sound, wherever you are.
-            </p>
-            <div className="w-full rounded-xl overflow-hidden aspect-[16/9]">
-              <video
-                className="w-full h-full object-cover"
-                src="/NoiseCancellation.mp4"
-                autoPlay
-                muted
-                loop
-                playsInline
-              />
-            </div>
-          </article>
+          <FeatureBlock
+            title="Smart Noise Cancellation & Voice Isolation"
+            description="Focus on what matters. Adaptive noise cancellation blocks distractions, while voice isolation ensures your voice comes through perfectly — even in the busiest environments."
+            media={{ src: "/v6/NoiseCancellationWhiteVersion.mp4" }}
+            isVideo={true}
+          />
 
-          {/* Feature 2: Real-time translation image */}
-          <article
-            className="
-              flex flex-col gap-5 p-6 rounded-2xl bg-white shadow-[0_4px_20px_rgba(0,0,0,0.05)]
-            "
-          >
-            <h3
-              className="
-                font-montserrat font-semibold text-[#101010]
-                text-[20px] leading-[28px]
-                md:text-[22px] md:leading-[32px]
-                lg:text-[24px] lg:leading-[34px]
-              "
-            >
-              Real-time translation
-            </h3>
-            <p
-              className="
-                font-montserrat text-[#4F4F4F]
-                max-w-[560px]
-                text-[14px] leading-[22px]
-                md:text-[15px] md:leading-[24px]
-                lg:text-[16px] lg:leading-[25px]
-              "
-            >
-              Break language barriers with instant AI-driven translation directly in your ears.
-              Communicate effortlessly anywhere in the world.
-            </p>
-            <div
-              className="
-                w-full rounded-xl overflow-hidden aspect-[16/9]
-                bg-cover bg-center
-              "
-              style={{
-                backgroundImage: "url('/AIPoweredPic2.png')",
-              }}
-              aria-label="Real-time translation preview"
-              role="img"
-            />
-          </article>
+          <FeatureBlock
+            title="Note-Taking"
+            description="With Note-Taking, capture voice, media, and documents seamlessly. AI organizes and links everything, delivering curated summaries and insights that grow with you."
+            media={{ src: "/v6/NoteTaking2.mp4" }}
+            isVideo={true}
+          />
+
+          <FeatureBlock
+            title="Live Translation"
+            description="Communicate effortlessly across languages and never have a problem with language again. Instant in-ear and on-screen translation ensures every conversation flows naturally."
+            media={{ src: "/v6/LiveTranslation.png", alt: "Live Translation preview" }}
+            isVideo={false}
+          />
+
+          <FeatureBlock
+            title="Zen Mode"
+            description="Create your personal auditory sanctuary. Zen Mode blends immersive soundscapes and subtle brainwave tones to help you focus, relax or recharge, blocking distractions while guiding your mind to calm and clarity."
+            media={{ src: "/v6/zen_mode.png", alt: "Zen Mode preview" }}
+            isVideo={false}
+          />
         </div>
       </section>
     </RevealSection>

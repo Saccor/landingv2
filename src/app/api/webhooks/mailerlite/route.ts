@@ -54,19 +54,20 @@ function shouldUpdateCount(eventType: string): boolean {
 }
 
 /**
- * Fetches current subscriber count with timeout protection
+ * Fetches current subscriber count with timeout protection (force refresh for webhooks)
  */
 async function fetchCurrentCount(): Promise<number> {
   try {
     const mailerLite = new MailerLiteService();
+    // Use refreshSubscriberCount for webhooks to ensure fresh data
     const count = await Promise.race([
-      mailerLite.getSubscriberCount(),
-      new Promise<never>((_, reject) => 
+      mailerLite.refreshSubscriberCount(),
+      new Promise<never>((_, reject) =>
         setTimeout(() => reject(new Error('Timeout')), CONFIG.TIMEOUT_MS)
       )
     ]);
-    
-    console.log(`Webhook: ✅ Fetched current count: ${count}`);
+
+    console.log(`Webhook: ✅ Fetched fresh current count: ${count}`);
     return count;
   } catch (error) {
     console.error('Webhook: ❌ Failed to fetch current count:', error);
@@ -79,9 +80,9 @@ async function fetchCurrentCount(): Promise<number> {
  */
 function broadcastCountUpdate(count: number): void {
   try {
-    broadcastUpdate({ 
-      count, 
-      total: CONFIG.TOTAL_SPOTS 
+    broadcastUpdate({
+      count,
+      total: CONFIG.TOTAL_SPOTS
     });
     console.log(`Webhook: 📡 Broadcasting count update: ${count}/${CONFIG.TOTAL_SPOTS}`);
   } catch (error) {
@@ -98,11 +99,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     // Parse webhook payload
     const body = await request.text();
-    
+
     if (!body.trim()) {
       console.warn('Webhook: ⚠️ Empty request body received');
       return NextResponse.json(
-        { error: 'Request body is required' }, 
+        { error: 'Request body is required' },
         { status: 400 }
       );
     }
@@ -113,7 +114,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     } catch (parseError) {
       console.error('Webhook: ❌ Invalid JSON payload:', parseError);
       return NextResponse.json(
-        { error: 'Invalid JSON payload' }, 
+        { error: 'Invalid JSON payload' },
         { status: 400 }
       );
     }
@@ -122,7 +123,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     if (!isValidWebhookPayload(webhookData)) {
       console.warn('Webhook: ⚠️ Invalid payload structure:', webhookData);
       return NextResponse.json(
-        { error: 'Invalid webhook payload structure' }, 
+        { error: 'Invalid webhook payload structure' },
         { status: 400 }
       );
     }
@@ -134,10 +135,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       try {
         // Fetch real current count from MailerLite API
         const currentCount = await fetchCurrentCount();
-        
+
         // Broadcast real-time update to all connected clients
         broadcastCountUpdate(currentCount);
-        
+
         console.log(`Webhook: ✅ Successfully processed ${webhookData.type} event`);
       } catch (countError) {
         console.error(`Webhook: ❌ Failed to process ${webhookData.type} event:`, countError);
@@ -149,7 +150,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
 
     // Always return success to MailerLite to prevent retries
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: true,
       processed: shouldUpdateCount(webhookData.type),
       eventType: webhookData.type
@@ -157,10 +158,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   } catch (error) {
     console.error('Webhook: ❌ Unexpected error:', error);
-    
+
     // Return generic error to avoid exposing internal details
     return NextResponse.json(
-      { error: 'Webhook processing failed' }, 
+      { error: 'Webhook processing failed' },
       { status: 500 }
     );
   }

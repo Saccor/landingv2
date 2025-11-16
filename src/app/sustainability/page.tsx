@@ -1,20 +1,18 @@
-import SustainabilityHero from '@/components/sustainability/SustainabilityHero';
-import SustainabilityAwareness from '@/components/sustainability/SustainabilityAwareness';
-import SustainabilityDesign from '@/components/sustainability/SustainabilityDesign';
-import SustainabilityModularity from '@/components/sustainability/SustainabilityModularity';
+import ComingSoonHero from '@/components/common/ComingSoonHero';
 import SustainabilitySocialCarousel from '@/components/sustainability/SustainabilitySocialCarousel';
 import Footer from '@/components/Footer';
 
 export default function SustainabilityPage() {
   return (
-    <main className="min-h-screen bg-black">
-      <SustainabilityHero />
-      <SustainabilityAwareness />
-      <SustainabilityDesign />
-      <SustainabilityModularity />
-      <SustainabilitySocialCarousel className="mt-4 md:mt-8 lg:mt-10" />
+    <main className="min-h-screen bg-white">
+      <ComingSoonHero
+        title="Coming Soon"
+        subtitle="We're working on something amazing for sustainable technology. Stay tuned for updates."
+      />
+      <div className="mt-4 md:mt-8 lg:mt-10">
+        <SustainabilitySocialCarousel />
+      </div>
       <Footer />
-      {/* Add more content below */}
     </main>
   );
 }

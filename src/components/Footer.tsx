@@ -25,7 +25,7 @@ const Footer = () => {
           <div className="flex flex-col lg:flex-row items-center lg:items-center lg:space-x-8 space-y-4 lg:space-y-0">
             <Link href="/" className="flex-shrink-0">
               <Image
-                src="/logo.svg"
+                src="/v6/logo.svg"
                 alt="Logo"
                 width={118}
                 height={41}
@@ -84,7 +84,7 @@ const Footer = () => {
               <LinkedInIcon />
             </Link>
             <Link
-              href="https://www.instagram.com/arfve_legacy/"
+              href="https://www.instagram.com/arfve_official/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-black hover:opacity-80 transition-opacity"
@@ -111,7 +111,7 @@ const Footer = () => {
               <FacebookIcon />
             </Link>
             <Link
-              href="https://www.youtube.com/@Arfve-ll7vt"
+              href="https://www.youtube.com/@arfve_official"
               target="_blank"
               rel="noopener noreferrer"
               className="text-black hover:opacity-80 transition-opacity"
