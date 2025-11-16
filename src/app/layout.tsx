@@ -34,6 +34,9 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Arfve - Shape the future of sustainable sound",
   description: "Join Arfve in revolutionizing audio technology with our modular earbud system. Subscribe now to be part of the future of sustainable sound.",
+  icons: {
+    icon: "/v6/arfve_logo.jpeg",
+  },
 };
 
 export default function RootLayout({
