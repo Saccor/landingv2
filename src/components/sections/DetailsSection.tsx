@@ -258,8 +258,8 @@ const DetailsSection: React.FC = () => {
       {/* Mobile layout */}
       <div className="block md:hidden w-full max-w-[393px] px-5 py-[50px] flex flex-col items-start gap-[50px] bg-white">
         {/* Heading section */}
-        <div className="w-full flex flex-col items-start gap-[10px]">
-          <div className="w-full h-[32px] font-montserrat font-semibold text-[24px] leading-[32px] text-[#1A1A1A]">
+        <div className="w-full flex flex-col items-start gap-[16px]">
+          <div className="w-full font-montserrat font-semibold text-[24px] leading-[32px] text-[#1A1A1A]">
             Innovation, Engineered for You
           </div>
           <p className="w-full font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">

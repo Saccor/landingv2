@@ -35,7 +35,7 @@ const SOCIAL_PLATFORMS: SocialPlatform[] = [
   {
     name: 'TikTok',
     icon: <TikTokIcon />,
-    url: 'https://www.tiktok.com/@arfve_legacy',
+    url: 'https://www.tiktok.com/@arfve_official',
     brandColor: '#000000',
     hoverBgColor: 'hover:bg-[#000000]/5'
   },

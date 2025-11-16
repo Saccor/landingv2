@@ -377,7 +377,7 @@ const ProductShowcaseSection: React.FC = () => {
                   </div>
                 </div>
                 <p className="w-full font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
-                  Experience the future of audio with our revolutionary modular design. Each earbud can be easily disassembled into three distinct components, allowing for unprecedented customization and repairability.
+                  Split into three modular components: battery, chipset, and dynamic driver, crafted for seamless replacement, enduring performance, and continuous evolution.
                 </p>
               </div>
 
@@ -394,7 +394,7 @@ const ProductShowcaseSection: React.FC = () => {
                   </div>
                 </div>
                 <p className="w-full font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
-                  Our precision-engineered case provides ultimate protection while maintaining a sleek, minimalist aesthetic. Crafted with premium materials for durability and style.
+                  Designed with precision and built for endurance, it combines effortless portability with a replaceable battery for lasting performance.
                 </p>
               </div>
             </div>
@@ -407,13 +407,13 @@ const ProductShowcaseSection: React.FC = () => {
               <div className="w-full flex flex-col gap-[20px]">
                 <ExpandableItem
                   title="Earbuds split in 3 parts."
-                  content="Experience the future of audio with our revolutionary modular design. Each earbud can be easily disassembled into three distinct components, allowing for unprecedented customization and repairability."
+                  content="Split into three modular components: battery, chipset, and dynamic driver, crafted for seamless replacement, enduring performance, and continuous evolution."
                   sectionId="earbuds"
                   onExpandChange={handleSectionExpand}
                 />
                 <ExpandableItem
                   title="A well made case"
-                  content="Our precision-engineered case provides ultimate protection while maintaining a sleek, minimalist aesthetic. Crafted with premium materials for durability and style."
+                  content="Designed with precision and built for endurance, it combines effortless portability with a replaceable battery for lasting performance."
                   sectionId="case"
                   onExpandChange={handleSectionExpand}
                 />

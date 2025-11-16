@@ -93,7 +93,7 @@ const Footer = () => {
               <InstagramIcon />
             </Link>
             <Link
-              href="https://www.tiktok.com/@arfve_legacy"
+              href="https://www.tiktok.com/@arfve_official"
               target="_blank"
               rel="noopener noreferrer"
               className="text-black hover:opacity-80 transition-opacity"

@@ -12,9 +12,9 @@ const SignupCTASection: React.FC = () => {
   const claimTextSuffix = 'claimed';
   return (
     <RevealSection className="relative w-full flex justify-center bg-white overflow-hidden">
-      {/* Radials per Figma (bottom left and right) */}
-      <div className="pointer-events-none absolute w-[934px] h-[934px] -left-[467px] -bottom-[467px] rounded-full" style={{ background: 'radial-gradient(50% 50% at 50% 50%, #FFFFFF 0%, rgba(228, 228, 228, 0) 100%)' }} />
-      <div className="pointer-events-none absolute w-[934px] h-[934px] left-[966px] -bottom-[159px] rounded-full" style={{ background: 'radial-gradient(50% 50% at 50% 50%, #FFFFFF 0%, rgba(228, 228, 228, 0) 100%)' }} />
+      {/* Radials per Figma (bottom left and right) - hidden on mobile/tablet */}
+      <div className="hidden lg:block pointer-events-none absolute w-[934px] h-[934px] -left-[467px] -bottom-[467px] rounded-full" style={{ background: 'radial-gradient(50% 50% at 50% 50%, #FFFFFF 0%, rgba(228, 228, 228, 0) 100%)' }} />
+      <div className="hidden lg:block pointer-events-none absolute w-[934px] h-[934px] left-[966px] -bottom-[159px] rounded-full" style={{ background: 'radial-gradient(50% 50% at 50% 50%, #FFFFFF 0%, rgba(228, 228, 228, 0) 100%)' }} />
 
       {/* Desktop layout: 1440x302, padding 40 124, gap 30 */}
       <div className="hidden lg:flex relative w-full max-w-[1440px] h-[302px] items-center justify-center px-[124px] py-[40px]">
