@@ -56,7 +56,7 @@ export default function OtherFeatures() {
                   Transcript & summary
                 </h3>
                 <p className="font-montserrat text-[#4F4F4F] text-[14px] lg:text-[15px]">
-                  Access in one click to your favorite LLM
+                  Conversations captured. Insights delivered.
                 </p>
               </div>
             </article>
@@ -95,7 +95,7 @@ export default function OtherFeatures() {
                   AI driven
                 </h3>
                 <p className="font-montserrat text-[#4F4F4F] text-[14px] lg:text-[15px]">
-                  Access in one click to your favorite LLM
+                  Your world, your AI. Works flawlessly with any ecosystem you choose.
                 </p>
               </div>
             </article>
