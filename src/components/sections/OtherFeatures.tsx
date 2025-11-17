@@ -37,7 +37,7 @@ export default function OtherFeatures() {
               </div>
               <div
                 className="mx-3 mb-3 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[300px] bg-cover bg-center"
-                style={{ backgroundImage: "url('/v6/VoiceIsolation.png')" }}
+                style={{ backgroundImage: "url('/images/VoiceIsolation.png')" }}
                 aria-label="Voice isolation preview"
                 role="img"
               />
@@ -47,7 +47,7 @@ export default function OtherFeatures() {
             <article className="rounded-2xl bg-[#f4f4f4] shadow-[0_2px_12px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col">
               <div
                 className="mx-3 mt-3 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[300px] bg-cover bg-center"
-                style={{ backgroundImage: "url('/v6/Summary.png')" }}
+                style={{ backgroundImage: "url('/images/Summary.png')" }}
                 aria-label="Transcript and summary preview"
                 role="img"
               />
@@ -68,7 +68,7 @@ export default function OtherFeatures() {
             <article className="rounded-2xl bg-[#f4f4f4] shadow-[0_2px_12px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col">
               <div
                 className="mx-3 mt-3 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[300px] bg-cover bg-center"
-                style={{ backgroundImage: "url('/v6/MoodbasedPlaylist.png')" }}
+                style={{ backgroundImage: "url('/images/MoodbasedPlaylist.png')" }}
                 aria-label="Mood based playlist preview"
                 role="img"
               />
@@ -86,7 +86,7 @@ export default function OtherFeatures() {
             <article className="rounded-2xl bg-[#f4f4f4] shadow-[0_2px_12px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col">
               <div
                 className="mx-3 mt-3 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[300px] bg-cover bg-center"
-                style={{ backgroundImage: "url('/v6/AIDriven.png')" }}
+                style={{ backgroundImage: "url('/images/AIDriven.png')" }}
                 aria-label="AI driven feature preview"
                 role="img"
               />

@@ -28,17 +28,25 @@ const NewHeroSection: React.FC = () => {
   // Determine video source based on screen size
   useEffect(() => {
     const updateVideoSrc = () => {
+      // This page is composed with responsive logic to select appropriate hero video:
+      // - Uses window.innerWidth to determine which video source to show:
+      //   * Under 768px: vertical mobile video
+      //   * 768px to under 1024px: square compressed video for tablets
+      //   * 1024px and up: full desktop horizontal video
       if (typeof window === 'undefined') return;
 
       const width = window.innerWidth;
       let src = '';
 
       if (width < 768) {
+        // Mobile: vertical hero video
         src = '/v6/hero/HeroBothVersionsLoopVertical.mp4';
       } else if (width < 1024) {
-        src = '/v6/hero/HeroVideoSquare_compressed.mp4';
+        // Tablet: square/1:1 hero video
+        src = '/v6/hero/HeroBothVersionsLoopSquare.mp4';
       } else {
-        src = '/v6/HeroBothVersionsLoop.mp4';
+        // Desktop: horizontal widescreen hero video
+        src = '/v6/hero/HeroBothVersionsLoopHorizontal.mp4';
       }
 
       setCurrentVideoSrc(src);
@@ -96,7 +104,7 @@ const NewHeroSection: React.FC = () => {
                 flex-none z-10 flex items-center justify-center
               ">
               <Image
-                src="/v6/logo.svg"
+                src="/images/logo.svg"
                 alt="Arfve"
                 width={131}
                 height={46}

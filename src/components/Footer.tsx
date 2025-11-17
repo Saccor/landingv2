@@ -25,7 +25,7 @@ const Footer = () => {
           <div className="flex flex-col lg:flex-row items-center lg:items-center lg:space-x-8 space-y-4 lg:space-y-0">
             <Link href="/" className="flex-shrink-0">
               <Image
-                src="/v6/logo.svg"
+                src="/images/logo.svg"
                 alt="Logo"
                 width={118}
                 height={41}

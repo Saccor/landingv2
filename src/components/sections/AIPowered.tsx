@@ -59,28 +59,28 @@ export default function AIPowered() {
           <FeatureBlock
             title="Smart Noise Cancellation & Voice Isolation"
             description="Focus on what matters. Adaptive noise cancellation blocks distractions, while voice isolation ensures your voice comes through perfectly — even in the busiest environments."
-            media={{ src: "/v6/NoiseCancellationWhiteVersion.mp4" }}
+            media={{ src: "/video/NoiseCancellation.mp4" }}
             isVideo={true}
           />
 
           <FeatureBlock
             title="Note-Taking"
             description="With Note-Taking, capture voice, media, and documents seamlessly. AI organizes and links everything, delivering curated summaries and insights that grow with you."
-            media={{ src: "/v6/NoteTaking2.mp4" }}
+            media={{ src: "/video/NoteTaking2.mp4" }}
             isVideo={true}
           />
 
           <FeatureBlock
             title="Live Translation"
             description="Communicate effortlessly across languages and never have a problem with language again. Instant in-ear and on-screen translation ensures every conversation flows naturally."
-            media={{ src: "/v6/LiveTranslation.png", alt: "Live Translation preview" }}
+            media={{ src: "/images/LiveTranslation.png", alt: "Live Translation preview" }}
             isVideo={false}
           />
 
           <FeatureBlock
             title="Zen Mode"
             description="Create your personal auditory sanctuary. Zen Mode blends immersive soundscapes and subtle brainwave tones to help you focus, relax or recharge, blocking distractions while guiding your mind to calm and clarity."
-            media={{ src: "/v6/zen_mode.png", alt: "Zen Mode preview" }}
+            media={{ src: "/images/zen_mode.png", alt: "Zen Mode preview" }}
             isVideo={false}
           />
         </div>

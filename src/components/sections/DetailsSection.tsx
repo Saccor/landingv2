@@ -270,7 +270,7 @@ const DetailsSection: React.FC = () => {
         {/* Specs image */}
         <div className="relative w-[300px] h-[168px] mx-auto">
           <Image
-            src="/EarbudSpecs2.png"
+            src="/images/EarbudSpecs2.png"
             alt="Earbud specifications"
             fill
             className="object-contain"
@@ -300,7 +300,7 @@ const DetailsSection: React.FC = () => {
         {/* Specs image */}
         <div className="relative w-[400px] h-[225px] mx-auto">
           <Image
-            src="/EarbudSpecs2.png"
+            src="/images/EarbudSpecs2.png"
             alt="Earbud specifications"
             fill
             className="object-contain"
@@ -333,7 +333,7 @@ const DetailsSection: React.FC = () => {
         <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-20" style={{ left: `${centerX}px`, top: `${centerY}px` }}>
           <div className="relative w-[500px] h-[270px]">
             <Image
-              src="/EarbudSpecs2.png"
+              src="/images/EarbudSpecs2.png"
               alt="Earbud specifications"
               fill
               className="object-contain"

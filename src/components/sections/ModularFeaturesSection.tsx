@@ -245,7 +245,7 @@ const ModularFeaturesSection: React.FC = () => {
         <div className="relative w-[351px] h-[198px] rounded-[30px] overflow-hidden">
           <video
             className="absolute inset-0 w-full h-full object-contain"
-            src="/v6/ExplodedView16_9.mp4"
+            src="/video/ExplodedView.mp4"
             autoPlay
             muted
             loop
@@ -285,7 +285,7 @@ const ModularFeaturesSection: React.FC = () => {
         <div className="relative w-[719px] h-[404px] rounded-[30px] overflow-hidden">
           <video
             className="absolute inset-0 w-full h-full object-contain"
-            src="/v6/ExplodedView16_9.mp4"
+            src="/video/ExplodedView.mp4"
             autoPlay
             muted
             loop
@@ -347,7 +347,7 @@ const ModularFeaturesSection: React.FC = () => {
         <div className="relative w-[719px] h-[404px] rounded-[30px] overflow-hidden">
           <video
             className="absolute inset-0 w-full h-full object-contain"
-            src="/v6/ExplodedView16_9.mp4"
+            src="/video/ExplodedView.mp4"
             autoPlay
             muted
             loop

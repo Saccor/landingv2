@@ -7,14 +7,14 @@ import OptimizedImage from '@/components/ui/OptimizedImage';
 
 const colorImages = {
     black: [
-        '/v6/Earbud2Black.png',
-        '/v6/BlackCaseOption1.png',
-        '/v6/Earbud1Black.png'
+        '/images/Earbud2Black.png',
+        '/images/BlackCaseOption1.png',
+        '/images/Earbud1Black.png'
     ],
     white: [
-        '/v6/Earbud2White.png',
-        '/v6/WhiteCaseOption1.png',
-        '/v6/Earbud1White.png'
+        '/images/Earbud2White.png',
+        '/images/WhiteCaseOption1.png',
+        '/images/Earbud1White.png'
     ]
 };
 

@@ -50,7 +50,7 @@ const ComingSoonHero: React.FC<ComingSoonHeroProps> = ({ title, subtitle }) => {
         ">
                     <div className="max-w-xl">
                         <Image
-                            src="/v6/logo.svg"
+                            src="/images/logo.svg"
                             alt="Arfve"
                             width={200}
                             height={70}
