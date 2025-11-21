@@ -337,8 +337,8 @@ const ExpandableItem: React.FC<{
 const ProductShowcaseSection: React.FC = () => {
   const [activeSection, setActiveSection] = useState<string>('earbuds'); // Default to earbuds
 
-  const earbudVideos = ['/video/3pcBlackAnim.mp4', '/video/3pcWhiteAnim.mp4'];
-  const caseVideos = ['/video/3pcBlackAnimCase.mp4', '/video/3pcWhiteAnimCase.mp4'];
+  const earbudVideos = ['/video/3pcBlackAnim.webm', '/video/3pcWhiteAnim.webm'];
+  const caseVideos = ['/video/3pcBlackAnimCase.webm', '/video/3pcWhiteAnimCase.webm'];
 
   const handleSectionExpand = (sectionId: string, isExpanded: boolean) => {
     if (isExpanded) {

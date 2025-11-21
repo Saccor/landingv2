@@ -8,128 +8,157 @@ if (typeof window !== 'undefined') {
 
 // Initialize GSAP scroll animations
 export const initGSAPScrollAnimations = () => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined') return () => { };
 
-    // Create animations for elements with data-gsap attributes
-    const animateElements = () => {
-        // Query elements once and reuse the arrays
-        const fadeInUpElements = gsap.utils.toArray('[data-gsap="fade-in-up"]');
-        const fadeInLeftElements = gsap.utils.toArray('[data-gsap="fade-in-left"]');
-        const fadeInRightElements = gsap.utils.toArray('[data-gsap="fade-in-right"]');
-        const scaleInElements = gsap.utils.toArray('[data-gsap="scale-in"]');
+    try {
+        // Detect mobile for different settings
+        const isMobile = window.innerWidth < 768;
 
-        // Set default properties only if elements exist
-        if (fadeInUpElements.length > 0) {
-            gsap.set(fadeInUpElements, {
-                opacity: 0,
-                y: 50
-            });
-        }
+        // Create animations for elements with data-gsap attributes
+        const animateElements = () => {
+            try {
+                // Query elements once and reuse the arrays
+                const fadeInUpElements = gsap.utils.toArray('[data-gsap="fade-in-up"]');
+                const fadeInLeftElements = gsap.utils.toArray('[data-gsap="fade-in-left"]');
+                const fadeInRightElements = gsap.utils.toArray('[data-gsap="fade-in-right"]');
+                const scaleInElements = gsap.utils.toArray('[data-gsap="scale-in"]');
 
-        if (fadeInLeftElements.length > 0) {
-            gsap.set(fadeInLeftElements, {
-                opacity: 0,
-                x: -50
-            });
-        }
-
-        if (fadeInRightElements.length > 0) {
-            gsap.set(fadeInRightElements, {
-                opacity: 0,
-                x: 50
-            });
-        }
-
-        if (scaleInElements.length > 0) {
-            gsap.set(scaleInElements, {
-                opacity: 0,
-                scale: 0.8
-            });
-        }
-
-        // Fade in from bottom animation
-        (fadeInUpElements as Element[]).forEach((element) => {
-            gsap.to(element, {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: 'power2.out',
-                scrollTrigger: {
-                    trigger: element,
-                    start: 'top 85%',
-                    toggleActions: 'play none none reverse'
+                // Set default properties only if elements exist
+                if (fadeInUpElements.length > 0) {
+                    gsap.set(fadeInUpElements, {
+                        opacity: 0,
+                        y: 50
+                    });
                 }
-            });
-        });
 
-        // Fade in from left animation
-        (fadeInLeftElements as Element[]).forEach((element) => {
-            gsap.to(element, {
-                opacity: 1,
-                x: 0,
-                duration: 0.8,
-                ease: 'power2.out',
-                scrollTrigger: {
-                    trigger: element,
-                    start: 'top 85%',
-                    toggleActions: 'play none none reverse'
+                if (fadeInLeftElements.length > 0) {
+                    gsap.set(fadeInLeftElements, {
+                        opacity: 0,
+                        x: -50
+                    });
                 }
-            });
-        });
 
-        // Fade in from right animation
-        (fadeInRightElements as Element[]).forEach((element) => {
-            gsap.to(element, {
-                opacity: 1,
-                x: 0,
-                duration: 0.8,
-                ease: 'power2.out',
-                scrollTrigger: {
-                    trigger: element,
-                    start: 'top 85%',
-                    toggleActions: 'play none none reverse'
+                if (fadeInRightElements.length > 0) {
+                    gsap.set(fadeInRightElements, {
+                        opacity: 0,
+                        x: 50
+                    });
                 }
-            });
-        });
 
-        // Scale in animation
-        (scaleInElements as Element[]).forEach((element) => {
-            gsap.to(element, {
-                opacity: 1,
-                scale: 1,
-                duration: 0.8,
-                ease: 'power2.out',
-                scrollTrigger: {
-                    trigger: element,
-                    start: 'top 85%',
-                    toggleActions: 'play none none reverse'
+                if (scaleInElements.length > 0) {
+                    gsap.set(scaleInElements, {
+                        opacity: 0,
+                        scale: 0.8
+                    });
                 }
-            });
-        });
-    };
 
-    // Initialize animations on load
-    animateElements();
+                // Mobile-optimized start position
+                const startPosition = isMobile ? 'top 100%' : 'top 85%';
 
-    // Re-initialize on route changes (for SPA navigation)
-    const handleRouteChange = () => {
-        // Small delay to ensure DOM is updated
-        setTimeout(() => {
-            animateElements();
-        }, 100);
-    };
+                // Fade in from bottom animation
+                (fadeInUpElements as Element[]).forEach((element) => {
+                    gsap.to(element, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        ease: 'power2.out',
+                        scrollTrigger: {
+                            trigger: element,
+                            start: startPosition,
+                            toggleActions: 'play none none reverse',
+                            invalidateOnRefresh: true
+                        }
+                    });
+                });
 
-    // Listen for route changes (Next.js specific)
-    if (typeof window !== 'undefined') {
-        window.addEventListener('popstate', handleRouteChange);
-    }
+                // Fade in from left animation
+                (fadeInLeftElements as Element[]).forEach((element) => {
+                    gsap.to(element, {
+                        opacity: 1,
+                        x: 0,
+                        duration: 0.8,
+                        ease: 'power2.out',
+                        scrollTrigger: {
+                            trigger: element,
+                            start: startPosition,
+                            toggleActions: 'play none none reverse',
+                            invalidateOnRefresh: true
+                        }
+                    });
+                });
 
-    return () => {
+                // Fade in from right animation
+                (fadeInRightElements as Element[]).forEach((element) => {
+                    gsap.to(element, {
+                        opacity: 1,
+                        x: 0,
+                        duration: 0.8,
+                        ease: 'power2.out',
+                        scrollTrigger: {
+                            trigger: element,
+                            start: startPosition,
+                            toggleActions: 'play none none reverse',
+                            invalidateOnRefresh: true
+                        }
+                    });
+                });
+
+                // Scale in animation
+                (scaleInElements as Element[]).forEach((element) => {
+                    gsap.to(element, {
+                        opacity: 1,
+                        scale: 1,
+                        duration: 0.8,
+                        ease: 'power2.out',
+                        scrollTrigger: {
+                            trigger: element,
+                            start: startPosition,
+                            toggleActions: 'play none none reverse',
+                            invalidateOnRefresh: true
+                        }
+                    });
+                });
+
+                // Refresh ScrollTrigger after setup (important for mobile)
+                ScrollTrigger.refresh();
+            } catch (error) {
+                console.error('Error animating elements:', error);
+            }
+        };
+
+        // Initialize animations on load
+        animateElements();
+
+        // Re-initialize on route changes (for SPA navigation)
+        const handleRouteChange = () => {
+            // Small delay to ensure DOM is updated
+            setTimeout(() => {
+                animateElements();
+            }, 100);
+        };
+
+        // Refresh ScrollTrigger on resize (important for mobile orientation changes)
+        const handleResize = () => {
+            ScrollTrigger.refresh();
+        };
+
+        // Listen for route changes (Next.js specific)
         if (typeof window !== 'undefined') {
-            window.removeEventListener('popstate', handleRouteChange);
+            window.addEventListener('popstate', handleRouteChange);
+            window.addEventListener('resize', handleResize);
         }
-        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
+
+        return () => {
+            if (typeof window !== 'undefined') {
+                window.removeEventListener('popstate', handleRouteChange);
+                window.removeEventListener('resize', handleResize);
+            }
+            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        };
+    } catch (error) {
+        console.error('Error initializing GSAP:', error);
+        return () => { };
+    }
 };
 
 // Utility function to create staggered animations
@@ -193,36 +222,19 @@ export const fadeInUp = (element: Element, delay: number = 0) => {
 export const preventFlash = () => {
     if (typeof window === 'undefined') return;
 
-    // Add CSS to prevent flash
-    const style = document.createElement('style');
-    style.textContent = `
-    html {
-      opacity: 0;
-      transition: opacity 0.2s ease-out;
-    }
-    html.loaded {
-      opacity: 1 !important;
-    }
-    body {
-      opacity: 0;
-      transition: opacity 0.2s ease-out;
-    }
-    body.loaded {
-      opacity: 1 !important;
-    }
-  `;
-    document.head.appendChild(style);
-
-    // Show content after a short delay and after DOM is ready
+    // Show content immediately - removed opacity hiding to fix mobile white screen issue
     const showContent = () => {
         document.documentElement.classList.add('loaded');
         document.body.classList.add('loaded');
     };
 
+    // Ensure content is visible immediately
+    showContent();
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', showContent);
     } else {
         // Small delay to ensure everything is rendered
-        setTimeout(showContent, 100);
+        setTimeout(showContent, 50);
     }
 };

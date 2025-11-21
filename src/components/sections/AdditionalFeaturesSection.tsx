@@ -9,7 +9,7 @@ const CarouselItem1 = () => (
         <article className="rounded-2xl bg-[#f4f4f4] shadow-[0_2px_12px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col">
             <div
                 className="mx-3 mt-1 mb-1 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[300px] bg-cover bg-center"
-                style={{ backgroundImage: "url('/images/WhiteOpen.png')" }}
+                style={{ backgroundImage: "url('/images/WhiteOpen.webp')" }}
                 aria-label="Open case white preview"
                 role="img"
             />
@@ -18,7 +18,7 @@ const CarouselItem1 = () => (
             <article className="rounded-2xl bg-[#f4f4f4] shadow-[0_2px_12px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col">
                 <div
                     className="mx-3 mt-1 mb-1 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[145px] bg-cover bg-center"
-                    style={{ backgroundImage: "url('/images/WhiteCaseOption2.png')" }}
+                    style={{ backgroundImage: "url('/images/WhiteCaseOption2.webp')" }}
                     aria-label="Black case option 2 preview"
                     role="img"
                 />
@@ -26,7 +26,7 @@ const CarouselItem1 = () => (
             <article className="rounded-2xl bg-[#f4f4f4] shadow-[0_2px_12px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col">
                 <div
                     className="mx-3 mt-1 mb-1 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[145px] bg-cover bg-center"
-                    style={{ backgroundImage: "url('/images/WhiteAngled.png')" }}
+                    style={{ backgroundImage: "url('/images/WhiteAngled.webp')" }}
                     aria-label="White case angled preview"
                     role="img"
                 />
@@ -40,7 +40,7 @@ const CarouselItem2 = () => (
         <article className="rounded-2xl bg-[#f4f4f4] shadow-[0_2px_12px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col">
             <div
                 className="mx-3 mt-1 mb-1 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[300px] bg-cover bg-center"
-                style={{ backgroundImage: "url('/images/BlackOpen.png')" }}
+                style={{ backgroundImage: "url('/images/BlackOpen.webp')" }}
                 aria-label="White case option 2 preview"
                 role="img"
             />
@@ -49,7 +49,7 @@ const CarouselItem2 = () => (
             <article className="rounded-2xl bg-[#f4f4f4] shadow-[0_2px_12px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col">
                 <div
                     className="mx-3 mt-1 mb-1 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[145px] bg-cover bg-center"
-                    style={{ backgroundImage: "url('/images/BlackAngled.png')" }}
+                    style={{ backgroundImage: "url('/images/BlackAngled.webp')" }}
                     aria-label="Black case angled preview"
                     role="img"
                 />
@@ -57,7 +57,7 @@ const CarouselItem2 = () => (
             <article className="rounded-2xl bg-[#f4f4f4] shadow-[0_2px_12px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col">
                 <div
                     className="mx-3 mt-1 mb-1 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[145px] bg-cover bg-center"
-                    style={{ backgroundImage: "url('/images/BlackCaseOption2.png')" }}
+                    style={{ backgroundImage: "url('/images/BlackCaseOption2.webp')" }}
                     aria-label="Black case option 1 preview"
                     role="img"
                 />

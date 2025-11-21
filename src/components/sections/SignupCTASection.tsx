@@ -11,7 +11,7 @@ const SignupCTASection: React.FC = () => {
   const claimTextMain = loading ? 'Loading…' : `${count} of ${total} super early bird spots`;
   const claimTextSuffix = 'claimed';
   return (
-    <RevealSection className="relative w-full flex justify-center bg-white overflow-hidden">
+    <RevealSection className="relative w-full flex justify-center bg-white overflow-hidden" data-signup-section>
       {/* Radials per Figma (bottom left and right) - hidden on mobile/tablet */}
       <div className="hidden lg:block pointer-events-none absolute w-[934px] h-[934px] -left-[467px] -bottom-[467px] rounded-full" style={{ background: 'radial-gradient(50% 50% at 50% 50%, #FFFFFF 0%, rgba(228, 228, 228, 0) 100%)' }} />
       <div className="hidden lg:block pointer-events-none absolute w-[934px] h-[934px] left-[966px] -bottom-[159px] rounded-full" style={{ background: 'radial-gradient(50% 50% at 50% 50%, #FFFFFF 0%, rgba(228, 228, 228, 0) 100%)' }} />

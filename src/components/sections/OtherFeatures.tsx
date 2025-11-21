@@ -37,7 +37,7 @@ export default function OtherFeatures() {
               </div>
               <div
                 className="mx-3 mb-3 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[300px] bg-cover bg-center"
-                style={{ backgroundImage: "url('/images/VoiceIsolation.png')" }}
+                style={{ backgroundImage: "url('/images/VoiceIsolation.webp')" }}
                 aria-label="Voice isolation preview"
                 role="img"
               />
@@ -47,7 +47,7 @@ export default function OtherFeatures() {
             <article className="rounded-2xl bg-[#f4f4f4] shadow-[0_2px_12px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col">
               <div
                 className="mx-3 mt-3 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[300px] bg-cover bg-center"
-                style={{ backgroundImage: "url('/images/Summary.png')" }}
+                style={{ backgroundImage: "url('/images/Summary.webp')" }}
                 aria-label="Transcript and summary preview"
                 role="img"
               />
@@ -64,20 +64,20 @@ export default function OtherFeatures() {
 
           {/* ROW 2 — 40/60 */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:[grid-template-columns:1fr_1.6fr] gap-4 lg:gap-6">
-            {/* Mood based playlist */}
+            {/* Adaptive Audio */}
             <article className="rounded-2xl bg-[#f4f4f4] shadow-[0_2px_12px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col">
               <div
                 className="mx-3 mt-3 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[300px] bg-cover bg-center"
-                style={{ backgroundImage: "url('/images/MoodbasedPlaylist.png')" }}
-                aria-label="Mood based playlist preview"
+                style={{ backgroundImage: "url('/images/MoodbasedPlaylist.webp')" }}
+                aria-label="Adaptive Audio preview"
                 role="img"
               />
               <div className="p-4 pt-2">
                 <h3 className="font-montserrat font-semibold text-[#101010] text-[18px] lg:text-[20px]">
-                  Mood based playlist
+                  Adaptive Audio
                 </h3>
                 <p className="font-montserrat text-[#4F4F4F] text-[14px] lg:text-[15px]">
-                  Access in one click to your favorite LLM
+                  Adjusts in real time to your world for perfect balance and focus.
                 </p>
               </div>
             </article>
@@ -86,7 +86,7 @@ export default function OtherFeatures() {
             <article className="rounded-2xl bg-[#f4f4f4] shadow-[0_2px_12px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col">
               <div
                 className="mx-3 mt-3 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[300px] bg-cover bg-center"
-                style={{ backgroundImage: "url('/images/AIDriven.png')" }}
+                style={{ backgroundImage: "url('/images/AIDriven.webp')" }}
                 aria-label="AI driven feature preview"
                 role="img"
               />

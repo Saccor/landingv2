@@ -21,32 +21,24 @@ interface FeatureData {
 
 const features: FeatureData[] = [
   {
-    title: "Battery",
+    title: "Battery",//Wanted 
     description: "Engineered for longevity. Adaptive power intelligence ensures extended battery life, delivering consistent performance from morning to night."
   },
   {
-    title: "Recycled Materials",
+    title: "Recycled Materials",//Wanted
     description: "Designed with care for both performance and the planet, using recycled materials without compromise on quality or feel."
-  },
-  {
-    title: "Hi-Fi Sound",
-    description: "Pure sound, perfectly balanced. Every note is rendered with precision for an authentic listening experience."
   },
   {
     title: "Snapdragon S7 Pro Chipset",
     description: "Qualcomm's most advanced audio chipset delivers best-in-class sound, intelligent processing, and seamless connectivity."
   },
   {
-    title: "Low Latency",
-    description: "Sound that keeps up with you. Enjoy perfectly synced audio for movies, calls, and games without delay."
+    title: "Multi-AI Assistant Integration",
+    description: "Your world, your AI. Seamlessly works with Siri and Alexa."
   },
   {
     title: "Swedish Design",
     description: "Rooted in Scandinavian minimalism, every detail is crafted for balance, clarity, and purpose where form always follows function."
-  },
-  {
-    title: "Connectivity",
-    description: "Bluetooth 5.4, LE Audio, Auracast, and XPAN Wi-Fi deliver flawless range, stability, and seamless connections"
   },
   {
     title: "Water Resistance",
@@ -248,10 +240,10 @@ const DetailsSection: React.FC = () => {
   // Circle parameters
   const centerX = 720; // Center X coordinate
   const centerY = 680; // Center Y coordinate - positioned to ensure 50px minimum clearance from header
-  const radius = 400; // Radius of the circle - significantly increased for better spread
+  const radius = 375; // Radius of the circle - optimized for 6 features with balanced spacing
 
-  // Custom angles for 8 features - Battery aligned with Snapdragon, uniform spacing
-  const angles = [20, 240, 60, 160, 200, 120, 300, 340];
+  // Custom angles for 6 features - evenly distributed in hexagonal arrangement
+  const angles = [30, 90, 150, 210, 270, 330];
 
   return (
     <RevealSection className="relative w-full flex justify-center bg-white overflow-hidden">
@@ -270,7 +262,7 @@ const DetailsSection: React.FC = () => {
         {/* Specs image */}
         <div className="relative w-[300px] h-[168px] mx-auto">
           <Image
-            src="/images/EarbudSpecs2.png"
+            src="/images/EarbudSpecs2.webp"
             alt="Earbud specifications"
             fill
             className="object-contain"
@@ -300,7 +292,7 @@ const DetailsSection: React.FC = () => {
         {/* Specs image */}
         <div className="relative w-[400px] h-[225px] mx-auto">
           <Image
-            src="/images/EarbudSpecs2.png"
+            src="/images/EarbudSpecs2.webp"
             alt="Earbud specifications"
             fill
             className="object-contain"
@@ -333,7 +325,7 @@ const DetailsSection: React.FC = () => {
         <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-20" style={{ left: `${centerX}px`, top: `${centerY}px` }}>
           <div className="relative w-[500px] h-[270px]">
             <Image
-              src="/images/EarbudSpecs2.png"
+              src="/images/EarbudSpecs2.webp"
               alt="Earbud specifications"
               fill
               className="object-contain"

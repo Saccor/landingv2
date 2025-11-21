@@ -8,27 +8,27 @@ import { gsap } from 'gsap';
 const FEATURES = [
   {
     title: "Studio-Grade Sound",
-    description: "Lossless audio up to 192 kHz for pure, high-fidelity detail."
+    description: "Lossless audio up to 192 kHz for pure, studio-level clarity sound."
   },
   {
-    title: "Adaptive Noise Control",
-    description: "4th-gen ANC that perfectly balances silence and awareness."
+    title: "Active Noise Canceling",
+    description: "4th Generation Adaptive ANC that perfectly balances silence and awareness."
   },
   {
-    title: "AI-Driven Audio",
-    description: "Real-time tuning for your environment and listening habits."
+    title: "Low Latency Mode",
+    description: "Low-latency mode delivers instant sound response, ideal for gaming, movies, and streaming."
   },
   {
-    title: "Personalized Hearing",
-    description: "Built-in compensation enhances every frequency for your unique hearing profile."
+    title: "Smart Battery Optimization",
+    description: "Thoughtfully built for low power consumption, smart technology keeps your audio precise and effortless all day."
   },
   {
     title: "Next-Level Connectivity",
     description: "Bluetooth 5.4, LE Audio, Auracast, and Qualcomm XPAN Wi-Fi ensure flawless range and stability."
   },
   {
-    title: "All-Day Power",
-    description: "Ultra-efficient design delivers enduring performance without compromise."
+    title: "Personalized Hearing",
+    description: "Smart on-device AI adapts to your hearing, your environment, and your listening habits to create a personalized audio experience."
   }
 ] as const;
 
@@ -245,7 +245,7 @@ const ModularFeaturesSection: React.FC = () => {
         <div className="relative w-[351px] h-[198px] rounded-[30px] overflow-hidden">
           <video
             className="absolute inset-0 w-full h-full object-contain"
-            src="/video/ExplodedView.mp4"
+            src="/video/ExplodedView.webm"
             autoPlay
             muted
             loop
@@ -285,7 +285,7 @@ const ModularFeaturesSection: React.FC = () => {
         <div className="relative w-[719px] h-[404px] rounded-[30px] overflow-hidden">
           <video
             className="absolute inset-0 w-full h-full object-contain"
-            src="/video/ExplodedView.mp4"
+            src="/video/ExplodedView.webm"
             autoPlay
             muted
             loop
@@ -347,7 +347,7 @@ const ModularFeaturesSection: React.FC = () => {
         <div className="relative w-[719px] h-[404px] rounded-[30px] overflow-hidden">
           <video
             className="absolute inset-0 w-full h-full object-contain"
-            src="/video/ExplodedView.mp4"
+            src="/video/ExplodedView.webm"
             autoPlay
             muted
             loop
