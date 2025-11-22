@@ -186,43 +186,6 @@ const FeatureItem: React.FC<FeatureItemProps> = ({
   );
 };
 
-// Reusable Feature Section Component
-interface FeatureSectionProps {
-  features: readonly { title: string; description: string }[];
-  layout: 'vertical' | 'horizontal';
-  titleSize?: 'sm' | 'md' | 'lg';
-  descriptionSize?: 'sm' | 'md';
-  maxWidth?: string;
-  gap?: string;
-}
-
-const FeatureSection: React.FC<FeatureSectionProps> = ({
-  features,
-  layout,
-  titleSize = 'md',
-  descriptionSize = 'md',
-  maxWidth,
-  gap = 'gap-[58px]'
-}) => {
-  const containerClasses = layout === 'vertical'
-    ? `flex flex-col items-start ${gap}`
-    : `flex flex-row items-start ${gap}`;
-
-  return (
-    <div className={`w-full ${maxWidth ? `max-w-[${maxWidth}]` : ''} ${containerClasses}`}>
-      {features.map((feature, index) => (
-        <div key={index} className={layout === 'horizontal' ? 'flex-1 max-w-[378px]' : 'w-full'}>
-          <FeatureItem
-            title={feature.title}
-            description={feature.description}
-            titleSize={titleSize}
-            descriptionSize={descriptionSize}
-          />
-        </div>
-      ))}
-    </div>
-  );
-};
 
 const ModularFeaturesSection: React.FC = () => {
   return (
