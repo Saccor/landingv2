@@ -5,10 +5,10 @@ import RevealSection from '@/components/ui/RevealSection';
 
 // Carousel item components with case images
 const CarouselItem1 = () => (
-    <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-4 lg:gap-6 flex-shrink-0 w-[1120px]">
+    <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-4 lg:gap-6 flex-shrink-0 w-[1120px] 3xl:w-[1500px] 4xl:w-[2000px]">
         <article className="rounded-2xl bg-[#f4f4f4] shadow-[0_2px_12px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col">
             <div
-                className="mx-3 mt-1 mb-1 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[300px] bg-cover bg-center"
+                className="mx-3 mt-1 mb-1 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[300px] 3xl:h-[380px] 4xl:h-[480px] bg-cover bg-center"
                 style={{ backgroundImage: "url('/images/WhiteOpen.webp')" }}
                 aria-label="Open case white preview"
                 role="img"
@@ -17,7 +17,7 @@ const CarouselItem1 = () => (
         <div className="flex flex-col gap-4 lg:gap-6">
             <article className="rounded-2xl bg-[#f4f4f4] shadow-[0_2px_12px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col">
                 <div
-                    className="mx-3 mt-1 mb-1 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[145px] bg-cover bg-center"
+                    className="mx-3 mt-1 mb-1 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[145px] 3xl:h-[182px] 4xl:h-[232px] bg-cover bg-center"
                     style={{ backgroundImage: "url('/images/WhiteCaseOption2.webp')" }}
                     aria-label="Black case option 2 preview"
                     role="img"
@@ -25,7 +25,7 @@ const CarouselItem1 = () => (
             </article>
             <article className="rounded-2xl bg-[#f4f4f4] shadow-[0_2px_12px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col">
                 <div
-                    className="mx-3 mt-1 mb-1 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[145px] bg-cover bg-center"
+                    className="mx-3 mt-1 mb-1 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[145px] 3xl:h-[182px] 4xl:h-[232px] bg-cover bg-center"
                     style={{ backgroundImage: "url('/images/WhiteAngled.webp')" }}
                     aria-label="White case angled preview"
                     role="img"
@@ -36,10 +36,10 @@ const CarouselItem1 = () => (
 );
 
 const CarouselItem2 = () => (
-    <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-4 lg:gap-6 flex-shrink-0 w-[1120px]">
+    <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-4 lg:gap-6 flex-shrink-0 w-[1120px] 3xl:w-[1500px] 4xl:w-[2000px]">
         <article className="rounded-2xl bg-[#f4f4f4] shadow-[0_2px_12px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col">
             <div
-                className="mx-3 mt-1 mb-1 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[300px] bg-cover bg-center"
+                className="mx-3 mt-1 mb-1 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[300px] 3xl:h-[380px] 4xl:h-[480px] bg-cover bg-center"
                 style={{ backgroundImage: "url('/images/BlackOpen.webp')" }}
                 aria-label="White case option 2 preview"
                 role="img"
@@ -48,7 +48,7 @@ const CarouselItem2 = () => (
         <div className="flex flex-col gap-4 lg:gap-6">
             <article className="rounded-2xl bg-[#f4f4f4] shadow-[0_2px_12px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col">
                 <div
-                    className="mx-3 mt-1 mb-1 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[145px] bg-cover bg-center"
+                    className="mx-3 mt-1 mb-1 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[145px] 3xl:h-[182px] 4xl:h-[232px] bg-cover bg-center"
                     style={{ backgroundImage: "url('/images/BlackAngled.webp')" }}
                     aria-label="Black case angled preview"
                     role="img"
@@ -56,7 +56,7 @@ const CarouselItem2 = () => (
             </article>
             <article className="rounded-2xl bg-[#f4f4f4] shadow-[0_2px_12px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col">
                 <div
-                    className="mx-3 mt-1 mb-1 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[145px] bg-cover bg-center"
+                    className="mx-3 mt-1 mb-1 rounded-[12px] overflow-hidden h-[220px] md:h-[250px] lg:h-[145px] 3xl:h-[182px] 4xl:h-[232px] bg-cover bg-center"
                     style={{ backgroundImage: "url('/images/BlackCaseOption2.webp')" }}
                     aria-label="Black case option 1 preview"
                     role="img"
@@ -88,8 +88,14 @@ export default function AdditionalFeaturesSection() {
 
             position += speed;
 
-            // Fixed item width (1120px) plus gap (32px)
-            const itemWidth = 1120;
+            // Dynamic item width calculation based on screen size
+            const getItemWidth = () => {
+                if (window.innerWidth >= 2560) return 2000; // 4xl
+                if (window.innerWidth >= 1920) return 1500; // 3xl
+                return 1120; // lg and below
+            };
+
+            const itemWidth = getItemWidth();
             const gap = 32;
             const totalItemWidth = itemWidth + gap;
 
@@ -148,12 +154,15 @@ export default function AdditionalFeaturesSection() {
           px-4 py-10
           md:px-6 md:py-14
           lg:px-12 lg:py-16
+          3xl:px-16 3xl:py-20
+          4xl:px-20 4xl:py-24
+          max-w-[1440px] 3xl:max-w-[1920px] 4xl:max-w-[2560px] mx-auto
         "
             >
                 {/* Header */}
                 <header
                     className="
-                    w-full max-w-[1120px] mx-auto flex flex-col gap-1 text-left
+                    w-full max-w-[1120px] 3xl:max-w-[1500px] 4xl:max-w-[2000px] flex flex-col gap-1 text-left
                   "
                 >
                     <h2
@@ -162,6 +171,8 @@ export default function AdditionalFeaturesSection() {
                       text-[26px] leading-[34px]
                       md:text-[30px]
                       lg:text-[36px]
+                      3xl:text-[42px] 3xl:leading-[52px]
+                      4xl:text-[48px] 4xl:leading-[60px]
                     "
                     >
                         Product overview
@@ -169,10 +180,10 @@ export default function AdditionalFeaturesSection() {
                 </header>
 
                 {/* Carousel Container */}
-                <div className="w-full overflow-hidden mt-8">
+                <div className="w-full overflow-hidden mt-8 3xl:mt-10 4xl:mt-12">
                     <div
                         ref={carouselRef}
-                        className="flex gap-8 transition-none"
+                        className="flex gap-8 3xl:gap-10 4xl:gap-12 transition-none"
                         style={{ width: 'fit-content' }}
                     >
                         {duplicatedItems.map((ItemComponent, index) => (

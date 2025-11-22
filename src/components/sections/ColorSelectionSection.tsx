@@ -177,9 +177,9 @@ const ColorSelectionSection: React.FC = () => {
 
     return (
         <RevealSection className="relative w-full flex justify-center bg-gray-50 overflow-hidden">
-            <div className="w-full max-w-[1440px] px-5 md:px-20 lg:px-[124px] py-[50px] flex flex-col items-center gap-[50px]">
+            <div className="w-full max-w-[1440px] 3xl:max-w-[1920px] 4xl:max-w-[2560px] px-5 md:px-20 lg:px-[124px] 3xl:px-[160px] 4xl:px-[200px] py-[50px] 3xl:py-[60px] 4xl:py-[80px] flex flex-col items-center gap-[50px] 3xl:gap-[60px] 4xl:gap-[80px] mx-auto">
                 {/* Main content container */}
-                <div className="w-full max-w-[1192px] flex flex-col md:flex-row items-stretch gap-[40px] md:gap-[60px]">
+                <div className="w-full max-w-[1192px] 3xl:max-w-[1600px] 4xl:max-w-[2160px] flex flex-col md:flex-row items-stretch gap-[40px] md:gap-[60px] 3xl:gap-[80px] 4xl:gap-[100px]">
                     {/* Left side - Image carousel */}
                     <div className="flex-1 rounded-[30px] overflow-hidden relative group" style={{ backgroundColor: '#F6F6F6' }}>
                         {/* Navigation Buttons */}
@@ -259,10 +259,10 @@ const ColorSelectionSection: React.FC = () => {
                     <div className="flex-1 flex flex-col items-start justify-between">
                         {/* Title */}
                         <div className="w-full flex flex-col items-start gap-[15px]">
-                            <h2 className="font-montserrat font-semibold text-[24px] md:text-[30px] lg:text-[36px] leading-[32px] md:leading-[38px] lg:leading-[44px] text-[#1A1A1A]">
+                            <h2 className="font-montserrat font-semibold text-[24px] md:text-[30px] lg:text-[36px] 3xl:text-[42px] 4xl:text-[48px] leading-[32px] md:leading-[38px] lg:leading-[44px] 3xl:leading-[52px] 4xl:leading-[60px] text-[#1A1A1A]">
                                 Choose Your Color
                             </h2>
-                            <p className="font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
+                            <p className="font-montserrat font-normal text-[16px] 3xl:text-[18px] 4xl:text-[20px] leading-[24px] 3xl:leading-[28px] 4xl:leading-[30px] text-[#1A1A1A]">
                                 Personalize your style. Choose your color and finishes to create earbuds as unique as your sound.
                             </p>
                         </div>

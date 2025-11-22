@@ -237,10 +237,20 @@ const MobileFeatureCarousel: React.FC<{ features: FeatureData[] }> = ({ features
 };
 
 const DetailsSection: React.FC = () => {
-  // Circle parameters
-  const centerX = 720; // Center X coordinate
-  const centerY = 680; // Center Y coordinate - positioned to ensure 50px minimum clearance from header
-  const radius = 375; // Radius of the circle - optimized for 6 features with balanced spacing
+  // Circle parameters - more conservative scaling for larger screens
+  const centerX = 720; // Center X coordinate for lg
+  const centerY = 680; // Center Y coordinate for lg
+  const radius = 375; // Radius for lg
+
+  // More conservative scaling for 3xl (centered for 1920px viewport)
+  const centerX3xl = 960; // Center of 1920px viewport
+  const centerY3xl = 780;
+  const radius3xl = 430;
+
+  // Moderate scaling for 4xl (centered for 2560px viewport)
+  const centerX4xl = 1280; // Center of 2560px viewport
+  const centerY4xl = 880;
+  const radius4xl = 490;
 
   // Custom angles for 6 features - evenly distributed in hexagonal arrangement
   const angles = [30, 90, 150, 210, 270, 330];
@@ -248,7 +258,7 @@ const DetailsSection: React.FC = () => {
   return (
     <RevealSection className="relative w-full flex justify-center bg-white overflow-hidden">
       {/* Mobile layout */}
-      <div className="block md:hidden w-full max-w-[393px] px-5 py-[50px] flex flex-col items-start gap-[50px] bg-white">
+      <div className="block md:hidden w-full max-w-[393px] px-5 py-[80px] flex flex-col items-start gap-[50px] bg-white">
         {/* Heading section */}
         <div className="w-full flex flex-col items-start gap-[16px]">
           <div className="w-full font-montserrat font-semibold text-[24px] leading-[32px] text-[#1A1A1A]">
@@ -276,7 +286,7 @@ const DetailsSection: React.FC = () => {
       </div>
 
       {/* Tablet layout */}
-      <div className="hidden md:flex lg:hidden w-full max-w-[834px] px-20 py-[50px] flex flex-col items-start gap-[95px] bg-white">
+      <div className="hidden md:flex lg:hidden w-full max-w-[834px] px-20 py-[80px] flex flex-col items-start gap-[95px] bg-white">
         {/* Heading section */}
         <div className="w-full max-w-[654px] flex flex-col items-start gap-[10px]">
           <div className="w-full flex flex-row flex-wrap items-baseline gap-x-[17px] gap-y-0">
@@ -305,8 +315,8 @@ const DetailsSection: React.FC = () => {
         <TabletFeatureCarousel features={features} />
       </div>
 
-      {/* Desktop layout: 1440x1150 circular layout */}
-      <div className="hidden lg:block relative w-full max-w-[1440px] h-[1150px]">
+      {/* Desktop layout: lg - 1440x1150 circular layout */}
+      <div className="hidden lg:block 3xl:hidden relative w-full max-w-[1440px] h-[1150px] py-[80px]">
         {/* Top heading group */}
         <div className="absolute left-[124px] top-[50px] w-[1192px] flex flex-col items-start gap-[10px] z-10">
           {/* Heading container */}
@@ -344,6 +354,92 @@ const DetailsSection: React.FC = () => {
             radius={radius}
             centerX={centerX}
             centerY={centerY}
+          />
+        ))}
+      </div>
+
+      {/* 3XL layout: 1920px width circular layout - left-aligned heading */}
+      <div className="hidden 3xl:block 4xl:hidden relative w-full max-w-[1920px] h-[1300px] py-[80px] mx-auto">
+        {/* Top heading group - left-aligned to match other sections */}
+        <div className="absolute left-[160px] top-[50px] w-[1600px] flex flex-col items-start gap-[12px] z-10">
+          {/* Heading container */}
+          <div className="w-full flex flex-row flex-wrap items-start gap-x-[17px] gap-y-0">
+            <div className="font-montserrat font-semibold text-[40px] leading-[50px] text-[#1A1A1A]">
+              Innovation, Engineered for You
+            </div>
+          </div>
+          {/* Description */}
+          <p className="w-full font-montserrat font-semibold text-[22px] leading-[32px] text-[#1A1A1A]">
+            Every feature is engineered to connect, adapt, and elevate your listening experience. Intelligent, intuitive, and effortlessly refined for those who expect nothing less than perfection.
+          </p>
+        </div>
+
+        {/* Central specs image */}
+        <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-20" style={{ left: `${centerX3xl}px`, top: `${centerY3xl}px` }}>
+          <div className="relative w-[575px] h-[310px]">
+            <Image
+              src="/images/EarbudSpecs2.webp"
+              alt="Earbud specifications"
+              fill
+              className="object-contain"
+              priority
+              sizes="575px"
+            />
+          </div>
+        </div>
+
+        {/* Circular features */}
+        {features.map((feature, index) => (
+          <FeatureBlock
+            key={`feature-3xl-${index}`}
+            feature={feature}
+            angle={angles[index]}
+            radius={radius3xl}
+            centerX={centerX3xl}
+            centerY={centerY3xl}
+          />
+        ))}
+      </div>
+
+      {/* 4XL layout: 2560px width circular layout - left-aligned heading */}
+      <div className="hidden 4xl:block relative w-full max-w-[2560px] h-[1450px] py-[100px] mx-auto">
+        {/* Top heading group - left-aligned to match other sections */}
+        <div className="absolute left-[200px] top-[50px] w-[2160px] flex flex-col items-start gap-[14px] z-10">
+          {/* Heading container */}
+          <div className="w-full flex flex-row flex-wrap items-start gap-x-[17px] gap-y-0">
+            <div className="font-montserrat font-semibold text-[44px] leading-[54px] text-[#1A1A1A]">
+              Innovation, Engineered for You
+            </div>
+          </div>
+          {/* Description */}
+          <p className="w-full font-montserrat font-semibold text-[24px] leading-[36px] text-[#1A1A1A]">
+            Every feature is engineered to connect, adapt, and elevate your listening experience. Intelligent, intuitive, and effortlessly refined for those who expect nothing less than perfection.
+          </p>
+        </div>
+
+        {/* Central specs image */}
+        <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-20" style={{ left: `${centerX4xl}px`, top: `${centerY4xl}px` }}>
+          <div className="relative w-[650px] h-[350px]">
+            <Image
+              src="/images/EarbudSpecs2.webp"
+              alt="Earbud specifications"
+              fill
+              className="object-contain"
+              priority
+              sizes="650px"
+            />
+          </div>
+        </div>
+
+        {/* Circular features */}
+        {features.map((feature, index) => (
+          <FeatureBlock
+            key={`feature-4xl-${index}`}
+            feature={feature}
+            angle={angles[index]}
+            radius={radius4xl}
+            centerX={centerX4xl}
+            centerY={centerY4xl}
           />
         ))}
       </div>

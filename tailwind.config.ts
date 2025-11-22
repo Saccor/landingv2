@@ -14,6 +14,8 @@ const config: Config = {
         'lg': '1024px',   // Desktop breakpoint
         'xl': '1280px',   // Large desktop
         '2xl': '1536px',  // Extra large desktop
+        '3xl': '1920px',  // 27" monitors and TVs
+        '4xl': '2560px',  // 4K displays
       },
       colors: {
         background: "var(--background)",

@@ -6,57 +6,41 @@ if (typeof window !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
 }
 
+// Track if animations have been initialized to prevent re-initialization
+let isInitialized = false;
+let isResizing = false;
+
 // Initialize GSAP scroll animations
 export const initGSAPScrollAnimations = () => {
     if (typeof window === 'undefined') return () => { };
 
     try {
-        // Detect mobile for different settings
-        const isMobile = window.innerWidth < 768;
+        // Prevent multiple initializations
+        if (isInitialized) {
+            return () => { };
+        }
 
         // Create animations for elements with data-gsap attributes
         const animateElements = () => {
             try {
+                // Detect mobile for different settings
+                const isMobile = window.innerWidth < 768;
+                const startPosition = isMobile ? 'top 100%' : 'top 85%';
+
                 // Query elements once and reuse the arrays
                 const fadeInUpElements = gsap.utils.toArray('[data-gsap="fade-in-up"]');
                 const fadeInLeftElements = gsap.utils.toArray('[data-gsap="fade-in-left"]');
                 const fadeInRightElements = gsap.utils.toArray('[data-gsap="fade-in-right"]');
                 const scaleInElements = gsap.utils.toArray('[data-gsap="scale-in"]');
 
-                // Set default properties only if elements exist
-                if (fadeInUpElements.length > 0) {
-                    gsap.set(fadeInUpElements, {
+                // Fade in from bottom animation
+                (fadeInUpElements as Element[]).forEach((element) => {
+                    // Set initial state
+                    gsap.set(element, {
                         opacity: 0,
                         y: 50
                     });
-                }
 
-                if (fadeInLeftElements.length > 0) {
-                    gsap.set(fadeInLeftElements, {
-                        opacity: 0,
-                        x: -50
-                    });
-                }
-
-                if (fadeInRightElements.length > 0) {
-                    gsap.set(fadeInRightElements, {
-                        opacity: 0,
-                        x: 50
-                    });
-                }
-
-                if (scaleInElements.length > 0) {
-                    gsap.set(scaleInElements, {
-                        opacity: 0,
-                        scale: 0.8
-                    });
-                }
-
-                // Mobile-optimized start position
-                const startPosition = isMobile ? 'top 100%' : 'top 85%';
-
-                // Fade in from bottom animation
-                (fadeInUpElements as Element[]).forEach((element) => {
                     gsap.to(element, {
                         opacity: 1,
                         y: 0,
@@ -65,14 +49,21 @@ export const initGSAPScrollAnimations = () => {
                         scrollTrigger: {
                             trigger: element,
                             start: startPosition,
-                            toggleActions: 'play none none reverse',
-                            invalidateOnRefresh: true
+                            toggleActions: 'play none none none',
+                            once: false,
+                            fastScrollEnd: true,
+                            preventOverlaps: true
                         }
                     });
                 });
 
                 // Fade in from left animation
                 (fadeInLeftElements as Element[]).forEach((element) => {
+                    gsap.set(element, {
+                        opacity: 0,
+                        x: -50
+                    });
+
                     gsap.to(element, {
                         opacity: 1,
                         x: 0,
@@ -81,14 +72,21 @@ export const initGSAPScrollAnimations = () => {
                         scrollTrigger: {
                             trigger: element,
                             start: startPosition,
-                            toggleActions: 'play none none reverse',
-                            invalidateOnRefresh: true
+                            toggleActions: 'play none none none',
+                            once: false,
+                            fastScrollEnd: true,
+                            preventOverlaps: true
                         }
                     });
                 });
 
                 // Fade in from right animation
                 (fadeInRightElements as Element[]).forEach((element) => {
+                    gsap.set(element, {
+                        opacity: 0,
+                        x: 50
+                    });
+
                     gsap.to(element, {
                         opacity: 1,
                         x: 0,
@@ -97,14 +95,21 @@ export const initGSAPScrollAnimations = () => {
                         scrollTrigger: {
                             trigger: element,
                             start: startPosition,
-                            toggleActions: 'play none none reverse',
-                            invalidateOnRefresh: true
+                            toggleActions: 'play none none none',
+                            once: false,
+                            fastScrollEnd: true,
+                            preventOverlaps: true
                         }
                     });
                 });
 
                 // Scale in animation
                 (scaleInElements as Element[]).forEach((element) => {
+                    gsap.set(element, {
+                        opacity: 0,
+                        scale: 0.8
+                    });
+
                     gsap.to(element, {
                         opacity: 1,
                         scale: 1,
@@ -113,13 +118,18 @@ export const initGSAPScrollAnimations = () => {
                         scrollTrigger: {
                             trigger: element,
                             start: startPosition,
-                            toggleActions: 'play none none reverse',
-                            invalidateOnRefresh: true
+                            toggleActions: 'play none none none',
+                            once: false,
+                            fastScrollEnd: true,
+                            preventOverlaps: true
                         }
                     });
                 });
 
-                // Refresh ScrollTrigger after setup (important for mobile)
+                // Mark as initialized
+                isInitialized = true;
+
+                // Refresh ScrollTrigger after setup
                 ScrollTrigger.refresh();
             } catch (error) {
                 console.error('Error animating elements:', error);
@@ -129,31 +139,34 @@ export const initGSAPScrollAnimations = () => {
         // Initialize animations on load
         animateElements();
 
-        // Re-initialize on route changes (for SPA navigation)
-        const handleRouteChange = () => {
-            // Small delay to ensure DOM is updated
-            setTimeout(() => {
-                animateElements();
-            }, 100);
-        };
-
-        // Refresh ScrollTrigger on resize (important for mobile orientation changes)
+        // Optimized resize handler with debouncing
+        let resizeTimeout: NodeJS.Timeout;
         const handleResize = () => {
-            ScrollTrigger.refresh();
+            // Set resizing flag to pause ScrollTrigger updates
+            if (!isResizing) {
+                isResizing = true;
+            }
+
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                // Only refresh positions, don't re-animate
+                ScrollTrigger.refresh();
+                isResizing = false;
+            }, 250); // Increased debounce time for smoother resize
         };
 
-        // Listen for route changes (Next.js specific)
+        // Listen for resize events
         if (typeof window !== 'undefined') {
-            window.addEventListener('popstate', handleRouteChange);
-            window.addEventListener('resize', handleResize);
+            window.addEventListener('resize', handleResize, { passive: true });
         }
 
         return () => {
             if (typeof window !== 'undefined') {
-                window.removeEventListener('popstate', handleRouteChange);
                 window.removeEventListener('resize', handleResize);
+                clearTimeout(resizeTimeout);
             }
             ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+            isInitialized = false;
         };
     } catch (error) {
         console.error('Error initializing GSAP:', error);

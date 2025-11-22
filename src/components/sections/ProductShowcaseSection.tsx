@@ -28,7 +28,7 @@ const ExpandableIcon: React.FC<{ isExpanded: boolean }> = ({ isExpanded }) => {
       viewBox="0 0 22 22"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="flex-shrink-0"
+      className="flex-shrink-0 3xl:w-[24px] 3xl:h-[24px] 4xl:w-[28px] 4xl:h-[28px]"
     >
       {/* Horizontal line - always visible */}
       <path
@@ -311,9 +311,9 @@ const ExpandableItem: React.FC<{
         onClick={handleToggle}
         className="w-full flex flex-col items-start gap-[5px] cursor-pointer hover:opacity-80 transition-opacity"
       >
-        <div className="w-full h-[24px] flex flex-row items-center gap-2">
+        <div className="w-full h-[24px] 3xl:h-[28px] 4xl:h-[32px] flex flex-row items-center gap-2 3xl:gap-3 4xl:gap-4">
           <ExpandableIcon isExpanded={isExpanded} />
-          <div className="font-montserrat font-semibold text-[18px] leading-[28px] text-[#1A1A1A]">
+          <div className="font-montserrat font-semibold text-[18px] 3xl:text-[22px] 4xl:text-[26px] leading-[28px] 3xl:leading-[32px] 4xl:leading-[36px] text-[#1A1A1A]">
             {title}
           </div>
         </div>
@@ -324,8 +324,8 @@ const ExpandableItem: React.FC<{
         className="overflow-hidden"
         style={{ height: 0 }}
       >
-        <div className="w-full mt-4 pl-7">
-          <p className="font-montserrat font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
+        <div className="w-full mt-4 3xl:mt-5 4xl:mt-6 pl-7 3xl:pl-9 4xl:pl-11">
+          <p className="font-montserrat font-normal text-[16px] 3xl:text-[18px] 4xl:text-[20px] leading-[24px] 3xl:leading-[28px] 4xl:leading-[32px] text-[#1A1A1A]">
             {content}
           </p>
         </div>
@@ -348,10 +348,10 @@ const ProductShowcaseSection: React.FC = () => {
 
   return (
     <RevealSection className="relative w-full flex justify-center bg-white overflow-hidden">
-      <div className="w-full max-w-[1440px] px-5 md:px-20 lg:px-[124px] py-[50px] flex flex-col items-center gap-[95px] bg-white">
+      <div className="w-full max-w-[1440px] 3xl:max-w-[1920px] 4xl:max-w-[2560px] px-5 md:px-20 lg:px-[124px] 3xl:px-[160px] 4xl:px-[200px] py-[50px] 3xl:py-[60px] 4xl:py-[80px] flex flex-col items-center gap-[95px] 3xl:gap-[110px] 4xl:gap-[130px] bg-white mx-auto">
         {/* Title */}
         <div className="w-full flex flex-row flex-wrap items-baseline gap-x-[17px] gap-y-0">
-          <h2 className="font-montserrat font-semibold text-[24px] md:text-[30px] lg:text-[36px] leading-[32px] md:leading-[38px] lg:leading-[44px] text-[#1A1A1A]">
+          <h2 className="font-montserrat font-semibold text-[24px] md:text-[30px] lg:text-[36px] 3xl:text-[42px] 4xl:text-[48px] leading-[32px] md:leading-[38px] lg:leading-[44px] 3xl:leading-[52px] 4xl:leading-[60px] text-[#1A1A1A]">
             Modular by Design: Swap,<br />
             Upgrade and Evolve Your Earbuds
           </h2>
@@ -359,7 +359,7 @@ const ProductShowcaseSection: React.FC = () => {
 
         {/* Mobile/Tablet: Vertical stack - Title then Content */}
         {/* Desktop: Two column layout */}
-        <div className="w-full max-w-[1192px]">
+        <div className="w-full max-w-[1192px] 3xl:max-w-[1600px] 4xl:max-w-[2160px]">
           {/* Mobile and Tablet Layout */}
           <div className="lg:hidden flex flex-col items-start gap-[40px]">
             {/* Content - below title */}
@@ -401,10 +401,10 @@ const ProductShowcaseSection: React.FC = () => {
           </div>
 
           {/* Desktop Layout */}
-          <div className="hidden lg:flex flex-row items-start gap-[60px]">
+          <div className="hidden lg:flex flex-row items-start gap-[60px] 3xl:gap-[80px] 4xl:gap-[100px]">
             {/* Left side - Expandable content (1/3 width) */}
             <div className="w-1/3">
-              <div className="w-full flex flex-col gap-[20px]">
+              <div className="w-full flex flex-col gap-[20px] 3xl:gap-[25px] 4xl:gap-[30px]">
                 <ExpandableItem
                   title="Earbuds split in 3 parts."
                   content="Split into three modular components: battery, chipset, and dynamic driver, crafted for seamless replacement, enduring performance, and continuous evolution."

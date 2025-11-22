@@ -17,7 +17,7 @@ export default function FeatureBlock({
     isVideo = false
 }: FeatureBlockProps) {
     return (
-        <article className="flex flex-col gap-5 p-6 rounded-2xl">
+        <article className="flex flex-col gap-5 p-6 3xl:p-8 4xl:p-10 rounded-2xl">
             {isVideo ? (
                 <div className="w-full rounded-xl overflow-hidden aspect-[16/9]">
                     <video
@@ -45,7 +45,9 @@ export default function FeatureBlock({
         text-[20px] leading-[28px]
         md:text-[22px] md:leading-[32px]
         lg:text-[24px] lg:leading-[34px]
-        min-h-[56px] md:min-h-[64px] lg:min-h-[68px]
+        3xl:text-[28px] 3xl:leading-[38px]
+        4xl:text-[32px] 4xl:leading-[42px]
+        min-h-[56px] md:min-h-[64px] lg:min-h-[68px] 3xl:min-h-[76px] 4xl:min-h-[84px]
       ">
                 {title}
             </h3>
@@ -56,6 +58,8 @@ export default function FeatureBlock({
         text-[14px] leading-[22px]
         md:text-[15px] md:leading-[24px]
         lg:text-[16px] lg:leading-[25px]
+        3xl:text-[18px] 3xl:leading-[28px]
+        4xl:text-[20px] 4xl:leading-[30px]
       ">
                 {description}
             </p>

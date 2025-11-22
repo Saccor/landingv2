@@ -70,9 +70,9 @@ const NewHeroSection: React.FC = () => {
 
   return (
     <>
-      {/* Sticky header - stays at top when scrolling */}
-      <div className="sticky top-0 z-50 w-full bg-[rgba(230,230,230,0.7)] backdrop-blur-[11.5px]">
-        <div className="relative flex flex-row items-center justify-between h-[82px] px-[40px] max-w-[1440px] mx-auto">
+      {/* Sticky header - positioned above the hero section */}
+      <div className="fixed top-0 left-0 right-0 z-50 w-full bg-[rgba(230,230,230,0.42)] backdrop-blur-[11.5px]">
+        <div className="relative flex flex-row items-center justify-between h-[82px] px-[40px] 3xl:px-[80px] 4xl:px-[120px] max-w-[1440px] 3xl:max-w-[1920px] 4xl:max-w-[2560px] mx-auto">
           {/* Logo - centered on mobile, left-aligned on tablet/desktop */}
           <Link href="/" aria-label="Arfve Home" className="
               absolute left-1/2 -translate-x-1/2
@@ -113,7 +113,7 @@ const NewHeroSection: React.FC = () => {
 
           {/* Dropdown menu - only visible on mobile */}
           {isMenuOpen && (
-            <div className="md:hidden absolute right-[40px] top-[calc(100%+8px)] flex flex-col items-start gap-2 bg-[rgba(230,230,230,0.95)] backdrop-blur-[11.5px] rounded-[20px] px-4 py-3 min-w-[120px] z-50">
+            <div className="md:hidden absolute right-[40px] top-[calc(100%+8px)] flex flex-col items-start gap-2 bg-[rgba(230,230,230,0.57)] backdrop-blur-[11.5px] rounded-[20px] px-4 py-3 min-w-[120px] z-50">
               <Link
                 href="/sustainability"
                 className="font-montserrat text-[14px] leading-[20px] text-[#1A1A1A] hover:bg-black/10 transition-all duration-200 px-2 py-1 rounded w-full cursor-pointer"
@@ -135,7 +135,7 @@ const NewHeroSection: React.FC = () => {
 
       <RevealSection className="relative w-full overflow-hidden">
         {/* Hero container - Full viewport height for immersive video experience */}
-        <div className="relative w-full h-[calc(100vh-82px)]">
+        <div className="relative w-full h-screen">
           {/* Single responsive video element */}
           {currentVideoSrc && (
             <video
@@ -155,15 +155,15 @@ const NewHeroSection: React.FC = () => {
           {/* Overlay container for bottom info text */}
           <div className="absolute inset-0">
             {/* Bottom info text - 50px from bottom of frame, aligned with container left margin */}
-            <div className="absolute left-[50px] bottom-[50px]">
+            <div className="absolute left-[50px] 3xl:left-[80px] 4xl:left-[120px] bottom-[50px]">
               <div className="flex flex-col items-start gap-[7px]">
-                {/* Mobile: 28px, Tablet: 32px, Desktop: 36px - 50% reduced */}
-                <div className="font-montserrat font-semibold text-[28px] leading-[34px] md:text-[32px] md:leading-[40px] lg:text-[36px] lg:leading-[44px] text-white mix-blend-difference whitespace-nowrap">
+                {/* Mobile: 28px, Tablet: 32px, Desktop: 36px, 3XL: 42px, 4XL: 48px */}
+                <div className="font-montserrat font-semibold text-[28px] leading-[34px] md:text-[32px] md:leading-[40px] lg:text-[36px] lg:leading-[44px] 3xl:text-[42px] 3xl:leading-[50px] 4xl:text-[48px] 4xl:leading-[56px] text-white mix-blend-difference whitespace-nowrap">
                   Legacy 1
                 </div>
-                {/* Mobile: 18px, Tablet: 20px, Desktop: 24px - 50% reduced */}
-                <div className="font-montserrat font-semibold text-[18px] leading-[20px] md:text-[20px] md:leading-[24px] lg:text-[24px] lg:leading-[32px] text-white mix-blend-difference">
-                  The world&apos;s first 3-piece modular AI earbuds
+                {/* Mobile: 18px, Tablet: 20px, Desktop: 24px, 3XL: 28px, 4XL: 32px */}
+                <div className="font-montserrat font-semibold text-[18px] leading-[20px] md:text-[20px] md:leading-[24px] lg:text-[24px] lg:leading-[32px] 3xl:text-[28px] 3xl:leading-[36px] 4xl:text-[32px] 4xl:leading-[40px] text-white mix-blend-difference">
+                  The world&apos;s first 3-piece <br />modular AI earbuds
                 </div>
               </div>
             </div>

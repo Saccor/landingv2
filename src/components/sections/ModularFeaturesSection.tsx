@@ -322,29 +322,35 @@ const ModularFeaturesSection: React.FC = () => {
       </div>
 
       {/* Desktop layout */}
-      <div className="hidden lg:flex w-full max-w-[1440px] px-[124px] py-[50px] flex flex-col items-center gap-[95px] bg-white">
+      <div className="hidden lg:flex w-full max-w-[1440px] 3xl:max-w-[1920px] 4xl:max-w-[2560px] px-[124px] 3xl:px-[160px] 4xl:px-[200px] py-[50px] 3xl:py-[60px] 4xl:py-[80px] flex flex-col items-center gap-[95px] 3xl:gap-[110px] 4xl:gap-[130px] bg-white mx-auto">
         {/* Heading section */}
-        <div className="w-full max-w-[1192px] flex flex-col items-start gap-[10px]">
+        <div className="w-full max-w-[1192px] 3xl:max-w-[1600px] 4xl:max-w-[2160px] flex flex-col items-start gap-[10px] 3xl:gap-[12px] 4xl:gap-[14px]">
           <div className="w-full flex flex-row flex-wrap items-start gap-x-[17px] gap-y-0">
-            <div className="font-montserrat font-semibold text-[36px] leading-[44px] text-[#1A1A1A]">
+            <div className="font-montserrat font-semibold text-[36px] 3xl:text-[42px] 4xl:text-[48px] leading-[44px] 3xl:leading-[52px] 4xl:leading-[60px] text-[#1A1A1A]">
               The Pinnacle of Intelligent Audio
             </div>
           </div>
-          <p className="w-full font-montserrat font-semibold text-[20px] leading-[30px] text-[#1A1A1A]">
+          <p className="w-full font-montserrat font-semibold text-[20px] 3xl:text-[22px] 4xl:text-[24px] leading-[30px] 3xl:leading-[34px] 4xl:leading-[38px] text-[#1A1A1A]">
             Powered by the Qualcomm® Snapdragon™ S7 Pro sound chipset, Arfve Legacy 1 redefines what earbuds can do, delivering unmatched precision, adaptive intelligence, and seamless connectivity.
           </p>
         </div>
 
         {/* First feature row */}
-        <FeatureSection
-          features={FEATURES.slice(0, 3)}
-          layout="horizontal"
-          titleSize="lg"
-          maxWidth="1199px"
-        />
+        <div className="w-full max-w-[1199px] 3xl:max-w-[1600px] 4xl:max-w-[2160px] flex flex-row items-start gap-[58px] 3xl:gap-[70px] 4xl:gap-[90px]">
+          {FEATURES.slice(0, 3).map((feature, index) => (
+            <div key={index} className="flex-1">
+              <FeatureItem
+                title={feature.title}
+                description={feature.description}
+                titleSize="lg"
+                descriptionSize="md"
+              />
+            </div>
+          ))}
+        </div>
 
         {/* Video */}
-        <div className="relative w-[719px] h-[404px] rounded-[30px] overflow-hidden">
+        <div className="relative w-[719px] 3xl:w-[960px] 4xl:w-[1280px] h-[404px] 3xl:h-[540px] 4xl:h-[720px] rounded-[30px] overflow-hidden">
           <video
             className="absolute inset-0 w-full h-full object-contain"
             src="/video/ExplodedView.webm"
@@ -358,12 +364,18 @@ const ModularFeaturesSection: React.FC = () => {
         </div>
 
         {/* Second feature row */}
-        <FeatureSection
-          features={FEATURES.slice(3, 6)}
-          layout="horizontal"
-          titleSize="lg"
-          maxWidth="1199px"
-        />
+        <div className="w-full max-w-[1199px] 3xl:max-w-[1600px] 4xl:max-w-[2160px] flex flex-row items-start gap-[58px] 3xl:gap-[70px] 4xl:gap-[90px]">
+          {FEATURES.slice(3, 6).map((feature, index) => (
+            <div key={index + 3} className="flex-1">
+              <FeatureItem
+                title={feature.title}
+                description={feature.description}
+                titleSize="lg"
+                descriptionSize="md"
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </RevealSection>
   );

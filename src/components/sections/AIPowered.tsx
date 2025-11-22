@@ -13,13 +13,16 @@ export default function AIPowered() {
       px-4 py-12
       md:px-20 md:py-[50px] md:gap-[95px]
       lg:px-12 lg:py-20 lg:gap-20
+      3xl:px-16 3xl:py-24 3xl:gap-24
+      4xl:px-20 4xl:py-28 4xl:gap-28
+      max-w-[1440px] 3xl:max-w-[1920px] 4xl:max-w-[2560px] mx-auto
     "
       >
         {/* Section header - Frame 481710 */}
         <header
           className="
-            w-full max-w-[353px] md:max-w-[674px] lg:max-w-[1120px] mx-auto
-            flex flex-col items-start gap-[10px]
+            w-full max-w-[353px] md:max-w-[674px] lg:max-w-[1120px] 3xl:max-w-[1500px] 4xl:max-w-[2000px]
+            flex flex-col items-start gap-[10px] 3xl:gap-[12px] 4xl:gap-[14px]
           "
         >
           <div className="w-full flex flex-row flex-wrap items-baseline gap-x-[17px] gap-y-0">
@@ -27,8 +30,8 @@ export default function AIPowered() {
               className="
                 w-full
                 font-montserrat font-semibold text-[#1A1A1A]
-                text-[24px] md:text-[30px] lg:text-[36px]
-                leading-[32px] md:leading-[38px] lg:leading-[44px]
+                text-[24px] md:text-[30px] lg:text-[36px] 3xl:text-[42px] 4xl:text-[48px]
+                leading-[32px] md:leading-[38px] lg:leading-[44px] 3xl:leading-[52px] 4xl:leading-[60px]
                 tracking-[-0.02em]
               "
               style={{ textShadow: '0px 0px 37.4px #FFFFFF' }}
@@ -40,7 +43,7 @@ export default function AIPowered() {
             className="
               w-full h-[140px] md:h-auto
               font-montserrat font-medium text-[#1A1A1A]
-              text-[18px] leading-[28px]
+              text-[18px] 3xl:text-[20px] 4xl:text-[22px] leading-[28px] 3xl:leading-[30px] 4xl:leading-[34px]
             "
           >
             Our intelligent system learns from you, adapts to your environment, and evolves with your listening habits. It enhances every note, conversation, and experience, acting as a personal audio assistant that grows with you.
@@ -50,10 +53,10 @@ export default function AIPowered() {
         {/* Features grid */}
         <div
           className="
-            w-full max-w-[353px] md:max-w-[674px] lg:max-w-[1120px] mx-auto
+            w-full max-w-[353px] md:max-w-[674px] lg:max-w-[1120px] 3xl:max-w-[1500px] 4xl:max-w-[2000px]
             grid grid-cols-1 gap-8
             md:grid-cols-1 md:gap-[58px]
-            lg:grid-cols-2 lg:gap-10
+            lg:grid-cols-2 lg:gap-10 3xl:gap-14 4xl:gap-16
           "
         >
           <FeatureBlock

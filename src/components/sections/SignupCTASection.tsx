@@ -14,18 +14,18 @@ const SignupCTASection: React.FC = () => {
     <RevealSection className="relative w-full flex justify-center bg-white overflow-hidden" data-signup-section>
       {/* Radials per Figma (bottom left and right) - hidden on mobile/tablet */}
       <div className="hidden lg:block pointer-events-none absolute w-[934px] h-[934px] -left-[467px] -bottom-[467px] rounded-full" style={{ background: 'radial-gradient(50% 50% at 50% 50%, #FFFFFF 0%, rgba(228, 228, 228, 0) 100%)' }} />
-      <div className="hidden lg:block pointer-events-none absolute w-[934px] h-[934px] left-[966px] -bottom-[159px] rounded-full" style={{ background: 'radial-gradient(50% 50% at 50% 50%, #FFFFFF 0%, rgba(228, 228, 228, 0) 100%)' }} />
+      <div className="hidden lg:block pointer-events-none absolute w-[934px] h-[934px] left-[966px] 3xl:left-[1400px] 4xl:left-[1800px] -bottom-[159px] rounded-full" style={{ background: 'radial-gradient(50% 50% at 50% 50%, #FFFFFF 0%, rgba(228, 228, 228, 0) 100%)' }} />
 
-      {/* Desktop layout: 1440x302, padding 40 124, gap 30 */}
-      <div className="hidden lg:flex relative w-full max-w-[1440px] h-[302px] items-center justify-center px-[124px] py-[40px]">
-        <div className="w-full h-full flex flex-col items-center justify-center gap-[30px] isolation-isolate">
-          <h2 className="w-[700px] max-w-[700px] h-[76px] text-center font-montserrat font-bold text-[30px] leading-[38px] text-[#3E3E3E]">
+      {/* Desktop layout: responsive width, responsive padding, gap 30 */}
+      <div className="hidden lg:flex relative w-full max-w-[1440px] 3xl:max-w-[1920px] 4xl:max-w-[2560px] h-[302px] 3xl:h-[380px] 4xl:h-[460px] items-center justify-center px-[124px] 3xl:px-[160px] 4xl:px-[200px] py-[40px] 3xl:py-[50px] 4xl:py-[60px]">
+        <div className="w-full h-full flex flex-col items-center justify-center gap-[30px] 3xl:gap-[40px] 4xl:gap-[50px] isolation-isolate">
+          <h2 className="w-[700px] 3xl:w-[900px] 4xl:w-[1100px] max-w-[700px] 3xl:max-w-[900px] 4xl:max-w-[1100px] h-[76px] 3xl:h-[90px] 4xl:h-[110px] text-center font-montserrat font-bold text-[30px] 3xl:text-[36px] 4xl:text-[42px] leading-[38px] 3xl:leading-[45px] 4xl:leading-[55px] text-[#3E3E3E]">
             Sign up now to get 50% off, early access, and exclusive updates, countdown&apos;s ticking.
           </h2>
-          <div className="w-[431px] h-[78px] flex flex-col items-start gap-[12px]">
-            <div className="relative w-full h-[24px] flex items-center">
-              <span className="inline-block w-[10px] h-[10px] rounded-full bg-[#06DF73] z-0" />
-              <span className="absolute left-[22px] top-0 font-montserrat font-medium text-[16px] leading-[24px] text-[#868889] z-1">{claimText}</span>
+          <div className="w-[431px] 3xl:w-[520px] 4xl:w-[600px] h-[78px] 3xl:h-[90px] 4xl:h-[100px] flex flex-col items-start gap-[12px]">
+            <div className="relative w-full h-[24px] 3xl:h-[28px] 4xl:h-[32px] flex items-center">
+              <span className="inline-block w-[10px] 3xl:w-[12px] 4xl:w-[14px] h-[10px] 3xl:h-[12px] 4xl:h-[14px] rounded-full bg-[#06DF73] z-0" />
+              <span className="absolute left-[22px] 3xl:left-[26px] 4xl:left-[30px] top-0 font-montserrat font-medium text-[16px] 3xl:text-[18px] 4xl:text-[20px] leading-[24px] 3xl:leading-[28px] 4xl:leading-[32px] text-[#868889] z-1">{claimText}</span>
             </div>
             <SignupForm theme="lightV6" buttonText="Join the Movement" />
           </div>

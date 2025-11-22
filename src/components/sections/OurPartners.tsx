@@ -105,6 +105,9 @@ export default function OurPartners() {
           px-4 py-12
           md:px-6 md:py-16
           lg:px-12 lg:py-20
+          3xl:px-16 3xl:py-24
+          4xl:px-20 4xl:py-28
+          max-w-[1440px] 3xl:max-w-[1920px] 4xl:max-w-[2560px] mx-auto
         "
       >
         {/* Header */}
@@ -120,6 +123,8 @@ export default function OurPartners() {
               text-[22px] leading-[30px]
               md:text-[26px] md:leading-[34px]
               lg:text-[30px] lg:leading-[38px]
+              3xl:text-[36px] 3xl:leading-[44px]
+              4xl:text-[42px] 4xl:leading-[52px]
             "
           >
             Our partners
@@ -147,9 +152,11 @@ export default function OurPartners() {
         {/* Tablet & Desktop Static Layout */}
         <div
           className="
-            hidden md:flex w-full flex-wrap items-center justify-center
+            hidden md:flex w-full max-w-[1120px] 3xl:max-w-[1500px] 4xl:max-w-[2000px] flex-wrap items-center justify-center
             gap-12 mt-10
             lg:gap-20 lg:mt-12
+            3xl:gap-28 3xl:mt-14
+            4xl:gap-36 4xl:mt-16
           "
         >
           {/* Partner 1 */}
@@ -159,6 +166,8 @@ export default function OurPartners() {
             className="
               h-[50px] w-auto object-contain
               lg:h-[60px]
+              3xl:h-[72px]
+              4xl:h-[84px]
             "
           />
 
@@ -169,6 +178,8 @@ export default function OurPartners() {
             className="
               h-[36px] w-auto object-contain
               lg:h-[44px]
+              3xl:h-[54px]
+              4xl:h-[64px]
             "
           />
 
@@ -179,6 +190,8 @@ export default function OurPartners() {
             className="
               h-[36px] w-auto object-contain
               lg:h-[44px]
+              3xl:h-[54px]
+              4xl:h-[64px]
             "
           />
         </div>
