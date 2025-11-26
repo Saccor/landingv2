@@ -200,7 +200,7 @@ const ModularFeaturesSection: React.FC = () => {
             </div>
           </div>
           <p className="w-full h-[140px] font-montserrat font-normal text-[18px] leading-[28px] text-[#1A1A1A]">
-            Powered by the Qualcomm® Snapdragon™ S7 Pro sound chipset, Arfve Legacy 1 redefines what earbuds can do, delivering unmatched precision, adaptive intelligence, and seamless connectivity.
+            Powered by the Snapdragon® S7 Pro Gen 1&apos;s sound chipset, Arfve Legacy 1 redefines what earbuds can do, delivering unmatched precision, adaptive intelligence, and seamless connectivity.
           </p>
         </div>
 
@@ -240,7 +240,7 @@ const ModularFeaturesSection: React.FC = () => {
             </div>
           </div>
           <p className="w-full font-montserrat font-normal text-[18px] leading-[28px] text-[#1A1A1A]">
-            Powered by the Qualcomm® Snapdragon™ S7 Pro sound chipset, Arfve Legacy 1 redefines what earbuds can do, delivering unmatched precision, adaptive intelligence, and seamless connectivity.
+            Powered by the Snapdragon® S7 Pro Gen 1&apos;s sound chipset, Arfve Legacy 1 redefines what earbuds can do, delivering unmatched precision, adaptive intelligence, and seamless connectivity.
           </p>
         </div>
 
@@ -294,7 +294,7 @@ const ModularFeaturesSection: React.FC = () => {
             </div>
           </div>
           <p className="w-full font-montserrat font-semibold text-[20px] 3xl:text-[22px] 4xl:text-[24px] leading-[30px] 3xl:leading-[34px] 4xl:leading-[38px] text-[#1A1A1A]">
-            Powered by the Qualcomm® Snapdragon™ S7 Pro sound chipset, Arfve Legacy 1 redefines what earbuds can do, delivering unmatched precision, adaptive intelligence, and seamless connectivity.
+            Powered by the Snapdragon® S7 Pro Gen 1&apos;s sound chipset, Arfve Legacy 1 redefines what earbuds can do, delivering unmatched precision, adaptive intelligence, and seamless connectivity.
           </p>
         </div>
 

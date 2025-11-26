@@ -29,8 +29,8 @@ const features: FeatureData[] = [
     description: "Designed with care for both performance and the planet, using recycled materials without compromise on quality or feel."
   },
   {
-    title: "Snapdragon S7 Pro Chipset",
-    description: "Qualcomm's most advanced audio chipset delivers best-in-class sound, intelligent processing, and seamless connectivity."
+    title: "Snapdragon® S7 Pro Gen 1",
+    description: "The most advanced audio chipset delivers best-in-class sound, intelligent processing, and seamless connectivity."
   },
   {
     title: "Multi-AI Assistant Integration",
