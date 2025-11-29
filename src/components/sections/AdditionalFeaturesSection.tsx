@@ -180,7 +180,7 @@ export default function AdditionalFeaturesSection() {
                 </header>
 
                 {/* Carousel Container */}
-                <div className="w-full overflow-hidden mt-8 3xl:mt-10 4xl:mt-12">
+                <div className="w-full overflow-hidden mt-12 md:mt-14 lg:mt-16 3xl:mt-[72px] 4xl:mt-20">
                     <div
                         ref={carouselRef}
                         className="flex gap-8 3xl:gap-10 4xl:gap-12 transition-none"

@@ -10,11 +10,11 @@ export default function AIPowered() {
       <section
         className="
       w-full flex flex-col items-center gap-10
-      px-4 py-12
-      md:px-20 md:py-[50px] md:gap-[95px]
-      lg:px-12 lg:py-20 lg:gap-20
-      3xl:px-16 3xl:py-24 3xl:gap-24
-      4xl:px-20 4xl:py-28 4xl:gap-28
+      px-4 py-[38px]
+      md:px-20 md:py-[40px] md:gap-[95px]
+      lg:px-12 lg:py-[70px] lg:gap-20
+      3xl:px-16 3xl:py-[86px] 3xl:gap-24
+      4xl:px-20 4xl:py-[102px] 4xl:gap-28
       max-w-[1440px] 3xl:max-w-[1920px] 4xl:max-w-[2560px] mx-auto
     "
       >

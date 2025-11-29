@@ -17,7 +17,7 @@ const SignupCTASection: React.FC = () => {
       <div className="hidden lg:block pointer-events-none absolute w-[934px] h-[934px] left-[966px] 3xl:left-[1400px] 4xl:left-[1800px] -bottom-[159px] rounded-full" style={{ background: 'radial-gradient(50% 50% at 50% 50%, #FFFFFF 0%, rgba(228, 228, 228, 0) 100%)' }} />
 
       {/* Desktop layout: responsive width, responsive padding, gap 30 */}
-      <div className="hidden lg:flex relative w-full max-w-[1440px] 3xl:max-w-[1920px] 4xl:max-w-[2560px] h-[302px] 3xl:h-[380px] 4xl:h-[460px] items-center justify-center px-[124px] 3xl:px-[160px] 4xl:px-[200px] py-[40px] 3xl:py-[50px] 4xl:py-[60px]">
+      <div className="hidden lg:flex relative w-full max-w-[1440px] 3xl:max-w-[1920px] 4xl:max-w-[2560px] h-[302px] 3xl:h-[380px] 4xl:h-[460px] items-center justify-center px-[124px] 3xl:px-[160px] 4xl:px-[200px] py-[35px] 3xl:py-[45px] 4xl:py-[55px]">
         <div className="w-full h-full flex flex-col items-center justify-center gap-[30px] 3xl:gap-[40px] 4xl:gap-[50px] isolation-isolate">
           <h2 className="w-[700px] 3xl:w-[900px] 4xl:w-[1100px] max-w-[700px] 3xl:max-w-[900px] 4xl:max-w-[1100px] h-[76px] 3xl:h-[90px] 4xl:h-[110px] text-center font-montserrat font-bold text-[30px] 3xl:text-[36px] 4xl:text-[42px] leading-[38px] 3xl:leading-[45px] 4xl:leading-[55px] text-[#3E3E3E]">
             Sign up now to get 50% off, early access, and exclusive updates, countdown&apos;s ticking.
@@ -33,7 +33,7 @@ const SignupCTASection: React.FC = () => {
       </div>
 
       {/* Mobile/Tablet stacked layout */}
-      <div className="lg:hidden w-full max-w-[1440px] px-6 py-12 flex flex-col items-center gap-6 bg-white">
+      <div className="lg:hidden w-full max-w-[1440px] px-6 py-[43px] flex flex-col items-center gap-6 bg-white">
         <h2 className="text-center font-montserrat font-bold text-[22px] leading-[30px] text-[#3E3E3E] md:text-[26px] md:leading-[34px]">
           Sign up now to get 50% off, early access, and exclusive updates, countdown&apos;s ticking.
         </h2>

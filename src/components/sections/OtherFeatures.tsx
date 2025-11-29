@@ -9,11 +9,11 @@ export default function OtherFeatures() {
       <section
         className="
           w-full flex flex-col items-center
-          px-4 py-10
-          md:px-6 md:py-14
-          lg:px-12 lg:py-16
-          3xl:px-16 3xl:py-20
-          4xl:px-20 4xl:py-24
+          px-4 py-[30px]
+          md:px-6 md:py-[46px]
+          lg:px-12 lg:py-[54px]
+          3xl:px-16 3xl:py-[70px]
+          4xl:px-20 4xl:py-[86px]
           max-w-[1440px] 3xl:max-w-[1920px] 4xl:max-w-[2560px] mx-auto
         "
       >

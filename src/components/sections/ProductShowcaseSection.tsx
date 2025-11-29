@@ -267,8 +267,8 @@ const ExpandableItem: React.FC<{
   content: string;
   onExpandChange?: (sectionId: string, isExpanded: boolean) => void;
   sectionId: string;
-}> = ({ title, content, onExpandChange, sectionId }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  isExpanded: boolean;
+}> = ({ title, content, onExpandChange, sectionId, isExpanded }) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -301,7 +301,6 @@ const ExpandableItem: React.FC<{
 
   const handleToggle = () => {
     const newExpanded = !isExpanded;
-    setIsExpanded(newExpanded);
     onExpandChange?.(sectionId, newExpanded);
   };
 
@@ -336,15 +335,69 @@ const ExpandableItem: React.FC<{
 
 const ProductShowcaseSection: React.FC = () => {
   const [activeSection, setActiveSection] = useState<string>('earbuds'); // Default to earbuds
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
+    earbuds: false,
+    case: false
+  });
+  const earbudVideoRef = useRef<HTMLDivElement>(null);
+  const caseVideoRef = useRef<HTMLDivElement>(null);
 
   const earbudVideos = ['/video/3pcBlackAnim.webm', '/video/3pcWhiteAnim.webm'];
   const caseVideos = ['/video/3pcBlackAnimCase.webm', '/video/3pcWhiteAnimCase.webm'];
 
   const handleSectionExpand = (sectionId: string, isExpanded: boolean) => {
     if (isExpanded) {
+      // Close all other sections
+      setExpandedSections({
+        earbuds: sectionId === 'earbuds',
+        case: sectionId === 'case'
+      });
       setActiveSection(sectionId);
+    } else {
+      // Close the section
+      setExpandedSections(prev => ({
+        ...prev,
+        [sectionId]: false
+      }));
     }
   };
+
+  // Handle video playback when active section changes
+  useEffect(() => {
+    const playActiveVideos = () => {
+      // Pause videos in inactive section
+      const inactiveContainer = activeSection === 'earbuds' ? caseVideoRef.current : earbudVideoRef.current;
+      if (inactiveContainer) {
+        const inactiveVideos = inactiveContainer.querySelectorAll('video');
+        inactiveVideos.forEach(video => {
+          if (!video.paused) {
+            video.pause();
+          }
+        });
+      }
+
+      // Play videos in active section
+      const activeContainer = activeSection === 'earbuds' ? earbudVideoRef.current : caseVideoRef.current;
+      if (activeContainer) {
+        const activeVideos = activeContainer.querySelectorAll('video');
+        activeVideos.forEach(video => {
+          if (video.paused) {
+            video.play().catch((err) => {
+              // Ignore play errors - they're harmless
+              if (!err.message.includes('interrupted by a call to pause') &&
+                !err.message.includes('interrupted by a new load request')) {
+                console.error('Video play error:', err);
+              }
+            });
+          }
+        });
+      }
+    };
+
+    // Small delay to ensure DOM is updated
+    const timeoutId = setTimeout(playActiveVideos, 150);
+    return () => clearTimeout(timeoutId);
+  }, [activeSection]);
 
   return (
     <RevealSection className="relative w-full flex justify-center bg-white overflow-hidden">
@@ -409,12 +462,14 @@ const ProductShowcaseSection: React.FC = () => {
                   title="Earbuds split in 3 parts."
                   content="Split into three modular components: battery, chipset, and dynamic driver, crafted for seamless replacement, enduring performance, and continuous evolution."
                   sectionId="earbuds"
+                  isExpanded={expandedSections.earbuds}
                   onExpandChange={handleSectionExpand}
                 />
                 <ExpandableItem
                   title="A well made case"
                   content="Designed with precision and built for endurance, it combines effortless portability with a replaceable battery for lasting performance."
                   sectionId="case"
+                  isExpanded={expandedSections.case}
                   onExpandChange={handleSectionExpand}
                 />
               </div>
@@ -424,14 +479,20 @@ const ProductShowcaseSection: React.FC = () => {
             <div className="w-2/3 rounded-[30px] overflow-hidden">
               <div className="relative w-full aspect-[719/404]">
                 {/* Earbuds videos */}
-                <div className={`absolute inset-0 transition-opacity duration-500 ${activeSection === 'earbuds' ? 'opacity-100' : 'opacity-0'}`}>
+                <div
+                  ref={earbudVideoRef}
+                  className={`absolute inset-0 transition-opacity duration-500 ${activeSection === 'earbuds' ? 'opacity-100' : 'opacity-0'}`}
+                >
                   <CyclingVideoPlayer
                     videos={earbudVideos}
                     className="absolute inset-0 w-full h-full object-cover rounded-[30px]"
                   />
                 </div>
                 {/* Case videos */}
-                <div className={`absolute inset-0 transition-opacity duration-500 ${activeSection === 'case' ? 'opacity-100' : 'opacity-0'}`}>
+                <div
+                  ref={caseVideoRef}
+                  className={`absolute inset-0 transition-opacity duration-500 ${activeSection === 'case' ? 'opacity-100' : 'opacity-0'}`}
+                >
                   <CyclingVideoPlayer
                     videos={caseVideos}
                     className="absolute inset-0 w-full h-full object-cover rounded-[30px]"

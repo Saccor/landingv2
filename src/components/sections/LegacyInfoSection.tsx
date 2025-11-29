@@ -5,12 +5,12 @@ import RevealSection from '@/components/ui/RevealSection';
 
 const LegacyInfoSection: React.FC = () => {
     return (
-        <RevealSection className="relative w-full flex justify-center bg-gray-50 py-16 md:py-20 lg:py-24 3xl:py-28 4xl:py-32">
+        <RevealSection className="relative w-full flex justify-center bg-gray-50 py-[49px] md:py-[65px] lg:py-[81px] 3xl:py-[97px] 4xl:py-[113px]">
             <div className="w-full max-w-[1440px] 3xl:max-w-[1920px] 4xl:max-w-[2560px] px-5 md:px-20 lg:px-[124px] 3xl:px-[160px] 4xl:px-[200px] flex flex-col items-center justify-center text-center mx-auto">
                 {/* Content container */}
                 <div className="flex flex-col items-center justify-center text-center max-w-[1080px] 3xl:max-w-[1440px] 4xl:max-w-[1920px]">
                     {/* Main title */}
-                    <div className="font-montserrat font-semibold text-[32px] md:text-[40px] lg:text-[48px] 3xl:text-[56px] 4xl:text-[64px] leading-[40px] md:leading-[50px] lg:leading-[60px] 3xl:leading-[70px] 4xl:leading-[80px] text-[#1A1A1A] mb-8">
+                    <div className="font-montserrat font-semibold text-[24px] md:text-[32px] lg:text-[36px] 3xl:text-[42px] 4xl:text-[48px] leading-[30px] md:leading-[40px] lg:leading-[44px] 3xl:leading-[52px] 4xl:leading-[60px] text-[#1A1A1A] mb-8">
                         World&apos;s First 3-Piece Modular AI Earbuds
                     </div>
 
